@@ -1,0 +1,29 @@
+title: godis
+author: matt8707
+attribution: Background image by user3802032 on Freepik
+theme:
+  colors-text: rgb(255, 255, 255)
+  colors-icon: rgb(255, 255, 255)
+  colors-title: rgb(255, 255, 255)
+  colors-sidebar-border: 1px solid rgba(255, 255, 255, 0.3)
+  colors-sidebar-background: rgba(0, 0, 0, 0.2)
+  sizes-sidebar-time: 3.4rem
+  background-image: url('/themes/godis_background.webp')
+  font-family: "'Inter Variable', system-ui"
+  button-background-color-on: rgb(255, 255, 255)
+  button-background-color-off: rgba(0, 0, 0, 0.3)
+  drawer-button-background-color: rgba(0, 0, 0, 0.2)
+  button-name-color-on: rgb(0, 0, 0)
+  button-name-color-off: rgb(255, 255, 255)
+  button-state-color-on: DimGray
+  button-state-color-off: rgb(200, 200, 200)
+  modal-background-color: rgba(0,0,0,0.3)
+  border-radius: 0.4rem
+  sidebar-font-size: 1.04rem
+  sidebar-item-padding: 0.6rem 0
+  sidebar-padding: 0 2rem
+  drawer-font-size: 0.95rem
+  sidebar-divider: 1px solid rgba(255, 255, 255, 0.3)
+  navigate-background-color: rgba(255, 255, 255, 0.15)
+  app-color: '#722b6e'
+  modal-background-color-modal: rgb(31 24 10 / 70%)

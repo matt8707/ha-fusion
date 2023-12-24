@@ -1,0 +1,58 @@
+<script lang="ts">
+	import { dashboard, motion, record, lang, ripple } from '$lib/Stores';
+	import Ripple from 'svelte-ripple';
+	import Icon from '@iconify/svelte';
+	import { generateId } from '$lib/Utils';
+
+	export let view: any;
+
+	$: noViews = !$dashboard?.views?.length;
+
+	/**
+	 * Creates a new section object
+	 * in current view
+	 */
+	function handleClick() {
+		if (!view || !view.sections) return;
+
+		// prepend section
+		view.sections = [
+			{
+				name: $lang('section'),
+				items: [],
+				id: generateId($dashboard)
+			},
+			...view.sections
+		];
+
+		// trigger reactivity by reassigning to self
+		$dashboard = $dashboard;
+
+		$record();
+	}
+</script>
+
+<button
+	class="button"
+	on:click={handleClick}
+	use:Ripple={{
+		...$ripple,
+		opacity: noViews ? '0' : $ripple.opacity
+	}}
+	style:cursor={noViews ? 'unset' : 'pointer'}
+	style:opacity={noViews ? '0.5' : '1'}
+	style:transition="opacity {$motion}ms ease"
+>
+	<figure>
+		<Icon icon="gg:row-first" height="none" />
+	</figure>
+
+	{$lang('section')}
+</button>
+
+<style>
+	figure {
+		transform: scale(135%);
+		transform-origin: center 0.64rem;
+	}
+</style>

@@ -1,0 +1,191 @@
+/**
+ * Global CSS for #modal
+ */
+
+:root {
+	--border-color-button: 1px solid rgb(100 100 100);
+}
+
+#modal h1 {
+	margin: 0;
+	font-size: 1.65rem;
+	font-weight: 700;
+	pointer-events: none;
+}
+
+#modal h2 {
+	font-weight: 500;
+	margin: 1.3rem 0 0.6rem 0;
+	font-size: 1.125rem;
+	pointer-events: none;
+}
+
+#modal h2 .align-right {
+	float: right;
+}
+
+#modal .button-container {
+	display: flex;
+}
+
+#modal .button-container button {
+	background-color: rgba(0, 0, 0, 0.2);
+	color: white;
+	width: 50%;
+	border: none;
+	cursor: pointer;
+	transition: background-color 200ms ease;
+	font-size: 0.9rem;
+	font-family: inherit;
+	height: 3rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 1rem;
+	text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+#modal .button-container button:first-child {
+	border-top-left-radius: 0.6rem;
+	border-bottom-left-radius: 0.6rem;
+	border: var(--border-color-button);
+	border-right: none;
+}
+
+#modal .button-container button:not(:first-child):not(:last-child) {
+	border-top: var(--border-color-button);
+	border-bottom: var(--border-color-button);
+	border-left: var(--border-color-button);
+}
+
+#modal .button-container button:last-child {
+	border-top-right-radius: 0.6rem;
+	border-bottom-right-radius: 0.6rem;
+	border: var(--border-color-button);
+}
+
+#modal .button-container .selected {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+#modal .input {
+	padding: 0.9em;
+	border-radius: 0.6em;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	background-color: rgba(0, 0, 0, 0.2);
+	color: inherit;
+	font-family: inherit;
+	width: 100%;
+	font-size: inherit;
+}
+
+#modal .input::placeholder {
+	color: rgba(255, 255, 255, 0.3);
+	opacity: 1;
+}
+
+#modal .preview {
+	pointer-events: none;
+	font-size: 1.07rem;
+}
+
+#modal .done {
+	background-color: var(--theme-button-background-color-off);
+	float: right;
+	font-size: inherit;
+}
+
+#modal .options {
+	background-color: var(--theme-button-background-color-off);
+	font-size: inherit;
+}
+
+#modal .remove {
+	background-color: #ae2e2e;
+	font-size: inherit;
+}
+
+#modal .action {
+	border-radius: 0.4em;
+	border: none;
+	color: inherit;
+	padding: 0.55em 0.9em;
+	cursor: pointer;
+	font-family: inherit;
+	width: fit-content;
+	font-size: inherit;
+}
+
+#modal .clear {
+	position: relative;
+	flex-grow: 1;
+}
+
+#modal .clear > button {
+	background: none;
+	color: lightgrey;
+	font-size: 1.5rem;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	right: -1.4rem;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 2.8rem;
+	height: 2.8rem;
+}
+
+#modal .icon-gallery-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 0.8rem;
+}
+
+#modal .icon-gallery {
+	padding: 0 1rem;
+	border-radius: 0.6em;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	background-color: rgba(0, 0, 0, 0.2);
+	color: inherit;
+	font-size: inherit;
+	cursor: pointer;
+	width: 3.15rem;
+	display: grid;
+	align-items: center;
+}
+
+#modal .overflow {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@keyframes scale-in {
+	0% {
+		scale: 0.8;
+		opacity: 0;
+	}
+
+	80% {
+		opacity: 1;
+	}
+
+	100% {
+		scale: 1;
+		opacity: 1;
+	}
+}
+
+@keyframes copy-animation {
+	0% {
+		background-color: rgba(255, 255, 255, 0);
+	}
+
+	20% {
+		background-color: rgba(255, 255, 255, 0.15);
+	}
+
+	900% {
+		background-color: rgba(255, 255, 255, 0);
+	}
+}

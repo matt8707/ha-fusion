@@ -1,0 +1,67 @@
+<script lang="ts">
+	import { dashboard, motion, record, lang, ripple } from '$lib/Stores';
+	import Ripple from 'svelte-ripple';
+	import Icon from '@iconify/svelte';
+	import { generateId } from '$lib/Utils';
+
+	export let view: any;
+
+	$: noViewsOrSections = !$dashboard?.views?.length || !view?.sections?.length;
+
+	/**
+	 * Creates a new button object in
+	 * first section of current view
+	 */
+	function handleClick() {
+		if (!view?.sections) return;
+
+		const section = findSection(view.sections);
+
+		if (!section?.items) return;
+
+		section.items.unshift({
+			type: 'button',
+			id: generateId($dashboard)
+		});
+
+		$dashboard = $dashboard;
+		$record();
+	}
+
+	/**
+	 * Finds the first section that is
+	 * not of type 'horizontal-stack'.
+	 */
+	function findSection(sections: any[]): any | undefined {
+		for (const section of sections) {
+			if (section.type !== 'horizontal-stack') return section;
+			const found = section.sections && findSection(section.sections);
+			if (found) return found;
+		}
+	}
+</script>
+
+<button
+	class="button"
+	on:click={handleClick}
+	use:Ripple={{
+		...$ripple,
+		opacity: noViewsOrSections ? '0' : $ripple.opacity
+	}}
+	style:cursor={noViewsOrSections ? 'unset' : 'pointer'}
+	style:opacity={noViewsOrSections ? '0.5' : '1'}
+	style:transition="opacity {$motion}ms ease"
+>
+	<figure>
+		<Icon icon="mdi:button-pointer" height="none" />
+	</figure>
+
+	{$lang('button')}
+</button>
+
+<style>
+	figure {
+		transform: scale(95%);
+		transform-origin: center 2.6rem;
+	}
+</style>

@@ -1,0 +1,29 @@
+title: contrast
+author: matt8707
+attribution: ''
+theme:
+  colors-text: white
+  colors-icon: white
+  colors-title: white
+  colors-sidebar-border: 1px solid white
+  colors-sidebar-background: none
+  sizes-sidebar-time: 3.4rem
+  background-image: none
+  font-family: "'Inter Variable', system-ui"
+  button-background-color-on: white
+  button-background-color-off: rgba(255, 255, 255, 0.15)
+  drawer-button-background-color: rgba(255, 255, 255, 0.15)
+  button-name-color-on: black
+  button-name-color-off: white
+  button-state-color-on: black
+  button-state-color-off: white
+  modal-background-color: black
+  border-radius: 0.4rem
+  sidebar-font-size: 1.04rem
+  sidebar-item-padding: 0.6rem 0
+  sidebar-padding: 0 2rem
+  drawer-font-size: 0.95rem
+  sidebar-divider: 1px solid white
+  navigate-background-color: rgba(255, 255, 255, 0.15)
+  app-color: black
+  modal-background-color-modal: none

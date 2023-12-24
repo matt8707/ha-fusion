@@ -1,0 +1,45 @@
+title: muted
+author: matt8707
+notes: 'attribution: background image by someone'
+theme:
+  global:
+    font-family: inherit
+    background-image: url('/themes/muted_background.webp')
+
+  modal:
+    color:
+      background: rgba(31, 29, 26, 0.7)
+
+  drawer:
+    font-size: 0.95rem
+    border-width: 1px
+    border-style: solid
+    color:
+      text: rgba(255, 255, 255, 1)
+      button-background: rgba(115, 115, 115, 0.25)
+      background: rgba(0, 0, 0, 0.06)
+      border: rgba(115, 115, 115, 0.25)
+
+  sidebar:
+    font-size: 1.1rem
+    item-padding: 0.6rem 0
+    padding: 0 2rem
+    border-width: 1px
+    border-style: solid
+    divider-border-width: 1px
+    divider-border-style: solid
+    color:
+      text: rgba(255, 255, 255, 1)
+      background: rgba(0, 0, 0, 0.06)
+      border: rgba(115, 115, 115, 0.25)
+      divider-border: rgba(58, 69, 73, 0.4)
+
+  main:
+    border-radius: 0.4rem
+    color:
+      name-on: rgb(48 51 52)
+      name-off: rgb(151, 152, 156)
+      state-on: rgb(88 90 90)
+      state-off: rgb(151, 152, 156)
+      background-on: rgba(255, 255, 255, 0.85)
+      background-off: rgba(115, 115, 115, 0.25)

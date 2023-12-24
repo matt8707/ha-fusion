@@ -1,0 +1,31 @@
+/**
+ * Global CSS for #drawer
+ */
+
+#drawer .button {
+	text-align: left;
+	position: relative;
+	border: none;
+	border-radius: 0.4rem;
+	padding: 0.65rem 1rem 0.4rem 0.82rem;
+	font-family: inherit;
+	cursor: pointer;
+	transition: width 0.3s ease;
+	white-space: nowrap;
+	overflow: hidden;
+	background-color: var(--theme-drawer-button-background-color);
+	color: inherit;
+	margin-right: 0;
+	font-weight: 500;
+	font-size: var(--theme-drawer-font-size);
+	text-overflow: ellipsis;
+	min-width: 3rem;
+}
+
+#drawer figure {
+	width: 1.5em;
+	margin: 0 0.2rem 0 0;
+	vertical-align: middle;
+	display: inline-block;
+	color: inherit;
+}

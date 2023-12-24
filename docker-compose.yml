@@ -1,0 +1,15 @@
+version: '3'
+services:
+  ha-fusion:
+    container_name: ha-fusion
+    build: .
+    volumes:
+      - ~/Developer/ha-fusion/data:/app/data
+    network_mode: bridge
+    ports:
+      - 5050:5050
+    environment:
+      TZ: Europe/Stockholm
+      HASS_URL: http://192.168.1.241:8123
+    restart: always
+# cd ~/Developer/ha-fusion && docker-compose up -d --build ha-fusion
