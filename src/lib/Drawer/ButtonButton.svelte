@@ -6,14 +6,26 @@
 
 	export let view: any;
 
-	$: noViewsOrSections = !$dashboard?.views?.length || !view?.sections?.length;
+	$: noViewsOrSectionsOrStacks =
+		!view ||
+		!view.sections ||
+		view.sections.length === 0 ||
+		checkForHorizontalStackOnly(view.sections);
+
+	function checkForHorizontalStackOnly(sections: any[]): boolean {
+		return sections.every(
+			(section) =>
+				section.type === 'horizontal-stack' ||
+				(section.sections && checkForHorizontalStackOnly(section.sections))
+		);
+	}
 
 	/**
 	 * Creates a new button object in
 	 * first section of current view
 	 */
 	function handleClick() {
-		if (!view?.sections) return;
+		if (noViewsOrSectionsOrStacks) return;
 
 		const section = findSection(view.sections);
 
@@ -46,10 +58,10 @@
 	on:click={handleClick}
 	use:Ripple={{
 		...$ripple,
-		opacity: noViewsOrSections ? '0' : $ripple.opacity
+		opacity: noViewsOrSectionsOrStacks ? '0.5' : $ripple.opacity
 	}}
-	style:cursor={noViewsOrSections ? 'unset' : 'pointer'}
-	style:opacity={noViewsOrSections ? '0.5' : '1'}
+	style:cursor={noViewsOrSectionsOrStacks ? 'unset' : 'pointer'}
+	style:opacity={noViewsOrSectionsOrStacks ? '0.5' : '1'}
 	style:transition="opacity {$motion}ms ease"
 >
 	<figure>
