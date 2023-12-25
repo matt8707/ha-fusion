@@ -2,9 +2,9 @@ version: '3'
 services:
   ha-fusion:
     container_name: ha-fusion
-    image: ghcr.io/matt8707/ha-fusion
+    build: .
     volumes:
-      - /path/to/ha-fusion:/app/data
+      - ~/Developer/ha-fusion/data:/app/data
     network_mode: bridge
     ports:
       - 5050:5050
@@ -12,3 +12,4 @@ services:
       TZ: Europe/Stockholm
       HASS_URL: http://192.168.1.241:8123
     restart: always
+# cd ~/Developer/ha-fusion && docker-compose up -d --build ha-fusion
