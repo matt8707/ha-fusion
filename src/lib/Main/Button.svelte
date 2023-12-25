@@ -300,17 +300,19 @@
 		<!-- STATE -->
 
 		<!-- only bind clientWidth if marquee is set and use svelte-fast-dimension -->
-		<div class="state" data-state={stateOn}>
-			{#if marquee}
-				<div style="width: min-content;" bind:clientWidth={contentWidth}>
-					<StateLogic selected={sel} {contentWidth} />
-				</div>
-			{:else}
-				<div style="overflow: hidden; text-overflow: ellipsis;">
-					<StateLogic selected={sel} {contentWidth} />
-				</div>
-			{/if}
-		</div>
+		{#key sel}
+			<div class="state" data-state={stateOn}>
+				{#if marquee}
+					<div style="width: min-content;" bind:clientWidth={contentWidth}>
+						<StateLogic selected={sel} {contentWidth} />
+					</div>
+				{:else}
+					<div style="overflow: hidden; text-overflow: ellipsis;">
+						<StateLogic selected={sel} {contentWidth} />
+					</div>
+				{/if}
+			</div>
+		{/key}
 	</div>
 </div>
 
