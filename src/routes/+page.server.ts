@@ -12,9 +12,17 @@ dotenv.config();
 async function loadFile(file: string) {
 	try {
 		const data = await readFile(file, 'utf8');
-		return file.endsWith('.yaml') ? yaml.load(data) : JSON.parse(data);
+		if (!data.trim()) {
+			return {}; // file is empty, early return object
+		} else {
+			return file.endsWith('.yaml') ? yaml.load(data) : JSON.parse(data);
+		}
 	} catch (error) {
-		console.error(`Error reading or parsing ${file}:`, error);
+		if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') {
+			console.error(`No existing file found for ${file}`);
+		} else {
+			console.error(`Error reading or parsing ${file}:`, error);
+		}
 		return {};
 	}
 }
