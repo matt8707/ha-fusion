@@ -19,13 +19,8 @@
 	 * based on its parents dimensions.
 	 */
 
-	$: if (
-		$states &&
-		entity &&
-		$states?.[entity]?.attributes?.entity_picture &&
-		$configuration?.hassUrl
-	) {
-		url = $configuration.hassUrl + $states[entity].attributes.entity_picture;
+	$: if ($states && entity && $states?.[entity]?.attributes?.entity_picture) {
+		url = $states[entity].attributes.entity_picture;
 	}
 </script>
 
