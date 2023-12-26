@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, editMode, lang, motion, configuration } from '$lib/Stores';
+	import { states, editMode, lang, motion } from '$lib/Stores';
 
 	export let entity_id: string | undefined = undefined;
 	export let demo: string | undefined = undefined;
