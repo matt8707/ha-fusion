@@ -34,7 +34,6 @@ export default defineConfig({
 			'svelte-dnd-action',
 			'svelte-modals',
 			'svelte-ripple',
-			'svelte-tiny-virtual-list',
 			'svelecte/item'
 		],
 		exclude: [
