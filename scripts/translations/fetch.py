@@ -106,6 +106,16 @@ dir_keys = [
             ("off", ["entity_component", "_", "state", "off"]),
         ],
     ),
+    (  # COVER
+        f"{COMPONENTS}/cover/translations/",
+        [
+            ("closed", ["entity_component", "_", "state", "closed"]),
+            ("closing", ["entity_component", "_", "state", "closing"]),
+            ("open", ["entity_component", "_", "state", "open"]),
+            ("opening", ["entity_component", "_", "state", "opening"]),
+            ("stopped", ["entity_component", "_", "state", "stopped"]),
+        ],
+    ),
     (  # WEATHER
         f"{COMPONENTS}/weather/translations",
         [
