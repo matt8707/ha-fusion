@@ -12,4 +12,4 @@ services:
       TZ: Europe/Stockholm
       HASS_URL: http://192.168.1.241:8123
     restart: always
-# cd ~/Developer/ha-fusion && docker-compose up -d --build ha-fusion
+# cd ~/Developer/ha-fusion && docker-compose -f compose-dev.yml up -d --build ha-fusion
