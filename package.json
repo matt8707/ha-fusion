@@ -13,7 +13,6 @@
 	},
 	"devDependencies": {
 		"@iconify/svelte": "^3.1.6",
-		"@rollup/wasm-node": "^4.9.1",
 		"@sveltejs/adapter-node": "^2.0.2",
 		"@sveltejs/kit": "^2.0.6",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
@@ -65,8 +64,5 @@
 		"svelte-dnd-action": "^0.9.38",
 		"svelte-modals": "^1.3.0",
 		"svelte-ripple": "^0.1.1"
-	},
-	"overrides": {
-		"rollup": "npm:@rollup/wasm-node"
 	}
 }
