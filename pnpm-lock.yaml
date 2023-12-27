@@ -88,9 +88,6 @@ devDependencies:
   '@iconify/svelte':
     specifier: ^3.1.6
     version: 3.1.6(svelte@4.2.8)
-  '@rollup/wasm-node':
-    specifier: ^4.9.1
-    version: 4.9.1
   '@sveltejs/adapter-node':
     specifier: ^2.0.2
     version: 2.0.2(@sveltejs/kit@2.0.6)
@@ -822,14 +819,6 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
-
-  /@rollup/wasm-node@4.9.1:
-    resolution: {integrity: sha512-awrdTJgcUC0IA5X7Zi2HJlCcdhxaSDZHaBhoNuKt+TgDPdLatbw8GKKcLpqKVEAIOwfajNCQP+taQ/EgM+090A==}
-    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
 
   /@sveltejs/adapter-node@2.0.2(@sveltejs/kit@2.0.6):
     resolution: {integrity: sha512-iboANjLIB7Af74+og5IEQVSPsIfaO+o9zldU/7ljCGCrBj0t2gQlINtuwUhjvwhLgw9vHgICYWWZFxLM2C0zrg==}
