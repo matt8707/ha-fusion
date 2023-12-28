@@ -58,7 +58,7 @@
 	on:click={handleClick}
 	use:Ripple={{
 		...$ripple,
-		opacity: noViewsOrSectionsOrStacks ? '0.5' : $ripple.opacity
+		opacity: noViewsOrSectionsOrStacks ? '0' : $ripple.opacity
 	}}
 	style:cursor={noViewsOrSectionsOrStacks ? 'unset' : 'pointer'}
 	style:opacity={noViewsOrSectionsOrStacks ? '0.5' : '1'}

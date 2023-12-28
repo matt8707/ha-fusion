@@ -50,8 +50,7 @@
 			$dashboard?.views?.find((view) => view?.isDndShadowItem);
 
 	/**
-	 * WebSocket, determines 'hassUrl' from data or local storage.
-	 * Tries to reconnect if no previous connection has been made.
+	 * WebSocket, tries to reconnect if no previous connection has been made.
 	 */
 
 	let isConnecting = false;
@@ -68,20 +67,16 @@
 
 		console.log('authenticating...');
 
-		const hassTokens = localStorage.getItem('hassTokens');
-		options.hassUrl =
-			data?.configuration?.hassUrl || (hassTokens && JSON.parse(hassTokens)?.hassUrl);
+		options.hassUrl = $configuration?.hassUrl;
 
-		if (options.hassUrl) {
-			try {
-				await authentication(options);
-				console.log('authenticated.');
-				clearInterval(retryInterval);
-			} catch (err) {
-				// catch but don't log
-			} finally {
-				isConnecting = false;
-			}
+		try {
+			await authentication(options);
+			console.log('authenticated.');
+			clearInterval(retryInterval);
+		} catch (err) {
+			// catch but don't log
+		} finally {
+			isConnecting = false;
 		}
 	}
 

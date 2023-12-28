@@ -30,12 +30,17 @@ async function loadFile(file: string) {
 /**
  * Server load function
  */
-export async function load(): Promise<{
+export async function load({ request }): Promise<{
 	configuration: Configuration;
 	dashboard: Dashboard;
 	theme: any;
 	translations: Translations;
 }> {
+	// const headers = Object.fromEntries(request.headers);
+	// const ingressPath = request.headers.get('x-ingress-path');
+	const proto = request.headers.get('x-forwarded-proto');
+	const host = request.headers.get('x-forwarded-host');
+
 	// must be loaded first
 	const [configuration, dashboard] = await Promise.all([
 		loadFile('./data/configuration.yaml'),
@@ -43,9 +48,7 @@ export async function load(): Promise<{
 	]);
 
 	// set hassUrl from env
-	if (process.env.HASS_URL) {
-		configuration.hassUrl = process.env.HASS_URL;
-	}
+	configuration.hassUrl = process.env.HASS_URL || `${proto}://${host}`;
 
 	// initialize keys if missing
 	dashboard.views = dashboard.views || [];
