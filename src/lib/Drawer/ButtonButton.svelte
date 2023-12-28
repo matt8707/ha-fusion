@@ -13,11 +13,14 @@
 		checkForHorizontalStackOnly(view.sections);
 
 	function checkForHorizontalStackOnly(sections: any[]): boolean {
-		return sections.every(
-			(section) =>
-				section.type === 'horizontal-stack' ||
-				(section.sections && checkForHorizontalStackOnly(section.sections))
-		);
+		return sections.every((section) => {
+			// section is a horizontal-stack
+			if (section.type === 'horizontal-stack') {
+				return section.sections ? checkForHorizontalStackOnly(section.sections) : true;
+			}
+			// section is not a horizontal-stack
+			return false;
+		});
 	}
 
 	/**
