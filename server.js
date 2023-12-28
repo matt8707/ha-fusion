@@ -26,4 +26,7 @@ app.use(handler);
 
 app.listen(PORT, () => {
 	console.debug(`listening on port ${PORT}`);
+	console.debug(`env HASS_URL ${process.env.HASS_URL}`);
+	console.debug(`env ADDON ${process.env.ADDON}`);
+	// console.debug(`env SUPERVISOR_TOKEN ${process.env.SUPERVISOR_TOKEN}`);
 });
