@@ -268,7 +268,7 @@
 		position: relative;
 		box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 		outline: 1px solid rgba(255, 255, 255, 0.25);
-		/* overflow: scroll; */
+		overflow-y: auto;
 	}
 
 	button {
