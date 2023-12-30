@@ -61,8 +61,11 @@
 	<!-- State  -->
 {:else if state}
 	{@html $lang(state) || state}
-	<!-- Unit of measurement -->
-	{@html attributes?.['unit_of_measurement'] || ''}
+
+	<!-- Unit -->
+	{#if attributes?.unit_of_measurement}
+		{attributes.unit_of_measurement}
+	{/if}
 {:else}
 	{$lang('unknown')}
 {/if}
