@@ -53,6 +53,6 @@
 </script>
 
 <svelte:head>
-	{@html `<style>:root {${css}}</style>`}
+	{@html `<style lang="false">:root {${css}}</style>`}
 	<meta name="theme-color" content={initial?.theme?.['app-color']} />
 </svelte:head>

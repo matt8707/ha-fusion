@@ -4,6 +4,7 @@
 	import { Modals, closeModal } from 'svelte-modals';
 	import Loader from '$lib/Components/Loader.svelte';
 	import '@fontsource-variable/inter';
+	import '../app.css';
 </script>
 
 <svelte:head>

@@ -15,6 +15,7 @@ const config = {
 		}
 	},
 	vitePlugin: {
+		exclude: [],
 		// dev inspector
 		inspector: {
 			toggleKeyCombo: 'control-shift',

@@ -37,6 +37,7 @@
 
 	const _motion = data?.configuration?.motion;
 	$motion = _motion === undefined || _motion === true ? $motion : 0;
+	$: mobileSidebarIsVisible = true;
 
 	/**
 	 * Computes the current view.
@@ -100,6 +101,10 @@
 		$clickOriginatedFromMenu = false;
 	}
 
+	function toggleMenu() {
+		mobileSidebarIsVisible = !mobileSidebarIsVisible;
+	}
+
 	/**
 	 * If in edit mode, toggle editMode by programmatically clicking `EditModeButton`
 	 * to trigger any potential confirm dialogs. Else toggle drawer normally.
@@ -148,12 +153,34 @@
 
 <div
 	id="layout"
+	class={mobileSidebarIsVisible ? 'mobile-sidebar-visible' : ''}
+	style="--size:{mobileSidebarIsVisible ? '100%' : '0%'};"
 	style:grid-template-columns="{$dashboard?.hide_sidebar || !$dashboard?.sidebar?.length
 		? '0'
 		: $dashboard?.sidebarWidth || 350}px auto"
 	style:grid-template-rows={$showDrawer ? 'auto auto 1fr' : '0fr auto 1fr'}
-	style:transition="grid-template-rows {$motion}ms ease, grid-template-columns {$motion}ms ease"
+	style:transition="layout {$motion}ms ease, grid-template-columns {$motion}ms ease"
 >
+	<button class="absolute z-20 top-0 right-0 mr-20 h-6 w-6 mt-6 md:hidden" on:click={toggleMenu}>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			aria-hidden="true"
+			role="img"
+			viewBox="0 0 24 24"
+			class="iconify iconify--solar rotate-180"
+			><path
+				fill="currentColor"
+				fill-rule="evenodd"
+				d="M3.172 4.172C2 5.343 2 7.229 2 11v2c0 3.771 0 5.657 1.172 6.828C4.343 21 6.229 21 10 21h5V3h-5C6.229 3 4.343 3 3.172 4.172"
+				clip-rule="evenodd"
+				opacity=".5"
+			></path><path
+				fill={mobileSidebarIsVisible ? 'black' : 'currentColor'}
+				opacity={mobileSidebarIsVisible ? '.2' : '1'}
+				d="M22 13v-2c0-3.771 0-5.657-1.172-6.828c-.974-.975-3.192-1.139-5.828-1.166v17.988c2.636-.027 4.854-.191 5.828-1.166C22 18.657 22 16.771 22 13"
+			></path></svg
+		>
+	</button>
 	<!-- nav -->
 	{#await import('$lib/Main/Views.svelte') then Views}
 		<svelte:component this={Views.default} {view} />
@@ -172,7 +199,7 @@
 
 	<!-- aside -->
 	{#await import('$lib/Sidebar/Index.svelte') then Sidebar}
-		<svelte:component this={Sidebar.default} />
+		<svelte:component this={Sidebar.default} {mobileSidebarIsVisible} />
 	{/await}
 
 	<!-- menu -->
@@ -206,5 +233,10 @@
 			'aside main';
 		min-height: 100vh;
 		overflow: hidden;
+	}
+	@media (max-width: 768px) {
+		#layout {
+			grid-template-columns: var(--size) auto !important;
+		}
 	}
 </style>

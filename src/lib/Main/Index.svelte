@@ -162,7 +162,7 @@
 				<HorizontalStackHeader {view} {section} />
 
 				<div
-					class="horizontal-stack"
+					class="horizontal-stack grid-flow-row md:grid-flow-col"
 					style:min-height="{stackHeight}px"
 					style:outline="2px dashed {$editMode ? '#ffc008' : 'transparent'}"
 					style:transition="min-height {$motion}ms ease, outline {$motion / 2}ms ease"
@@ -254,7 +254,6 @@
 
 	.horizontal-stack {
 		display: grid;
-		grid-auto-flow: column;
 		grid-auto-columns: 1fr;
 		gap: 0.4rem;
 		border-radius: 0.65rem;
