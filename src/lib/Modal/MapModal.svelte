@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, lang, ripple } from '$lib/Stores';
+	import { states, lang, ripple, configuration } from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { Map, NavigationControl, Popup, Marker } from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
@@ -10,7 +10,6 @@
 	import { getName } from '$lib/Utils';
 
 	export let isOpen: boolean;
-	export let config: any;
 	export let entity_id: string;
 	export let entity_picture: string | undefined;
 
@@ -27,7 +26,7 @@
 
 	const zoom = 13.5;
 	const pitch = 0;
-	const apiKey = config?.addons?.maptiler?.apikey;
+	const apiKey = $configuration?.addons?.maptiler?.apikey;
 
 	const styles = {
 		demo: 'https://demotiles.maplibre.org/style.json',

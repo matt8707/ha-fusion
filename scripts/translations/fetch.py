@@ -79,6 +79,7 @@ dir_keys = [
             ("duration", ["ui.dialogs.helper_settings.timer.duration"]),
             ("motion", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.motion"]),
             ("copied", ["ui.common.copied"]),
+            ("object", ["ui.components.selectors.selector.types.object"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -212,6 +213,7 @@ dir_keys = [
             ("timer", ["ui.panel.config.helpers.types.timer"]),
             ("javascript_module", ["ui.panel.config.lovelace.resources.types.module"]),
             ("copy", ["ui.panel.config.repairs.copy"]),
+            ("media", ["ui.panel.config.storage.network_mounts.mount_usage.media"]),
         ],
     ),
     (  # ONBOARDING

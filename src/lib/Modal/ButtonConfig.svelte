@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dashboard, states, record, lang, ripple } from '$lib/Stores';
+	import { dashboard, states, record, lang, ripple, history, historyIndex } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Button from '$lib/Main/Button.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -9,17 +9,22 @@
 	import InputClear from '$lib/Components/InputClear.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import { updateObj, getDomain, getName } from '$lib/Utils';
-	import type { ButtonItem, Configuration } from '$lib/Types';
+	import type { ButtonItem } from '$lib/Types';
 
 	export let isOpen: boolean;
 	export let sel: ButtonItem;
-	export let config: Configuration;
+	export let demo: string | undefined = undefined;
+
+	if (demo) {
+		// replace history entry with demo
+		$history.splice($historyIndex, 1);
+		set('entity_id', demo);
+	}
 
 	let name = sel?.name;
 
 	// untested
 	let color = sel?.color;
-	let marquee = sel?.marquee;
 	// (maybe make reactive)
 
 	$: entity_id = sel?.entity_id;
@@ -67,7 +72,7 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div style:pointer-events="none">
-			<Button {entity_id} {name} {icon} {color} {marquee} {config} {sel} />
+			<Button {sel} />
 		</div>
 
 		<h2>{$lang('entity')}</h2>

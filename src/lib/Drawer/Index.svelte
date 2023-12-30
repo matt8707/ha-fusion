@@ -40,8 +40,8 @@
 			{/await}
 		{/if}
 
-		{#await import('$lib/Drawer/ButtonButton.svelte') then ButtonButton}
-			<svelte:component this={ButtonButton.default} {view} />
+		{#await import('$lib/Drawer/ObjectButton.svelte') then ObjectButton}
+			<svelte:component this={ObjectButton.default} {view} />
 		{/await}
 
 		<Separator />

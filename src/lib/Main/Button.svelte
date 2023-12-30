@@ -17,13 +17,14 @@
 	import Icon from '@iconify/svelte';
 	import { getDomain, getName } from '$lib/Utils';
 
-	export let entity_id: string | undefined;
-	export let name: string | undefined = undefined;
-	export let icon: string | undefined = undefined;
-	export let color: string | undefined = undefined;
-	export let marquee: boolean | undefined = undefined;
-	export let config: any;
+	export let demo: string | undefined = undefined;
 	export let sel: any;
+
+	$: entity_id = demo || sel?.entity_id;
+	$: name = sel?.name;
+	$: icon = sel?.icon;
+	$: color = sel?.color;
+	$: marquee = sel?.marquee;
 
 	let entity: HassEntity;
 	let contentWidth: number;
@@ -128,8 +129,8 @@
 	async function handleClickEvent() {
 		if ($editMode) {
 			openModal(() => import('$lib/Modal/ButtonConfig.svelte'), {
-				sel,
-				config: config
+				demo: entity_id,
+				sel
 			});
 		} else {
 			switch (getDomain(sel?.entity_id)) {
@@ -169,7 +170,6 @@
 					// if attributes?.source_type === 'gps'
 					openModal(() => import('$lib/Modal/MapModal.svelte'), {
 						entity_id: entity?.entity_id,
-						config,
 						entity_picture: entity_picture
 					});
 					break;
@@ -186,7 +186,6 @@
 
 					openModal(async () => import('$lib/Modal/MapModal.svelte'), {
 						entity_id,
-						config,
 						entity_picture: $states?.[sel?.entity_id]?.attributes?.entity_picture
 					});
 
@@ -300,19 +299,17 @@
 		<!-- STATE -->
 
 		<!-- only bind clientWidth if marquee is set and use svelte-fast-dimension -->
-		{#key sel}
-			<div class="state" data-state={stateOn}>
-				{#if marquee}
-					<div style="width: min-content;" bind:clientWidth={contentWidth}>
-						<StateLogic selected={sel} {contentWidth} />
-					</div>
-				{:else}
-					<div style="overflow: hidden; text-overflow: ellipsis;">
-						<StateLogic selected={sel} {contentWidth} />
-					</div>
-				{/if}
-			</div>
-		{/key}
+		<div class="state" data-state={stateOn}>
+			{#if marquee}
+				<div style="width: min-content;" bind:clientWidth={contentWidth}>
+					<StateLogic {entity_id} selected={sel} {contentWidth} />
+				</div>
+			{:else}
+				<div style="overflow: hidden; text-overflow: ellipsis;">
+					<StateLogic {entity_id} selected={sel} {contentWidth} />
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
 
