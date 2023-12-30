@@ -21,6 +21,7 @@
 	import { browser } from '$app/environment';
 	import { modals } from 'svelte-modals';
 	import Theme from '$lib/Components/Theme.svelte';
+	import { fade } from 'svelte/transition';
 
 	/**
 	 * Data from server-side load
@@ -139,15 +140,19 @@
 			$drawerSearch = undefined;
 		}
 	}
+
+	let innerWidth = 768;
+	let mobileSidebar = false;
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window on:keydown={handleKeydown} bind:innerWidth />
 
 <!-- theme -->
 <Theme initial={data?.theme} />
 
 <div
 	id="layout"
+	style:--size={innerWidth > 768 || mobileSidebar ? '100%' : '0%'}
 	style:grid-template-columns="{$dashboard?.hide_sidebar || !$dashboard?.sidebar?.length
 		? '0'
 		: $dashboard?.sidebarWidth || 350}px auto"
@@ -172,8 +177,24 @@
 
 	<!-- aside -->
 	{#await import('$lib/Sidebar/Index.svelte') then Sidebar}
-		<svelte:component this={Sidebar.default} />
+		<svelte:component
+			this={Sidebar.default}
+			mobileSidebarVisible={innerWidth > 768 || mobileSidebar}
+		/>
 	{/await}
+
+	<!-- mobile sidebar toggle -->
+	{#if innerWidth < 768 && !$dashboard?.hide_sidebar}
+		<div transition:fade={{ duration: $motion / 2 }}>
+			{#await import('$lib/Sidebar/MobileSidebarToggle.svelte') then MobileSidebarToggle}
+				<svelte:component
+					this={MobileSidebarToggle.default}
+					on:toggle={() => (mobileSidebar = !mobileSidebar)}
+					{mobileSidebar}
+				/>
+			{/await}
+		</div>
+	{/if}
 
 	<!-- menu -->
 	{#if !$disableMenuButton}
@@ -206,5 +227,11 @@
 			'aside main';
 		min-height: 100vh;
 		overflow: hidden;
+	}
+
+	@media (max-width: 768px) {
+		#layout {
+			grid-template-columns: var(--size) auto !important;
+		}
 	}
 </style>
