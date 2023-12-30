@@ -79,6 +79,7 @@ dir_keys = [
             ("duration", ["ui.dialogs.helper_settings.timer.duration"]),
             ("motion", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.motion"]),
             ("copied", ["ui.common.copied"]),
+            ("object", ["ui.components.selectors.selector.types.object"]),
         ],
     ),
     (  # MEDIA_PLAYER
