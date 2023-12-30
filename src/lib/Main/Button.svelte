@@ -282,7 +282,7 @@
 			{:else if image}
 				&nbsp;
 			{:else if icon}
-				<Icon {icon} height="auto" width="100%" />
+				<Icon {icon} height="auto" width="100%" style="margin:0 auto" />
 			{:else if entity_id}
 				<ComputeIcon {entity_id} />
 			{:else}
