@@ -71,6 +71,7 @@
 
 	.expandable {
 		min-height: 0;
+		white-space: pre-line;
 	}
 
 	span {
