@@ -9,6 +9,8 @@
 	import type { SidebarItem } from '$lib/Types';
 	import '$lib/Sidebar/Sidebar.css';
 
+	export let mobileSidebarVisible: boolean;
+
 	let imported: (string | undefined)[] = [];
 	let loaded = false;
 
@@ -147,6 +149,7 @@
 </script>
 
 <aside
+	style:display={mobileSidebarVisible ? 'block' : 'none'}
 	style:padding={$dashboard.hide_sidebar || $dashboard.sidebar.length === 0
 		? '0px'
 		: 'var(--theme-sidebar-padding)'}
