@@ -212,6 +212,7 @@ dir_keys = [
             ("timer", ["ui.panel.config.helpers.types.timer"]),
             ("javascript_module", ["ui.panel.config.lovelace.resources.types.module"]),
             ("copy", ["ui.panel.config.repairs.copy"]),
+            ("media", ["ui.panel.config.storage.network_mounts.mount_usage.media"]),
         ],
     ),
     (  # ONBOARDING
