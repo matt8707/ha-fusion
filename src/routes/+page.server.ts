@@ -36,8 +36,6 @@ export async function load({ request }): Promise<{
 	theme: any;
 	translations: Translations;
 }> {
-	// const headers = Object.fromEntries(request.headers);
-	// const ingressPath = request.headers.get('x-ingress-path');
 	const proto = request.headers.get('x-forwarded-proto');
 	const host = request.headers.get('x-forwarded-host');
 
@@ -47,7 +45,8 @@ export async function load({ request }): Promise<{
 		loadFile('./data/dashboard.yaml')
 	]);
 
-	// set hassUrl from env
+	// set hassUrl from env for dev and docker setups
+	// forward headers for ios/mac app to work...
 	configuration.hassUrl = process.env.HASS_URL || `${proto}://${host}`;
 
 	// initialize keys if missing

@@ -65,13 +65,13 @@
 		if (isConnecting) return;
 		isConnecting = true;
 
-		console.log('authenticating...');
+		console.debug('authenticating...');
 
 		options.hassUrl = $configuration?.hassUrl;
 
 		try {
 			await authentication(options);
-			console.log('authenticated.');
+			console.debug('authenticated.');
 			clearInterval(retryInterval);
 		} catch (err) {
 			// catch but don't log
