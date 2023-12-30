@@ -5,9 +5,9 @@
 
 	export let selected: any;
 	export let contentWidth: number | undefined = undefined;
+	export let entity_id: string | undefined;
 
 	let entity: HassEntity;
-	let entity_id = selected?.entity_id;
 
 	$: if (entity_id && $states?.[entity_id]?.last_updated !== entity?.last_updated)
 		entity = $states?.[entity_id];

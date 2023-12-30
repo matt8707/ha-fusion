@@ -8,45 +8,38 @@
 	export let sel: any = undefined;
 
 	/**
-	 * Removes 'ButtonItem' | 'SidebarItem' | 'ViewItem' from `$dashboard`.
+	 * Checks if current id is in/from sidebar
 	 */
-	async function removeObj() {
-		if (!sel) return;
-		closeModal();
-		if (sel.type === 'button') {
-			removeButtonItem();
-		} else if (sel.type) {
-			removeSidebarItem();
-		} else if (sel.sections) {
-			await removeViewItem();
-		}
-		$record();
+	function sidebarItem() {
+		return $dashboard.sidebar.some((item) => item?.id === sel?.id);
 	}
 
-	function removeButtonItem() {
+	/**
+	 * Removes a sidebarItem
+	 */
+	function removeSidebarItem() {
+		$dashboard.sidebar = $dashboard.sidebar.filter((item) => item?.id !== sel?.id);
+	}
+
+	/**
+	 * Get id from a mainItem
+	 */
+	function mainItem(callback: (item: any) => any) {
+		const process = (section: any) => ({
+			...section,
+			items: section.items?.map(callback).filter((item: any) => item !== null) || [],
+			sections: section.sections?.map(process) || []
+		});
+
 		$dashboard.views = $dashboard.views.map((view) => ({
 			...view,
-			sections: view.sections?.map((section) => ({
-				...section,
-				sections:
-					section.type === 'horizontal-stack' && section.sections
-						? section.sections.map((nestedSection) => ({
-								...nestedSection,
-								items: nestedSection.items?.filter((item) => item.id !== sel.id)
-							}))
-						: section.sections,
-				items:
-					section.type !== 'horizontal-stack'
-						? section.items?.filter((item) => item.id !== sel.id)
-						: section.items
-			}))
+			sections: view.sections?.map(process) || []
 		}));
 	}
 
-	function removeSidebarItem() {
-		$dashboard.sidebar = $dashboard.sidebar.filter((item) => item.id !== sel.id);
-	}
-
+	/**
+	 * Removes a ViewItem
+	 */
 	async function removeViewItem() {
 		const index = $dashboard.views.findIndex((view) => view.id === sel.id);
 		$dashboard.views = [...$dashboard.views.slice(0, index), ...$dashboard.views.slice(index + 1)];
@@ -60,22 +53,43 @@
 	}
 
 	/**
+	 * Removes 'SidebarItem' | 'MainItem' | 'ViewItem' from `$dashboard`.
+	 */
+	async function removeObj() {
+		if (!sel) return;
+		closeModal();
+
+		if (sidebarItem()) {
+			removeSidebarItem();
+		} else if (sel?.type) {
+			mainItem((item) => (item?.id !== sel?.id ? item : null));
+		} else if (sel.sections) {
+			await removeViewItem();
+		}
+		$record();
+	}
+
+	/**
 	 * When clicking 'change type' in modal, close modal
-	 * and programmatically click 'edit' on sidebar item
+	 * and programmatically click 'edit' on sidebar or main item
 	 */
 	async function handleChangeType() {
-		$dashboard.sidebar = $dashboard.sidebar.map((item) =>
-			item.id === sel?.id ? { ...item, type: 'configure' } : item
-		);
+		const item = ((item: { id: string }) =>
+			item.id === sel?.id ? { ...item, type: 'configure' } : item) as any;
+
+		if (sidebarItem()) {
+			$dashboard.sidebar = $dashboard.sidebar.map(item);
+		} else {
+			mainItem(item);
+		}
 
 		const element = document.getElementById(String(sel?.id));
 
 		await tick();
 		closeModal();
 
-		let button: HTMLButtonElement | null | undefined;
-		button = element?.querySelector('div > button');
-		if (button) button.click();
+		const div = element?.querySelector('div');
+		if (div) div.click();
 	}
 </script>
 
@@ -94,7 +108,7 @@
 				{$lang('remove')}
 			</button>
 
-			{#if sel?.type && !['button', 'configure'].includes(sel.type)}
+			{#if sel?.type && !['configure'].includes(sel.type)}
 				<button
 					transition:fade={{ duration: $motion }}
 					class="options action"

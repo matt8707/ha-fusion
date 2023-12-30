@@ -35,7 +35,7 @@
 		if (!section?.items) return;
 
 		section.items.unshift({
-			type: 'button',
+			type: 'configure',
 			id: generateId($dashboard)
 		});
 
@@ -68,15 +68,8 @@
 	style:transition="opacity {$motion}ms ease"
 >
 	<figure>
-		<Icon icon="mdi:button-pointer" height="none" />
+		<Icon icon="solar:file-bold-duotone" height="none" />
 	</figure>
 
-	{$lang('button')}
+	{$lang('object')}
 </button>
-
-<style>
-	figure {
-		transform: scale(95%);
-		transform-origin: center 2.6rem;
-	}
-</style>

@@ -137,8 +137,8 @@
 
 	function itemStyles(type: string) {
 		return `
-			grid-column: ${type === 'media' ? 'span 2' : 'span 1'};
-			grid-row: ${type === 'media' ? 'span 4' : 'span 1'};
+			grid-column: ${type === 'media' || type === 'camera' ? 'span 2' : 'span 1'};
+			grid-row: ${type === 'media' || type === 'camera' ? 'span 4' : 'span 1'};
 			display: ${type ? '' : 'none'};
     `;
 	}

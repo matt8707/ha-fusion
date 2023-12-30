@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { configuration } from '$lib/Stores';
 	import { SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import Button from '$lib/Main/Button.svelte';
 	import Media from '$lib/Main/Media.svelte';
+	import Camera from '$lib/Main/Camera.svelte';
+	import Configure from '$lib/Main/Configure.svelte';
 
 	export let item: any;
 </script>
@@ -11,18 +12,14 @@
 	<div class="shadow" />
 {/if}
 
-{#if item?.type === 'button'}
-	<Button
-		entity_id={item?.entity_id}
-		name={item?.name}
-		icon={item?.icon}
-		color={item?.color}
-		marquee={item?.marquee}
-		sel={item}
-		config={$configuration}
-	/>
+{#if item?.type === 'configure'}
+	<Configure sel={item} />
+{:else if item?.type === 'button'}
+	<Button sel={item} />
 {:else if item?.type === 'media'}
 	<Media sel={item} />
+{:else if item?.type === 'camera'}
+	<Camera sel={item} />
 {/if}
 
 <style>
