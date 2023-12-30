@@ -278,11 +278,11 @@
 			class:image
 		>
 			{#if loading}
-				<img src="loader.svg" alt="loading" />
+				<img src="loader.svg" alt="loading" style="margin:0 auto" />
 			{:else if image}
 				&nbsp;
 			{:else if icon}
-				<Icon {icon} height="auto" width="100%" style="margin:0 auto" />
+				<Icon {icon} height="auto" width="100%" />
 			{:else if entity_id}
 				<ComputeIcon {entity_id} />
 			{:else}
