@@ -278,7 +278,7 @@
 			class:image
 		>
 			{#if loading}
-				<img src="loader.svg" alt="loading" />
+				<img src="loader.svg" alt="loading" style="margin:0 auto" />
 			{:else if image}
 				&nbsp;
 			{:else if icon}
