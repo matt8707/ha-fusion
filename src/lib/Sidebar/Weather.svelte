@@ -12,6 +12,7 @@
 	export let extra_sensor_icon: string | undefined = undefined;
 	export let weather_sensor: string | undefined = undefined;
 	export let icon_pack: string | undefined = undefined;
+	export let show_apparent: boolean | undefined = undefined;
 
 	let precipitation: string | undefined;
 	let path: string;
@@ -65,9 +66,15 @@
 		</icon>
 
 		{#if attributes?.temperature}
-			<div class="temp">
-				{Math.round(attributes?.temperature)}{attributes?.temperature_unit || '°'}
-			</div>
+			{#if show_apparent}
+				<div class="temp">
+					{Math.round(attributes?.temperature)}{#if attributes.apparent_temperature}({Math.round(attributes?.apparent_temperature)}){/if}{attributes?.temperature_unit || '°'}
+				</div>
+			{:else}
+				<div class="temp">
+					{Math.round(attributes?.temperature)}{attributes?.temperature_unit || '°'}
+				</div>
+			{/if}
 		{/if}
 
 		<div class="state">
