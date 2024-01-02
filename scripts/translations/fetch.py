@@ -80,6 +80,7 @@ dir_keys = [
             ("motion", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.motion"]),
             ("copied", ["ui.common.copied"]),
             ("object", ["ui.components.selectors.selector.types.object"]),
+            ("state", ["ui.components.entity.entity-state-picker.state"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -105,6 +106,39 @@ dir_keys = [
         [
             ("on", ["entity_component", "_", "state", "on"]),
             ("off", ["entity_component", "_", "state", "off"]),
+        ],
+    ),
+    (  # ALARM_CONTROL_PANEL
+        f"{COMPONENTS}/alarm_control_panel/translations/",
+        [
+            ("armed", ["entity_component", "_", "state", "armed"]),
+            ("armed_away", ["entity_component", "_", "state", "armed_away"]),
+            ("armed_custom_bypass", ["entity_component", "_", "state", "armed_custom_bypass"]),
+            ("armed_home", ["entity_component", "_", "state", "armed_home"]),
+            ("armed_night", ["entity_component", "_", "state", "armed_night"]),
+            ("armed_vacation", ["entity_component", "_", "state", "armed_vacation"]),
+            ("arming", ["entity_component", "_", "state", "arming"]),
+            ("disarmed", ["entity_component", "_", "state", "disarmed"]),
+            ("disarming", ["entity_component", "_", "state", "disarming"]),
+            ("pending", ["entity_component", "_", "state", "pending"]),
+            ("triggered", ["entity_component", "_", "state", "triggered"]),
+        ],
+    ),
+    (  # SUN
+        f"{COMPONENTS}/sun/translations/",
+        [
+            ("above_horizon", ["entity_component", "_", "state", "above_horizon"]),
+            ("below_horizon", ["entity_component", "_", "state", "below_horizon"]),
+        ],
+    ),
+    (  # LOCK
+        f"{COMPONENTS}/lock/translations/",
+        [
+            ("jammed", ["entity_component", "_", "state", "jammed"]),
+            ("locked", ["entity_component", "_", "state", "locked"]),
+            ("locking", ["entity_component", "_", "state", "locking"]),
+            ("unlocked", ["entity_component", "_", "state", "unlocked"]),
+            ("unlocking", ["entity_component", "_", "state", "unlocking"]),
         ],
     ),
     (  # COVER
@@ -214,6 +248,7 @@ dir_keys = [
             ("javascript_module", ["ui.panel.config.lovelace.resources.types.module"]),
             ("copy", ["ui.panel.config.repairs.copy"]),
             ("media", ["ui.panel.config.storage.network_mounts.mount_usage.media"]),
+            ("service", ["ui.panel.config.devices.type.service_heading"]),
         ],
     ),
     (  # ONBOARDING
@@ -270,6 +305,13 @@ dir_keys = [
             ("iframe", ["ui.panel.lovelace.editor.card.iframe.name"]),
             ("horizontal_stack", ["ui.panel.lovelace.editor.card.horizontal-stack.name"]),
             ("drag_and_drop", ["ui.panel.lovelace.cards.shopping-list.drag_and_drop"]),
+            ("alarm_modes_label", ["ui.panel.lovelace.editor.features.types.alarm-modes.label"]),
+            ("alarm_modes_armed_away", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_away"]),
+            ("alarm_modes_armed_home", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_home"]),
+            ("alarm_modes_armed_night", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_night"]),
+            ("alarm_modes_armed_vacation", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_vacation"]),
+            ("alarm_modes_armed_custom_bypass", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_custom_bypass"]),
+            ("alarm_modes_disarmed", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.disarmed"]),
         ],
     ),
     (  # DEVELOPER-TOOLS
