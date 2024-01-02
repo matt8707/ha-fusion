@@ -68,6 +68,10 @@ git clone https://github.com/matt8707/ha-fusion.git
 cd ha-fusion
 pnpm install
 
+# environment
+cp .env.example .env
+code .env
+
 # server
 npm run dev -- --open
 
