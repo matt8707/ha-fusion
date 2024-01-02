@@ -17,7 +17,7 @@ export default defineConfig({
 	optimizeDeps: {
 		include: [
 			// include all because of dynamic imports, this prevents: ✨ optimized dependencies changed. reloading
-			// (pnpm ls -P | grep -Ev 'codemirror|@fontsource' | awk '/dependencies:/{flag=1; next} flag{print "\047" $1 "\047,"}'; echo "'svelecte/item'")
+			// (pnpm ls -P | grep -Ev 'codemirror|@fontsource' | awk '/dependencies:/{flag=1; next} flag{print "\047" $1 "\047,"}'; echo "'svelecte/item',"; echo "'@iconify/svelte',"; echo "'svelte-fast-dimension/action'")
 			'@jaames/iro',
 			'd3-array',
 			'd3-scale',
@@ -34,7 +34,9 @@ export default defineConfig({
 			'svelte-dnd-action',
 			'svelte-modals',
 			'svelte-ripple',
-			'svelecte/item'
+			'svelecte/item',
+			'@iconify/svelte',
+			'svelte-fast-dimension/action'
 		],
 		exclude: [
 			// exclude codemirror to avoid state duplication
