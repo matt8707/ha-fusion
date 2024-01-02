@@ -33,7 +33,9 @@
 	};
 
 	// color
-	$: supportedColorModes = entity?.attributes?.supported_color_modes;
+	$: supportedColorModes = entity?.attributes?.supported_color_modes?.filter(
+		(m: string) => m !== 'brightness'
+	);
 	$: colorMode = entity?.attributes?.color_mode;
 	$: selTab = supportMappings?.[colorMode];
 
@@ -87,7 +89,7 @@
 		{/if}
 
 		<!-- BRIGHTNESS -->
-		{#if brightness}
+		{#if brightness !== undefined}
 			<h2>
 				{$lang('brightness')}
 				<span class="align-right">
