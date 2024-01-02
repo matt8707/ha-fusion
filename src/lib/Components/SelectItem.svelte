@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { itemActions, highlightSearch, CloseButton } from 'svelecte/item';
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
+	import Icon from '@iconify/svelte';
 
 	interface Item {
+		icon?: string;
 		id?: string;
 		label?: string;
 	}
@@ -28,7 +30,9 @@
 	<div class="sv-item-content">
 		<div class="icon-text-wrapper">
 			<div class="icon-container">
-				{#if item?.label && !isDisabled}
+				{#if item?.icon && !isDisabled}
+					<Icon icon={item?.icon} height="auto" width="100%" />
+				{:else if item?.label && !isDisabled}
 					<ComputeIcon entity_id={item.label} />
 				{/if}
 			</div>
