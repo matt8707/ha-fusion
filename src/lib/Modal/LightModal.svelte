@@ -23,12 +23,14 @@
 	const supportMappings: Record<string, string> = {
 		brightness: 'brightness',
 		color_temp: 'color_temp',
+		rgbw: 'color',
 		xy: 'color'
 	};
 
 	const displayMappings: Record<string, string> = {
 		brightness: $lang('brightness'),
 		color_temp: $lang('color_temp'),
+		rgbw: $lang('color'),
 		xy: $lang('color')
 	};
 
@@ -100,11 +102,11 @@
 		{/if}
 
 		<!-- COLOR -->
-		{#if supportedColorModes?.includes('color_temp') || supportedColorModes?.includes('xy')}
+		{#if supportedColorModes?.includes('color_temp') || supportedColorModes?.includes('xy') || supportedColorModes?.includes('rgbw')}
 			<h2>{$lang('change_color')}</h2>
 		{/if}
 
-		{#if supportedColorModes?.length > 0}
+		{#if supportedColorModes?.length > 1}
 			<div class="button-container">
 				{#each supportedColorModes as mode}
 					<button
@@ -119,7 +121,7 @@
 				{/each}
 			</div>
 		{/if}
-		{#if supportedColorModes?.includes('color_temp') || supportedColorModes?.includes('xy')}
+		{#if supportedColorModes?.includes('color_temp') || supportedColorModes?.includes('xy') || supportedColorModes?.includes('rgbw')}
 			<ColorPicker
 				{entity}
 				{colorMode}
