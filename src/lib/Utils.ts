@@ -126,3 +126,14 @@ export function relativeTime(timestamp: string, languageCode: string | undefined
 
 	return formatter.format(Math.round(diffUnit) * (diff < 0 ? -1 : 1), units[index][0]);
 }
+
+/**
+ * Determines if a feature is supported
+ * from a list of entity attributes
+ */
+export const supportsFeatureFromAttributes = (
+	attributes: {
+		[key: string]: any;
+	},
+	feature: number
+): boolean => (attributes.supported_features! & feature) !== 0;

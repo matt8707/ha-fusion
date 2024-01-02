@@ -191,6 +191,11 @@
 
 					break;
 				}
+				case 'cover':
+					openModal(() => import('$lib/Modal/CoverModal.svelte'), {
+						selected: sel
+					});
+					break;
 				default:
 					openModal(() => import('$lib/Modal/Unknown.svelte'), {
 						selected: sel
