@@ -184,4 +184,5 @@ export interface WeatherItem {
 	icon_pack?: string;
 	extra_sensor?: string;
 	extra_sensor_icon?: string;
+	show_apparent?: boolean;
 }

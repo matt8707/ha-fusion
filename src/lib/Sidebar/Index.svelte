@@ -329,6 +329,7 @@
 								weather_sensor={item?.state}
 								extra_sensor={item?.extra_sensor}
 								icon_pack={item?.icon_pack}
+								show_apparent={item?.show_apparent}
 							/>
 						</button>
 					{/if}

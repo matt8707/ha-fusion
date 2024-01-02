@@ -49,6 +49,7 @@
 				weather_sensor={sel?.weather_sensor}
 				extra_sensor={sel?.extra_sensor}
 				icon_pack={sel?.icon_pack}
+				show_apparent={sel?.show_apparent}
 			/>
 		</div>
 
@@ -135,7 +136,29 @@
 				<Icon icon="vaadin:grid-small" height="none" />
 			</button>
 		</div>
+		{#if sel?.entity_id }
+			{#if $states[sel?.entity_id].attributes.apparent_temperature }
+				<h2>Apparent temperature</h2>
 
+				<div class="button-container">
+					<button
+						class:selected={!sel?.show_apparent}
+						on:click={() => set('show_apparent', false)}
+						use:Ripple={$ripple}
+					>
+						{$lang('no')}
+					</button>
+
+					<button
+						class:selected={sel?.show_apparent}
+						on:click={() => set('show_apparent', true)}
+						use:Ripple={$ripple}
+					>
+						{$lang('yes')}
+					</button>
+				</div>
+			{/if}
+		{/if}
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
