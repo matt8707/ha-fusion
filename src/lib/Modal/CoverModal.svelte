@@ -139,7 +139,6 @@
 				value={position}
 				min={0}
 				max={100}
-				reverse={true}
 				on:change={(event) => {
 					request = undefined;
 					handleChange(Math.round(event.detail));

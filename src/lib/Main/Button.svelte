@@ -192,7 +192,7 @@
 					break;
 				}
 				case 'cover':
-					openModal(() => import('$lib/Modal/Cover.svelte'), {
+					openModal(() => import('$lib/Modal/CoverModal.svelte'), {
 						selected: sel
 					});
 					break;
