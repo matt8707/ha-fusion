@@ -74,33 +74,59 @@
 
 	/**
 	 * Toggles the state of the specified entity
-	 * using the `homeassistant.toggle` service
+	 * using the correct service call...
 	 */
 	function toggle() {
-		const domain = getDomain(sel?.entity_id);
+		const domain = getDomain(entity_id);
+		const state = entity?.state;
+		if (!domain || !state) return;
 
-		if (domain === 'timer') {
-			const service = entity?.state === 'active' ? 'pause' : 'start';
-			callService($connection, 'timer', service, {
-				entity_id: entity?.entity_id
-			});
-		} else if (domain === 'person') {
-			console.debug('shortcut to ping iphone?');
-			return;
-		} else {
-			callService($connection, 'homeassistant', 'toggle', {
-				entity_id: entity?.entity_id
-			});
+		const services: Record<string, string> = {
+			automation: 'toggle',
+			button: 'press',
+			cover: 'toggle',
+			fan: 'toggle',
+			humidifier: 'toggle',
+			input_boolean: 'toggle',
+			input_button: 'press',
+			light: 'toggle',
+			lock: state === 'locked' ? 'unlock' : 'lock',
+			media_player: 'toggle',
+			scene: 'turn_on',
+			script: 'toggle',
+			siren: 'toggle',
+			switch: 'toggle',
+			timer: state === 'active' ? 'pause' : 'start',
+			vacuum: 'toggle'
+		};
+
+		switch (domain) {
+			case 'person':
+				console.debug('ping phone?');
+				break;
+
+			case 'remote':
+				callService($connection, 'homeassistant', 'toggle', { entity_id });
+				break;
+
+			default:
+				if (domain in services) {
+					callService($connection, domain, services[domain], { entity_id });
+
+					// loader
+					delayLoading = setTimeout(() => {
+						loading = true;
+					}, $motion);
+
+					// loader 20s fallback
+					resetLoading = setTimeout(() => {
+						loading = false;
+					}, 20_000);
+				} else {
+					// not listed above just open modal
+					handleClickEvent();
+				}
 		}
-
-		delayLoading = setTimeout(() => {
-			loading = true;
-		}, $motion);
-
-		// remove loader after 20s if state never changes (fallback)
-		resetLoading = setTimeout(() => {
-			loading = false;
-		}, 20_000);
 	}
 
 	/**
@@ -134,24 +160,64 @@
 			});
 		} else {
 			switch (getDomain(sel?.entity_id)) {
+				// light
 				case 'light':
 					openModal(() => import('$lib/Modal/LightModal.svelte'), {
 						sel: sel
 					});
 					break;
+
+				// switch
+				case 'automation':
+				case 'input_boolean':
+				case 'remote':
+				case 'siren':
 				case 'switch':
-					openModal(() => import('$lib/Modal/SwitchModal.svelte'), {
-						selected: sel
+				case 'script':
+					openModal(() => import('$lib/Modal/SwitchModal.svelte'), { sel });
+					break;
+
+				// sensor
+				case 'air_quality':
+				case 'calendar':
+				case 'event':
+				case 'image_processing':
+				case 'mailbox':
+				case 'sensor':
+				case 'binary_sensor':
+				case 'stt':
+				case 'update':
+				case 'weather':
+				case 'button':
+				case 'scene':
+				case 'schedule':
+				case 'sun':
+				case 'input_button':
+					openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
+					break;
+
+				case 'timer':
+					openModal(() => import('$lib/Modal/TimerModal.svelte'), {
+						entity_id
 					});
 					break;
-				case 'timer':
-					openModal(() => import('$lib/Modal/TimerModal.svelte'), { entity_id });
+
+				case 'alarm_control_panel':
+					openModal(() => import('$lib/Modal/AlarmControlPanelModal.svelte'), {
+						sel
+					});
 					break;
+
+				case 'lock':
+					openModal(() => import('$lib/Modal/LockModal.svelte'), { sel });
+					break;
+
 				case 'climate':
 					openModal(() => import('$lib/Modal/ClimateModal.svelte'), {
 						selected: sel
 					});
 					break;
+
 				case 'camera':
 					openModal(() => import('$lib/Modal/CameraModal.svelte'), {
 						entity_id: sel?.entity_id

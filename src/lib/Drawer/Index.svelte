@@ -1,20 +1,22 @@
 <script lang="ts">
 	import { dashboard, editMode, history, historyIndex, motion } from '$lib/Stores';
+	import Separator from '$lib/Drawer/Separator.svelte';
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import '$lib/Drawer/Drawer.css';
+	import type { Configuration, Dashboard, Translations, ViewItem } from '$lib/Types';
 
-	import Separator from '$lib/Drawer/Separator.svelte';
-
-	export let view: any;
-	export let data: any;
+	export let data: {
+		configuration: Configuration;
+		dashboard: Dashboard;
+		theme: any;
+		translations: Translations;
+	};
+	export let view: ViewItem | undefined;
 	export let toggleDrawer: () => void;
 
-	/**
-	 * BETA: Only display SayButton in Chrome
-	 */
+	/** Only display SayButton in Chrome */
 	let chrome: boolean;
-
 	onMount(() => {
 		chrome = navigator?.userAgent?.indexOf('Chrome') > -1;
 	});
@@ -75,9 +77,7 @@
 				<svelte:component this={SaveButton.default} {modified} />
 			{/await}
 		</div>
-	{/if}
-
-	{#if !$editMode}
+	{:else}
 		{#await import('$lib/Drawer/CodeButton.svelte') then CodeButton}
 			<svelte:component this={CodeButton.default} />
 		{/await}

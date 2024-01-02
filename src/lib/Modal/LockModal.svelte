@@ -10,15 +10,13 @@
 	export let sel: any;
 
 	$: entity = $states[sel?.entity_id];
-	$: toggle = entity?.state === 'on';
+	$: entity_id = entity?.entity_id;
+	$: state = entity?.state;
+	$: toggle = entity?.state === 'unlocked';
 
-	/**
-	 * Calls switch.toggle service
-	 */
 	function handleClick() {
-		callService($connection, 'homeassistant', 'toggle', {
-			entity_id: entity?.entity_id
-		});
+		const service = state === 'locked' ? 'unlock' : 'lock';
+		callService($connection, 'lock', service, { entity_id });
 	}
 </script>
 
