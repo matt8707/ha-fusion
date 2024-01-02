@@ -7,6 +7,7 @@
 	export let value: number;
 	export let min: number;
 	export let max: number;
+	export let reverse = false;
 
 	const dispatch = createEventDispatcher();
 
@@ -19,6 +20,7 @@
 	});
 
 	$: fill.set(normalized);
+	$: rangeWidth = reverse ? 100 - $fill * 100 : $fill * 100;
 
 	/**
 	 * Dispatches value on input end
@@ -30,10 +32,11 @@
 </script>
 
 <div>
-	<span style:width="{$fill * 100}%" />
+	<span style:width="{rangeWidth}%" />
 	<input
 		name="slider"
 		type="range"
+		style:direction={reverse ? 'rtl' : 'ltr'}
 		{min}
 		{max}
 		bind:value
