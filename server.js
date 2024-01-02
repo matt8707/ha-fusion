@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = 5050;
+const PORT = process.env.PORT || 5050;
 
 // production proxy
 if (process.env.HASS_URL) {
