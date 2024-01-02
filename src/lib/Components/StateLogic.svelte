@@ -60,11 +60,23 @@
 
 	<!-- State  -->
 {:else if state}
-	{@html $lang(state) || state}
-
-	<!-- Unit -->
-	{#if attributes?.unit_of_measurement}
-		{attributes.unit_of_measurement}
+		{#if selected?.marquee && contentWidth && contentWidth > 153 && !$editMode}
+		{#await import('$lib/Components/Marquee.svelte') then Marquee}
+			<svelte:component this={Marquee.default}>
+				{@html $lang(state) || state}
+				<!-- Unit -->
+				{#if attributes?.unit_of_measurement}
+					{attributes.unit_of_measurement}
+				{/if}
+				{@html '&nbsp;'.repeat(4)}
+			</svelte:component>
+		{/await}
+	{:else}
+		{@html $lang(state) || state}
+		<!-- Unit -->
+		{#if attributes?.unit_of_measurement}
+			{attributes.unit_of_measurement}
+		{/if}
 	{/if}
 {:else}
 	{$lang('unknown')}
