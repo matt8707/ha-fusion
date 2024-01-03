@@ -196,9 +196,11 @@
 			/>
 		</InputClear>
 
-		<h2>{$lang('show_details_on_interaction')}</h2>
-		<div style:margin-top="1.3rem">
-			<Toggle bind:checked={canOpen} />
+		<div class="interaction_container">
+			<h2>{$lang('show_details_on_interaction')}</h2>
+			<div style:margin-top="1.3rem">
+				<Toggle bind:checked={canOpen} />
+			</div>
 		</div>
 
 		{#if getDomain(entity_id) === 'media_player'}
@@ -226,3 +228,11 @@
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
+
+<style>
+	.interaction_container {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+	}
+</style>
