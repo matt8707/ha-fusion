@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { editMode, motion, record, dragging, itemHeight } from '$lib/Stores';
+	import { editMode, motion, record, dragging, itemHeight, itemWidth, itemGap } from '$lib/Stores';
 	import { tick } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import Content from '$lib/Main/Content.svelte';
 	import SectionHeader from '$lib/Main/SectionHeader.svelte';
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
+	import type { ButtonItem } from '$lib/Types';
 
 	export let view: any;
 
@@ -129,18 +130,36 @@
 			min-height: ${itemHeight}px;
 			background-color: ${empty ? 'rgba(255, 190, 10, 0.25)' : 'transparent'};
 			outline: ${empty ? '2px dashed #ffc107' : 'none'};
+			grid-template-columns: repeat(auto-fill, ${$itemWidth}rem);
+			gap: ${$itemGap}rem;
 			transition: ${
 				editMode ? `background-color ${motion / 2}ms ease, min-height ${motion}ms ease` : 'none'
 			};
     `;
 	}
 
-	function itemStyles(type: string) {
-		return `
-			grid-column: ${type === 'media' || type === 'camera' ? 'span 2' : 'span 1'};
-			grid-row: ${type === 'media' || type === 'camera' ? 'span 4' : 'span 1'};
-			display: ${type ? '' : 'none'};
-    `;
+	function itemStyles(item: ButtonItem) {
+		let columnSpan = 3;
+		let rowSpan = 1;
+
+		if (item.size === 'widget') {
+			columnSpan = 2;
+			rowSpan = 2;
+		}
+
+		// Hardcode size for these types, then remove, everything should be driven by size config in the item
+		if (item.type === 'camera' || item.type === 'media') {
+			columnSpan = 4;
+			rowSpan = 4;
+		}
+
+		const styles = `
+			grid-column: span ${columnSpan};
+			grid-row: span ${rowSpan};
+			display: ${item.type ? '' : 'none'};
+		`;
+
+		return styles;
 	}
 </script>
 
@@ -198,7 +217,7 @@
 										class="item"
 										animate:flip={{ duration: $motion }}
 										tabindex="-1"
-										style={itemStyles(item?.type)}
+										style={itemStyles(item)}
 									>
 										<Content {item} />
 									</div>
@@ -265,9 +284,7 @@
 		border-radius: 0.6rem;
 		outline-offset: -2px;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, 14.5rem);
 		grid-auto-rows: min-content;
-		gap: 0.4rem;
 		border-radius: 0.6rem;
 		height: 100%;
 	}

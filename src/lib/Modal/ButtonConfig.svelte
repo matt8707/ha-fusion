@@ -24,6 +24,10 @@
 		set('entity_id', demo);
 	}
 
+	const sizes = [
+		{ id: 'compact', label: 'Compact' },
+		{ id: 'widget', label: 'Widget' }
+	];
 	let name = sel?.name;
 
 	// untested
@@ -31,6 +35,7 @@
 	// (maybe make reactive)
 
 	$: entity_id = sel?.entity_id;
+	$: size = sel?.size || 'compact';
 	$: canOpen, set('can_open_details', canOpen);
 
 	if (canOpen === undefined) {
@@ -134,6 +139,16 @@
 				style:padding
 			/>
 		</InputClear>
+
+		<h2>Size</h2>
+		<div class="icon-gallery-container">
+			<Select
+				options={sizes}
+				placeholder="Size"
+				value={size}
+				on:change={(event) => set('size', event)}
+			/>
+		</div>
 
 		<h2>
 			{$lang('icon')}

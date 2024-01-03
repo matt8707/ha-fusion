@@ -7,7 +7,9 @@
 		motion,
 		ripple,
 		lang,
-		itemHeight
+		itemHeight,
+		itemWidth,
+		itemGap
 	} from '$lib/Stores';
 	import { callService, type HassEntity } from 'home-assistant-js-websocket';
 	import { openModal } from 'svelte-modals';
@@ -16,9 +18,10 @@
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 	import Icon from '@iconify/svelte';
 	import { getDomain, getName } from '$lib/Utils';
+	import type { ButtonItem } from '$lib/Types';
 
 	export let demo: string | undefined = undefined;
-	export let sel: any;
+	export let sel: ButtonItem;
 
 	$: entity_id = demo || sel?.entity_id;
 	$: name = sel?.name;
@@ -232,7 +235,7 @@
 					});
 					break;
 				case 'device_tracker': {
-					const entity = $states?.[sel?.entity_id];
+					const entity = $states?.[sel?.entity_id!];
 					const attributes = entity?.attributes;
 					const entity_picture = attributes?.entity_picture;
 
@@ -244,7 +247,7 @@
 					break;
 				}
 				case 'person': {
-					const device_trackers = $states?.[sel?.entity_id]?.attributes?.device_trackers || [];
+					const device_trackers = $states?.[sel?.entity_id!]?.attributes?.device_trackers || [];
 					const gpsEntities = Object.values($states).filter(
 						(states) =>
 							device_trackers.includes(states.entity_id) && states.attributes?.source_type === 'gps'
@@ -255,7 +258,7 @@
 
 					openModal(async () => import('$lib/Modal/MapModal.svelte'), {
 						entity_id,
-						entity_picture: $states?.[sel?.entity_id]?.attributes?.entity_picture
+						entity_picture: $states?.[sel?.entity_id!]?.attributes?.entity_picture
 					});
 
 					break;
@@ -306,6 +309,35 @@
 		}
 		if (module) module.default;
 	}
+
+	function getItemHeight() {
+		switch (sel.size) {
+			case 'compact':
+				return `${itemHeight}px`;
+			case 'widget':
+				return `calc(${$itemHeight}px * 2 + ${$itemGap}rem)`;
+			default:
+				return `${itemHeight}px`;
+		}
+	}
+
+	function getItemStyles() {
+		return `
+			cursor: ${$editMode ? 'pointer' : ''};
+			height: ${getItemHeight()};
+			grid-template-areas: 
+				${
+					sel.size === 'widget'
+						? `
+							'icon  circle'
+							'right right'
+						`
+						: `
+							'left right'
+						`
+				};
+		`;
+	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -316,8 +348,7 @@
 	bind:this={container}
 	data-state={stateOn}
 	tabindex="-1"
-	style={!$editMode ? 'cursor: pointer;' : ''}
-	style:height="{$itemHeight}px"
+	style={getItemStyles()}
 	on:pointerenter={handlePointer}
 	on:pointerdown={handlePointer}
 	use:Ripple={{
@@ -391,13 +422,11 @@
 	.container {
 		background-color: var(--theme-button-background-color-off);
 		font-family: inherit;
-		width: 14.5rem;
 		display: grid;
 		border-radius: 0.65rem;
 		margin: 0;
 		grid-template-columns: min-content auto;
 		grid-auto-flow: row;
-		grid-template-areas: 'left right';
 		--container-padding: 0.8rem;
 
 		/* fix ripple */
@@ -421,6 +450,8 @@
 		overflow: hidden;
 		gap: 1px;
 		margin-top: -1px;
+		grid-area: right;
+		padding: var(--container-padding);
 	}
 
 	.icon {
@@ -436,7 +467,6 @@
 	}
 
 	.name {
-		grid-area: name;
 		font-weight: 500;
 		color: inherit;
 		white-space: nowrap;
@@ -447,7 +477,6 @@
 	}
 
 	.state {
-		grid-area: state;
 		font-weight: 400;
 		white-space: nowrap;
 		overflow: hidden;

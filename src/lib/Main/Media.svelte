@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, itemHeight, lang, configuration } from '$lib/Stores';
+	import { states, itemHeight, lang, configuration, itemGap, itemWidth } from '$lib/Stores';
 	import Icon from '@iconify/svelte';
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 	import { getName } from '$lib/Utils';
@@ -84,7 +84,8 @@
 <div
 	class="media-container"
 	style:background-image={backgroundImage}
-	style:height="calc({$itemHeight}px * 4 + 0.4rem * 3)"
+	style:height={`calc(${$itemHeight}px * 4 + ${$itemGap}rem * 3)`}
+	style:width={`calc(${$itemWidth}rem * 4 + ${$itemGap}rem * 3)`}
 >
 	{#if entity?.attributes?.app_id === 'com.google.ios.youtube' && backgroundImage === 'none'}
 		<div class="youtube-icon">
@@ -233,7 +234,6 @@
 		--container-padding: 0.8rem;
 		position: relative;
 		color: white;
-		width: calc(14.5rem * 2 + 0.4rem);
 		border-radius: 0.65rem;
 		background-color: var(--theme-button-background-color-off);
 		background-size: cover;

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, lang, itemHeight, editMode } from '$lib/Stores';
+	import { states, lang, itemHeight, editMode, itemWidth, itemGap } from '$lib/Stores';
 	import { openModal } from 'svelte-modals';
 
 	export let sel: any;
@@ -48,7 +48,8 @@
 	bind:offsetWidth
 	bind:offsetHeight
 	style:aspect-ratio="{width} / {height}"
-	style:height={`calc(${$itemHeight}px * 4 + 0.4rem * 3)`}
+	style:height={`calc(${$itemHeight}px * 4 + ${$itemGap}rem * 3)`}
+	style:width={`calc(${$itemWidth}rem * 4 + ${$itemGap}rem * 3)`}
 	style:background-image={url ? `url(${url})` : 'none'}
 	style:background-size="{offsetHeight * (width / height)}px {offsetHeight}px"
 	style:cursor={!$editMode ? 'pointer' : 'unset'}
@@ -71,7 +72,6 @@
 		background-color: rgba(0, 0, 0, 0.2);
 		border-radius: 0.6rem;
 		overflow: hidden;
-		width: calc(14.5rem * 2 + 0.4rem);
 		background-repeat: no-repeat;
 	}
 

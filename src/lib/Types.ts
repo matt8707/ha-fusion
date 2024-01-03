@@ -61,6 +61,7 @@ export interface ButtonItem {
 	type?: string;
 	id?: number;
 	entity_id?: string;
+	size: string;
 	name?: string;
 	icon?: string;
 	color?: string;

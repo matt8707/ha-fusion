@@ -41,6 +41,8 @@ export const editMode = writable(false);
 export const showDrawer = writable(false);
 export const motion = writable(190);
 export const itemHeight = readable(65);
+export const itemWidth = readable(4.5);
+export const itemGap = readable(0.5);
 
 // language
 export const translation = writable<Translations>({});
