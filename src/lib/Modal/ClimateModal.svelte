@@ -48,7 +48,7 @@
 						on:click={() => handleClick('hvac_mode', hvacMode)}
 						class:selected={hvacMode === entity?.state}
 					>
-						<div class="icon-test">
+						<div class="icon">
 							<Icon icon={hvacModesIcons?.[hvacMode]} height="none" />
 						</div>
 					</button>
@@ -102,7 +102,7 @@
 {/if}
 
 <style>
-	.icon-test {
+	.icon {
 		height: 1.25rem;
 		width: 1.25rem;
 		margin-right: 0.25rem;

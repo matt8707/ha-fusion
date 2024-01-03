@@ -22,6 +22,8 @@ export const onStates = readable([
 	'home',
 	'open',
 	'cool',
+	'heat',
+	'dry',
 	'fan_only',
 	'playing',
 	'unlocked'

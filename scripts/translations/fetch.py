@@ -188,6 +188,10 @@ dir_keys = [
             ("low", ["entity_component", "_", "state_attributes", "fan_mode", "state", "low"]),
             ("medium", ["entity_component", "_", "state_attributes", "fan_mode", "state", "medium"]),
             ("high", ["entity_component", "_", "state_attributes", "fan_mode", "state", "high"]),
+            ("heating", ["entity_component", "_", "state_attributes", "hvac_action", "state", "heating"]),
+            ("cooling", ["entity_component", "_", "state_attributes", "hvac_action", "state", "cooling"]),
+            ("fan", ["entity_component", "_", "state_attributes", "hvac_action", "state", "fan"]),
+            ("drying", ["entity_component", "_", "state_attributes", "hvac_action", "state", "drying"]),
         ],
     ),
     (  # DEVICE_TRACKER
