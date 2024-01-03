@@ -68,6 +68,7 @@
 	"graph": "Kaavio",
 	"group": "Ryhm\u00e4",
 	"ha_url": "Home Assistant URL",
+	"heating": "L\u00e4mmitys",
 	"hidden": "Piilotettu",
 	"hide": "Piilota",
 	"history": "Historia",
