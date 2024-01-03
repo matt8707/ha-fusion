@@ -7,11 +7,14 @@
 	import Icon from '@iconify/svelte';
 	import Ripple from 'svelte-ripple';
 	import InputClear from '$lib/Components/InputClear.svelte';
+	import Toggle from '$lib/Components/Toggle.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import { updateObj, getDomain, getName } from '$lib/Utils';
 	import type { ButtonItem } from '$lib/Types';
 
 	export let isOpen: boolean;
+	export let canOpen: boolean;
+
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
 
@@ -28,6 +31,11 @@
 	// (maybe make reactive)
 
 	$: entity_id = sel?.entity_id;
+	$: canOpen, set('can_open_details', canOpen);
+
+	if (canOpen === undefined) {
+		canOpen = true;
+	}
 
 	let icon: string | undefined = sel?.icon;
 
@@ -188,6 +196,13 @@
 			/>
 		</InputClear>
 
+		<div class="interaction_container">
+			<h2>{$lang('show_details_on_interaction')}</h2>
+			<div style:margin-top="1.3rem">
+				<Toggle bind:checked={canOpen} />
+			</div>
+		</div>
+
 		{#if getDomain(entity_id) === 'media_player'}
 			<h2>Marquee</h2>
 
@@ -213,3 +228,11 @@
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
+
+<style>
+	.interaction_container {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+	}
+</style>
