@@ -8,4 +8,11 @@
 		border-left: 1px solid rgba(0, 0, 0, 0.1);
 		margin: 0 0.4rem;
 	}
+
+	/* Phone */
+	@media all and (max-width: 480px) {
+		hr {
+			display: none;
+		}
+	}
 </style>
