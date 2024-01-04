@@ -136,8 +136,8 @@
 				<Icon icon="vaadin:grid-small" height="none" />
 			</button>
 		</div>
-		{#if sel?.entity_id }
-			{#if $states[sel?.entity_id].attributes.apparent_temperature }
+		{#if sel?.entity_id}
+			{#if $states[sel?.entity_id].attributes.apparent_temperature}
 				<h2>Apparent temperature</h2>
 
 				<div class="button-container">

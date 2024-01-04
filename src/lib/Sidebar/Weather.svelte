@@ -68,7 +68,9 @@
 		{#if attributes?.temperature}
 			{#if show_apparent}
 				<div class="temp">
-					{Math.round(attributes?.temperature)}{#if attributes.apparent_temperature}({Math.round(attributes?.apparent_temperature)}){/if}{attributes?.temperature_unit || '°'}
+					{Math.round(attributes?.temperature)}{#if attributes.apparent_temperature}({Math.round(
+							attributes?.apparent_temperature
+						)}){/if}{attributes?.temperature_unit || '°'}
 				</div>
 			{:else}
 				<div class="temp">
