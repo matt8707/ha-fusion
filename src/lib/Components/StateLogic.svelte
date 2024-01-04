@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { states, lang, selectedLanguage, editMode } from '$lib/Stores';
+	import { editMode, lang, selectedLanguage, states } from '$lib/Stores';
+	import { getDomain, isTimestamp, relativeTime } from '$lib/Utils';
 	import type { HassEntity } from 'home-assistant-js-websocket';
-	import { isTimestamp, relativeTime } from '$lib/Utils';
-	import { getDomain } from '$lib/Utils';
 
 	export let selected: any;
 	export let contentWidth: number | undefined = undefined;
@@ -16,6 +15,7 @@
 	$: attributes = entity?.attributes;
 	$: state = entity?.state;
 	$: brightness = attributes?.brightness;
+	$: percentage = attributes?.percentage;
 	$: media_title = attributes?.media_title;
 </script>
 
@@ -71,6 +71,10 @@
 	<!-- Timestamp  -->
 {:else if state && isTimestamp(state)}
 	{relativeTime(state, $selectedLanguage)}
+
+	<!-- Percentage  -->
+{:else if state === 'on' && percentage}
+	{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(percentage * 0.01)}
 
 	<!-- State  -->
 {:else if state}
