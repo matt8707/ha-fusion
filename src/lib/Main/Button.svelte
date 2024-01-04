@@ -1,21 +1,21 @@
 <script lang="ts">
+	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
+	import StateLogic from '$lib/Components/StateLogic.svelte';
 	import {
-		states,
-		editMode,
 		connection,
-		onStates,
-		motion,
-		ripple,
+		editMode,
+		itemHeight,
 		lang,
-		itemHeight
+		motion,
+		onStates,
+		ripple,
+		states
 	} from '$lib/Stores';
+	import { getDomain, getName } from '$lib/Utils';
+	import Icon from '@iconify/svelte';
 	import { callService, type HassEntity } from 'home-assistant-js-websocket';
 	import { openModal } from 'svelte-modals';
 	import Ripple from 'svelte-ripple';
-	import StateLogic from '$lib/Components/StateLogic.svelte';
-	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
-	import Icon from '@iconify/svelte';
-	import { getDomain, getName } from '$lib/Utils';
 
 	export let demo: string | undefined = undefined;
 	export let sel: any;
@@ -272,6 +272,11 @@
 				}
 				case 'cover':
 					openModal(() => import('$lib/Modal/CoverModal.svelte'), {
+						selected: sel
+					});
+					break;
+				case 'fan':
+					openModal(() => import('$lib/Modal/FanModal.svelte'), {
 						selected: sel
 					});
 					break;
