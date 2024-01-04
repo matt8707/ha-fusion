@@ -141,14 +141,14 @@
 				<Icon icon="vaadin:grid-small" height="none" />
 			</button>
 		</div>
-		{#if sel?.entity_id }
-			{#if $states[sel?.entity_id].attributes.apparent_temperature }
+		{#if sel?.entity_id}
+			{#if $states[sel?.entity_id].attributes.apparent_temperature}
 				<div class="apparent_temperature_container">
-				<h2>{$lang('show_apparent_temperature')}</h2>
-				<div style:margin-top="1.3rem">
-					<Toggle bind:checked={showApparent} />
+					<h2>{$lang('show_apparent_temperature')}</h2>
+					<div style:margin-top="1.3rem">
+						<Toggle bind:checked={showApparent} />
+					</div>
 				</div>
-			</div>
 			{/if}
 		{/if}
 		<ConfigButtons {sel} />

@@ -131,7 +131,7 @@ export function relativeTime(timestamp: string, languageCode: string | undefined
  * Determines if a feature is supported
  * from a list of entity attributes
  */
-export const supportsFeatureFromAttributes = (
+export const getSupport = (
 	attributes: {
 		[key: string]: any;
 	},

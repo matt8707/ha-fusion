@@ -6,6 +6,7 @@
 	import { getName } from '$lib/Utils';
 
 	export let entity_id: string | undefined;
+	export let name: string | undefined = undefined;
 	export let period = 'day';
 	export let stroke = 2;
 
@@ -88,7 +89,7 @@
 	$: if (entity) {
 		unit_of_measurement = entity?.attributes?.unit_of_measurement || '';
 
-		friendlyName = getName(undefined, entity);
+		friendlyName = getName({ name }, entity);
 
 		state = entity?.state;
 

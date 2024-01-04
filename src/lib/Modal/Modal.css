@@ -31,7 +31,7 @@
 #modal .button-container button {
 	background-color: rgba(0, 0, 0, 0.2);
 	color: white;
-	width: 50%;
+	width: auto;
 	border: none;
 	cursor: pointer;
 	transition: background-color 200ms ease;
@@ -43,6 +43,7 @@
 	text-overflow: ellipsis;
 	padding: 0 1rem;
 	text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+	flex: 1 1 auto;
 }
 
 #modal .button-container button:first-child {

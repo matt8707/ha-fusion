@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { dashboard, connection, lang, history, historyIndex, record } from '$lib/Stores';
+	import { dashboard, states, connection, lang, history, historyIndex, record } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Graph from '$lib/Sidebar/Graph.svelte';
 	import Select from '$lib/Components/Select.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
+	import InputClear from '$lib/Components/InputClear.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
-	import { updateObj } from '$lib/Utils';
+	import { updateObj, getName } from '$lib/Utils';
 	import type { GraphItem } from '$lib/Types';
 
 	export let isOpen: boolean;
@@ -18,6 +19,8 @@
 		$history.splice($historyIndex, 1);
 		set('entity_id', demo);
 	}
+
+	let name = sel?.name;
 
 	let options: { id: string; label: string }[];
 	let stroke = sel?.stroke;
@@ -91,7 +94,12 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<Graph entity_id={sel?.entity_id} period={sel?.period} stroke={minMax(stroke)} />
+			<Graph
+				entity_id={sel?.entity_id}
+				name={sel?.name}
+				period={sel?.period}
+				stroke={minMax(stroke)}
+			/>
 		</div>
 
 		<h2>{$lang('entity')}</h2>
@@ -105,6 +113,30 @@
 				on:change={(event) => set('entity_id', event)}
 			/>
 		{/if}
+
+		<h2>{$lang('name')}</h2>
+
+		<InputClear
+			condition={name}
+			on:clear={() => {
+				name = undefined;
+				set('name');
+			}}
+			let:padding
+		>
+			<input
+				name={$lang('name')}
+				class="input"
+				type="text"
+				placeholder={getName(sel, (sel.entity_id && $states[sel.entity_id]) || undefined) ||
+					$lang('name')}
+				autocomplete="off"
+				spellcheck="false"
+				bind:value={name}
+				on:change={(event) => set('name', event)}
+				style:padding
+			/>
+		</InputClear>
 
 		<h2>{$lang('period')} (data_points)</h2>
 

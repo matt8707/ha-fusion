@@ -65,6 +65,7 @@ export interface ButtonItem {
 	icon?: string;
 	color?: string;
 	marquee?: boolean;
+	can_open_details?: boolean;
 }
 
 export type SidebarItem = BarItem &
@@ -106,6 +107,7 @@ export interface DateItem {
 }
 
 export interface GraphItem {
+	name?: string;
 	type?: string;
 	id?: number;
 	entity_id?: string;

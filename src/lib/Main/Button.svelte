@@ -25,6 +25,7 @@
 	$: icon = sel?.icon;
 	$: color = sel?.color;
 	$: marquee = sel?.marquee;
+	$: can_open_details = sel?.can_open_details;
 
 	let entity: HassEntity;
 	let contentWidth: number;
@@ -158,6 +159,8 @@
 				demo: entity_id,
 				sel
 			});
+		} else if (can_open_details === false) {
+			toggle();
 		} else {
 			switch (getDomain(sel?.entity_id)) {
 				// light
@@ -194,6 +197,11 @@
 				case 'sun':
 				case 'input_button':
 					openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
+					break;
+
+				case 'input_select':
+				case 'select':
+					openModal(() => import('$lib/Modal/InputSelectModal.svelte'), { sel });
 					break;
 
 				case 'timer':
