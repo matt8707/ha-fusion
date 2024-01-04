@@ -239,4 +239,11 @@
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
+
+	/* Phone and Tablet (portrait) */
+	@media all and (max-width: 768px) {
+		.media-container {
+			width: calc(100vw - 2rem);
+		}
+	}
 </style>

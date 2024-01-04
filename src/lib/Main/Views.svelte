@@ -89,7 +89,10 @@
 				<EyeIndicator />
 			{/if}
 
-			<div class="navigation-container">
+			<div
+				class="navigation-container"
+				style:width="calc(100vw - ({$dashboard?.sidebarWidth}px + 120px))"
+			>
 				<div class="fadecont" transition:fade={{ duration: $motion / 2 }}>
 					<div class="top-bar">
 						<div
@@ -220,5 +223,16 @@
 		bottom: 0rem;
 		height: 3px;
 		background: white;
+	}
+
+	/* Phone and Tablet (portrait) */
+	@media all and (max-width: 768px) {
+		nav {
+			padding: 0 1rem;
+		}
+
+		.navigation-container {
+			width: calc(100vw - 160px) !important;
+		}
 	}
 </style>
