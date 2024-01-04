@@ -7,12 +7,14 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import Icon from '@iconify/svelte';
 	import InputClear from '$lib/Components/InputClear.svelte';
+	import Toggle from '$lib/Components/Toggle.svelte';
 	import Ripple from 'svelte-ripple';
 	import { updateObj } from '$lib/Utils';
 	import type { WeatherItem } from '$lib/Types';
 
 	export let isOpen: boolean;
 	export let sel: WeatherItem;
+	export let showApparent: boolean | undefined = undefined;
 
 	// init icon
 	let extra_sensor_icon: string | undefined = sel?.extra_sensor_icon;
@@ -28,6 +30,9 @@
 		.filter((key) => key.startsWith('sensor.'))
 		.sort()
 		.map((key) => ({ id: key, label: key }));
+
+	$: showApparent, set('show_apparent', showApparent);
+	showApparent = sel?.show_apparent;
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);
@@ -138,27 +143,22 @@
 		</div>
 		{#if sel?.entity_id }
 			{#if $states[sel?.entity_id].attributes.apparent_temperature }
-				<h2>Apparent temperature</h2>
-
-				<div class="button-container">
-					<button
-						class:selected={!sel?.show_apparent}
-						on:click={() => set('show_apparent', false)}
-						use:Ripple={$ripple}
-					>
-						{$lang('no')}
-					</button>
-
-					<button
-						class:selected={sel?.show_apparent}
-						on:click={() => set('show_apparent', true)}
-						use:Ripple={$ripple}
-					>
-						{$lang('yes')}
-					</button>
+				<div class="apparent_temperature_container">
+				<h2>{$lang('show_apparent_temperature')}</h2>
+				<div style:margin-top="1.3rem">
+					<Toggle bind:checked={showApparent} />
 				</div>
+			</div>
 			{/if}
 		{/if}
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
+
+<style>
+	.apparent_temperature_container {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
+	}
+</style>
