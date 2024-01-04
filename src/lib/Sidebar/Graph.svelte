@@ -4,7 +4,6 @@
 	import { line, area, curveBasis } from 'd3-shape';
 	import { extent, bisector } from 'd3-array';
 	import { getName } from '$lib/Utils';
-	import type { HassEntity } from 'home-assistant-js-websocket';
 
 	export let entity_id: string | undefined;
 	export let name: string | undefined = undefined;

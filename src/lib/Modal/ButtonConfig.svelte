@@ -13,7 +13,7 @@
 	import type { ButtonItem } from '$lib/Types';
 
 	export let isOpen: boolean;
-	export let canOpen: boolean;
+	export let canOpen: boolean | undefined = undefined;
 
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
