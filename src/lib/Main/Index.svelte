@@ -240,7 +240,7 @@
 <style>
 	main {
 		grid-area: main;
-		padding: 0 2rem 2rem 2rem;
+		padding: 0 2rem 2rem;
 		display: grid;
 		gap: 1.5rem;
 		outline: transparent;
@@ -275,5 +275,19 @@
 	.item {
 		position: relative;
 		border-radius: 0.65rem;
+	}
+
+	/* Phone and Tablet (portrait) */
+	@media all and (max-width: 768px) {
+		main {
+			padding: 0 1rem 1rem 1rem;
+		}
+		.horizontal-stack {
+			grid-auto-flow: row;
+		}
+		.items {
+			display: flex;
+			flex-wrap: wrap;
+		}
 	}
 </style>
