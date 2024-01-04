@@ -4,8 +4,10 @@
 	import { line, area, curveBasis } from 'd3-shape';
 	import { extent, bisector } from 'd3-array';
 	import { getName } from '$lib/Utils';
+	import type { HassEntity } from 'home-assistant-js-websocket';
 
 	export let entity_id: string | undefined;
+	export let name: string | undefined = undefined;
 	export let period = 'day';
 	export let stroke = 2;
 
@@ -88,7 +90,7 @@
 	$: if (entity) {
 		unit_of_measurement = entity?.attributes?.unit_of_measurement || '';
 
-		friendlyName = getName(undefined, entity);
+		friendlyName = getName({ name }, entity);
 
 		state = entity?.state;
 

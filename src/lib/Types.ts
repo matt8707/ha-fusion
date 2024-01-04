@@ -107,6 +107,7 @@ export interface DateItem {
 }
 
 export interface GraphItem {
+	name?: string;
 	type?: string;
 	id?: number;
 	entity_id?: string;

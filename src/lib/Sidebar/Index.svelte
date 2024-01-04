@@ -240,6 +240,7 @@
 							<svelte:component
 								this={Graph.default}
 								entity_id={item?.entity_id}
+								name={item?.name}
 								period={item?.period}
 								stroke={item?.stroke}
 							/>
