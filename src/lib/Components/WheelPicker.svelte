@@ -34,8 +34,17 @@
 	$: min = value === temperatures.length - 1;
 	$: max = value === 0;
 
-	$: dispatch('change', temperatures[value]);
+	$: if (mountFix()) {
+		dispatch('change', temperatures[value]);
+	}
 
+	// don't set temperature on mount
+	// rewrite component later...
+	function mountFix() {
+		if (isMounted === true) return true;
+	}
+
+	let isMounted = false;
 	onMount(async () => {
 		touch = 'ontouchstart' in window;
 
@@ -54,6 +63,8 @@
 				behavior: 'auto'
 			});
 		}
+
+		isMounted = true;
 	});
 
 	/**
