@@ -60,9 +60,9 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] light
   - [x] open rgb issue <https://github.com/matt8707/ha-fusion/issues/18>
 - [ ] media_player
-- [ ] input_select
-  - [ ] <https://github.com/matt8707/ha-fusion/issues/4>
-- [ ] select
+- [x] input_select
+  - [x] <https://github.com/matt8707/ha-fusion/issues/4>
+- [x] select
   - [ ] use svelecte
 - [ ] text
   - [ ] input field in modal

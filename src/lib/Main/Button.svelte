@@ -199,6 +199,11 @@
 					openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
 					break;
 
+				case 'input_select':
+				case 'select':
+					openModal(() => import('$lib/Modal/InputSelectModal.svelte'), { sel });
+					break;
+
 				case 'timer':
 					openModal(() => import('$lib/Modal/TimerModal.svelte'), {
 						entity_id
