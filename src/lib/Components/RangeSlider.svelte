@@ -7,6 +7,7 @@
 	export let value: number;
 	export let min: number;
 	export let max: number;
+	export let step: number | undefined = undefined;
 
 	const dispatch = createEventDispatcher();
 
@@ -34,6 +35,7 @@
 	<input
 		name="slider"
 		type="range"
+		{step}
 		{min}
 		{max}
 		bind:value
