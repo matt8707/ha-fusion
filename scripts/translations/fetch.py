@@ -81,6 +81,13 @@ dir_keys = [
             ("copied", ["ui.common.copied"]),
             ("object", ["ui.components.selectors.selector.types.object"]),
             ("state", ["ui.components.entity.entity-state-picker.state"]),
+            ("position", ["ui.card.cover.position"]),
+            ("open_cover", ["ui.card.cover.open_cover"]),
+            ("close_cover", ["ui.card.cover.close_cover"]),
+            ("stop_cover", ["ui.card.cover.stop_cover"]),
+            ("tilt_position", ["ui.card.cover.tilt_position"]),
+            ("open_tilt_cover", ["ui.card.cover.open_tilt_cover"]),
+            ("close_tilt_cover", ["ui.card.cover.close_tilt_cover"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -316,6 +323,7 @@ dir_keys = [
             ("alarm_modes_armed_vacation", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_vacation"]),
             ("alarm_modes_armed_custom_bypass", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_custom_bypass"]),
             ("alarm_modes_disarmed", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.disarmed"]),
+            ("buttons", ["ui.panel.lovelace.editor.card.entities.entity_row.buttons"]),
         ],
     ),
     (  # DEVELOPER-TOOLS

@@ -9,13 +9,14 @@
 	import RangeSlider from '$lib/Components/RangeSlider.svelte';
 	import Icon from '@iconify/svelte';
 	import Modal from '$lib/Modal/Index.svelte';
-	import { getName, supportsFeatureFromAttributes } from '$lib/Utils';
+	import { getName, getSupport } from '$lib/Utils';
+	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 
 	export let isOpen: boolean;
 	export let selected: any;
 
-	// Taken from https://github.com/home-assistant/frontend/blob/dev/src/data/cover.ts
-	const enum CoverEntityFeature {
+	// https://github.com/home-assistant/frontend/blob/dev/src/data/cover.ts
+	const enum Feature {
 		OPEN = 1,
 		CLOSE = 2,
 		SET_POSITION = 4,
@@ -39,42 +40,49 @@
 	let request: Promise<unknown> | undefined = undefined;
 
 	$: entity = $states[selected?.entity_id] as CoverEntity;
-	$: position = entity?.attributes?.current_position;
-	$: supportsOpen = supportsFeatureFromAttributes(entity?.attributes, CoverEntityFeature.OPEN);
-	$: supportsStop = supportsFeatureFromAttributes(entity?.attributes, CoverEntityFeature.STOP);
-	$: supportsClose = supportsFeatureFromAttributes(entity?.attributes, CoverEntityFeature.CLOSE);
-	$: supportsSetPosition = supportsFeatureFromAttributes(
-		entity?.attributes,
-		CoverEntityFeature.SET_POSITION
-	);
+	$: attributes = entity?.attributes;
+
+	// position
+	$: position = attributes?.current_position;
+	$: supportsOpen = getSupport(attributes, Feature.OPEN);
+	$: supportsStop = getSupport(attributes, Feature.STOP);
+	$: supportsClose = getSupport(attributes, Feature.CLOSE);
+	$: supportsSetPosition = getSupport(attributes, Feature.SET_POSITION);
+
+	// tilt
+	$: tiltPosition = attributes?.current_tilt_position;
+	$: supportsOpenTilt = getSupport(attributes, Feature.OPEN_TILT);
+	$: supportsCloseTilt = getSupport(attributes, Feature.CLOSE_TILT);
+	$: supportsStopTilt = getSupport(attributes, Feature.STOP_TILT);
+	$: supportsSetTiltPosition = getSupport(attributes, Feature.SET_TILT_POSITION);
+
 	$: canCoverOpen = canOpen(entity);
 	$: canCoverStop = canStop(entity);
 	$: canCoverClose = canClose(entity);
 
-	async function handleChange(position: number) {
+	async function handleChange(service: string, attribute: string, position: number) {
 		if (request) return;
 
-		request = callService($connection, 'cover', 'set_cover_position', {
+		request = callService($connection, 'cover', service, {
 			entity_id: entity?.entity_id,
-			position
+			[attribute]: position
 		});
 
 		try {
 			await request;
 		} catch (error) {
-			console.error('Failed to set cover position:', error);
+			console.error(`Failed to set cover ${attribute}:`, error);
 		} finally {
 			request = undefined;
 		}
 	}
 
-	async function handleClick(service: string) {
-		await callService($connection, 'cover', service, {
+	function handleClick(service: string) {
+		callService($connection, 'cover', service, {
 			entity_id: entity?.entity_id
 		});
 	}
 
-	// Adapted from https://github.com/home-assistant/frontend/blob/dev/src/data/cover.ts
 	function canOpen(entity: CoverEntity) {
 		if (entity.state === 'unavailable') {
 			return false;
@@ -129,61 +137,134 @@
 		<!-- POSITION -->
 		{#if supportsSetPosition && position !== undefined}
 			<h2>
-				<!-- Translated label candidate: ui.dialogs.more_info_control.cover.switch_mode.position -->
-				Position
+				{$lang('position')}
+
 				<span class="align-right">
-					{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(position / 100)}
+					{#if position === 0}
+						{$lang('closed')}
+					{:else}
+						{$lang('open')}
+						{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(position / 100)}
+					{/if}
 				</span>
 			</h2>
+
 			<RangeSlider
 				value={position}
 				min={0}
 				max={100}
 				on:change={(event) => {
 					request = undefined;
-					handleChange(Math.round(event.detail));
+					handleChange('set_cover_position', 'position', Math.round(event?.detail));
 				}}
 			/>
 		{/if}
 
-		<!-- BUTTONS -->
-		<h2>
-			<!-- Translated label candidate: ui.dialogs.more_info_control.cover.switch_mode.button -->
-			Buttons
-		</h2>
+		<!-- POSITION BUTTONS -->
+
+		{#if supportsClose || supportsStop || supportsOpen}
+			<h2>{$lang('buttons')}</h2>
+		{/if}
+
 		<div class="buttons-container">
-			<!-- Open -->
-			<button
-				on:click={() => handleClick('open_cover')}
-				use:Ripple={$ripple}
-				style:display={supportsOpen ? 'block' : 'none'}
-				disabled={!canCoverOpen}
-			>
-				<Icon icon="raphael:arrowup" height="none" />
-			</button>
+			{#if supportsClose}
+				<button
+					use:Ripple={$ripple}
+					on:click={() => handleClick('close_cover')}
+					disabled={!canCoverClose}
+					title={$lang('close_cover')}
+				>
+					<Icon icon="raphael:arrowdown" height="none" />
+				</button>
+			{/if}
 
-			<!-- Stop -->
-			<button
-				on:click={() => handleClick('stop_cover')}
-				use:Ripple={$ripple}
-				style:display={supportsStop ? 'block' : 'none'}
-				disabled={!canCoverStop}
-			>
-				<Icon icon="ic:round-stop" height="none" />
-			</button>
+			{#if supportsStop}
+				<button
+					on:click={() => handleClick('stop_cover')}
+					use:Ripple={$ripple}
+					disabled={!canCoverStop}
+					title={$lang('stop_cover')}
+				>
+					<Icon icon="ic:round-stop" height="none" />
+				</button>
+			{/if}
 
-			<!-- Close -->
-			<button
-				use:Ripple={$ripple}
-				on:click={() => {
-					handleClick('close_cover');
-				}}
-				style:display={supportsClose ? 'block' : 'none'}
-				disabled={!canCoverClose}
-			>
-				<Icon icon="raphael:arrowdown" height="none" />
-			</button>
+			{#if supportsOpen}
+				<button
+					on:click={() => handleClick('open_cover')}
+					use:Ripple={$ripple}
+					disabled={!canCoverOpen}
+					title={$lang('open_cover')}
+				>
+					<Icon icon="raphael:arrowup" height="none" />
+				</button>
+			{/if}
 		</div>
+
+		<!-- TILT POSITION -->
+		{#if supportsSetTiltPosition && tiltPosition !== undefined}
+			<h2>
+				{$lang('tilt_position')}
+
+				<span class="align-right">
+					{#if tiltPosition === 0}
+						{$lang('closed')}
+					{:else}
+						{$lang('open')}
+						{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(tiltPosition / 100)}
+					{/if}
+				</span>
+			</h2>
+
+			<RangeSlider
+				value={tiltPosition}
+				min={0}
+				max={100}
+				on:change={(event) => {
+					request = undefined;
+					handleChange('set_cover_tilt_position', 'tilt_position', Math.round(event?.detail));
+				}}
+			/>
+		{/if}
+
+		{#if supportsCloseTilt || supportsStopTilt || supportsOpenTilt}
+			<h2>{$lang('buttons')}</h2>
+		{/if}
+
+		<!-- TILT BUTTONS -->
+		<div class="buttons-container">
+			{#if supportsCloseTilt}
+				<button
+					on:click={() => handleClick('close_cover_tilt')}
+					use:Ripple={$ripple}
+					title={$lang('close_tilt_cover')}
+				>
+					<Icon icon="raphael:arrowdown" height="none" />
+				</button>
+			{/if}
+
+			{#if supportsStopTilt}
+				<button
+					on:click={() => handleClick('stop_cover_tilt')}
+					use:Ripple={$ripple}
+					title={$lang('stop_cover')}
+				>
+					<Icon icon="ic:round-stop" height="none" />
+				</button>
+			{/if}
+
+			{#if supportsOpenTilt}
+				<button
+					on:click={() => handleClick('open_cover_tilt')}
+					use:Ripple={$ripple}
+					title={$lang('open_tilt_cover')}
+				>
+					<Icon icon="raphael:arrowup" height="none" />
+				</button>
+			{/if}
+		</div>
+
+		<ConfigButtons />
 	</Modal>
 {/if}
 
