@@ -145,5 +145,13 @@
 			color: rgba(255, 255, 255, 0.35);
 			opacity: 1;
 		}
+
+		/* Phone */
+		@media all and (max-width: 480px) {
+			.clear > button,
+			.input {
+				height: 2.8rem;
+			}
+		}
 	</style>
 </InputClear>
