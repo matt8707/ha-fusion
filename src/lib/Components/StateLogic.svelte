@@ -2,6 +2,7 @@
 	import { states, lang, selectedLanguage, editMode } from '$lib/Stores';
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import { isTimestamp, relativeTime } from '$lib/Utils';
+	import { getDomain } from '$lib/Utils';
 
 	export let selected: any;
 	export let contentWidth: number | undefined = undefined;
@@ -44,6 +45,11 @@
 	<!--  Timer -->
 {:else if entity_id && entity_id.split('.')[0] === 'timer'}
 	handle timer logic
+
+	<!--  Input Number / Number -->
+{:else if entity_id && (getDomain(entity_id) === 'input_number' || getDomain(entity_id) === 'number')}
+	{Number(state) || $lang('unknown')}
+	{#if attributes?.unit_of_measurement}{attributes.unit_of_measurement}{/if}
 
 	<!--  Camera -->
 {:else if entity_id && entity_id.split('.')[0] === 'camera'}

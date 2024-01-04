@@ -54,9 +54,10 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] cover
   - [x] <https://github.com/matt8707/ha-fusion/issues/29>
   - [x] <https://github.com/matt8707/ha-fusion/issues/13>
-- [ ] input_number
-  - [ ] idea: round state if .0
-  - [ ] support different modes other than mode: slider
+- [x] number
+- [x] input_number
+  - [x] idea: round state if .0
+  - [x] support different modes other than mode: slider
 - [x] light
   - [x] open rgb issue <https://github.com/matt8707/ha-fusion/issues/18>
 - [ ] media_player
