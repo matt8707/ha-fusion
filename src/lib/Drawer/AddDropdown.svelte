@@ -17,7 +17,7 @@
 	let showTriangle = false;
 	let container: HTMLDivElement;
 
-	function handleClick(event: MouseEvent) {
+	function handleClick() {
 		isOpen = !isOpen;
 	}
 
