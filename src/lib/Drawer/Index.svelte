@@ -36,7 +36,11 @@
 	{#if $editMode}
 		<Separator />
 
-		{#if !$dashboard.hide_sidebar}
+		{#await import('$lib/Drawer/AddDropdown.svelte') then AddDropdown}
+			<svelte:component this={AddDropdown.default} {view} />
+		{/await}
+
+		<!-- {#if !$dashboard.hide_sidebar}
 			{#await import('$lib/Drawer/SidebarButton.svelte') then SidebarButton}
 				<svelte:component this={SidebarButton.default} />
 			{/await}
@@ -60,7 +64,7 @@
 			<svelte:component this={ViewButton.default} />
 		{/await}
 
-		<Separator />
+		<Separator /> -->
 
 		{#await import('$lib/Drawer/AppearanceButton.svelte') then AppearanceButton}
 			<svelte:component this={AppearanceButton.default} />
