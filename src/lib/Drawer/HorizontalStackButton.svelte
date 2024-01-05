@@ -33,7 +33,7 @@
 </script>
 
 <button
-	class="button"
+	class="button dropdown"
 	on:click={handleClick}
 	use:Ripple={{
 		...$ripple,

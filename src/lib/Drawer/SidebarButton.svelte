@@ -20,7 +20,7 @@
 	}
 </script>
 
-<button class="button" on:click={handleClick} use:Ripple={$ripple}>
+<button class="button dropdown" on:click={handleClick} use:Ripple={$ripple}>
 	<figure>
 		<Icon icon="solar:sidebar-minimalistic-bold-duotone" height="none" />
 	</figure>
