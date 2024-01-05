@@ -88,6 +88,7 @@ dir_keys = [
             ("tilt_position", ["ui.card.cover.tilt_position"]),
             ("open_tilt_cover", ["ui.card.cover.open_tilt_cover"]),
             ("close_tilt_cover", ["ui.card.cover.close_tilt_cover"]),
+            ("add", ["ui.common.add"]),
         ],
     ),
     (  # MEDIA_PLAYER
