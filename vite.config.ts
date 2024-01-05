@@ -59,6 +59,10 @@ export default defineConfig({
 				target: process.env.HASS_URL,
 				changeOrigin: true
 			},
+			'/api/image/': {
+				target: process.env.HASS_URL,
+				changeOrigin: true
+			},
 			'/api/image_proxy/': {
 				target: process.env.HASS_URL,
 				changeOrigin: true
