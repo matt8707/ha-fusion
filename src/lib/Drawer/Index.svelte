@@ -66,7 +66,7 @@
 			<svelte:component this={AppearanceButton.default} />
 		{/await}
 
-		<div class="actions">
+		<div>
 			{#await import('$lib/Drawer/HistoryButtons.svelte') then HistoryButtons}
 				<svelte:component this={HistoryButtons.default} />
 			{/await}
@@ -109,16 +109,15 @@
 		grid-area: header;
 		min-height: 0;
 		display: flex;
-		flex-wrap: wrap;
 		gap: 0.5rem;
-		height: auto;
+		height: 4.75rem;
 		width: 100vw;
 		padding: 1rem 2rem;
 		background-color: var(--theme-colors-sidebar-background);
 		border-bottom: var(--theme-colors-sidebar-border);
 	}
 
-	.actions {
+	div {
 		display: flex;
 		margin-left: auto;
 		margin-right: 3.6rem;
