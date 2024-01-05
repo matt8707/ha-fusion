@@ -10,7 +10,7 @@
 		lang,
 		historyIndex
 	} from '$lib/Stores';
-	import { tick } from 'svelte';
+	import { onDestroy, tick } from 'svelte';
 	import { modals } from 'svelte-modals';
 	import Ripple from 'svelte-ripple';
 	import Icon from '@iconify/svelte';
@@ -26,12 +26,6 @@
 	$: if ($editMode && $history.length === 0) {
 		// create initial entry
 		$history = [...$history, JSON.stringify($dashboard)];
-
-		// resets history and associated variables
-	} else if (!$editMode) {
-		$historyIndex = 0;
-		ignored = false;
-		$history = [];
 	}
 
 	$: canUndo = $historyIndex > 0;
@@ -126,6 +120,15 @@
 			set($historyIndex + 1);
 		}
 	}
+
+	/**
+	 * Resets history and associated variables
+	 */
+	onDestroy(() => {
+		$historyIndex = 0;
+		ignored = false;
+		$history = [];
+	});
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
