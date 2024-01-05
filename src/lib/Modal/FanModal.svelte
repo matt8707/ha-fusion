@@ -17,7 +17,7 @@
 		SET_SPEED = 1,
 		OSCILLATE = 2,
 		DIRECTION = 4,
-		PRESET_MODE = 8,
+		PRESET_MODE = 8
 	}
 
 	interface FanEntityAttributes extends HassEntityAttributeBase {

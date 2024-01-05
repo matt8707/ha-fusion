@@ -40,7 +40,7 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] climate
   - [ ] horizontal temp select
   - [ ] issue <https://github.com/matt8707/ha-fusion/issues/22>
-- [X] fan
+- [x] fan
 - [ ] humidifier
 - [ ] water_heater
 
