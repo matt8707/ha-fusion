@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dashboard, editMode, history, historyIndex, motion } from '$lib/Stores';
+	import { editMode, history, historyIndex, motion } from '$lib/Stores';
 	import Separator from '$lib/Drawer/Separator.svelte';
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';

@@ -108,7 +108,7 @@
 	function handleClick() {
 		if ($editMode) {
 			$clickOriginatedFromMenu = true;
-			const button = document.querySelector('#drawer button') as HTMLButtonElement;
+			const button = document.querySelector('#editmode') as HTMLButtonElement;
 			button?.click();
 		} else {
 			toggleDrawer();

@@ -128,6 +128,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 <button
+	id="editmode"
 	class="button"
 	on:click={handleClick}
 	style:color={$editMode ? '#3b0f10' : 'inherit'}
