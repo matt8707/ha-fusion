@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, lang, itemHeight, editMode } from '$lib/Stores';
+	import { editMode, itemHeight, lang, states } from '$lib/Stores';
 	import { openModal } from 'svelte-modals';
 
 	export let sel: any;
@@ -50,7 +50,6 @@
 	style:aspect-ratio="{width} / {height}"
 	style:height={`calc(${$itemHeight}px * 4 + 0.4rem * 3)`}
 	style:background-image={url ? `url(${url})` : 'none'}
-	style:background-size="{offsetHeight * (width / height)}px {offsetHeight}px"
 	style:cursor={!$editMode ? 'pointer' : 'unset'}
 >
 	<!-- all this binding and transforming essentially aims to
@@ -59,9 +58,9 @@
 		<iframe
 			src={url?.replace('/camera_proxy/', '/camera_proxy_stream/')}
 			title={$lang('camera')}
-			style:width="{offsetWidth * (width / height)}px"
+			style:width="{width}px"
 			style:aspect-ratio="{width} / {height}"
-			style:transform="scale({offsetHeight / height})"
+			style:transform="scale({Math.max(offsetHeight / height, offsetWidth / width)}) translate(-50%, -50%)"
 		/>
 	{/if}
 </div>
@@ -73,6 +72,9 @@
 		overflow: hidden;
 		width: calc(14.5rem * 2 + 0.4rem);
 		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+		position: relative;
 	}
 
 	iframe {
@@ -80,5 +82,8 @@
 		pointer-events: none;
 		user-select: none;
 		transform-origin: top left;
+		position: absolute;
+		top: 50%;
+		left: 50%;
 	}
 </style>
