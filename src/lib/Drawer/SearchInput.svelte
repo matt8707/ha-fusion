@@ -122,6 +122,7 @@
 
 		.clear {
 			position: relative;
+			max-width: 20rem;
 		}
 
 		.clear > button {
@@ -152,6 +153,10 @@
 			.input {
 				height: 2.8rem;
 				width: 100%;
+				max-width: unset;
+			}
+
+			.clear {
 				max-width: unset;
 			}
 		}
