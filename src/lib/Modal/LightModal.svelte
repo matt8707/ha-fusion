@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { states, selectedLanguage, lang, ripple } from '$lib/Stores';
+	import { states, selectedLanguage, lang, ripple, connection } from '$lib/Stores';
 	import Modal from '$lib/Modal/Index.svelte';
 	import LightSlider from '$lib/Components/LightSlider.svelte';
 	import ColorPicker from '$lib/Components/ColorPicker.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Ripple from 'svelte-ripple';
 	import { getName } from '$lib/Utils';
-	import type { HassEntity } from 'home-assistant-js-websocket';
+	import { callService, type HassEntity } from 'home-assistant-js-websocket';
+	import Toggle from '$lib/Components/Toggle.svelte';
 
 	export let isOpen: boolean;
 	export let sel: any;
@@ -34,10 +35,18 @@
 		xy: $lang('color')
 	};
 
-	// color
-	$: supportedColorModes = entity?.attributes?.supported_color_modes?.filter(
-		(m: string) => m !== 'brightness'
-	);
+	//color
+	let supportedColorModes: string | any[] = [];
+	$: toggle = entity?.state === 'on';
+	$: colorModes = entity?.attributes?.supported_color_modes;
+	$: if (Array.isArray(colorModes)) {
+		supportedColorModes = colorModes.filter((m) => m !== 'brightness');
+	} else if (typeof colorModes === 'string') {
+		if (colorModes !== 'brightness') {
+			supportedColorModes = [colorModes];
+		}
+	}
+
 	$: colorMode = entity?.attributes?.color_mode;
 	$: selTab = supportMappings?.[colorMode];
 
@@ -48,6 +57,15 @@
 	let groupSelected: string | undefined;
 	if (masterEntity?.entity_id) {
 		groupSelected = $states?.[masterEntity.entity_id]?.entity_id;
+	}
+
+	/**
+	 * Calls light.toggle service
+	 */
+	function handleClick() {
+		callService($connection, 'light', 'toggle', {
+			entity_id: entity?.entity_id
+		});
 	}
 </script>
 
@@ -88,6 +106,13 @@
 					</button>
 				{/each}
 			</div>
+		{/if}
+
+		<!-- ONOFF -->
+		{#if supportedColorModes?.includes('onoff')}
+			<h2>{$lang('toggle')}</h2>
+
+			<Toggle bind:checked={toggle} on:change={handleClick} />
 		{/if}
 
 		<!-- BRIGHTNESS -->
