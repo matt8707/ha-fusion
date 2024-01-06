@@ -32,7 +32,7 @@
 
 	$: entity_id = sel?.entity_id;
 	$: canOpen, set('can_open_details', canOpen);
-
+	canOpen = sel?.can_open_details;
 	if (canOpen === undefined) {
 		canOpen = true;
 	}
