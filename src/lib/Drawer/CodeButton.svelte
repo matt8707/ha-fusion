@@ -31,5 +31,5 @@
 		<Icon icon="ph:code-bold" height="none" />
 	</figure>
 
-	{$lang('code')}
+	<span>{$lang('code')}</span>
 </button>

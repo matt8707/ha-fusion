@@ -60,5 +60,5 @@
 		<Icon icon="clarity:settings-solid" height="none" />
 	</figure>
 
-	{$lang('settings')}
+	<span>{$lang('settings')}</span>
 </button>

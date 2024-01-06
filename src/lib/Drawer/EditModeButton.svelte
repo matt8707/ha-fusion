@@ -144,7 +144,7 @@
 		<Icon icon="solar:pen-2-bold-duotone" height="none" />
 	</figure>
 
-	{text}
+	<span>{text}</span>
 </button>
 
 <!--  hidden reference -->
@@ -159,5 +159,5 @@
 		<Icon icon="solar:pen-2-bold-duotone" height="none" />
 	</figure>
 
-	{text}
+	<span>{text}</span>
 </button>

@@ -492,15 +492,7 @@
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		.container {
-			width: calc(50vw - 1.2rem);
-		}
-		.name {
-			font-size: 0.85rem;
-			padding-right: 0.5rem;
-		}
-		.state {
-			font-size: calc(var(--theme-drawer-font-size) - 0.2rem);
-			padding-right: 0.5rem;
+			width: calc(50vw - 1.45rem);
 		}
 	}
 </style>

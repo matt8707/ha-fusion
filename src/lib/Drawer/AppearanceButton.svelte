@@ -47,5 +47,5 @@
 		<Icon icon="material-symbols:invert-colors-rounded" height="none" />
 	</figure>
 
-	{$lang('appearance')}
+	<span>{$lang('appearance')}</span>
 </button>

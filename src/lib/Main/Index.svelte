@@ -280,11 +280,14 @@
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		main {
-			padding: 0 1rem 1rem 1rem;
+			padding: 0 1.25rem 1.25rem 1.25rem;
 		}
+
 		.horizontal-stack {
 			grid-auto-flow: row;
+			gap: 1.5rem;
 		}
+
 		.items {
 			display: flex;
 			flex-wrap: wrap;
