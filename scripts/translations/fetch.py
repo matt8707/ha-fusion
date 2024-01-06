@@ -325,6 +325,7 @@ dir_keys = [
             ("alarm_modes_armed_custom_bypass", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.armed_custom_bypass"]),
             ("alarm_modes_disarmed", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.disarmed"]),
             ("buttons", ["ui.panel.lovelace.editor.card.entities.entity_row.buttons"]),
+            ("show_more_info", ["ui.panel.lovelace.cards.show_more_info"]),
         ],
     ),
     (  # DEVELOPER-TOOLS

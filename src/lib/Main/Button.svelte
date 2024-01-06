@@ -25,7 +25,7 @@
 	$: icon = sel?.icon;
 	$: color = sel?.color;
 	$: marquee = sel?.marquee;
-	$: can_open_details = sel?.can_open_details;
+	$: more_info = sel?.more_info;
 
 	let entity: HassEntity;
 	let contentWidth: number;
@@ -159,7 +159,7 @@
 				demo: entity_id,
 				sel
 			});
-		} else if (can_open_details === false) {
+		} else if (more_info === false) {
 			toggle();
 		} else {
 			switch (getDomain(sel?.entity_id)) {

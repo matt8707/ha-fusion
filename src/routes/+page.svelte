@@ -21,7 +21,6 @@
 	import { browser } from '$app/environment';
 	import { modals } from 'svelte-modals';
 	import Theme from '$lib/Components/Theme.svelte';
-	import { fade } from 'svelte/transition';
 
 	/**
 	 * Data from server-side load
