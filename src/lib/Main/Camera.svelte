@@ -53,14 +53,14 @@
 	style:cursor={!$editMode ? 'pointer' : 'unset'}
 >
 	<!-- all this binding and transforming essentially aims to
-			make the iframe behave like `background-size: cover` -->
+			make the iframe behave like `background-size: contain` -->
 	{#if stream && url}
 		<iframe
 			src={url?.replace('/camera_proxy/', '/camera_proxy_stream/')}
 			title={$lang('camera')}
 			style:width="{width}px"
 			style:aspect-ratio="{width} / {height}"
-			style:transform="scale({Math.max(offsetHeight / height, offsetWidth / width)}) translate(-50%, -50%)"
+			style:transform="scale({Math.min(offsetHeight / height, offsetWidth / width)}) translate(-50%, -50%)"
 		/>
 	{/if}
 </div>
@@ -73,7 +73,7 @@
 		width: calc(14.5rem * 2 + 0.4rem);
 		background-repeat: no-repeat;
 		background-position: center center;
-		background-size: cover;
+		background-size: contain;
 		position: relative;
 	}
 
