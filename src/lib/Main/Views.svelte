@@ -234,7 +234,7 @@
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		nav {
-			padding: 0 1rem;
+			padding: 0 1.25rem;
 		}
 
 		.navigation-container {

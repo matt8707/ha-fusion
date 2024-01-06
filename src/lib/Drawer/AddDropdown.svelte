@@ -49,7 +49,7 @@
 			<Icon icon="gridicons:add-outline" height="none" />
 		</figure>
 
-		{$lang('add')}
+		<span>{$lang('add')}</span>
 	</button>
 
 	{#if isOpen}

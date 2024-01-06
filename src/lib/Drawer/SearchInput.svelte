@@ -117,6 +117,7 @@
 			font-size: inherit;
 			height: 100%;
 			min-width: 5.5rem;
+			max-width: 20rem;
 		}
 
 		.clear {
@@ -147,10 +148,11 @@
 		}
 
 		/* Phone */
-		@media all and (max-width: 480px) {
-			.clear > button,
+		@media all and (max-width: 768px) {
 			.input {
 				height: 2.8rem;
+				width: 100%;
+				max-width: unset;
 			}
 		}
 	</style>

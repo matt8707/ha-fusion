@@ -72,4 +72,11 @@
 		fill: currentColor;
 		transform-origin: center center;
 	}
+
+	/* Phone and Tablet (portrait) */
+	@media all and (max-width: 768px) {
+		button {
+			right: 1.25rem;
+		}
+	}
 </style>

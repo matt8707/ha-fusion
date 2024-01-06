@@ -238,12 +238,13 @@
 		background-color: var(--theme-button-background-color-off);
 		background-size: cover;
 		background-repeat: no-repeat;
+		background-position: center;
 	}
 
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		.media-container {
-			width: calc(100vw - 2rem);
+			width: calc(100vw - (1.25rem + 1.25rem));
 		}
 	}
 </style>

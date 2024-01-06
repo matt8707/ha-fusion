@@ -29,91 +29,69 @@
 </script>
 
 <header id="drawer" transition:slide|global={{ duration: $motion }}>
-	{#await import('$lib/Drawer/EditModeButton.svelte') then EditModeButton}
-		<svelte:component this={EditModeButton.default} {modified} {toggleDrawer} />
-	{/await}
-
-	{#if $editMode}
-		<Separator />
-
-		{#await import('$lib/Drawer/AddDropdown.svelte') then AddDropdown}
-			<svelte:component this={AddDropdown.default} {view} />
-		{/await}
-
-		<!-- {#if !$dashboard.hide_sidebar}
-			{#await import('$lib/Drawer/SidebarButton.svelte') then SidebarButton}
-				<svelte:component this={SidebarButton.default} />
+	<div class:grid={!$editMode} class:grid-editmode={$editMode}>
+		<div class="edit">
+			{#await import('$lib/Drawer/EditModeButton.svelte') then EditModeButton}
+				<svelte:component this={EditModeButton.default} {modified} {toggleDrawer} />
 			{/await}
-		{/if}
+		</div>
 
-		{#await import('$lib/Drawer/ObjectButton.svelte') then ObjectButton}
-			<svelte:component this={ObjectButton.default} {view} />
-		{/await}
+		{#if $editMode}
+			<div class="add">
+				{#await import('$lib/Drawer/AddDropdown.svelte') then AddDropdown}
+					<svelte:component this={AddDropdown.default} {view} />
+				{/await}
+			</div>
 
-		<Separator />
+			<div class="appearance">
+				{#await import('$lib/Drawer/AppearanceButton.svelte') then AppearanceButton}
+					<svelte:component this={AppearanceButton.default} />
+				{/await}
+			</div>
 
-		{#await import('$lib/Drawer/SectionButton.svelte') then SectionButton}
-			<svelte:component this={SectionButton.default} {view} />
-		{/await}
+			<div class="history">
+				{#await import('$lib/Drawer/HistoryButtons.svelte') then HistoryButtons}
+					<svelte:component this={HistoryButtons.default} />
+				{/await}
+			</div>
 
-		{#await import('$lib/Drawer/HorizontalStackButton.svelte') then HorizontalStackButton}
-			<svelte:component this={HorizontalStackButton.default} {view} />
-		{/await}
-
-		{#await import('$lib/Drawer/ViewButton.svelte') then ViewButton}
-			<svelte:component this={ViewButton.default} />
-		{/await}
-
-		<Separator /> -->
-
-		{#await import('$lib/Drawer/AppearanceButton.svelte') then AppearanceButton}
-			<svelte:component this={AppearanceButton.default} />
-		{/await}
-
-		<div>
-			{#await import('$lib/Drawer/HistoryButtons.svelte') then HistoryButtons}
-				<svelte:component this={HistoryButtons.default} />
-			{/await}
+			<div class="save push">
+				{#await import('$lib/Drawer/SaveButton.svelte') then SaveButton}
+					<svelte:component this={SaveButton.default} {modified} />
+				{/await}
+			</div>
+		{:else}
+			<div class="code">
+				{#await import('$lib/Drawer/CodeButton.svelte') then CodeButton}
+					<svelte:component this={CodeButton.default} />
+				{/await}
+			</div>
 
 			<Separator />
 
-			{#await import('$lib/Drawer/SaveButton.svelte') then SaveButton}
-				<svelte:component this={SaveButton.default} {modified} />
-			{/await}
-		</div>
-	{:else}
-		{#await import('$lib/Drawer/CodeButton.svelte') then CodeButton}
-			<svelte:component this={CodeButton.default} />
-		{/await}
+			<div class="search">
+				{#await import('$lib/Drawer/SearchInput.svelte') then SearchInput}
+					<svelte:component this={SearchInput.default} />
+				{/await}
+			</div>
 
-		<Separator />
+			<div class="settings push">
+				{#await import('$lib/Drawer/SettingsButton.svelte') then SettingsButton}
+					<svelte:component this={SettingsButton.default} {data} />
+				{/await}
+			</div>
 
-		{#await import('$lib/Drawer/SearchInput.svelte') then SearchInput}
-			<svelte:component this={SearchInput.default} />
-		{/await}
-
-		{#if chrome}
-			<Separator />
-
-			{#await import('$lib/Drawer/SayButton.svelte') then SayButton}
-				<svelte:component this={SayButton.default} />
-			{/await}
+			{#if chrome}
+				{#await import('$lib/Drawer/SayButton.svelte') then SayButton}
+					<svelte:component this={SayButton.default} />
+				{/await}
+			{/if}
 		{/if}
-
-		<div>
-			{#await import('$lib/Drawer/SettingsButton.svelte') then SettingsButton}
-				<svelte:component this={SettingsButton.default} {data} />
-			{/await}
-		</div>
-	{/if}
+	</div>
 </header>
 
 <style>
 	#drawer {
-		grid-area: header;
-		min-height: 0;
-		display: flex;
-		gap: 0.5rem;
 		height: 4.75rem;
 		width: 100vw;
 		padding: 1rem 2rem;
@@ -121,11 +99,85 @@
 		border-bottom: var(--theme-colors-sidebar-border);
 	}
 
-	div {
-		display: flex;
-		margin-left: auto;
-		margin-right: 3.6rem;
+	.edit {
+		grid-area: edit;
+	}
+
+	.add {
+		grid-area: add;
+	}
+
+	.appearance {
+		grid-area: appearance;
+	}
+
+	.history {
+		grid-area: history;
+		justify-self: end;
+	}
+
+	.save {
+		grid-area: save;
+	}
+
+	.code {
+		grid-area: code;
+	}
+
+	.search {
+		grid-area: search;
+		display: grid;
+	}
+
+	.settings {
+		grid-area: settings;
+	}
+
+	.push {
+		justify-self: end;
+		margin-right: 3.7rem;
+	}
+
+	.grid {
+		display: grid;
 		gap: 0.5rem;
-		overflow: hidden;
+		grid-template-areas: 'edit code div search settings';
+		grid-template-columns: auto auto auto 1fr auto;
+		width: 100%;
+	}
+
+	.grid-editmode {
+		display: grid;
+		gap: 0.5rem;
+		grid-template-areas: 'edit add appearance . history save';
+		grid-template-columns: auto auto auto 1fr auto auto;
+		width: 100%;
+	}
+
+	/* Phone and Tablet (portrait) */
+	@media all and (max-width: 768px) {
+		#drawer {
+			padding: 1rem 1.25rem;
+			height: 8rem;
+			flex-wrap: wrap;
+		}
+
+		.grid {
+			grid-template-columns: auto auto 1fr 1fr;
+			grid-template-areas:
+				'edit code . settings'
+				'search search search search';
+		}
+
+		.grid-editmode {
+			grid-template-columns: auto auto 1fr auto;
+			grid-template-areas:
+				'edit add  appearance .'
+				'history history history save';
+		}
+
+		.save {
+			margin-right: 0;
+		}
 	}
 </style>

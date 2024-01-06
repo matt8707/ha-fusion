@@ -19,7 +19,6 @@
 	font-weight: 500;
 	font-size: var(--theme-drawer-font-size);
 	text-overflow: ellipsis;
-	min-width: 3rem;
 }
 
 #drawer .button.dropdown {
@@ -33,4 +32,19 @@
 	vertical-align: middle;
 	display: inline-block;
 	color: inherit;
+}
+
+/* Phone */
+@media all and (max-width: 768px) {
+	.button {
+		padding: 0.65rem 0.8rem 0.4rem 0.8rem !important;
+	}
+
+	.button span {
+		display: none;
+	}
+
+	figure {
+		margin: 0 !important;
+	}
 }

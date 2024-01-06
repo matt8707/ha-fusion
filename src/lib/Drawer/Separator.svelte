@@ -10,7 +10,7 @@
 	}
 
 	/* Phone */
-	@media all and (max-width: 480px) {
+	@media all and (max-width: 768px) {
 		hr {
 			display: none;
 		}
