@@ -66,17 +66,13 @@
 		>
 			{#if !$dashboard.hide_sidebar}
 				<SidebarButton />
-				<hr />
 			{/if}
 
 			<ObjectButton {view} />
-			<hr />
 
 			<SectionButton {view} />
-			<hr />
 
 			<HorizontalStackButton {view} />
-			<hr />
 
 			<ViewButton />
 		</div>
@@ -100,9 +96,11 @@
 	.dropdown {
 		position: absolute;
 		top: calc(100% + 8px);
-		background: rgb(29, 27, 24);
+		background: #1d1b18;
 		z-index: 1;
 		border-radius: 0.4rem;
+		overflow: hidden;
+		padding: 0 0.4rem;
 	}
 
 	.triangle {
@@ -114,15 +112,6 @@
 		height: 0;
 		border-left: 8px solid transparent;
 		border-right: 8px solid transparent;
-		border-bottom: 8px solid rgb(29, 27, 24);
-	}
-
-	hr {
-		padding: 0;
-		margin: 0;
-		border-top: none;
-		border-right: none;
-		border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-		border-left: none;
+		border-bottom: 8px solid #1d1b18;
 	}
 </style>

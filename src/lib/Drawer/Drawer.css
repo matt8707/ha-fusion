@@ -22,8 +22,18 @@
 }
 
 #drawer .button.dropdown {
-	background-color: none;
+	background-color: transparent;
 	width: 100%;
+	/* child radius = parent radius - padding */
+	border-radius: calc(0.4rem - 0.2rem);
+}
+
+/* add margin instead of padding because of animation drift */
+#drawer .dropdown button:first-of-type {
+	margin-top: 0.4rem;
+}
+#drawer .dropdown button:last-of-type {
+	margin-bottom: 0.45rem;
 }
 
 #drawer figure {
