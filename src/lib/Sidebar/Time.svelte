@@ -5,7 +5,7 @@
 	export let seconds: boolean | undefined = undefined;
 
 	$: time = $timer.toLocaleTimeString($selectedLanguage, {
-		hour: '2-digit',
+		hour: hour12 ? 'numeric' : '2-digit',
 		minute: '2-digit',
 		second: seconds ? '2-digit' : undefined,
 		hour12: hour12 === undefined ? false : hour12
