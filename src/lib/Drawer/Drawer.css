@@ -22,6 +22,11 @@
 	min-width: 3rem;
 }
 
+#drawer .button.dropdown {
+	background-color: none;
+	width: 100%;
+}
+
 #drawer figure {
 	width: 1.5em;
 	margin: 0 0.2rem 0 0;

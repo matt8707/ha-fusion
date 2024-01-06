@@ -75,6 +75,10 @@
 			$currentViewId = paramView?.id;
 		}
 	});
+
+	// navbar = 100% - (sidebar & padding & button & padding)
+	let editViewButtonWidth: number;
+	$: navWidth = `calc(100vw - (${$dashboard?.sidebarWidth}px + 2rem + ${editViewButtonWidth}px + 2rem))`;
 </script>
 
 <nav>
@@ -82,17 +86,19 @@
 	{#if $dashboard.views.length === 0 ? false : $editMode ? true : !$dashboard?.hide_views}
 		<section transition:slide={{ duration: $motion }}>
 			{#if $editMode}
-				<EditViewButton {view} />
+				<EditViewButton
+					{view}
+					on:change={(event) => {
+						editViewButtonWidth = event?.detail;
+					}}
+				/>
 			{/if}
 
 			{#if $dashboard?.hide_views}
 				<EyeIndicator />
 			{/if}
 
-			<div
-				class="navigation-container"
-				style:width="calc(100vw - ({$dashboard?.sidebarWidth}px + 120px))"
-			>
+			<div class="navigation-container" style:width={navWidth}>
 				<div class="fadecont" transition:fade={{ duration: $motion / 2 }}>
 					<div class="top-bar">
 						<div

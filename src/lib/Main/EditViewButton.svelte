@@ -3,8 +3,15 @@
 	import { fade } from 'svelte/transition';
 	import { openModal } from 'svelte-modals';
 	import Ripple from 'svelte-ripple';
+	import { createEventDispatcher } from 'svelte';
 
 	export let view: any;
+
+	const dispatch = createEventDispatcher();
+
+	let clientWidth = 0;
+
+	$: dispatch('change', clientWidth);
 
 	/**
 	 * Opens modal to edit view
@@ -19,6 +26,7 @@
 </script>
 
 <button
+	bind:clientWidth
 	class="edit"
 	on:click={handleClick}
 	transition:fade={{ duration: $motion / 2 }}
@@ -43,7 +51,6 @@
 		display: flex;
 		font-family: inherit;
 		white-space: nowrap;
-		margin-left: 0.4rem;
 		margin-top: 0.25rem;
 	}
 </style>

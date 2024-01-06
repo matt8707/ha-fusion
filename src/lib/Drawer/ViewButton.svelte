@@ -48,7 +48,7 @@
 	}
 </script>
 
-<button class="button" on:click={handleClick} use:Ripple={$ripple}>
+<button class="button dropdown" on:click={handleClick} use:Ripple={$ripple}>
 	<figure style:width="1.35rem">
 		<Icon icon="fluent:tab-add-24-filled" height="none" />
 	</figure>

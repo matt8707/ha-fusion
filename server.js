@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5050;
 // production proxy
 if (process.env.HASS_URL) {
 	app.use(
-		['/local/', '/api/*_proxy*'],
+		['/local/', '/api/image/', '/api/*_proxy*'],
 		createProxyMiddleware({
 			target: process.env.HASS_URL,
 			changeOrigin: true
