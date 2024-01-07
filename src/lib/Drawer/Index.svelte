@@ -127,6 +127,7 @@
 	.search {
 		grid-area: search;
 		display: grid;
+		max-width: 20rem;
 	}
 
 	.settings {

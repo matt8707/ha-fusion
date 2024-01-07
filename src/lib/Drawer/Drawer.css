@@ -32,6 +32,7 @@
 #drawer .dropdown button:first-of-type {
 	margin-top: 0.4rem;
 }
+
 #drawer .dropdown button:last-of-type {
 	margin-bottom: 0.45rem;
 }
@@ -46,15 +47,15 @@
 
 /* Phone */
 @media all and (max-width: 768px) {
-	.button {
+	#drawer .button {
 		padding: 0.65rem 0.8rem 0.4rem 0.8rem !important;
 	}
 
-	.button span {
+	#drawer .button span {
 		display: none;
 	}
 
-	figure {
+	#drawer figure {
 		margin: 0 !important;
 	}
 }

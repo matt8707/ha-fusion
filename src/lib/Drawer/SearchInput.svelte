@@ -117,12 +117,10 @@
 			font-size: inherit;
 			height: 100%;
 			min-width: 5.5rem;
-			max-width: 20rem;
 		}
 
 		.clear {
 			position: relative;
-			max-width: 20rem;
 		}
 
 		.clear > button {
