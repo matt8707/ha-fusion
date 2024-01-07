@@ -24,7 +24,7 @@ For "Operating System" or "Supervised" installation methods, you can install ha-
 
 1. **Add Repository**: To begin, add the ha-fusion add-on repository to your Home Assistant instance. Click the button below or manually add the repository using this URL: <https://github.com/matt8707/addon-ha-fusion>.
 
-    [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fmatt8707%2Faddon-ha-fusion)
+   [![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fmatt8707%2Faddon-ha-fusion)
 
 2. **Install Add-on**: After adding the repository, refresh the add-on store page. Locate ha-fusion in the list and proceed with the installation.
 
@@ -37,12 +37,12 @@ If you're using the "Container" or "Core" installation methods, ha-fusion can be
 1. **Docker Compose File**: Place your edited copy of the [docker-compose.yml](https://github.com/matt8707/ha-fusion/blob/main/docker-compose.yml) file in a suitable directory.
 
 2. **Create Container**:
-    Run the following commands in your terminal to start the container:
+   Run the following commands in your terminal to start the container:
 
-    ```bash
-    cd path/to/docker-compose.yml
-    docker-compose up -d ha-fusion
-    ```
+   ```bash
+   cd path/to/docker-compose.yml
+   docker-compose up -d ha-fusion
+   ```
 
 #### Update
 

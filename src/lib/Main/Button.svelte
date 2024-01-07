@@ -204,6 +204,11 @@
 					openModal(() => import('$lib/Modal/InputNumberModal.svelte'), { sel });
 					break;
 
+				case 'datetime':
+				case 'input_datetime':
+					openModal(() => import('$lib/Modal/InputDateModal.svelte'), { sel });
+					break;
+
 				case 'input_select':
 				case 'select':
 					openModal(() => import('$lib/Modal/InputSelectModal.svelte'), { sel });

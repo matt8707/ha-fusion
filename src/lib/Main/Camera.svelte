@@ -60,7 +60,8 @@
 			title={$lang('camera')}
 			style:width="{width}px"
 			style:aspect-ratio="{width} / {height}"
-			style:transform="scale({Math.min(offsetHeight / height, offsetWidth / width)}) translate(-50%, -50%)"
+			style:transform="scale({Math.min(offsetHeight / height, offsetWidth / width)}) translate(-50%,
+			-50%)"
 		/>
 	{/if}
 </div>
