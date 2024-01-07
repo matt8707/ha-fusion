@@ -78,8 +78,8 @@ List grouped by domains and categorized based on their similar behaviors
 ### Date
 
 - [ ] date
-- [ ] datetime
-- [ ] input_datetime
+- [x] datetime
+- [x] input_datetime
   - [ ] parse date in state
 - [ ] time
   - [ ] time input like `timer`
