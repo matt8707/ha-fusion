@@ -1,5 +1,6 @@
 {
 	"above_horizon": "powy\u017cej horyzontu",
+	"active": "aktywny",
 	"add": "Utw\u00f3rz",
 	"add_view": "Dodaj widok",
 	"addons": "Dodatki",
@@ -62,7 +63,7 @@
 	"done": "Gotowe",
 	"dry": "osuszanie",
 	"drying": "osuszanie",
-	"duration": "Czas",
+	"duration": "Czas trwania",
 	"edit": "Edytuj",
 	"edit_title": "Edytuj tytu\u0142",
 	"edit_ui": "Edycja interfejsu u\u017cytkownika",

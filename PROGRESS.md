@@ -84,7 +84,9 @@ List grouped by domains and categorized based on their similar behaviors
 - [ ] time
   - [ ] time input like `timer`
 - [x] timer
-  - [ ] when set state in modal don't stop timer
+  - [x] when set state in modal don't stop timer
+  - [x] add entity name to timers
+        <https://github.com/matt8707/ha-fusion/issues/107>
 
 ### Device Tracker
 
@@ -93,6 +95,8 @@ List grouped by domains and categorized based on their similar behaviors
   - [ ] bug: if no entity_picture in map show icon
   - [ ] bug: if no gps modal won't open
   - [ ] idea: toggle icon pings phone?
+  - [ ] make api key more clear if missing
+        <https://github.com/matt8707/ha-fusion/issues/121>
 - [ ] zone
   - [ ] map with all person:, device_trackers etc
 

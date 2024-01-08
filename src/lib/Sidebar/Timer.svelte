@@ -5,8 +5,9 @@
 	import Ripple from 'svelte-ripple';
 	import { modals } from 'svelte-modals';
 	import { callService, type HassEntity } from 'home-assistant-js-websocket';
+	import { getName } from '$lib/Utils';
 
-	export let entity_id: string | undefined = undefined;
+	export let sel: any;
 
 	let interval: ReturnType<typeof setInterval>;
 	let currentDate = new Date();
@@ -15,6 +16,7 @@
 
 	let clicked = false;
 
+	$: entity_id = sel?.entity_id;
 	$: if (entity_id && $states?.[entity_id]?.last_updated !== entity?.last_updated) {
 		entity = $states?.[entity_id];
 	}
@@ -111,42 +113,44 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="outer">
 	<div
 		class="container"
 		style:pointer-events={$modals.length !== 0 ? 'none' : 'unset'}
 		style:cursor={$editMode || $modals.length !== 0 ? 'unset' : 'pointer'}
-		style:transition="background-color {$motion}ms ease"
 		style:background-color={state === 'active' && entity_id
 			? 'rgba(0, 0, 0, 0.25)'
 			: 'rgba(0, 0, 0, 0)'}
+		style:padding={state === 'active' && entity_id
+			? '0.35rem 0.65rem 0.35rem 0.45rem'
+			: '0 0.65rem 0 0.45rem'}
+		style:transition="color {$motion}ms ease, background-color {$motion}ms ease, padding {$motion}ms
+		ease"
 	>
-		<div
-			class="timer"
-			style:color={finishes_at ? 'orange' : 'rgba(255, 255, 255, 0.5)'}
-			style:transition="color {$motion}ms ease"
-		>
-			<div class="icon">
-				<Icon icon="ic:twotone-timer" height="none" />
+		<div class="icon" style:color={finishes_at ? 'orange' : 'rgba(255, 255, 255, 0.5)'}>
+			<Icon icon="ic:twotone-timer" height="none" />
+		</div>
+
+		<div class="column">
+			<div class="name">
+				{getName(sel, entity) || $lang('unknown')}
 			</div>
 
-			<span style:margin-top="0.1rem">
+			<div class="counter" style:color={finishes_at ? 'orange' : 'rgba(255, 255, 255, 0.5)'}>
 				{#if state === 'active' && entity_id}
 					{displayTime || $timers[entity_id].pausedState}
 				{:else if state === 'paused' && entity_id}
 					{$timers[entity_id].pausedState}
-				{:else if state === 'idle'}
-					{$lang('idle')}
+				{:else if state === 'idle' && attributes?.duration}
+					{format(...parseRemaining(attributes.duration))}
 				{:else}
 					--:--
 				{/if}
-			</span>
+			</div>
 		</div>
 
 		{#if state}
-			<div
+			<button
 				class="start_pause"
 				style:cursor={$editMode ? 'unset' : 'pointer'}
 				style:pointer-events={$modals.length !== 0 ? 'auto' : 'unset'}
@@ -161,7 +165,7 @@
 				{:else}
 					<Icon icon="ic:round-play-arrow" height="none" />
 				{/if}
-			</div>
+			</button>
 		{/if}
 	</div>
 </div>
@@ -172,46 +176,49 @@
 	}
 
 	.container {
-		padding: var(--theme-sidebar-item-padding);
 		display: flex;
-		justify-content: space-between;
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 		border-radius: 0.65rem;
 		margin-left: -0.6rem;
 		margin-right: -0.6rem;
-		padding: 0.45rem 0.65rem 0.45rem 0.45rem;
-	}
-
-	.timer {
-		display: flex;
-		gap: 0.4rem;
-		font-weight: 500;
-		font-size: 2.2rem;
-		line-height: 2.25rem;
-		transition: font-size 190ms ease;
-		border-radius: 0.2em;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		margin-left: -0.1rem;
-		align-self: center;
 	}
 
 	.icon {
-		width: 2.4rem;
-		height: 2.4rem;
-		padding-top: 0.08rem;
+		flex-shrink: 1;
+		width: 3.1rem;
+		height: 3.1rem;
+		align-self: center;
+		margin-bottom: -0.2rem;
+	}
+
+	.column {
+		display: flex;
+		flex-direction: column;
+		margin-left: 0.2rem;
+		flex-grow: 1;
+		margin-left: 0.5rem;
+	}
+
+	.name {
+		margin-top: 0.1rem;
+		margin-bottom: -0.2rem;
+	}
+
+	.counter {
+		font-size: 1.8rem;
+		transition: font-size 190ms ease;
+		font-weight: 500;
 	}
 
 	.start_pause {
-		width: 2.2rem;
-		height: 2.2rem;
+		flex-shrink: 1;
+		width: 2.5rem;
+		height: 2.5rem;
 		background-color: var(--theme-navigate-background-color);
-		border: none;
-		color: inherit;
 		border-radius: 50%;
-		padding: 0.3rem;
-		margin-top: 0.1rem;
-		font-size: inherit;
+		padding: 0.4rem;
+		align-self: center;
+		color: inherit;
+		border: none;
 	}
 </style>

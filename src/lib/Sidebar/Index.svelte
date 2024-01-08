@@ -131,7 +131,7 @@
 					height: sel?.height
 				});
 			} else if (sel?.type === 'timer') {
-				openModal(() => import('$lib/Modal/TimerModal.svelte'), { entity_id: sel?.entity_id });
+				openModal(() => import('$lib/Modal/TimerModal.svelte'), { sel });
 			}
 		}
 	}
@@ -315,7 +315,7 @@
 						<!-- TIMER -->
 					{:else if Timer && item?.type === 'timer'}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Timer.default} entity_id={item?.entity_id} />
+							<svelte:component this={Timer.default} sel={item} />
 						</button>
 
 						<!-- WEATHER -->

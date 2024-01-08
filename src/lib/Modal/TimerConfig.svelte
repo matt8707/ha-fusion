@@ -19,8 +19,6 @@
 		set('entity_id', demo);
 	}
 
-	$: entity_id = sel?.entity_id;
-
 	$: options = Object.entries($states)
 		.filter(([key]) => key.startsWith('timer.'))
 		.sort()
@@ -41,7 +39,7 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<Timer {entity_id} />
+			<Timer {sel} />
 		</div>
 
 		<h2>{$lang('entity')}</h2>

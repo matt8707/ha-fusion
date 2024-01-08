@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { states, lang, connection, motion, selectedLanguage } from '$lib/Stores';
+	import { states, lang, connection, selectedLanguage } from '$lib/Stores';
 	import Modal from '$lib/Modal/Index.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
-	import { getDomain, getName, relativeTime } from '$lib/Utils';
+	import { getDomain, getName } from '$lib/Utils';
 	import { callService } from 'home-assistant-js-websocket';
 
 	export let isOpen: boolean;

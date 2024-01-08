@@ -1,5 +1,6 @@
 {
 	"above_horizon": "Horisontin yl\u00e4puolella",
+	"active": "Aktiivinen",
 	"add": "Lis\u00e4\u00e4",
 	"add_view": "Lis\u00e4\u00e4 n\u00e4kym\u00e4",
 	"addons": "Lis\u00e4osat",
@@ -93,6 +94,7 @@
 	"log_out": "Kirjaudu ulos",
 	"max": "Enimm\u00e4ispituus",
 	"media": "Media",
+	"medium": "Keskitaso",
 	"menu": "Valikko",
 	"min": "V\u00e4himm\u00e4ispituus",
 	"minutes": "Minuuttia",
