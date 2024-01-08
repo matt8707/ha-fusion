@@ -215,9 +215,7 @@
 					break;
 
 				case 'timer':
-					openModal(() => import('$lib/Modal/TimerModal.svelte'), {
-						entity_id
-					});
+					openModal(() => import('$lib/Modal/TimerModal.svelte'), { sel });
 					break;
 
 				case 'alarm_control_panel':

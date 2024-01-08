@@ -9,11 +9,12 @@
 	import { callService, type HassEntity } from 'home-assistant-js-websocket';
 
 	export let isOpen: boolean;
-	export let entity_id: string | undefined;
+	export let sel: any;
 
 	let duration: string;
 	let entity: HassEntity;
 
+	$: entity_id = sel?.entity_id;
 	$: if (entity_id && $states?.[entity_id]?.last_updated !== entity?.last_updated) {
 		entity = $states?.[entity_id];
 	}
@@ -43,7 +44,7 @@
 
 		<h2>{$lang('timer')}</h2>
 
-		<Timer {entity_id} />
+		<Timer {sel} />
 
 		<h2>{$lang('options')}</h2>
 
@@ -75,8 +76,9 @@
 			<button
 				class="input overflow"
 				on:click={() => {
+					const prevState = state;
 					callService($connection, 'timer', 'start', { entity_id, duration });
-					callService($connection, 'timer', 'pause', { entity_id });
+					if (prevState !== 'active') callService($connection, 'timer', 'pause', { entity_id });
 				}}
 				use:Ripple={$ripple}
 			>
