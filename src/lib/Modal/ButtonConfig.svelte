@@ -18,7 +18,7 @@
 
 	const sizes = [
 		{ id: 'compact', label: 'Compact' },
-		{ id: 'widget', label: 'Widget' }
+		{ id: 'small', label: 'Small' }
 	];
 
 	if (demo) {

@@ -330,10 +330,10 @@
 	function getItemStyles(sel: ButtonItem) {
 		return `
 			cursor: ${$editMode ? 'pointer' : ''};
-			grid-template-columns: ${sel.size === 'widget' ? '' : 'min-content auto'};
+			grid-template-columns: ${sel.size === 'small' ? '' : 'min-content auto'};
 			grid-template-areas: 
 				${
-					sel.size === 'widget'
+					sel.size === 'small'
 						? `
 							'icon  circle'
 							'right right'
@@ -347,7 +347,7 @@
 
 	function getRightStyles(sel: ButtonItem) {
 		return `
-			justify-content: ${sel.size === 'widget' ? 'end' : 'center'};
+			justify-content: ${sel.size === 'small' ? 'end' : 'center'};
 		`;
 	}
 </script>

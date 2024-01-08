@@ -145,7 +145,7 @@ export function itemStyles(item: ButtonItem) {
 	let columnSpan = 3;
 	let rowSpan = 1;
 
-	if (item.size === 'widget') {
+	if (item.size === 'small') {
 		columnSpan = 2;
 		rowSpan = 2;
 	}
