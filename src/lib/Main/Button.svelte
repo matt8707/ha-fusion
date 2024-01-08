@@ -11,6 +11,7 @@
 		ripple,
 		states
 	} from '$lib/Stores';
+	import type { ButtonItem } from '$lib/Types';
 	import { getDomain, getName } from '$lib/Utils';
 	import Icon from '@iconify/svelte';
 	import { callService, type HassEntity } from 'home-assistant-js-websocket';
@@ -18,12 +19,13 @@
 	import Ripple from 'svelte-ripple';
 
 	export let demo: string | undefined = undefined;
-	export let sel: any;
+	export let sel: ButtonItem;
 
 	$: entity_id = demo || sel?.entity_id;
 	$: name = sel?.name;
 	$: icon = sel?.icon;
 	$: color = sel?.color;
+	$: size = sel?.size;
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
 
@@ -245,7 +247,7 @@
 					});
 					break;
 				case 'device_tracker': {
-					const entity = $states?.[sel?.entity_id];
+					const entity = $states?.[sel?.entity_id!];
 					const attributes = entity?.attributes;
 					const entity_picture = attributes?.entity_picture;
 
@@ -257,7 +259,7 @@
 					break;
 				}
 				case 'person': {
-					const device_trackers = $states?.[sel?.entity_id]?.attributes?.device_trackers || [];
+					const device_trackers = $states?.[sel?.entity_id!]?.attributes?.device_trackers || [];
 					const gpsEntities = Object.values($states).filter(
 						(states) =>
 							device_trackers.includes(states.entity_id) && states.attributes?.source_type === 'gps'
@@ -268,7 +270,7 @@
 
 					openModal(async () => import('$lib/Modal/MapModal.svelte'), {
 						entity_id,
-						entity_picture: $states?.[sel?.entity_id]?.attributes?.entity_picture
+						entity_picture: $states?.[sel?.entity_id!]?.attributes?.entity_picture
 					});
 
 					break;
@@ -324,6 +326,30 @@
 		}
 		if (module) module.default;
 	}
+
+	function getItemStyles(sel: ButtonItem) {
+		return `
+			cursor: ${$editMode ? 'pointer' : ''};
+			grid-template-columns: ${sel.size === 'widget' ? '' : 'min-content auto'};
+			grid-template-areas: 
+				${
+					sel.size === 'widget'
+						? `
+							'icon  circle'
+							'right right'
+						`
+						: `
+							'left right'
+						`
+				};
+		`;
+	}
+
+	function getRightStyles(sel: ButtonItem) {
+		return `
+			justify-content: ${sel.size === 'widget' ? 'end' : 'center'};
+		`;
+	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -334,8 +360,7 @@
 	bind:this={container}
 	data-state={stateOn}
 	tabindex="-1"
-	style={!$editMode ? 'cursor: pointer;' : ''}
-	style:height="{$itemHeight}px"
+	style={getItemStyles(sel)}
 	on:pointerenter={handlePointer}
 	on:pointerdown={handlePointer}
 	use:Ripple={{
@@ -382,7 +407,7 @@
 		</div>
 	</div>
 
-	<div class="right" on:click|stopPropagation={handleEvent}>
+	<div class="right" on:click|stopPropagation={handleEvent} style={getRightStyles(sel)}>
 		<!-- NAME -->
 		<div class="name" data-state={stateOn}>
 			{getName({ name }, entity) || $lang('unknown')}
@@ -409,14 +434,12 @@
 	.container {
 		background-color: var(--theme-button-background-color-off);
 		font-family: inherit;
-		width: 14.5rem;
 		display: grid;
 		border-radius: 0.65rem;
-		margin: 0;
-		grid-template-columns: min-content auto;
+		height: 100%;
 		grid-auto-flow: row;
 		grid-template-areas: 'left right';
-		--container-padding: 0.8rem;
+		--container-padding: 0.7rem;
 
 		/* fix ripple */
 		transform: translateZ(0);
@@ -430,20 +453,21 @@
 
 	.left {
 		padding: var(--container-padding);
+		display: flex;
+		align-items: center;
 	}
 
 	.right {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		overflow: hidden;
 		gap: 1px;
-		margin-top: -1px;
+		grid-area: right;
+		padding: var(--container-padding);
 	}
 
 	.icon {
 		--icon-size: 2.5rem;
-		grid-area: icon;
 		height: var(--icon-size);
 		width: var(--icon-size);
 		color: rgb(200 200 200);
@@ -454,7 +478,6 @@
 	}
 
 	.name {
-		grid-area: name;
 		font-weight: 500;
 		color: inherit;
 		white-space: nowrap;
@@ -465,7 +488,6 @@
 	}
 
 	.state {
-		grid-area: state;
 		font-weight: 400;
 		white-space: nowrap;
 		overflow: hidden;
@@ -494,8 +516,14 @@
 
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
+		.name {
+			font-size: 0.85rem;
+		}
+		.state {
+			font-size: calc(var(--theme-drawer-font-size) - 0.2rem);
+		}
 		.container {
-			width: calc(50vw - 1.45rem);
+			--container-padding: 0.6rem;
 		}
 	}
 </style>

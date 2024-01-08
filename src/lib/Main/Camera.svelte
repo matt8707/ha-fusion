@@ -47,8 +47,6 @@
 	on:click={handleClick}
 	bind:offsetWidth
 	bind:offsetHeight
-	style:aspect-ratio="{width} / {height}"
-	style:height={`calc(${$itemHeight}px * 4 + 0.4rem * 3)`}
 	style:background-image={url ? `url(${url})` : 'none'}
 	style:cursor={!$editMode ? 'pointer' : 'unset'}
 >
@@ -68,10 +66,10 @@
 
 <style>
 	div {
+		height: 100%;
 		background-color: rgba(0, 0, 0, 0.2);
 		border-radius: 0.6rem;
 		overflow: hidden;
-		width: calc(14.5rem * 2 + 0.4rem);
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-size: contain;

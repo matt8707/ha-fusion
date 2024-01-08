@@ -8,13 +8,18 @@
 	import Ripple from 'svelte-ripple';
 	import InputClear from '$lib/Components/InputClear.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
-	import { updateObj, getDomain, getName } from '$lib/Utils';
+	import { updateObj, getDomain, getName, itemStyles } from '$lib/Utils';
 	import type { ButtonItem } from '$lib/Types';
 
 	export let isOpen: boolean;
 
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
+
+	const sizes = [
+		{ id: 'compact', label: 'Compact' },
+		{ id: 'widget', label: 'Widget' }
+	];
 
 	if (demo) {
 		// replace history entry with demo
@@ -29,6 +34,7 @@
 	// (maybe make reactive)
 
 	$: entity_id = sel?.entity_id;
+	$: size = sel?.size || 'compact';
 
 	let icon: string | undefined = sel?.icon;
 
@@ -72,8 +78,10 @@
 
 		<h2>{$lang('preview')}</h2>
 
-		<div style:pointer-events="none">
-			<Button {sel} />
+		<div class="button-preview">
+			<div style={itemStyles(sel)}>
+				<Button {sel} />
+			</div>
 		</div>
 
 		<h2>{$lang('entity')}</h2>
@@ -127,6 +135,16 @@
 				style:padding
 			/>
 		</InputClear>
+
+		<h2>Size</h2>
+		<div class="size-selector">
+			<Select
+				options={sizes}
+				placeholder="Size"
+				value={size}
+				on:change={(event) => set('size', event)}
+			/>
+		</div>
 
 		<h2>
 			{$lang('icon')}
@@ -234,3 +252,12 @@
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
+
+<style>
+	.button-preview {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 4.5rem);
+		grid-auto-rows: repeat(2, 4.5rem);
+		grid-gap: 0.4rem;
+	}
+</style>

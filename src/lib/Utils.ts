@@ -1,5 +1,5 @@
 import type { HassEntity } from 'home-assistant-js-websocket';
-import type { Dashboard } from '$lib/Types';
+import type { ButtonItem, Dashboard } from '$lib/Types';
 
 /**
  * Updates a selected object's property based on the event or direct value.
@@ -137,3 +137,29 @@ export const getSupport = (
 	},
 	feature: number
 ): boolean => (attributes.supported_features! & feature) !== 0;
+
+/**
+ * Creates styles for button items
+ */
+export function itemStyles(item: ButtonItem) {
+	let columnSpan = 3;
+	let rowSpan = 1;
+
+	if (item.size === 'widget') {
+		columnSpan = 2;
+		rowSpan = 2;
+	}
+
+	if (item.type === 'camera' || item.type === 'media') {
+		columnSpan = 6;
+		rowSpan = 4;
+	}
+
+	const styles = `
+		grid-column: span ${columnSpan};
+		grid-row: span ${rowSpan};
+		display: ${item.type ? '' : 'none'};
+	`;
+
+	return styles;
+}

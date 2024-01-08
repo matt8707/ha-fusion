@@ -6,6 +6,8 @@
 	import Content from '$lib/Main/Content.svelte';
 	import SectionHeader from '$lib/Main/SectionHeader.svelte';
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
+	import type { ButtonItem } from '$lib/Types';
+	import { itemStyles } from '$lib/Utils';
 
 	export let view: any;
 
@@ -134,14 +136,6 @@
 			};
     `;
 	}
-
-	function itemStyles(type: string) {
-		return `
-			grid-column: ${type === 'media' || type === 'camera' ? 'span 2' : 'span 1'};
-			grid-row: ${type === 'media' || type === 'camera' ? 'span 4' : 'span 1'};
-			display: ${type ? '' : 'none'};
-    `;
-	}
 </script>
 
 <main
@@ -198,7 +192,7 @@
 										class="item"
 										animate:flip={{ duration: $motion }}
 										tabindex="-1"
-										style={itemStyles(item?.type)}
+										style={itemStyles(item)}
 									>
 										<Content {item} />
 									</div>
@@ -226,7 +220,7 @@
 							class="item"
 							animate:flip={{ duration: $motion }}
 							tabindex="-1"
-							style={itemStyles(item?.type)}
+							style={itemStyles(item)}
 						>
 							<Content {item} />
 						</div>
@@ -265,11 +259,10 @@
 		border-radius: 0.6rem;
 		outline-offset: -2px;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, 14.5rem);
-		grid-auto-rows: min-content;
+		grid-template-columns: repeat(auto-fill, 4.5rem);
+		grid-auto-rows: 4.5rem;
 		gap: 0.4rem;
 		border-radius: 0.6rem;
-		height: 100%;
 	}
 
 	.item {
@@ -280,17 +273,14 @@
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		main {
-			padding: 0 1.25rem 1.25rem 1.25rem;
+			padding: 0 1rem 1rem 1rem;
 		}
-
 		.horizontal-stack {
 			grid-auto-flow: row;
-			gap: 1.5rem;
 		}
-
 		.items {
-			display: flex;
-			flex-wrap: wrap;
+			grid-template-columns: repeat(auto-fill, calc((100vw - 0.4rem * 5 - 2rem) / 6));
+			grid-auto-rows: calc((100vw - 0.4rem * 5 - 2rem) / 6);
 		}
 	}
 </style>
