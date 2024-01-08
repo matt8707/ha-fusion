@@ -1,5 +1,6 @@
 {
 	"above_horizon": "\u65e5\u51fa",
+	"active": "\u555f\u7528",
 	"armed": "\u5df2\u8b66\u6212",
 	"armed_away": "\u96e2\u5bb6\u8b66\u6212",
 	"armed_custom_bypass": "\u81ea\u8a02\u5ffd\u7565\u8b66\u6212",
@@ -19,6 +20,7 @@
 	"disarming": "\u89e3\u9664\u4e2d",
 	"dry": "\u9664\u6fd5",
 	"drying": "\u9664\u6fd5",
+	"duration": "\u6301\u7e8c\u6642\u9593",
 	"fan": "\u9001\u98a8",
 	"fan_modes": "\u98a8\u901f\u6a21\u5f0f",
 	"fan_only": "\u50c5\u9001\u98a8",

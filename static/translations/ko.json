@@ -1,5 +1,6 @@
 {
 	"above_horizon": "\uc218\ud3c9\uc120 \uc704",
+	"active": "\ud65c\uc131 \uc0c1\ud0dc",
 	"add": "\ucd94\uac00\ud558\uae30",
 	"add_view": "\ubdf0 \ucd94\uac00\ud558\uae30",
 	"addons": "\uc560\ub4dc\uc628",
@@ -62,7 +63,7 @@
 	"done": "\uc644\ub8cc",
 	"dry": "\uc81c\uc2b5",
 	"drying": "\uc81c\uc2b5 \uc911",
-	"duration": "\uae30\uac04",
+	"duration": "\uc9c0\uc18d \uae30\uac04",
 	"edit": "\ud3b8\uc9d1\ud558\uae30",
 	"edit_title": "\uc81c\ubaa9 \ud3b8\uc9d1\ud558\uae30",
 	"edit_ui": "UI \ud3b8\uc9d1\ud558\uae30",

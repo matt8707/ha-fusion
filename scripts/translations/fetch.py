@@ -76,7 +76,6 @@ dir_keys = [
             ("start", ["ui.card.timer.actions.start"]),
             ("pause", ["ui.card.timer.actions.pause"]),
             ("finish", ["ui.card.timer.actions.finish"]),
-            ("duration", ["ui.dialogs.helper_settings.timer.duration"]),
             ("motion", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.motion"]),
             ("copied", ["ui.common.copied"]),
             ("object", ["ui.components.selectors.selector.types.object"]),
@@ -157,6 +156,13 @@ dir_keys = [
             ("open", ["entity_component", "_", "state", "open"]),
             ("opening", ["entity_component", "_", "state", "opening"]),
             ("stopped", ["entity_component", "_", "state", "stopped"]),
+        ],
+    ),
+    (  # TIMER
+        f"{COMPONENTS}/timer/translations/",
+        [
+            ("active", ["entity_component", "_", "state", "active"]),
+            ("duration", ["entity_component", "_", "state_attributes", "duration", "name"]),
         ],
     ),
     (  # WEATHER

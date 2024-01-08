@@ -1,5 +1,6 @@
 {
 	"above_horizon": "\u00dcberem Horizont",
+	"active": "Aktiv",
 	"add": "Derzuef\u00fcege",
 	"add_view": "Aasicht derzuef\u00fcege",
 	"addons": "Add-On",
@@ -46,7 +47,6 @@
 	"divider": "Trenner",
 	"docs": "Dokumentation",
 	"done": "Fertig",
-	"duration": "Duur",
 	"edit": "Bearbeite",
 	"edit_title": "Titu bearbeite",
 	"edit_ui": "Benutzeroberfl\u00e4chi bearbeite",
