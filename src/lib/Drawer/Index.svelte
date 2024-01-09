@@ -5,6 +5,7 @@
 	import { slide } from 'svelte/transition';
 	import '$lib/Drawer/Drawer.css';
 	import type { Configuration, Dashboard, Translations, ViewItem } from '$lib/Types';
+	import { loadIcons } from '@iconify/svelte';
 
 	export let data: {
 		configuration: Configuration;
@@ -16,9 +17,23 @@
 	export let toggleDrawer: () => void;
 
 	/** Only display SayButton in Chrome */
-	let chrome: boolean;
+	// let chrome: boolean;
 	onMount(() => {
-		chrome = navigator?.userAgent?.indexOf('Chrome') > -1;
+		// chrome = navigator?.userAgent?.indexOf('Chrome') > -1;
+
+		// preload drawer $editMode icons
+		loadIcons([
+			'gridicons:add-outline',
+			'material-symbols:invert-colors-rounded',
+			'ion:arrow-undo-sharp',
+			'ion:arrow-redo-sharp',
+			'ic:round-save',
+			'solar:sidebar-minimalistic-bold-duotone',
+			'solar:file-bold-duotone',
+			'gg:row-first',
+			'solar:posts-carousel-horizontal-bold-duotone',
+			'fluent:tab-add-24-filled'
+		]);
 	});
 
 	/**
@@ -81,11 +96,11 @@
 				{/await}
 			</div>
 
-			{#if chrome}
+			<!-- {#if chrome}
 				{#await import('$lib/Drawer/SayButton.svelte') then SayButton}
 					<svelte:component this={SayButton.default} />
 				{/await}
-			{/if}
+			{/if} -->
 		{/if}
 	</div>
 </header>

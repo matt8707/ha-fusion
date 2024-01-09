@@ -126,6 +126,7 @@
 			{clearable}
 			{placeholder}
 			{i18n}
+			virtualList={true}
 			name="select"
 			inputId="select"
 		/>
@@ -138,6 +139,7 @@
 			{clearable}
 			{placeholder}
 			{i18n}
+			virtualList={true}
 			controlItem={SelectItem}
 			dropdownItem={SelectItem}
 			name="select"
