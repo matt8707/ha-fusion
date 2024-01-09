@@ -68,6 +68,16 @@
 {:else if entity_id && entity_id.split('.')[0] === 'weather'}
 	{$lang('weather_' + state?.replace('_', '-')) || state || $lang('unknown')}
 
+	<!--  Text -->
+{:else if entity_id && (getDomain(entity_id) === 'input_text' || getDomain(entity_id) === 'text')}
+	{#if state === 'unknown'}
+		{$lang('unknown')}
+	{:else if state === ''}
+		{@html '&nbsp;'}
+	{:else}
+		{attributes?.mode === 'password' ? state.replace(/./g, '•') : state}
+	{/if}
+
 	<!-- Timestamp  -->
 {:else if state && isTimestamp(state)}
 	{relativeTime(state, $selectedLanguage)}

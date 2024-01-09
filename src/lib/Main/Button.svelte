@@ -183,6 +183,8 @@
 				// sensor
 				case 'air_quality':
 				case 'calendar':
+				case 'date':
+				case 'time':
 				case 'event':
 				case 'image_processing':
 				case 'mailbox':
@@ -199,19 +201,28 @@
 					openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
 					break;
 
-				case 'number':
+				// number
 				case 'input_number':
+				case 'number':
 					openModal(() => import('$lib/Modal/InputNumberModal.svelte'), { sel });
 					break;
 
-				case 'datetime':
+				// date
 				case 'input_datetime':
+				case 'datetime':
 					openModal(() => import('$lib/Modal/InputDateModal.svelte'), { sel });
 					break;
 
+				// select
 				case 'input_select':
 				case 'select':
 					openModal(() => import('$lib/Modal/InputSelectModal.svelte'), { sel });
+					break;
+
+				// text
+				case 'input_text':
+				case 'text':
+					openModal(() => import('$lib/Modal/InputTextModal.svelte'), { sel });
 					break;
 
 				case 'timer':
