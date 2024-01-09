@@ -16,7 +16,7 @@
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
 
-	$: entity = $states[sel?.entity_id!] as HassEntity;
+	$: entity = $states[sel?.entity_id as any] as HassEntity;
 	$: entity_id = entity?.entity_id;
 
 	if (demo) {
