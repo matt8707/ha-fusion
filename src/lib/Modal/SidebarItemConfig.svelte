@@ -190,7 +190,10 @@
 			type: $lang('timer'),
 			component: Timer,
 			props: {
-				entity_id: $demo.timer
+				sel: {
+					...sel,
+					entity_id: $demo.timer
+				}
 			}
 		}
 	];
