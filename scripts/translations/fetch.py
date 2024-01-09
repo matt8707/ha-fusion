@@ -88,6 +88,9 @@ dir_keys = [
             ("open_tilt_cover", ["ui.card.cover.open_tilt_cover"]),
             ("close_tilt_cover", ["ui.card.cover.close_tilt_cover"]),
             ("add", ["ui.common.add"]),
+            ("text", ["ui.dialogs.helper_settings.input_text.text"]),
+            ("password", ["ui.dialogs.helper_settings.input_text.password"]),
+            ("show_password", ["ui.components.selectors.text.show_password"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -106,6 +109,15 @@ dir_keys = [
         f"{COMPONENTS}/camera/translations/",
         [
             ("camera", ["title"]),
+        ],
+    ),
+    (  # COUNTER
+        f"{COMPONENTS}/counter/translations/",
+        [
+            ("counter", ["entity_component", "_", "name"]),
+            ("decrement", ["services", "decrement", "name"]),
+            ("increment", ["services", "increment", "name"]),
+            ("reset", ["services", "reset", "name"]),
         ],
     ),
     (  # SWITCH

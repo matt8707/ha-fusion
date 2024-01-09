@@ -53,7 +53,6 @@
 			component: Button,
 			props: {
 				demo: $demo.sensor,
-				entity_id: undefined,
 				sel
 			}
 		},

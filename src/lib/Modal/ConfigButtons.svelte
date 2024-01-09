@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { dashboard, record, lang, editMode, ripple, motion } from '$lib/Stores';
 	import { tick } from 'svelte';
-	import { closeModal } from 'svelte-modals';
+	import { closeModal, openModal } from 'svelte-modals';
 	import Ripple from 'svelte-ripple';
 	import { fade } from 'svelte/transition';
 
@@ -71,7 +71,7 @@
 
 	/**
 	 * When clicking 'change type' in modal, close modal
-	 * and programmatically click 'edit' on sidebar or main item
+	 * and open SidebarItemConfig modal
 	 */
 	async function handleChangeType() {
 		const item = ((item: { id: string }) =>
@@ -83,13 +83,14 @@
 			mainItem(item);
 		}
 
-		const element = document.getElementById(String(sel?.id));
-
-		await tick();
 		closeModal();
 
-		const div = element?.querySelector('div');
-		if (div) div.click();
+		openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), {
+			sel: {
+				type: 'configure',
+				id: sel?.id
+			}
+		});
 	}
 </script>
 

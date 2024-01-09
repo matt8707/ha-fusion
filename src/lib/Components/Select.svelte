@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { lang, selectHover } from '$lib/Stores';
-	import { onMount, onDestroy, tick } from 'svelte';
+	import { lang } from '$lib/Stores';
+	import { onMount, tick } from 'svelte';
 	import Svelecte from 'svelecte';
 	import SelectItem from '$lib/Components/SelectItem.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -11,141 +11,86 @@
 	export let customItems = false;
 
 	let container: HTMLDivElement;
-	let clearable = false;
-	let dropdownOpen = false;
-
-	let observer: MutationObserver;
-	let dropdownObserver: MutationObserver;
-
-	$: if (!dropdownOpen) $selectHover = undefined;
+	let key = false;
 
 	const dispatch = createEventDispatcher();
 
-	const i18n = {
-		empty: $lang('no_entities'),
-		nomatch: $lang('nothing_found')
-	};
-
-	const style = `
-    --sv-bg: rgba(0, 0, 0, 0.2);
-    --sv-border-color: rgba(255, 255, 255, 0.3);
-    --sv-item-color: inherit;
-    --sv-item-active-bg: #3f4042;
-    --sv-highlight-bg: rgba(255, 222, 0, 0.4);
-		--sv-dropdown-height: 19rem;
-		--sv-placeholder-color: rgba(255, 255, 255, 0.6);
-  `;
-
-	/**
-	 * Observe parent '.svelecte' for the addition of '.sv-dropdown'.
-	 * Then observe '.sv-dropdown' for changes to 'aria-expanded'.
-	 * Set `dropdownOpen` based on observed 'aria-expanded'.
-	 */
 	onMount(() => {
-		const _svelecte = container?.querySelector('.svelecte');
-		if (!_svelecte) return;
-
-		observer = new MutationObserver((mutations) => {
-			const _dropdown = mutations
-				.flatMap((m) => Array.from(m.addedNodes))
-				.find((node) => node instanceof Element && node.matches('.sv-dropdown')) as Element;
-			if (!_dropdown) return;
-
-			dropdownOpen = _dropdown.getAttribute('aria-expanded') === 'true';
-
-			dropdownObserver = new MutationObserver((attrMutations) => {
-				attrMutations.forEach(({ type, attributeName, target }) => {
-					if (type === 'attributes' && attributeName === 'aria-expanded') {
-						dropdownOpen = (target as Element).getAttribute('aria-expanded') === 'true';
-					}
-				});
-			});
-			dropdownObserver.observe(_dropdown, { attributes: true });
-
-			observer.disconnect();
-		});
-
-		observer.observe(_svelecte, { childList: true });
-
 		// fix chrome warning on svelecte
 		const input = container?.querySelector('.sv-control > .sv-content > input');
 		if (input) input.setAttribute('autocomplete', 'off');
 	});
 
-	onDestroy(() => {
-		observer?.disconnect();
-		dropdownObserver?.disconnect();
-	});
-
+	/**
+	 * Handle select changes
+	 */
 	async function handleChange(event: any) {
-		if (event?.detail?.id) {
-			dispatch('change', event.detail.id);
-			await tick();
-			$selectHover = undefined;
+		const value = event?.detail?.id;
+		if (!value) return;
 
-			// blur input on select
-			(container?.querySelector('#select') as HTMLElement)?.blur();
-		}
+		// dispatch to parent component
+		dispatch('change', value);
+
+		// key
+		trigger();
+
+		// blur input on:change otherwise have to click twice
+		const element = container?.querySelector('#select') as HTMLElement;
+		element?.blur();
 	}
 
-	function handleKeydown(event: KeyboardEvent) {
-		// svelecte blocks page refresh shortcut when input is focused...
-		if ((event.metaKey || event.ctrlKey) && event.key === 'r') {
-			location.reload();
-		}
-
-		// arrow keys
-		if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-			setTimeout(() => {
-				const position = container?.querySelector('.sv-dd-item-active')?.getAttribute('data-pos');
-				if (position) $selectHover = options?.[position]?.id;
-			}, 0);
-		}
+	/**
+	 * Component re-render to fix virtualList rendering
+	 * https://github.com/mskocik/svelecte/issues/196
+	 */
+	async function trigger() {
+		// fix `TypeError: scrollContainer is null`
+		await tick();
+		// key change triggers rerender
+		key = !key;
 	}
 
-	// on:pointermove={handleEvent}
-
-	// function handleEvent(event: MouseEvent) {
-	// 	if (!dropdownOpen) return;
-	// 	const target = event.target as HTMLElement;
-	// 	if (target.classList.contains('sv-item-content')) {
-	// 		$selectHover = target.innerText;
-	// 	}
-	// }
+	const props = {
+		name: 'select',
+		inputId: 'select',
+		virtualList: true,
+		clearable: false,
+		i18n: {
+			empty: $lang('no_entities'),
+			nomatch: $lang('nothing_found')
+		},
+		style: `
+    --sv-bg: rgba(0, 0, 0, 0.2);
+    --sv-border-color: rgba(255, 255, 255, 0.3);
+    --sv-item-color: inherit;
+    --sv-item-active-bg: #3f4042;
+    --sv-highlight-bg: rgba(255, 222, 0, 0.4);
+		--sv-dropdown-height: 413px;
+		--sv-placeholder-color: rgba(255, 255, 255, 0.6);
+  `
+	};
 </script>
 
-<svelte:window on:keydown|capture={handleKeydown} />
-
 <div bind:this={container}>
-	{#if !customItems}
-		<Svelecte
-			bind:value
-			on:change={handleChange}
-			{style}
-			{options}
-			{clearable}
-			{placeholder}
-			{i18n}
-			name="select"
-			inputId="select"
-		/>
-	{:else}
-		<Svelecte
-			bind:value
-			on:change={handleChange}
-			{style}
-			{options}
-			{clearable}
-			{placeholder}
-			{i18n}
-			controlItem={SelectItem}
-			dropdownItem={SelectItem}
-			name="select"
-			inputId="select"
-		/>
-	{/if}
+	{#key key}
+		{#if customItems}
+			<Svelecte
+				bind:value
+				on:change={handleChange}
+				{options}
+				{placeholder}
+				controlItem={SelectItem}
+				dropdownItem={SelectItem}
+				{...props}
+			/>
+		{:else}
+			<Svelecte bind:value on:change={handleChange} {options} {placeholder} {...props} />
+		{/if}
+	{/key}
 
 	<style>
+		/* override styles */
+
 		.sv-control:focus {
 			outline: 1px solid yellow;
 		}
