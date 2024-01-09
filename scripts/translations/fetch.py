@@ -111,6 +111,15 @@ dir_keys = [
             ("camera", ["title"]),
         ],
     ),
+    (  # COUNTER
+        f"{COMPONENTS}/counter/translations/",
+        [
+            ("counter", ["entity_component", "_", "name"]),
+            ("decrement", ["services", "decrement", "name"]),
+            ("increment", ["services", "increment", "name"]),
+            ("reset", ["services", "reset", "name"]),
+        ],
+    ),
     (  # SWITCH
         f"{COMPONENTS}/switch/translations/",
         [
