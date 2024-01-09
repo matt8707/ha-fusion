@@ -16,8 +16,15 @@
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
 
+	const sizes = [
+		{ id: 'compact', label: 'Compact' },
+		{ id: 'small', label: 'Small' }
+	];
+
 	$: entity = $states[sel?.entity_id as any] as HassEntity;
 	$: entity_id = entity?.entity_id;
+	$: size = sel?.size || 'compact';
+	$: type = sel?.type || '';
 
 	if (demo) {
 		// replace history entry with demo
@@ -73,8 +80,10 @@
 
 		<h2>{$lang('preview')}</h2>
 
-		<div style:pointer-events="none">
-			<Button {sel} />
+		<div class="button-preview">
+			<div class="item" data-size={size} data-type={type}>
+				<Button {sel} />
+			</div>
 		</div>
 
 		<h2>{$lang('entity')}</h2>
@@ -128,6 +137,16 @@
 				style:padding
 			/>
 		</InputClear>
+
+		<h2>Size</h2>
+		<div class="size-selector">
+			<Select
+				options={sizes}
+				placeholder="Size"
+				value={size}
+				on:change={(event) => set('size', event)}
+			/>
+		</div>
 
 		<h2>
 			{$lang('icon')}
@@ -252,3 +271,33 @@
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
+
+<style>
+	.button-preview {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 4.5rem);
+		grid-auto-rows: repeat(2, 4.5rem);
+		grid-gap: 0.4rem;
+		pointer-events: none;
+	}
+
+	.item[data-type=''] {
+		display: none;
+	}
+
+	.item[data-size='compact'] {
+		grid-column: span 3;
+		grid-row: span 1;
+	}
+
+	.item[data-size='small'] {
+		grid-column: span 2;
+		grid-row: span 2;
+	}
+
+	.item[data-type='camera'],
+	.item[data-type='media'] {
+		grid-column: span 6;
+		grid-row: span 4;
+	}
+</style>

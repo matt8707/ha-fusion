@@ -1,16 +1,8 @@
 <script lang="ts">
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 	import StateLogic from '$lib/Components/StateLogic.svelte';
-	import {
-		connection,
-		editMode,
-		itemHeight,
-		lang,
-		motion,
-		onStates,
-		ripple,
-		states
-	} from '$lib/Stores';
+	import { connection, editMode, lang, motion, onStates, ripple, states } from '$lib/Stores';
+	import type { ButtonItem } from '$lib/Types';
 	import { getDomain, getName } from '$lib/Utils';
 	import Icon from '@iconify/svelte';
 	import { callService, type HassEntity } from 'home-assistant-js-websocket';
@@ -18,12 +10,13 @@
 	import Ripple from 'svelte-ripple';
 
 	export let demo: string | undefined = undefined;
-	export let sel: any;
+	export let sel: ButtonItem;
 
 	$: entity_id = demo || sel?.entity_id;
 	$: name = sel?.name;
 	$: icon = sel?.icon;
 	$: color = sel?.color;
+	$: size = sel?.size || 'compact';
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
 
@@ -260,7 +253,7 @@
 					});
 					break;
 				case 'device_tracker': {
-					const entity = $states?.[sel?.entity_id];
+					const entity = $states?.[sel?.entity_id!];
 					const attributes = entity?.attributes;
 					const entity_picture = attributes?.entity_picture;
 
@@ -272,7 +265,7 @@
 					break;
 				}
 				case 'person': {
-					const device_trackers = $states?.[sel?.entity_id]?.attributes?.device_trackers || [];
+					const device_trackers = $states?.[sel?.entity_id!]?.attributes?.device_trackers || [];
 					const gpsEntities = Object.values($states).filter(
 						(states) =>
 							device_trackers.includes(states.entity_id) && states.attributes?.source_type === 'gps'
@@ -283,7 +276,7 @@
 
 					openModal(async () => import('$lib/Modal/MapModal.svelte'), {
 						entity_id,
-						entity_picture: $states?.[sel?.entity_id]?.attributes?.entity_picture
+						entity_picture: $states?.[sel?.entity_id!]?.attributes?.entity_picture
 					});
 
 					break;
@@ -348,9 +341,9 @@
 	class="container"
 	bind:this={container}
 	data-state={stateOn}
+	data-size={size}
+	data-edit-mode={$editMode}
 	tabindex="-1"
-	style={!$editMode ? 'cursor: pointer;' : ''}
-	style:height="{$itemHeight}px"
 	on:pointerenter={handlePointer}
 	on:pointerdown={handlePointer}
 	use:Ripple={{
@@ -397,7 +390,7 @@
 		</div>
 	</div>
 
-	<div class="right" on:click|stopPropagation={handleEvent}>
+	<div class="right" on:click|stopPropagation={handleEvent} data-size={size}>
 		<!-- NAME -->
 		<div class="name" data-state={stateOn}>
 			{getName({ name }, entity) || $lang('unknown')}
@@ -424,18 +417,30 @@
 	.container {
 		background-color: var(--theme-button-background-color-off);
 		font-family: inherit;
-		width: 14.5rem;
 		display: grid;
 		border-radius: 0.65rem;
-		margin: 0;
-		grid-template-columns: min-content auto;
+		height: 100%;
 		grid-auto-flow: row;
-		grid-template-areas: 'left right';
-		--container-padding: 0.8rem;
+		--container-padding: 0.7rem;
 
 		/* fix ripple */
 		transform: translateZ(0);
 		overflow: hidden;
+	}
+
+	.container[data-edit-mode='true'] {
+		cursor: pointer;
+	}
+
+	.container[data-size='compact'] {
+		grid-template-columns: min-content auto;
+		grid-template-areas: 'left right';
+	}
+
+	.container[data-size='small'] {
+		grid-template-areas:
+			'icon  circle'
+			'right right';
 	}
 
 	.image {
@@ -445,20 +450,26 @@
 
 	.left {
 		padding: var(--container-padding);
+		display: flex;
+		align-items: center;
 	}
 
 	.right {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		overflow: hidden;
 		gap: 1px;
-		margin-top: -1px;
+		grid-area: right;
+		padding: var(--container-padding);
+		justify-content: center;
+	}
+
+	.right[data-size='small'] {
+		justify-content: end;
 	}
 
 	.icon {
 		--icon-size: 2.5rem;
-		grid-area: icon;
 		height: var(--icon-size);
 		width: var(--icon-size);
 		color: rgb(200 200 200);
@@ -469,7 +480,6 @@
 	}
 
 	.name {
-		grid-area: name;
 		font-weight: 500;
 		color: inherit;
 		white-space: nowrap;
@@ -480,7 +490,6 @@
 	}
 
 	.state {
-		grid-area: state;
 		font-weight: 400;
 		white-space: nowrap;
 		overflow: hidden;
@@ -510,7 +519,7 @@
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		.container {
-			width: calc(50vw - 1.45rem);
+			--container-padding: 0.6rem;
 		}
 	}
 </style>

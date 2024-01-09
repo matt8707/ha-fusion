@@ -134,14 +134,6 @@
 			};
     `;
 	}
-
-	function itemStyles(type: string) {
-		return `
-			grid-column: ${type === 'media' || type === 'camera' ? 'span 2' : 'span 1'};
-			grid-row: ${type === 'media' || type === 'camera' ? 'span 4' : 'span 1'};
-			display: ${type ? '' : 'none'};
-    `;
-	}
 </script>
 
 <main
@@ -195,10 +187,11 @@
 									<div
 										id={item?.id}
 										data-is-dnd-shadow-item-hint={item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+										data-size={item?.size || 'compact'}
+										data-type={item?.type || ''}
 										class="item"
 										animate:flip={{ duration: $motion }}
 										tabindex="-1"
-										style={itemStyles(item?.type)}
 									>
 										<Content {item} />
 									</div>
@@ -223,10 +216,11 @@
 						<div
 							id={item?.id}
 							data-is-dnd-shadow-item-hint={item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+							data-size={item?.size || 'compact'}
+							data-type={item?.type || ''}
 							class="item"
 							animate:flip={{ duration: $motion }}
 							tabindex="-1"
-							style={itemStyles(item?.type)}
 						>
 							<Content {item} />
 						</div>
@@ -265,11 +259,10 @@
 		border-radius: 0.6rem;
 		outline-offset: -2px;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, 14.5rem);
-		grid-auto-rows: min-content;
+		grid-template-columns: repeat(auto-fill, 4.5rem);
+		grid-auto-rows: 4.5rem;
 		gap: 0.4rem;
 		border-radius: 0.6rem;
-		height: 100%;
 	}
 
 	.item {
@@ -277,20 +270,37 @@
 		border-radius: 0.65rem;
 	}
 
+	.item[data-type=''] {
+		display: none;
+	}
+
+	.item[data-size='compact'] {
+		grid-column: span 3;
+		grid-row: span 1;
+	}
+
+	.item[data-size='small'] {
+		grid-column: span 2;
+		grid-row: span 2;
+	}
+
+	.item[data-type='camera'],
+	.item[data-type='media'] {
+		grid-column: span 6;
+		grid-row: span 4;
+	}
+
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		main {
-			padding: 0 1.25rem 1.25rem 1.25rem;
+			padding: 0 1rem 1rem 1rem;
 		}
-
 		.horizontal-stack {
 			grid-auto-flow: row;
-			gap: 1.5rem;
 		}
-
 		.items {
-			display: flex;
-			flex-wrap: wrap;
+			grid-template-columns: repeat(auto-fill, calc((100vw - 0.4rem * 5 - 2rem) / 6));
+			grid-auto-rows: calc((100vw - 0.4rem * 5 - 2rem) / 6);
 		}
 	}
 </style>

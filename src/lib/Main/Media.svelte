@@ -81,11 +81,7 @@
 	}
 </script>
 
-<div
-	class="media-container"
-	style:background-image={backgroundImage}
-	style:height="calc({$itemHeight}px * 4 + 0.4rem * 3)"
->
+<div class="media-container" style:background-image={backgroundImage}>
 	{#if entity?.attributes?.app_id === 'com.google.ios.youtube' && backgroundImage === 'none'}
 		<div class="youtube-icon">
 			<Icon icon="logos:youtube-icon" height="auto" width="100%" />
@@ -205,6 +201,8 @@
 
 	.left {
 		padding: var(--container-padding);
+		display: flex;
+		align-items: center;
 	}
 
 	.right {
@@ -230,21 +228,14 @@
 	.media-container {
 		display: grid;
 		overflow: hidden;
-		--container-padding: 0.8rem;
+		height: 100%;
+		--container-padding: 0.7rem;
 		position: relative;
 		color: white;
-		width: calc(14.5rem * 2 + 0.4rem);
 		border-radius: 0.65rem;
 		background-color: var(--theme-button-background-color-off);
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
-	}
-
-	/* Phone and Tablet (portrait) */
-	@media all and (max-width: 768px) {
-		.media-container {
-			width: calc(100vw - (1.25rem + 1.25rem));
-		}
 	}
 </style>
