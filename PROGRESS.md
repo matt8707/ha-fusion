@@ -64,7 +64,7 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] input_select
   - [x] <https://github.com/matt8707/ha-fusion/issues/4>
 - [x] select
-  - [ ] use svelecte
+  - [x] use svelecte
 - [x] text
   - [x] input field in modal
 - [x] input_text
@@ -73,7 +73,7 @@ List grouped by domains and categorized based on their similar behaviors
 - [ ] vacuum
   - [ ] idea: custom map if map camera
   - [ ] <https://github.com/matt8707/ha-fusion/issues/24>
-- [ ] counter
+- [x] counter
 
 ### Date
 

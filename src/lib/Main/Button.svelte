@@ -229,6 +229,10 @@
 					openModal(() => import('$lib/Modal/TimerModal.svelte'), { sel });
 					break;
 
+				case 'counter':
+					openModal(() => import('$lib/Modal/CounterModal.svelte'), { sel });
+					break;
+
 				case 'alarm_control_panel':
 					openModal(() => import('$lib/Modal/AlarmControlPanelModal.svelte'), {
 						sel
