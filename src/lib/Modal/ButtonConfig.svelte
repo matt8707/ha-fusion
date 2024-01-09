@@ -8,7 +8,7 @@
 	import Ripple from 'svelte-ripple';
 	import InputClear from '$lib/Components/InputClear.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
-	import { updateObj, getDomain, getName, itemStyles } from '$lib/Utils';
+	import { updateObj, getDomain, getName } from '$lib/Utils';
 	import type { ButtonItem } from '$lib/Types';
 	import type { HassEntity } from 'home-assistant-js-websocket';
 
@@ -24,6 +24,7 @@
 	$: entity = $states[sel?.entity_id as any] as HassEntity;
 	$: entity_id = entity?.entity_id;
 	$: size = sel?.size || 'compact';
+	$: type = sel?.type || '';
 
 	if (demo) {
 		// replace history entry with demo
@@ -80,7 +81,7 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="button-preview">
-			<div style={itemStyles(sel)}>
+			<div class="item" data-size={size} data-type={type}>
 				<Button {sel} />
 			</div>
 		</div>
@@ -277,5 +278,26 @@
 		grid-template-columns: repeat(auto-fill, 4.5rem);
 		grid-auto-rows: repeat(2, 4.5rem);
 		grid-gap: 0.4rem;
+		pointer-events: none;
+	}
+
+	.item[data-type=''] {
+		display: none;
+	}
+
+	.item[data-size='compact'] {
+		grid-column: span 3;
+		grid-row: span 1;
+	}
+
+	.item[data-size='small'] {
+		grid-column: span 2;
+		grid-row: span 2;
+	}
+
+	.item[data-type='camera'],
+	.item[data-type='media'] {
+		grid-column: span 6;
+		grid-row: span 4;
 	}
 </style>

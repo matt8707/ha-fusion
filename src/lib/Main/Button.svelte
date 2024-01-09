@@ -1,16 +1,7 @@
 <script lang="ts">
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 	import StateLogic from '$lib/Components/StateLogic.svelte';
-	import {
-		connection,
-		editMode,
-		itemHeight,
-		lang,
-		motion,
-		onStates,
-		ripple,
-		states
-	} from '$lib/Stores';
+	import { connection, editMode, lang, motion, onStates, ripple, states } from '$lib/Stores';
 	import type { ButtonItem } from '$lib/Types';
 	import { getDomain, getName } from '$lib/Utils';
 	import Icon from '@iconify/svelte';
@@ -25,7 +16,7 @@
 	$: name = sel?.name;
 	$: icon = sel?.icon;
 	$: color = sel?.color;
-	$: size = sel?.size;
+	$: size = sel?.size || 'compact';
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
 
@@ -341,30 +332,6 @@
 		}
 		if (module) module.default;
 	}
-
-	function getItemStyles(sel: ButtonItem) {
-		return `
-			cursor: ${$editMode ? 'pointer' : ''};
-			grid-template-columns: ${sel.size === 'small' ? '' : 'min-content auto'};
-			grid-template-areas: 
-				${
-					sel.size === 'small'
-						? `
-							'icon  circle'
-							'right right'
-						`
-						: `
-							'left right'
-						`
-				};
-		`;
-	}
-
-	function getRightStyles(sel: ButtonItem) {
-		return `
-			justify-content: ${sel.size === 'small' ? 'end' : 'center'};
-		`;
-	}
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -374,8 +341,9 @@
 	class="container"
 	bind:this={container}
 	data-state={stateOn}
+	data-size={size}
+	data-edit-mode={$editMode}
 	tabindex="-1"
-	style={getItemStyles(sel)}
 	on:pointerenter={handlePointer}
 	on:pointerdown={handlePointer}
 	use:Ripple={{
@@ -422,7 +390,7 @@
 		</div>
 	</div>
 
-	<div class="right" on:click|stopPropagation={handleEvent} style={getRightStyles(sel)}>
+	<div class="right" on:click|stopPropagation={handleEvent} data-size={size}>
 		<!-- NAME -->
 		<div class="name" data-state={stateOn}>
 			{getName({ name }, entity) || $lang('unknown')}
@@ -453,12 +421,26 @@
 		border-radius: 0.65rem;
 		height: 100%;
 		grid-auto-flow: row;
-		grid-template-areas: 'left right';
 		--container-padding: 0.7rem;
 
 		/* fix ripple */
 		transform: translateZ(0);
 		overflow: hidden;
+	}
+
+	.container[data-edit-mode='true'] {
+		cursor: pointer;
+	}
+
+	.container[data-size='compact'] {
+		grid-template-columns: min-content auto;
+		grid-template-areas: 'left right';
+	}
+
+	.container[data-size='small'] {
+		grid-template-areas:
+			'icon  circle'
+			'right right';
 	}
 
 	.image {
@@ -479,6 +461,11 @@
 		gap: 1px;
 		grid-area: right;
 		padding: var(--container-padding);
+		justify-content: center;
+	}
+
+	.right[data-size='small'] {
+		justify-content: end;
 	}
 
 	.icon {
@@ -531,12 +518,6 @@
 
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
-		.name {
-			font-size: 0.85rem;
-		}
-		.state {
-			font-size: calc(var(--theme-drawer-font-size) - 0.2rem);
-		}
 		.container {
 			--container-padding: 0.6rem;
 		}

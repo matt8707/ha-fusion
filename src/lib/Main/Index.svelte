@@ -6,8 +6,6 @@
 	import Content from '$lib/Main/Content.svelte';
 	import SectionHeader from '$lib/Main/SectionHeader.svelte';
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
-	import type { ButtonItem } from '$lib/Types';
-	import { itemStyles } from '$lib/Utils';
 
 	export let view: any;
 
@@ -189,10 +187,11 @@
 									<div
 										id={item?.id}
 										data-is-dnd-shadow-item-hint={item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+										data-size={item?.size || 'compact'}
+										data-type={item?.type || ''}
 										class="item"
 										animate:flip={{ duration: $motion }}
 										tabindex="-1"
-										style={itemStyles(item)}
 									>
 										<Content {item} />
 									</div>
@@ -217,10 +216,11 @@
 						<div
 							id={item?.id}
 							data-is-dnd-shadow-item-hint={item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+							data-size={item?.size || 'compact'}
+							data-type={item?.type || ''}
 							class="item"
 							animate:flip={{ duration: $motion }}
 							tabindex="-1"
-							style={itemStyles(item)}
 						>
 							<Content {item} />
 						</div>
@@ -268,6 +268,26 @@
 	.item {
 		position: relative;
 		border-radius: 0.65rem;
+	}
+
+	.item[data-type=''] {
+		display: none;
+	}
+
+	.item[data-size='compact'] {
+		grid-column: span 3;
+		grid-row: span 1;
+	}
+
+	.item[data-size='small'] {
+		grid-column: span 2;
+		grid-row: span 2;
+	}
+
+	.item[data-type='camera'],
+	.item[data-type='media'] {
+		grid-column: span 6;
+		grid-row: span 4;
 	}
 
 	/* Phone and Tablet (portrait) */
