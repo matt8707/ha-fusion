@@ -15,6 +15,8 @@
 			{:then inPlaceEdit}
 				<svelte:component this={inPlaceEdit.default} bind:value={section.name} />
 			{/await}
+		{:else if section.name === ''}
+			<div class="placeholder" />
 		{:else}
 			{section.name}
 		{/if}
@@ -42,6 +44,13 @@
 		padding: 0;
 		font-size: 1.8rem;
 		font-weight: 600;
+		margin-block-start: 0;
+		margin-block-end: 0.4rem;
+	}
+
+	.placeholder {
+		padding: 0;
+		height: 1.8rem;
 		margin-block-start: 0;
 		margin-block-end: 0.4rem;
 	}
