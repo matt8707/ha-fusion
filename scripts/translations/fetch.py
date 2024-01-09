@@ -88,6 +88,9 @@ dir_keys = [
             ("open_tilt_cover", ["ui.card.cover.open_tilt_cover"]),
             ("close_tilt_cover", ["ui.card.cover.close_tilt_cover"]),
             ("add", ["ui.common.add"]),
+            ("text", ["ui.dialogs.helper_settings.input_text.text"]),
+            ("password", ["ui.dialogs.helper_settings.input_text.password"]),
+            ("show_password", ["ui.components.selectors.text.show_password"]),
         ],
     ),
     (  # MEDIA_PLAYER
