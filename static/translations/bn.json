@@ -103,6 +103,7 @@
 	"period_week": "Week",
 	"picture": "Picture",
 	"position": "Position",
+	"precision": "Display precision",
 	"preview": "\u09aa\u09c2\u09b0\u09cd\u09ac\u09b0\u09c2\u09aa \u09ac\u09cd\u09b2\u09c1\u09aa\u09cd\u09b0\u09bf\u09a8\u09cd\u099f",
 	"raw": "Raw configuration editor",
 	"remove": "Remove",

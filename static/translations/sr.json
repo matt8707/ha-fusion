@@ -125,6 +125,7 @@
 	"period_week": "Week",
 	"picture": "Picture",
 	"position": "Position",
+	"precision": "Display precision",
 	"preview": "Preview",
 	"raw": "Raw configuration editor",
 	"remove": "Remove",

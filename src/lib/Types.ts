@@ -66,6 +66,7 @@ export interface ButtonItem {
 	icon?: string;
 	color?: string;
 	marquee?: boolean;
+	precision: number;
 	more_info?: boolean;
 }
 

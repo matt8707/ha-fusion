@@ -10,9 +10,9 @@
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import { updateObj, getDomain, getName, itemStyles } from '$lib/Utils';
 	import type { ButtonItem } from '$lib/Types';
+	import type { HassEntity } from 'home-assistant-js-websocket';
 
 	export let isOpen: boolean;
-
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
 
@@ -20,6 +20,10 @@
 		{ id: 'compact', label: 'Compact' },
 		{ id: 'small', label: 'Small' }
 	];
+
+	$: entity = $states[sel?.entity_id as any] as HassEntity;
+	$: entity_id = entity?.entity_id;
+	$: size = sel?.size || 'compact';
 
 	if (demo) {
 		// replace history entry with demo
@@ -32,9 +36,6 @@
 	// untested
 	let color = sel?.color;
 	// (maybe make reactive)
-
-	$: entity_id = sel?.entity_id;
-	$: size = sel?.size || 'compact';
 
 	let icon: string | undefined = sel?.icon;
 
@@ -206,6 +207,23 @@
 				style:padding
 			/>
 		</InputClear>
+
+		{#if !isNaN(parseFloat(entity?.state)) && !Number.isInteger(parseFloat(entity?.state))}
+			{@const precisionValues = [undefined, 0, 1, 2, 3, 4, 5]}
+			<h2>{$lang('precision')}</h2>
+
+			<div class="button-container">
+				{#each precisionValues as precision}
+					<button
+						class:selected={sel?.precision === precision}
+						on:click={() => set('precision', precision)}
+						use:Ripple={$ripple}
+					>
+						{precision === undefined ? '∅' : precision}
+					</button>
+				{/each}
+			</div>
+		{/if}
 
 		<h2>{$lang('show_more_info')}</h2>
 

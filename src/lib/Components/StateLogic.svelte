@@ -17,6 +17,11 @@
 	$: brightness = attributes?.brightness;
 	$: percentage = attributes?.percentage;
 	$: media_title = attributes?.media_title;
+
+	$: statePrecision =
+		selected?.precision !== undefined && !isNaN(parseFloat(entity?.state))
+			? parseFloat(entity?.state).toFixed(selected?.precision)
+			: undefined;
 </script>
 
 <!-- Light -->
@@ -91,7 +96,12 @@
 	{#if selected?.marquee && contentWidth && contentWidth > 153 && !$editMode}
 		{#await import('$lib/Components/Marquee.svelte') then Marquee}
 			<svelte:component this={Marquee.default}>
-				{@html $lang(state) || state}
+				{#if statePrecision}
+					{statePrecision}
+				{:else}
+					{@html $lang(state) || state}
+				{/if}
+
 				<!-- Unit -->
 				{#if attributes?.unit_of_measurement}
 					{attributes.unit_of_measurement}
@@ -100,7 +110,12 @@
 			</svelte:component>
 		{/await}
 	{:else}
-		{@html $lang(state) || state}
+		{#if statePrecision}
+			{statePrecision}
+		{:else}
+			{@html $lang(state) || state}
+		{/if}
+
 		<!-- Unit -->
 		{#if attributes?.unit_of_measurement}
 			{attributes.unit_of_measurement}
