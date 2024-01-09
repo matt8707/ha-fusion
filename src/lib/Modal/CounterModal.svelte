@@ -71,8 +71,10 @@
 				on:click={() => {
 					handleClick('reset');
 				}}
-				use:Ripple={$ripple}>Återställ</button
+				use:Ripple={$ripple}
 			>
+				{$lang('reset')}
+			</button>
 			<ConfigButtons {sel} />
 		</div>
 	</Modal>
