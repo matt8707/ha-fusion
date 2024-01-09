@@ -65,9 +65,9 @@ List grouped by domains and categorized based on their similar behaviors
   - [x] <https://github.com/matt8707/ha-fusion/issues/4>
 - [x] select
   - [ ] use svelecte
-- [ ] text
-  - [ ] input field in modal
-- [ ] input_text
+- [x] text
+  - [x] input field in modal
+- [x] input_text
 - [ ] todo
   - [ ] modal has a shopping_list functionality
 - [ ] vacuum
@@ -77,11 +77,11 @@ List grouped by domains and categorized based on their similar behaviors
 
 ### Date
 
-- [ ] date
+- [x] date
 - [x] datetime
 - [x] input_datetime
   - [ ] parse date in state
-- [ ] time
+- [x] time
   - [ ] time input like `timer`
 - [x] timer
   - [x] when set state in modal don't stop timer
