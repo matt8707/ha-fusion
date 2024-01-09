@@ -106,6 +106,3 @@ export const dragging = writable<boolean>(false);
 // codemirror
 export const autocompleteOpen = writable(false);
 export const autocompleteList = derived(states, ($states) => Object.keys($states));
-
-// svelecte
-export const selectHover = writable();
