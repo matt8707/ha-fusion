@@ -91,6 +91,7 @@ dir_keys = [
             ("text", ["ui.dialogs.helper_settings.input_text.text"]),
             ("password", ["ui.dialogs.helper_settings.input_text.password"]),
             ("show_password", ["ui.components.selectors.text.show_password"]),
+            ("precision", ["ui.dialogs.entity_registry.editor.precision"]),
         ],
     ),
     (  # MEDIA_PLAYER
