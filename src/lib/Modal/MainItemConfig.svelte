@@ -161,7 +161,7 @@
 						{type}
 					</div>
 
-					<div class="preview" class:camera={id === 'camera'}>
+					<div class="preview" data-id={id}>
 						<svelte:component this={component} {...props} />
 					</div>
 				</button>
@@ -173,11 +173,6 @@
 {/if}
 
 <style>
-	.camera {
-		transform: scale(0.5);
-		transform-origin: top left;
-	}
-
 	.container {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
@@ -192,28 +187,35 @@
 		padding: 0;
 		font-family: inherit;
 		cursor: pointer;
+		grid-template-rows: min-content auto;
+		grid-template-areas:
+			'header'
+			'preview';
 		border: 1px solid rgba(255, 255, 255, 0.2);
 		border-radius: 0.8em;
 		background-color: rgba(0, 0, 0, 0.2);
 		height: 10rem;
 		outline-offset: -2px;
+		align-items: center;
 	}
 
 	.header {
+		grid-area: header;
 		background-color: rgba(0, 0, 0, 0.2);
 		padding: 0.8em 1em 0.7em 1em;
 		color: white;
 		font-weight: 500;
-		display: inline-flex;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 		font-size: 1rem;
-		height: min-content;
 	}
 
 	.preview {
-		color: white;
-		padding: 0 1.5rem;
-		min-width: -webkit-fill-available;
+		grid-area: preview;
+		padding: 0.5rem 1.5rem;
+	}
+
+	.preview[data-id='camera'] {
+		height: 100%;
 	}
 
 	.search {

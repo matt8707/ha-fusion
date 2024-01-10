@@ -464,12 +464,12 @@
 		overflow: hidden;
 		gap: 1px;
 		grid-area: right;
-		padding: var(--container-padding);
 		justify-content: center;
 	}
 
 	.right[data-size='small'] {
 		justify-content: end;
+		padding: var(--container-padding);
 	}
 
 	.icon {
