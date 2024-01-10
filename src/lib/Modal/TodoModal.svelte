@@ -241,12 +241,15 @@
 						data-exclude-drag-modal
 					>
 						<div class="label-container">
-							<input
-								type="checkbox"
-								checked={item.status === 'completed' ? true : false}
-								class="input-checkbox"
-								on:input={(event) => handleStatus(event, item.uid)}
-							/>
+							<label for={item.uid} class="hitbox">
+								<input
+									id={item.uid}
+									type="checkbox"
+									checked={item.status === 'completed' ? true : false}
+									class="input-checkbox"
+									on:input={(event) => handleStatus(event, item.uid)}
+								/>
+							</label>
 							<!-- svelte-ignore a11y-click-events-have-key-events -->
 							<!-- svelte-ignore a11y-no-static-element-interactions -->
 							<span
@@ -377,7 +380,6 @@
 		flex-grow: 1;
 		margin-right: 0.5rem;
 		padding: 0.8rem;
-		cursor: pointer;
 		width: 100%;
 		justify-content: space-between;
 	}
@@ -392,11 +394,19 @@
 	.item-name {
 		flex-grow: 1;
 		margin-left: 0.5rem;
+		cursor: text;
 	}
 
 	.add-config-button {
 		display: flex;
 		justify-content: space-between;
 		width: 100%;
+	}
+
+	.hitbox {
+		display: inline-block;
+		padding: 14px 8px 14px 14px;
+		margin: -14px -8px -14px -14px;
+		cursor: pointer;
 	}
 </style>
