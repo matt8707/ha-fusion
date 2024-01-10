@@ -33,8 +33,14 @@
 		}
 
 		try {
+			const formDataToObject = (formData: FormData) => {
+				const object: Record<string, string | File> = {};
+				formData.forEach((value, key) => (object[key] = value));
+				return object;
+			};
+
 			const data = new FormData(formElement);
-			const form = Object.fromEntries(data);
+			const form = formDataToObject(data);
 
 			const addons = {
 				...(form.youtube_watching && { youtube_watching: { entity_id: form.youtube_watching } }),

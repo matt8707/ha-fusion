@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { config, connected, dashboard, lang, motion, connection } from '$lib/Stores';
+	import { config, connected, dashboard, lang, motion, connection, event } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 
@@ -73,6 +73,18 @@
 	}
 
 	onDestroy(() => clearTimeout(timeout));
+
+	// external event toast
+	$: if ($event) displayEvent();
+	function displayEvent() {
+		clearTimeout(timeout);
+		message = $event;
+
+		timeout = setTimeout(() => {
+			message = undefined;
+			$event = undefined;
+		}, 3500);
+	}
 </script>
 
 {#if message}

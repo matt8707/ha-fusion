@@ -222,6 +222,10 @@
 					openModal(() => import('$lib/Modal/TimerModal.svelte'), { sel });
 					break;
 
+				case 'todo':
+					openModal(() => import('$lib/Modal/TodoModal.svelte'), { sel });
+					break;
+
 				case 'counter':
 					openModal(() => import('$lib/Modal/CounterModal.svelte'), { sel });
 					break;
