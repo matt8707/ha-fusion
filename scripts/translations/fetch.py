@@ -345,6 +345,9 @@ dir_keys = [
             ("alarm_modes_disarmed", ["ui.panel.lovelace.editor.features.types.alarm-modes.modes_list.disarmed"]),
             ("buttons", ["ui.panel.lovelace.editor.card.entities.entity_row.buttons"]),
             ("show_more_info", ["ui.panel.lovelace.cards.show_more_info"]),
+            ("todo_list", ["ui.panel.lovelace.editor.card.todo-list.name"]),
+            ("clear_items", ["ui.panel.lovelace.cards.todo-list.clear_items"]),
+            ("add_item", ["ui.panel.lovelace.cards.todo-list.add_item"]),
         ],
     ),
     (  # DEVELOPER-TOOLS

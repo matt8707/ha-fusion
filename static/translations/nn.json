@@ -1,5 +1,6 @@
 {
 	"add": "Add",
+	"add_item": "Add item",
 	"add_view": "Legg til side",
 	"addons": "Tillegg",
 	"after": "Etter",
@@ -21,6 +22,7 @@
 	"card_configuration": "Kortkonfigurasjon",
 	"change_color": "Endre farge",
 	"change_type": "Endre type",
+	"clear_items": "Remove completed items",
 	"close_cover": "Close cover",
 	"close_tilt_cover": "Close cover tilt",
 	"code": "Kode",
@@ -147,6 +149,7 @@
 	"time_format_description": "Vel korleis tider er formater.",
 	"time_format_header": "Tidsformat",
 	"timer": "Tidtakar",
+	"todo_list": "To-do list",
 	"toggle": "Veksle",
 	"token": "Langtidslevande tilgangstokenar",
 	"unavailable": "Utilgjengeleg",
