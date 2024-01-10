@@ -163,28 +163,34 @@
 			return mode === 'dark' ? colors?.[key]?.dark : colors?.[key]?.light;
 		};
 
-		for (const element of container.querySelectorAll('.maplibregl-ctrl')) {
-			// background-color
-			(element as HTMLDivElement).style.backgroundColor = theme('backgroundColor');
-
-			// box-shadow
-			(element as HTMLDivElement).style.boxShadow = theme('boxShadow');
+		const elements = Array.from(container.querySelectorAll('.maplibregl-ctrl'));
+		// background-color and box-shadow
+		for (const element of elements) {
+			const divElement = element as HTMLDivElement;
+			divElement.style.backgroundColor = theme('backgroundColor');
+			divElement.style.boxShadow = theme('boxShadow');
 
 			// border-top
-			for (const button of element.querySelectorAll('button + button')) {
-				(button as HTMLButtonElement).style.borderTop = theme('borderTop');
+			const buttons = Array.from(element.querySelectorAll('button + button'));
+			for (const button of buttons) {
+				const buttonElement = button as HTMLButtonElement;
+				buttonElement.style.borderTop = theme('borderTop');
 			}
 
 			// uri encoded background svg fill
-			for (const span of element.querySelectorAll('button span')) {
-				(span as HTMLSpanElement).style.backgroundImage = window
-					.getComputedStyle(span)
-					.backgroundImage.replace(
+			const spans = Array.from(element.querySelectorAll('button span'));
+			for (const span of spans) {
+				const spanElement = span as HTMLSpanElement;
+				const computedStyle = window.getComputedStyle(spanElement);
+				if (computedStyle.backgroundImage) {
+					spanElement.style.backgroundImage = computedStyle.backgroundImage.replace(
 						controlButtonsIconColor || '%23333',
 						encodeURIComponent(theme('fill'))
 					);
+				}
 			}
 		}
+
 		controlButtonsIconColor = encodeURIComponent(theme('fill'));
 	}
 
