@@ -1,5 +1,6 @@
 {
 	"add": "\u6dfb\u52a0",
+	"add_item": "\u6dfb\u52a0\u9879\u76ee",
 	"add_view": "\u6dfb\u52a0\u89c6\u56fe",
 	"addons": "\u52a0\u8f7d\u9879",
 	"after": "\u665a\u4e8e",
@@ -20,6 +21,7 @@
 	"card_configuration": "\u5361\u7247\u914d\u7f6e",
 	"change_color": "\u66f4\u6539\u989c\u8272",
 	"change_type": "\u66f4\u6539\u7c7b\u578b",
+	"clear_items": "\u6e05\u9664\u5b8c\u6210\u9879\u76ee",
 	"close_cover": "Close cover",
 	"close_tilt_cover": "Close cover tilt",
 	"code": "\u4ee3\u7801",
@@ -144,6 +146,7 @@
 	"time_format_description": "\u9009\u62e9\u65f6\u95f4\u7684\u683c\u5f0f\u3002",
 	"time_format_header": "\u65f6\u95f4\u683c\u5f0f",
 	"timer": "\u8ba1\u65f6\u5668",
+	"todo_list": "\u5f85\u529e\u4e8b\u9879\u6e05\u5355",
 	"toggle": "\u5207\u6362",
 	"token": "\u957f\u671f\u8bbf\u95ee\u4ee4\u724c",
 	"unavailable": "\u4e0d\u53ef\u7528",

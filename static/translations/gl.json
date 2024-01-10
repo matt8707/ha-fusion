@@ -1,6 +1,7 @@
 {
 	"above_horizon": "Sobre o horizonte",
 	"add": "Engadir",
+	"add_item": "Engadir elementos",
 	"add_view": "Engadir vista",
 	"addons": "Complementos",
 	"after": "Despois de",
@@ -22,6 +23,7 @@
 	"card_configuration": "Configuraci\u00f3n da tarxeta",
 	"change_color": "Cambiar cor",
 	"change_type": "Cambiar tipo",
+	"clear_items": "Borrar elementos seleccionados",
 	"close_cover": "Pechar persiana",
 	"close_tilt_cover": "Pechar cuberta inclinada",
 	"code": "C\u00f3digo",
@@ -148,6 +150,7 @@
 	"time_format_description": "Escolle como se formatean as horas.",
 	"time_format_header": "Formato de tempo",
 	"timer": "Temporizador",
+	"todo_list": "Lista de quefaceres",
 	"toggle": "Alternar",
 	"token": "Tokens de acceso de longa duraci\u00f3n",
 	"unavailable": "Non dispo\u00f1ible",

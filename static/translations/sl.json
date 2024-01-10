@@ -1,5 +1,6 @@
 {
 	"add": "Add",
+	"add_item": "Add item",
 	"add_view": "Dodaj pogled",
 	"addons": "Dodatki",
 	"after": "Po",
@@ -28,6 +29,7 @@
 	"card_configuration": "Nastavitve kartice",
 	"change_color": "Sprememba barve",
 	"change_type": "Spremeni tip",
+	"clear_items": "Remove completed items",
 	"close_cover": "Close cover",
 	"close_tilt_cover": "Close cover tilt",
 	"closed": "Zaprto",
@@ -172,6 +174,7 @@
 	"time_format_description": "Izberite, kako so oblikovani \u010dasi.",
 	"time_format_header": "\u010casovni format",
 	"timer": "\u010casovnik",
+	"todo_list": "To-do list",
 	"toggle": "Preklopi",
 	"token": "Dolgotrajni dostopni \u017eetoni",
 	"unavailable": "Ni na voljo",
