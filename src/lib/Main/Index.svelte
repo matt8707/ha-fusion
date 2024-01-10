@@ -259,8 +259,8 @@
 		border-radius: 0.6rem;
 		outline-offset: -2px;
 		display: grid;
-		grid-template-columns: repeat(auto-fill, 4.5rem);
-		grid-auto-rows: 4.5rem;
+		grid-template-columns: repeat(auto-fill, 4rem);
+		grid-auto-rows: 4rem;
 		gap: 0.4rem;
 		border-radius: 0.6rem;
 	}
@@ -275,7 +275,7 @@
 	}
 
 	.item[data-size='compact'] {
-		grid-column: span 3;
+		grid-column: span 4;
 		grid-row: span 1;
 	}
 

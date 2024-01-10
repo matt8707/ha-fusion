@@ -275,8 +275,8 @@
 <style>
 	.button-preview {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, 4.5rem);
-		grid-auto-rows: repeat(2, 4.5rem);
+		grid-template-columns: repeat(auto-fill, 4rem);
+		grid-auto-rows: repeat(2, 4rem);
 		grid-gap: 0.4rem;
 		pointer-events: none;
 	}
@@ -286,7 +286,7 @@
 	}
 
 	.item[data-size='compact'] {
-		grid-column: span 3;
+		grid-column: span 4;
 		grid-row: span 1;
 	}
 
