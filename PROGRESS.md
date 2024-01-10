@@ -68,8 +68,8 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] text
   - [x] input field in modal
 - [x] input_text
-- [ ] todo
-  - [ ] modal has a shopping_list functionality
+- [x] todo
+  - [x] modal has a shopping_list functionality
 - [ ] vacuum
   - [ ] idea: custom map if map camera
   - [ ] <https://github.com/matt8707/ha-fusion/issues/24>
