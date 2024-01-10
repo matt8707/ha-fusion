@@ -77,6 +77,7 @@
 	"entity_not_found": "Az entit\u00e1s nem tal\u00e1lhat\u00f3",
 	"error": "Hiba",
 	"error_save_yaml": "Nem siker\u00fclt menteni a YAML-t: {error}",
+	"event_fired": "{type} esem\u00e9ny sikeresen megh\u00edvva!",
 	"exit_edit_mode": "K\u00e9sz",
 	"fan": "Ventil\u00e1tor",
 	"fan_modes": "Ventil\u00e1tor m\u00f3dok",

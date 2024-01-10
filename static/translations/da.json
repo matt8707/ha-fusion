@@ -76,6 +76,7 @@
 	"entity_not_found": "Entitet ikke fundet",
 	"error": "Fejl",
 	"error_save_yaml": "Kunne ikke gemme YAML: {error}",
+	"event_fired": "H\u00e6ndelse {type} blev afsendt!",
 	"exit_edit_mode": "F\u00e6rdig",
 	"fan": "Bl\u00e6ser",
 	"fan_modes": "Bl\u00e6sertilstande",

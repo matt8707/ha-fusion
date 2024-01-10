@@ -54,6 +54,7 @@
 	"entity_not_found": "Entitet nije prona\u0111en",
 	"error": "Gre\u0161ka",
 	"error_save_yaml": "Nije mogu\u0107e spremiti YAML: {error}",
+	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"finish": "Zavr\u0161iti",
 	"forward": "Naprijed",

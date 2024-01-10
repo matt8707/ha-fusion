@@ -77,6 +77,7 @@
 	"entity_not_found": "Enheten ble ikke funnet",
 	"error": "Feil",
 	"error_save_yaml": "Kan ikke lagre YAML: {error}",
+	"event_fired": "Arrangementet {type} vellykket!",
 	"exit_edit_mode": "Ferdig",
 	"fan": "Vifte",
 	"fan_modes": "Viftemoduser",

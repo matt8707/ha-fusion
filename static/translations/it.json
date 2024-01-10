@@ -77,6 +77,7 @@
 	"entity_not_found": "Entit\u00e0 non trovata",
 	"error": "Errore",
 	"error_save_yaml": "Impossibile salvare YAML: {error}",
+	"event_fired": "Evento {type} eseguito correttamente!",
 	"exit_edit_mode": "Fatto",
 	"fan": "Ventilatore",
 	"fan_modes": "Modalit\u00e0 di ventilazioni",

@@ -77,6 +77,7 @@
 	"entity_not_found": "Entita nebyla nenalezena",
 	"error": "Chyba",
 	"error_save_yaml": "Nelze ulo\u017eit YAML: {error}",
+	"event_fired": "Ud\u00e1lost {type} \u00fasp\u011b\u0161n\u011b spu\u0161t\u011bna!",
 	"exit_edit_mode": "Hotovo",
 	"fan": "V\u011btr\u00e1n\u00ed",
 	"fan_modes": "Re\u017eimy ventil\u00e1toru",

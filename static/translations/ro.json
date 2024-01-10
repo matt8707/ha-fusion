@@ -76,6 +76,7 @@
 	"entity_not_found": "Entitate neg\u0103sit\u0103",
 	"error": "Eroare",
 	"error_save_yaml": "Imposibil de salvat YAML: {error}",
+	"event_fired": "Evenimentul {type} declan\u0219at cu succes!",
 	"exit_edit_mode": "Am terminat",
 	"fan": "Ventilator",
 	"fan_modes": "Moduri ventilator",

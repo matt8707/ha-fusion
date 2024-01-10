@@ -53,6 +53,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Error",
 	"error_save_yaml": "Ne eblas konservi YAML: {error}",
+	"event_fired": "Evento {type} sukcese furoris!",
 	"exit_edit_mode": "Eliri UI-redaktre\u011dimon",
 	"finish": "finish",
 	"forward": "Forward",

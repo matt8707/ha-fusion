@@ -53,6 +53,7 @@
 	"entity_not_found": "Entidad no encontrada",
 	"error": "Error",
 	"error_save_yaml": "No se puede guardar YAML: {error}",
+	"event_fired": "\u00a1El evento {type} se ha activado correctamente!",
 	"exit_edit_mode": "Hecho",
 	"finish": "terminar",
 	"forward": "Adelante",

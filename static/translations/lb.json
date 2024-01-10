@@ -54,6 +54,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Feeler",
 	"error_save_yaml": "Kann de YAML net sp\u00e4icheren: {error}",
+	"event_fired": "Event {type} erfollegr\u00e4ich gestart",
 	"exit_edit_mode": "Benotzer Interface Edit\u00e9ierungsmodus verloossen",
 	"finish": "Ofschl\u00e9issen",
 	"forward": "Vir",

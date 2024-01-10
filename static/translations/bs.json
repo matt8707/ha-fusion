@@ -54,6 +54,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Gre\u0161ka",
 	"error_save_yaml": "Nije mogu\u0107e sa\u010duvati YAML: {error}",
+	"event_fired": "Doga\u0111aj {type} uspje\u0161no pokrenut!",
 	"exit_edit_mode": "Gotovo",
 	"finish": "zavr\u0161i",
 	"forward": "Naprijed",

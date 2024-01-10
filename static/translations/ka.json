@@ -53,6 +53,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Error",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "\u10db\u10d6\u10d0\u10d3\u10d0\u10d0",
 	"finish": "finish",
 	"forward": "Forward",

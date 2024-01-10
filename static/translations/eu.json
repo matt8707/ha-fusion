@@ -54,6 +54,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Errorea",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"finish": "finish",
 	"forward": "Forward",

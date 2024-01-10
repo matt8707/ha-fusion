@@ -75,6 +75,7 @@
 	"entity_not_found": "Kh\u00f4ng t\u00ecm th\u1ea5y th\u1ef1c th\u1ec3",
 	"error": "L\u1ed7i",
 	"error_save_yaml": "Kh\u00f4ng th\u1ec3 l\u01b0u YAML: {error}",
+	"event_fired": "S\u1ef1 ki\u1ec7n {type} \u0111\u00e3 \u0111\u01b0\u1ee3c k\u00edch ho\u1ea1t th\u00e0nh c\u00f4ng!",
 	"exit_edit_mode": "Xong",
 	"fan": "Qu\u1ea1t",
 	"fan_modes": "Ch\u1ebf \u0111\u1ed9 qu\u1ea1t",

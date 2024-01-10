@@ -67,6 +67,7 @@
 	"entity_not_found": "Entiteta ni najdena",
 	"error": "Napaka",
 	"error_save_yaml": "YAML-a ni mogo\u010de shraniti: {error}",
+	"event_fired": "Dogodek {type} uspe\u0161no zagnan!",
 	"exit_edit_mode": "Kon\u010dano",
 	"fan_only": "Samo ventilacija",
 	"finish": "Dokon\u010daj",
