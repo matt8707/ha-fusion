@@ -76,6 +76,7 @@
 	"entity_not_found": "Vien\u012bba nav atrasta",
 	"error": "K\u013c\u016bda",
 	"error_save_yaml": "Nevar saglab\u0101t YAML: {error}",
+	"event_fired": "Notikums {type} veiksm\u012bgi aktiviz\u0113ts!",
 	"exit_edit_mode": "Gatavs",
 	"fan": "Ventilators",
 	"fan_modes": "Ventilatora re\u017e\u012bmi",

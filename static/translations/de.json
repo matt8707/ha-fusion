@@ -77,6 +77,7 @@
 	"entity_not_found": "Entit\u00e4t nicht gefunden",
 	"error": "Fehler",
 	"error_save_yaml": "YAML konnte nicht gespeichert werden: {error}",
+	"event_fired": "Ereignis {type} erfolgreich ausgel\u00f6st!",
 	"exit_edit_mode": "Fertig",
 	"fan": "L\u00fcfter",
 	"fan_modes": "L\u00fcftermodi",

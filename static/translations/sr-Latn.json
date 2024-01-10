@@ -53,6 +53,7 @@
 	"entity_not_found": "Entitet nije prona\u0111en",
 	"error": "Gre\u0161ka",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_fired": "Doga\u0111aj {type} je uspe\u0161no pokrenut!",
 	"exit_edit_mode": "Gotovo",
 	"finish": "finish",
 	"forward": "Forward",

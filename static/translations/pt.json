@@ -76,6 +76,7 @@
 	"entity_not_found": "Entidade n\u00e3o encontrada",
 	"error": "Erro",
 	"error_save_yaml": "N\u00e3o foi poss\u00edvel guardar o c\u00f3digo YAML: {error}",
+	"event_fired": "Evento {type} espoletado com sucesso!",
 	"exit_edit_mode": "Feito",
 	"fan": "Ventila\u00e7\u00e3o",
 	"fan_modes": "Modos do ventilador",

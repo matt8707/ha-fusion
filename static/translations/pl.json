@@ -76,6 +76,7 @@
 	"entity_not_found": "Nie znaleziono encji",
 	"error": "b\u0142\u0105d",
 	"error_save_yaml": "Nie mo\u017cna zapisa\u0107 YAML: {error}",
+	"event_fired": "Uda\u0142o si\u0119 wywo\u0142a\u0107 zdarzenie {type}!",
 	"exit_edit_mode": "Gotowe",
 	"fan": "wentylator",
 	"fan_modes": "Tryby/biegi wentylatora",

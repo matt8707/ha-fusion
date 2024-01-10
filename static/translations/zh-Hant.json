@@ -53,6 +53,7 @@
 	"entity_not_found": "\u627e\u4e0d\u5230\u5be6\u9ad4",
 	"error": "\u932f\u8aa4",
 	"error_save_yaml": "\u7121\u6cd5\u5132\u5b58 YAML\uff1a{error}",
+	"event_fired": "\u4e8b\u4ef6 {type} \u5df2\u6210\u529f\u89f8\u767c\uff01",
 	"exit_edit_mode": "\u5b8c\u6210",
 	"finish": "\u5b8c\u6210",
 	"forward": "\u6b63\u5411",

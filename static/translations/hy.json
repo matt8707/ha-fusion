@@ -54,6 +54,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "\u054d\u056d\u0561\u056c",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"finish": "\u0561\u057e\u0561\u0580\u057f\u0565\u056c",
 	"forward": "\u0531\u057c\u0561\u057b",

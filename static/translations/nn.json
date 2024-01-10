@@ -54,6 +54,7 @@
 	"entity_not_found": "Oppf\u00f8ring ikkje funnen",
 	"error": "Feil",
 	"error_save_yaml": "Kan ikkje lagre YAML: {error}",
+	"event_fired": "Arrangementet {type} velukka!",
 	"exit_edit_mode": "Ferdig",
 	"finish": "fullf\u00f8r",
 	"forward": "Framover",

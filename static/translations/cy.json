@@ -54,6 +54,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Gwall",
 	"error_save_yaml": "Methu arbed YAML: {error}",
+	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Gadael modd golygu UI",
 	"finish": "finish",
 	"forward": "Forward",

@@ -66,6 +66,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "\u0413\u0440\u0435\u0448\u043a\u0430",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"fan_only": "Ventilator",
 	"finish": "finish",

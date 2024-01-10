@@ -77,6 +77,7 @@
 	"entity_not_found": "Subjektas nerastas",
 	"error": "Klaida",
 	"error_save_yaml": "Ne\u012fmanoma \u012fra\u0161yti YAML: {error}",
+	"event_fired": "\u012evykis {type} s\u0117kmingai aktyvuotas!",
 	"exit_edit_mode": "Atlikta",
 	"fan": "Ventiliatorius",
 	"fan_modes": "Ventiliatoriaus re\u017eimai",

@@ -53,6 +53,7 @@
 	"entity_not_found": "Entidade n\u00e3o encontrada",
 	"error": "Erro",
 	"error_save_yaml": "N\u00e3o foi poss\u00edvel salvar o YAML: {error}",
+	"event_fired": "Evento {type} disparado com sucesso!",
 	"exit_edit_mode": "Sair do modo de edi\u00e7\u00e3o",
 	"finish": "terminar",
 	"forward": "Frente",

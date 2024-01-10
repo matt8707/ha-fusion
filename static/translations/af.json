@@ -54,6 +54,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Fout",
 	"error_save_yaml": "Kan nie YAML stoor nie: {error}",
+	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Verlaat UI-wysigingsmodus",
 	"finish": "finish",
 	"forward": "Forward",

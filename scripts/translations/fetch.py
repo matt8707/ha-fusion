@@ -357,6 +357,7 @@ dir_keys = [
             ("template_editor", ["ui.panel.developer-tools.tabs.templates.editor"]),
             ("set_state", ["ui.panel.developer-tools.tabs.states.set_state"]),
             ("no_entities", ["ui.panel.developer-tools.tabs.states.no_entities"]),
+            ("event_fired", ["ui.panel.developer-tools.tabs.events.notification_event_fired"]),
         ],
     ),
 ]
