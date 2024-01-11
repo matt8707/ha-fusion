@@ -229,6 +229,10 @@
 					openModal(() => import('$lib/Modal/TimerModal.svelte'), { sel });
 					break;
 
+				case 'vacuum':
+					openModal(() => import('$lib/Modal/VacuumModal.svelte'), { sel });
+					break;
+
 				case 'todo':
 					openModal(() => import('$lib/Modal/TodoModal.svelte'), { sel });
 					break;
