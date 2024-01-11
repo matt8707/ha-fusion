@@ -3,12 +3,14 @@
 	import { marked } from 'marked';
 	import { onDestroy } from 'svelte';
 	import type { TemplateItem } from '$lib/Types';
+	import { openModal } from 'svelte-modals';
 
 	export let sel: TemplateItem | undefined = undefined;
 	export let demo = false;
 
 	let unsubscribe: () => void;
 	let id = sel?.id;
+	let popup = sel?.popup;
 	let error = false;
 
 	$: template = sel?.template;
@@ -49,10 +51,17 @@
 	}
 
 	/**
+	 * Delegate to handleEvent
+	 */
+	function handlePointer() {
+		handleEvent({ type: 'preload' });
+	}
+
+	/**
 	 * Handles events if template contains href links.
 	 * - Clicking link in edit mode opens modal instead.
 	 */
-	function handleEvent(event: Event) {
+	async function handleEvent(event: any) {
 		if (event?.type === 'click' && $editMode) {
 			event.preventDefault();
 		} else if (event?.type === 'pointerenter') {
@@ -67,7 +76,32 @@
 			lists?.forEach((list) => {
 				list.style.pointerEvents = event?.type === 'pointerdown' && $editMode ? 'none' : 'unset';
 			});
+		} else if (event?.type === 'click' && popup !== undefined) {
+			// If we have a custom popup defined, display the correct cursor and handle click
+			await handleClickEvent();
+		} else {
+			await handlePointerEvent();
 		}
+
+	}
+
+	/**
+	 * Handle click events
+	 * Opens modal for custom popup
+	 */
+	async function handleClickEvent() {
+			openModal(() => import('$lib/Modal/CustomPopupModal.svelte'), {popup});
+	}
+
+	/**
+	 * Preloads module before click event
+	 */
+	async function handlePointerEvent() {
+		let module;
+
+		module = await import('$lib/Modal/CustomPopupModal.svelte');
+
+		if (module) module.default;
 	}
 
 	/**
@@ -80,7 +114,12 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div id="markdown" on:click={handleEvent} on:pointerenter={handleEvent}>
+<div id="markdown"
+	on:click={handleEvent}
+	on:pointerenter={handlePointer}
+	on:pointerdown={handlePointer}
+	style:cursor={popup !== undefined? 'pointer' : 'unset'}
+	>
 	{#if demo}
 		<div class="template">
 			<span>&#123;&#123;</span> template <span>&#125;&#125;</span>

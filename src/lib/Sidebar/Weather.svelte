@@ -3,8 +3,10 @@
 	 * Rewrite
 	 */
 
-	import { states, selectedLanguage, lang } from '$lib/Stores';
+	import { states, editMode, selectedLanguage, lang } from '$lib/Stores';
 	import type { HassEntity } from 'home-assistant-js-websocket';
+	import { openModal } from 'svelte-modals';
+
 	import Icon from '@iconify/svelte';
 
 	export let entity_id: string | undefined;
@@ -13,6 +15,7 @@
 	export let weather_sensor: string | undefined = undefined;
 	export let icon_pack: string | undefined = undefined;
 	export let show_apparent: boolean | undefined = undefined;
+	export let popup: string | undefined = undefined;
 
 	let precipitation: string | undefined;
 	let path: string;
@@ -41,10 +44,71 @@
 			path = 'meteocons';
 		}
 	}
+
+	/**
+	 * Delegate to handleEvent
+	 */
+	function handlePointer() {
+		handleEvent({ type: 'preload' });
+	}
+
+	/**
+	 * Handles events if template contains href links.
+	 * - Clicking link in edit mode opens modal instead.
+	 */
+	async function handleEvent(event: any) {
+		if (event?.type === 'click' && $editMode) {
+			event.preventDefault();
+		} else if (event?.type === 'pointerenter') {
+			// When hovering a link display the correct cursor.
+			const links = (event.target as HTMLElement).querySelectorAll('a');
+			links.forEach((anchor: HTMLAnchorElement) => {
+				anchor.style.cursor = !$editMode ? 'pointer' : 'unset';
+			});
+			// Disable any 'li' pointer events to be able to drag (?).
+		} else if ((event?.type === 'pointerdown' && $editMode) || event?.type === 'pointerup') {
+			const lists = (event.target as HTMLElement).querySelectorAll('li');
+			lists?.forEach((list) => {
+				list.style.pointerEvents = event?.type === 'pointerdown' && $editMode ? 'none' : 'unset';
+			});
+		} else if (event?.type === 'click' && popup !== undefined) {
+			// If we have a custom popup defined, display the correct cursor and handle click
+			await handleClickEvent();
+		} else {
+			await handlePointerEvent();
+		}
+
+	}
+
+	/**
+	 * Handle click events
+	 * Opens modal for custom popup
+	 */
+	async function handleClickEvent() {
+			openModal(() => import('$lib/Modal/CustomPopupModal.svelte'), {popup});
+	}
+
+	/**
+	 * Preloads module before click event
+	 */
+	async function handlePointerEvent() {
+		let module;
+
+		module = await import('$lib/Modal/CustomPopupModal.svelte');
+
+		if (module) module.default;
+	}
+
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 {#if entity_state}
-	<div class="container">
+	<div class="container"
+		on:click={handleEvent}
+		on:pointerenter={handlePointer}
+		on:pointerdown={handlePointer}
+		style:cursor={popup !== undefined? 'pointer' : 'unset'}>
 		<icon class="icon">
 			{#if entity_state !== 'unavailable'}
 				{#if sun === 'below_horizon'}

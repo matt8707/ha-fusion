@@ -20,6 +20,7 @@ export interface Addons {
 export interface Dashboard {
 	views: Views[];
 	sidebar: SidebarItem[];
+	popups: Popups[]
 	theme?: string;
 	hide_views?: boolean;
 	hide_sidebar?: boolean;
@@ -32,6 +33,12 @@ export interface Views {
 	icon?: string;
 	sections?: Section[];
 	isDndShadowItem?: boolean;
+}
+
+export interface Popups {
+	id?: number;
+	name?: string;
+	sections?: Section[];
 }
 
 export interface Section {
@@ -54,6 +61,12 @@ export interface ViewItem {
 	id?: number;
 	name?: string;
 	icon?: string;
+	sections?: any[];
+}
+
+export interface PopupItem {
+	id?: number;
+	name?: string;
 	sections?: any[];
 }
 
@@ -163,6 +176,7 @@ export interface TemplateItem {
 	type?: string;
 	id?: number;
 	template?: string;
+	popup?: string;
 }
 
 export interface TimeItem {
@@ -188,4 +202,5 @@ export interface WeatherItem {
 	extra_sensor?: string;
 	extra_sensor_icon?: string;
 	show_apparent?: boolean;
+	popup?: string;
 }
