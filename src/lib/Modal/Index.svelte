@@ -12,7 +12,6 @@
 
 	export let backdropImage = true;
 	export let size: string | undefined = undefined;
-	export let info: string | undefined = undefined;
 
 	let backdrop: HTMLDivElement | null;
 	let contents: HTMLDivElement | null;
@@ -157,7 +156,6 @@
 		draggingModal = false;
 		if (top - startTop > threshold) {
 			if (backdrop) backdrop.style.transition = 'none';
-			killStream();
 			closeModal();
 		} else {
 			if (backdrop) backdrop.style.transition = 'opacity 100ms ease-out';
@@ -167,20 +165,7 @@
 
 	function handleKeydown(event: any) {
 		if (event.key === 'Escape') {
-			killStream();
 			if (!$autocompleteOpen) closeModal();
-		}
-	}
-
-	/**
-	 * Although using an iframe effectively terminates the mjpeg stream, Chrome may
-	 * display a "waiting on..." status in the lower-left corner. Changing the 'src'
-	 * attribute on the iframe before closing the modal mitigates this behavior.
-	 */
-	function killStream() {
-		if (info === 'camera_stream' && contents) {
-			const cam = contents.querySelectorAll('iframe');
-			if (cam.length) cam[0].src = 'about:blank';
 		}
 	}
 </script>
@@ -220,7 +205,6 @@
 
 				<button
 					on:click={() => {
-						killStream();
 						closeModal();
 					}}
 					aria-label="close"

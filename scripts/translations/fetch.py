@@ -119,6 +119,18 @@ dir_keys = [
             ("camera", ["title"]),
         ],
     ),
+    (  # DOORBIRD (CAMERA)
+        f"{COMPONENTS}/doorbird/translations/",
+        [
+            ("live", ["entity", "camera", "live", "name"]),
+        ],
+    ),
+    (  # RITUALS PERFUME GENIE (CAMERA)
+        f"{COMPONENTS}/rituals_perfume_genie/translations/",
+        [
+            ("fill", ["entity", "sensor", "fill", "name"]),
+        ],
+    ),
     (  # COUNTER
         f"{COMPONENTS}/counter/translations/",
         [
@@ -381,6 +393,7 @@ dir_keys = [
             ("todo_list", ["ui.panel.lovelace.editor.card.todo-list.name"]),
             ("clear_items", ["ui.panel.lovelace.cards.todo-list.clear_items"]),
             ("add_item", ["ui.panel.lovelace.cards.todo-list.add_item"]),
+            ("aspect_ratio", ["ui.panel.lovelace.editor.card.generic.aspect_ratio"]),
         ],
     ),
     (  # DEVELOPER-TOOLS

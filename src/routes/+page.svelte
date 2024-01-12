@@ -89,6 +89,15 @@
 		 */
 		const menuParam = new URLSearchParams(window.location.search).get('menu');
 		$disableMenuButton = menuParam === 'false';
+
+		/**
+		 * Unregister service worker because it
+		 * interferes with MJPEG camera streams
+		 */
+		const registrations = await navigator.serviceWorker.getRegistrations();
+		for (const registration of registrations) {
+			await registration.unregister();
+		}
 	});
 
 	/**

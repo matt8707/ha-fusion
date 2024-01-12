@@ -121,7 +121,7 @@
 			component: Camera,
 			props: {
 				demo: $demo.camera,
-				stream: false
+				sel
 			}
 		},
 		{
