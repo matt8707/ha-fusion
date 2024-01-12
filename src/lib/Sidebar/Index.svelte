@@ -125,11 +125,7 @@
 			}
 		} else {
 			if (sel?.type === 'camera') {
-				openModal(() => import('$lib/Modal/CameraModal.svelte'), {
-					entity_id: sel?.entity_id,
-					width: sel?.width,
-					height: sel?.height
-				});
+				openModal(() => import('$lib/Modal/CameraModal.svelte'), { sel });
 			} else if (sel?.type === 'timer') {
 				openModal(() => import('$lib/Modal/TimerModal.svelte'), { sel });
 			}
@@ -200,12 +196,7 @@
 						<!-- CAMERA -->
 					{:else if Camera && item?.type === 'camera'}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component
-								this={Camera.default}
-								entity_id={item?.entity_id}
-								width={item?.width}
-								height={item?.height}
-							/>
+							<svelte:component this={Camera.default} sel={item} />
 						</button>
 
 						<!-- CONFIGURE -->
