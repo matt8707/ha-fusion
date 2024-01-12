@@ -95,8 +95,8 @@ export interface CameraItem {
 	type?: string;
 	id?: number;
 	entity_id?: string;
-	width?: number;
-	height?: number;
+	stream?: boolean;
+	size?: string;
 }
 
 export interface DateItem {
