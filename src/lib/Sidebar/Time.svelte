@@ -8,7 +8,7 @@
 		hour: hour12 ? 'numeric' : '2-digit',
 		minute: '2-digit',
 		second: seconds ? '2-digit' : undefined,
-		hour12: hour12 === undefined ? false : hour12
+		hour12: hour12
 	});
 </script>
 
