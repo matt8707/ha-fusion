@@ -1,26 +1,82 @@
 <script lang="ts">
-	import Camera from '$lib/Sidebar/Camera.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
-	import { lang } from '$lib/Stores';
+	import { lang, motion, states } from '$lib/Stores';
+	import { onDestroy } from 'svelte';
+	import { getName } from '$lib/Utils';
+	import type { CameraItem } from '$lib/Types';
+	import Loader from '$lib/Components/Loader.svelte';
+	import { fade } from 'svelte/transition';
 
 	export let isOpen: boolean;
-	export let entity_id: string | undefined;
-	export let width: number = 640;
-	export let height: number = 360;
+	export let sel: CameraItem;
+
+	let img: HTMLImageElement;
+
+	$: entity = $states?.[(sel as any)?.entity_id];
+	$: attributes = entity?.attributes;
+
+	$: entity_picture = attributes?.entity_picture;
+	$: entity_stream = entity_picture?.replace('/camera_proxy/', '/camera_proxy_stream/');
+
+	/**
+	 * Remove image src to prevent continuous network activity
+	 */
+	onDestroy(() => {
+		if (img) img.src = '';
+	});
+
+	const alt = getName(sel, entity);
+
+	let loaderVisible = true;
+
+	function handleLoader() {
+		loaderVisible = false;
+	}
 </script>
 
 {#if isOpen}
-	<Modal size="large" info="camera_stream">
+	<Modal size="large">
 		<h1 slot="title">{$lang('camera')}</h1>
 
-		<br />
+		<div class="container">
+			<img class="picture" src={entity_picture} {alt} />
 
-		<Camera {entity_id} preview={true} {width} {height} />
+			{#if loaderVisible}
+				<div class="loader" transition:fade={{ duration: $motion }}>
+					<Loader />
+				</div>
+			{/if}
+
+			<img class="stream" src={entity_stream} {alt} bind:this={img} on:load={handleLoader} />
+		</div>
 	</Modal>
 {/if}
 
 <style>
-	br {
-		margin-bottom: 1rem;
+	.container {
+		position: relative;
+		margin-top: 1rem;
+	}
+
+	img {
+		width: 100%;
+		pointer-events: none;
+		border-radius: calc(1.9rem - 1.2rem); /* child radius = parent radius - padding */
+	}
+
+	.picture {
+		display: grid;
+	}
+
+	.loader {
+		display: contents;
+	}
+
+	.stream {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 	}
 </style>

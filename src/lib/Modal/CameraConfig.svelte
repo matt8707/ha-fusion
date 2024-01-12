@@ -1,16 +1,27 @@
 <script lang="ts">
-	import { states, dashboard, lang, history, historyIndex, record } from '$lib/Stores';
+	import {
+		states,
+		dashboard,
+		lang,
+		history,
+		historyIndex,
+		record,
+		ripple,
+		motion
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
-	import Camera from '$lib/Sidebar/Camera.svelte';
 	import Select from '$lib/Components/Select.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
-	import { updateObj } from '$lib/Utils';
-	import type { CameraItem } from '$lib/Types';
+	import { getName, updateObj } from '$lib/Utils';
+	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
-	export let sel: CameraItem;
+	export let sel: any;
 	export let demo: string | undefined = undefined;
+
+	let cont: HTMLDivElement;
+	let img: HTMLImageElement;
 
 	if (demo) {
 		// replace history entry with demo
@@ -18,58 +29,56 @@
 		set('entity_id', demo);
 	}
 
-	let imgRef: HTMLImageElement | null = null;
+	function set(key: string, event?: any) {
+		sel = updateObj(sel, key, event);
+		$dashboard = $dashboard;
+	}
 
-	$: entity_id = sel?.entity_id;
-	$: width = sel?.width;
-	$: height = sel?.height;
+	$: entity = $states?.[sel?.entity_id];
+	$: attributes = entity?.attributes;
+	$: entity_picture = attributes?.entity_picture;
+	$: size = sel?.size;
 
 	$: options = Object.keys($states)
 		.filter((key) => key.startsWith('camera.'))
 		.sort()
 		.map((key) => ({ id: key, label: key }));
 
-	$: if (entity_id) {
-		getDimensions($states?.[entity_id]?.attributes?.entity_picture);
-	}
-
-	function set(key: string, event?: any) {
-		sel = updateObj(sel, key, event);
-		$dashboard = $dashboard;
-	}
-
 	/**
-	 * Get dimensions of entity_picture, and set width/height to `$dashboard`.
-	 * It's needed to set the aspect ratio to display the entire image in the iframe.
+	 * 'size'
 	 */
-	async function getDimensions(entity_picture: string | undefined) {
-		// cleanup
-		if (imgRef) imgRef.onload = imgRef.onerror = imgRef = null;
 
-		if (!entity_picture) return;
+	$: if (cont && img && entity_picture && (size || !size)) {
+		computeSize();
+	}
 
-		// promise
-		const dimensions = await new Promise<{ width: number; height: number }>((resolve, reject) => {
-			imgRef = new Image();
+	function computeSize() {
+		const contRatio = cont.clientWidth / cont.clientHeight;
+		const imgRatio = img.naturalWidth / img.naturalHeight;
+		let width, height;
 
-			imgRef.onload = () => {
-				if (imgRef) {
-					resolve({
-						width: imgRef.width,
-						height: imgRef.height
-					});
-				}
-			};
-
-			imgRef.onerror = () => {
-				reject(new Error('Failed to load image'));
-			};
-
-			imgRef.src = entity_picture;
-		});
-
-		set('width', dimensions.width);
-		set('height', dimensions.height);
+		if (imgRatio > contRatio) {
+			// img is wider than container
+			if (size === 'contain') {
+				width = cont.clientWidth;
+				height = cont.clientWidth / imgRatio;
+			} else {
+				// cover
+				width = cont.clientHeight * imgRatio;
+				height = cont.clientHeight;
+			}
+		} else {
+			// img is taller than container
+			if (size === 'contain') {
+				width = cont.clientHeight * imgRatio;
+				height = cont.clientHeight;
+			} else {
+				// cover
+				width = cont.clientWidth;
+				height = cont.clientWidth / imgRatio;
+			}
+		}
+		cont.style.backgroundSize = `${width}px ${height}px`;
 	}
 
 	onDestroy(() => $record());
@@ -81,33 +90,87 @@
 
 		<h2>{$lang('preview')}</h2>
 
-		{#if sel}
-			<div>
-				{#key entity_id}
-					<Camera {entity_id} preview={true} {width} {height} />
-				{/key}
+		{#if entity_picture}
+			<div
+				class="container"
+				bind:this={cont}
+				style:background-image="url({entity_picture})"
+				style:transition="background-size {$motion}ms ease"
+			>
+				<img
+					bind:this={img}
+					src={entity_picture}
+					alt={getName(sel, entity)}
+					on:load={computeSize}
+				/>
 			</div>
 		{/if}
 
-		<h2>{$lang('entity')}</h2>
-
 		{#if options}
+			<h2>{$lang('entity')}</h2>
+
 			<Select
+				customItems={true}
 				{options}
 				placeholder={$lang('camera')}
-				value={entity_id}
+				value={entity?.entity_id}
 				on:change={(event) => {
 					set('entity_id', event);
 				}}
 			/>
 		{/if}
 
+		<h2>{$lang('live')}</h2>
+
+		<div class="button-container">
+			<button class:selected={!sel?.stream} on:click={() => set('stream')} use:Ripple={$ripple}>
+				{$lang('no')}
+			</button>
+
+			<button
+				class:selected={sel?.stream === true}
+				on:click={() => set('stream', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('yes')}
+			</button>
+		</div>
+
+		<h2>{$lang('size')}</h2>
+
+		<div class="button-container">
+			<button class:selected={!sel?.size} on:click={() => set('size')} use:Ripple={$ripple}>
+				{$lang('fill')}
+			</button>
+
+			<button
+				class:selected={sel?.size === 'contain'}
+				on:click={() => set('size', 'contain')}
+				use:Ripple={$ripple}
+			>
+				{$lang('aspect_ratio')}
+			</button>
+		</div>
+
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
 
 <style>
-	div {
+	.container {
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-color: rgba(0, 0, 0, 0.2);
+		border-radius: 0.6rem;
+		overflow: hidden;
+	}
+
+	img {
 		pointer-events: none;
+		visibility: hidden;
+	}
+
+	h2:first-letter {
+		text-transform: uppercase;
 	}
 </style>

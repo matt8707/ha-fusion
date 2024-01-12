@@ -70,27 +70,16 @@
 	}
 
 	/**
-	 * When clicking 'change type' in modal, close modal
-	 * and open SidebarItemConfig modal
+	 * Handle object type change
 	 */
 	async function handleChangeType() {
-		const item = ((item: { id: string }) =>
-			item.id === sel?.id ? { ...item, type: 'configure' } : item) as any;
-
-		if (sidebarItem()) {
-			$dashboard.sidebar = $dashboard.sidebar.map(item);
-		} else {
-			mainItem(item);
-		}
-
 		closeModal();
 
-		openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), {
-			sel: {
-				type: 'configure',
-				id: sel?.id
-			}
-		});
+		if (sidebarItem()) {
+			openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), { sel });
+		} else {
+			openModal(() => import('$lib/Modal/MainItemConfig.svelte'), { sel });
+		}
 	}
 </script>
 

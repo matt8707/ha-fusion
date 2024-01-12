@@ -259,14 +259,16 @@
 
 				case 'camera':
 					openModal(() => import('$lib/Modal/CameraModal.svelte'), {
-						entity_id: sel?.entity_id
+						sel
 					});
 					break;
+
 				case 'media_player':
 					openModal(() => import('$lib/Modal/MediaPlayer.svelte'), {
 						selected: sel
 					});
 					break;
+
 				case 'device_tracker': {
 					const entity = $states?.[sel?.entity_id];
 					const attributes = entity?.attributes;

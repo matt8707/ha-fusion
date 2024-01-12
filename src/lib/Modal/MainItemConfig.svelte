@@ -62,7 +62,6 @@
 			component: Camera,
 			props: {
 				demo: $demo.camera,
-				stream: false,
 				sel
 			}
 		}
@@ -95,8 +94,8 @@
 				break;
 			case 'camera':
 				openModal(() => import('$lib/Modal/CameraConfig.svelte'), {
-					sel,
-					demo: $demo.camera
+					demo: $demo.camera,
+					sel
 				});
 				break;
 			default:
