@@ -4,6 +4,7 @@
 	import { Modals, closeModal } from 'svelte-modals';
 	import Loader from '$lib/Components/Loader.svelte';
 	import '@fontsource-variable/inter';
+	import { expoOut } from 'svelte/easing';
 </script>
 
 <svelte:head>
@@ -18,8 +19,11 @@
 		slot="backdrop"
 		class="backdrop"
 		on:click={closeModal}
-		in:fade={{ duration: $motion / 3 }}
-		out:fade={{ duration: 50 }}
+		in:fade={{
+			duration: $motion,
+			easing: expoOut
+		}}
+		out:fade={{ duration: $motion / 2 }}
 		role="button"
 		tabindex="0"
 	/>

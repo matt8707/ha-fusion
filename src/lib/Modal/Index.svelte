@@ -2,7 +2,7 @@
 	import { motion, autocompleteOpen, ripple, connection, event, lang } from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { modals, closeModal } from 'svelte-modals';
-	import { fade, fly } from 'svelte/transition';
+	import { fly, scale } from 'svelte/transition';
 	import { expoOut } from 'svelte/easing';
 	import Icon from '@iconify/svelte';
 	import Ripple from 'svelte-ripple';
@@ -179,11 +179,12 @@
 <div
 	role="dialog"
 	in:fly|global={{
-		duration: $motion * 2,
+		duration: $motion * 3,
 		y: -35,
-		easing: expoOut
+		easing: expoOut,
+		opacity: 0.75
 	}}
-	out:fade|global={{ duration: 50 }}
+	out:scale|global={{ duration: $motion / 2, start: 0.85 }}
 >
 	<div
 		id="modal"
