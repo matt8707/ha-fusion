@@ -206,6 +206,12 @@ dir_keys = [
             ("turbo", ["entity", "vacuum", "roborock", "state_attributes", "fan_speed", "state", "turbo"]),
         ],
     ),
+    (  # WHIRLPOOL (EMPTY)
+        f"{COMPONENTS}/whirlpool/translations/",
+        [
+            ("empty", ["entity", "sensor", "whirlpool_tank", "state", "empty"]),
+        ],
+    ),
     (  # COVER
         f"{COMPONENTS}/cover/translations/",
         [
@@ -404,6 +410,7 @@ dir_keys = [
             ("set_state", ["ui.panel.developer-tools.tabs.states.set_state"]),
             ("no_entities", ["ui.panel.developer-tools.tabs.states.no_entities"]),
             ("event_fired", ["ui.panel.developer-tools.tabs.events.notification_event_fired"]),
+            ("attributes", ["ui.panel.developer-tools.tabs.states.attributes"]),
         ],
     ),
 ]
