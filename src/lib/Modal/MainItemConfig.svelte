@@ -167,7 +167,7 @@
 			{/each}
 		</div>
 
-		<ConfigButtons {sel} />
+		<ConfigButtons {sel} disableChangeType={true} />
 	</Modal>
 {/if}
 

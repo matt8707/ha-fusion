@@ -1,11 +1,10 @@
 <script lang="ts">
 	import Modal from '$lib/Modal/Index.svelte';
-	import { lang, motion, states } from '$lib/Stores';
+	import { lang, states } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import { getName } from '$lib/Utils';
 	import type { CameraItem } from '$lib/Types';
 	import Loader from '$lib/Components/Loader.svelte';
-	import { fade } from 'svelte/transition';
 
 	export let isOpen: boolean;
 	export let sel: CameraItem;
@@ -42,9 +41,7 @@
 			<img class="picture" src={entity_picture} {alt} />
 
 			{#if loaderVisible}
-				<div class="loader" transition:fade={{ duration: $motion }}>
-					<Loader />
-				</div>
+				<Loader />
 			{/if}
 
 			<img class="stream" src={entity_stream} {alt} bind:this={img} on:load={handleLoader} />
@@ -66,10 +63,6 @@
 
 	.picture {
 		display: grid;
-	}
-
-	.loader {
-		display: contents;
 	}
 
 	.stream {

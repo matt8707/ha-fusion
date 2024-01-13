@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { editMode, states } from '$lib/Stores';
-	import { getName } from '$lib/Utils';
 	import { onDestroy } from 'svelte';
+	import Loader from '$lib/Components/Loader.svelte';
 
 	export let sel: any;
 	export let demo: string | undefined = undefined;
@@ -23,12 +23,25 @@
 	onDestroy(() => {
 		if (img) img.src = '';
 	});
+
+	let loaderVisible = true;
+
+	function handleLoader() {
+		loaderVisible = false;
+	}
 </script>
 
 {#if url && entity_picture}
 	<div class="container">
+		{#if loaderVisible}
+			<div class="loader">
+				<Loader />
+			</div>
+		{/if}
+
 		<button style:background-image="url({entity_picture})" style:background-size={size}>
-			<img src={url} bind:this={img} alt={getName(sel, entity)} style:object-fit={size} />
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<img src={url} bind:this={img} style:object-fit={size} on:load={handleLoader} />
 		</button>
 	</div>
 {/if}
@@ -38,6 +51,7 @@
 		display: grid;
 		padding: var(--theme-sidebar-item-padding);
 		aspect-ratio: 16 / 9;
+		position: relative;
 	}
 
 	button {
@@ -59,5 +73,12 @@
 	img {
 		width: 100%;
 		height: 100%;
+	}
+
+	.loader {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: scale(0.5);
 	}
 </style>

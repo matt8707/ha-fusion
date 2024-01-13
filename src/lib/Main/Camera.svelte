@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { editMode, itemHeight, states } from '$lib/Stores';
-	import { getName } from '$lib/Utils';
 	import { onDestroy } from 'svelte';
 	import { openModal } from 'svelte-modals';
+	import Loader from '$lib/Components/Loader.svelte';
 
 	export let sel: any;
 	export let demo: string | undefined = undefined;
@@ -35,6 +35,12 @@
 	onDestroy(() => {
 		if (img) img.src = '';
 	});
+
+	let loaderVisible = true;
+
+	function handleLoader() {
+		loaderVisible = false;
+	}
 </script>
 
 {#if url && entity_picture}
@@ -44,7 +50,14 @@
 		style:background-size={size}
 		on:click={handleClick}
 	>
-		<img src={url} bind:this={img} alt={getName(sel, entity)} style:object-fit={size} />
+		{#if loaderVisible}
+			<div class="loader">
+				<Loader />
+			</div>
+		{/if}
+
+		<!-- svelte-ignore a11y-missing-attribute -->
+		<img src={url} bind:this={img} style:object-fit={size} on:load={handleLoader} />
 	</button>
 {/if}
 
@@ -68,5 +81,12 @@
 	img {
 		width: 100%;
 		height: 100%;
+	}
+
+	.loader {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: scale(0.5);
 	}
 </style>
