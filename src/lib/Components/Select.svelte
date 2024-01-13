@@ -32,25 +32,30 @@
 		dispatch('change', value);
 
 		// key
-		trigger();
+		// trigger();
+
+		const active = document?.activeElement;
+		if (value !== undefined) (active as HTMLInputElement)?.blur();
 
 		// blur input on:change otherwise have to click twice
-		const element = container?.querySelector('#select') as HTMLElement;
-		element?.blur();
+		// const element = container?.querySelector('#select') as HTMLElement;
+		// element?.blur();
+
+		// if (value === undefined) active?.focus();
 	}
 
 	/**
 	 * Component re-render to fix virtualList rendering
 	 * https://github.com/mskocik/svelecte/issues/196
 	 */
-	async function trigger() {
-		// fix `TypeError: scrollContainer is null`
-		await tick();
-		await tick();
-		// key change triggers rerender
+	// async function trigger() {
+	// 	// fix `TypeError: scrollContainer is null`
+	// 	await tick();
+	// 	await tick();
+	// 	// key change triggers rerender
 
-		key = !key;
-	}
+	// 	key = !key;
+	// }
 
 	const props = {
 		name: 'select',

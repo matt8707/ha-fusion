@@ -204,12 +204,17 @@
 			<input
 				type="color"
 				bind:value={color}
+				on:click={() => {
+					if (color === undefined) {
+						color = '#ffffff';
+					}
+				}}
 				on:change={(event) => set('color', event)}
 				title={$lang('color')}
 			/>
 		</div>
 
-		{#if !isNaN(parseFloat(entity?.state)) && !Number.isInteger(parseFloat(entity?.state))}
+		{#if !isNaN(parseFloat(entity?.state)) && !Number.isInteger(parseFloat(entity?.state)) && (entity?.state.match(/\./g) || []).length === 1}
 			{@const precisionValues = [undefined, 0, 1, 2, 3, 4, 5]}
 			<h2>{$lang('precision')}</h2>
 

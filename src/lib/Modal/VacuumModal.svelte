@@ -82,12 +82,11 @@
 		<h2>{$lang('state')}</h2>
 
 		{#if entity}
-			STATE: {state}
+			{$lang(state)}
 			<br />
-			STATUS: {entity?.attributes?.status}
-			<br />
+
 			{#if supports?.BATTERY}
-				BATTERY: {attributes?.battery_level} %
+				{$lang('battery')}: {attributes?.battery_level} %
 			{/if}
 		{/if}
 
@@ -131,15 +130,11 @@
 			</button>
 		</div>
 
-		<h2>Attributes</h2>
-
-		<pre>{JSON.stringify(entity, null, 2)}</pre>
-
-		<h2>Supports</h2>
+		<!-- <h2>Supports</h2>
 
 		{#each Object.entries(supports) as [feature, supported]}
 			<div>{feature}: {supported}</div>
-		{/each}
+		{/each} -->
 
 		<ConfigButtons />
 	</Modal>
