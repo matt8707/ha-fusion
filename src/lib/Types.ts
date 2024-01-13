@@ -67,6 +67,7 @@ export interface ButtonItem {
 	marquee?: boolean;
 	precision: number;
 	more_info?: boolean;
+	attribute?: string;
 }
 
 export type SidebarItem = BarItem &
@@ -81,7 +82,8 @@ export type SidebarItem = BarItem &
 	SensorItem &
 	TemplateItem &
 	TimeItem &
-	WeatherItem;
+	WeatherItem &
+	DividerItem;
 
 export interface BarItem {
 	type?: string;
@@ -135,6 +137,13 @@ export interface ImageItem {
 	id?: number;
 	entity_id?: string;
 	url?: string;
+}
+
+export interface DividerItem {
+	type?: string;
+	id?: number;
+	mode?: string;
+	size?: number;
 }
 
 export interface NavigateItem {
