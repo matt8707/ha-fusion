@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { lang } from '$lib/Stores';
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import Svelecte from 'svelecte';
 	import SelectItem from '$lib/Components/SelectItem.svelte';
 	import { createEventDispatcher } from 'svelte';

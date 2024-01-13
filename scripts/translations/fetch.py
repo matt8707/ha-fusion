@@ -99,6 +99,7 @@ dir_keys = [
             ("locate", ["ui.dialogs.more_info_control.vacuum.locate"]),
             ("return_home", ["ui.dialogs.more_info_control.vacuum.return_home"]),
             ("start_pause", ["ui.dialogs.more_info_control.vacuum.start_pause"]),
+            ("battery", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.battery"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -270,6 +271,11 @@ dir_keys = [
             ("cooling", ["entity_component", "_", "state_attributes", "hvac_action", "state", "cooling"]),
             ("fan", ["entity_component", "_", "state_attributes", "hvac_action", "state", "fan"]),
             ("drying", ["entity_component", "_", "state_attributes", "hvac_action", "state", "drying"]),
+            ("target_temp_low", ["services", "set_temperature", "fields", "target_temp_low", "name"]),
+            ("target_temp_high", ["services", "set_temperature", "fields", "target_temp_high", "name"]),
+            ("both", ["entity_component", "_", "state_attributes", "swing_mode", "state", "both"]),
+            ("horizontal", ["entity_component", "_", "state_attributes", "swing_mode", "state", "horizontal"]),
+            ("vertical", ["entity_component", "_", "state_attributes", "swing_mode", "state", "vertical"]),
         ],
     ),
     (  # DEVICE_TRACKER

@@ -37,12 +37,10 @@
 		.sort()
 		.map((key) => ({ id: key, label: key }));
 
-	$: options_attr = Object.keys(entity.attributes)
-		.filter((key) => key !== 'friendly_name')
-		.map((key) => ({
-			id: key,
-			label: key
-		}));
+	$: options_attr = Object.keys(entity.attributes).map((key) => ({
+		id: key,
+		label: key
+	}));
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);
@@ -238,7 +236,6 @@
 				options={options_attr}
 				placeholder={$lang('state')}
 				value={sel?.attribute}
-				clearable={true}
 				on:change={(event) => {
 					set('attribute', event);
 				}}

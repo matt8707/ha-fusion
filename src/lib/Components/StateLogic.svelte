@@ -63,14 +63,6 @@
 	<!-- instead of idle? -->
 	{$lang('camera')}
 
-	<!--  Climate -->
-{:else if entity_id && entity_id.split('.')[0] === 'climate'}
-	{#if state === 'fan_only' || state == 'dry' || state === 'off' || attributes?.hvac_action === 'idle'}
-		{@html $lang(state) || state}
-	{:else}
-		{@html $lang(attributes?.hvac_action) || attributes?.hvac_action}
-	{/if}
-
 	<!--  Weather -->
 {:else if entity_id && entity_id.split('.')[0] === 'weather'}
 	{$lang('weather_' + state?.replace('_', '-')) || state || $lang('unknown')}

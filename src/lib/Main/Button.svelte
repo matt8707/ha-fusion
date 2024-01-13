@@ -246,9 +246,7 @@
 					break;
 
 				case 'alarm_control_panel':
-					openModal(() => import('$lib/Modal/AlarmControlPanelModal.svelte'), {
-						sel
-					});
+					openModal(() => import('$lib/Modal/AlarmControlPanelModal.svelte'), { sel });
 					break;
 
 				case 'lock':
@@ -256,15 +254,11 @@
 					break;
 
 				case 'climate':
-					openModal(() => import('$lib/Modal/ClimateModal.svelte'), {
-						selected: sel
-					});
+					openModal(() => import('$lib/Modal/ClimateModal.svelte'), { sel });
 					break;
 
 				case 'camera':
-					openModal(() => import('$lib/Modal/CameraModal.svelte'), {
-						sel
-					});
+					openModal(() => import('$lib/Modal/CameraModal.svelte'), { sel });
 					break;
 
 				case 'media_player':
