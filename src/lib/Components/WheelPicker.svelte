@@ -160,24 +160,24 @@
 </script>
 
 <svelte:document
-	on:mousedown|preventDefault={handleMouseDown}
-	on:mouseup={handleMouseUp}
-	on:mousemove={handleMouseMove}
+	on:pointerdown={handleMouseDown}
+	on:pointerup={handleMouseUp}
+	on:pointermove={handleMouseMove}
 	on:touchend={() => (touchScrolling = true)}
 />
 
 <div class="wheel">
 	<button
-		on:click={() => handleClick('decrease')}
-		style:cursor={max ? 'unset' : 'pointer'}
-		style:color={max ? 'rgba(255, 255, 255, 0.1)' : 'white'}
+		on:click={() => handleClick('increase')}
+		style:cursor={min ? 'unset' : 'pointer'}
+		style:color={min ? 'rgba(255, 255, 255, 0.1)' : 'white'}
 		style:transition="color {$motion}ms ease"
 		use:Ripple={{
 			...$ripple,
-			opacity: max ? '0' : $ripple.opacity
+			opacity: min ? '0' : $ripple.opacity
 		}}
 	>
-		<Icon icon="mingcute:up-fill" height="none" />
+		<Icon icon="mingcute:down-fill" height="none" />
 	</button>
 
 	<div
@@ -202,16 +202,16 @@
 	</div>
 
 	<button
-		on:click={() => handleClick('increase')}
-		style:cursor={min ? 'unset' : 'pointer'}
-		style:color={min ? 'rgba(255, 255, 255, 0.1)' : 'white'}
+		on:click={() => handleClick('decrease')}
+		style:cursor={max ? 'unset' : 'pointer'}
+		style:color={max ? 'rgba(255, 255, 255, 0.1)' : 'white'}
 		style:transition="color {$motion}ms ease"
 		use:Ripple={{
 			...$ripple,
-			opacity: min ? '0' : $ripple.opacity
+			opacity: max ? '0' : $ripple.opacity
 		}}
 	>
-		<Icon icon="mingcute:down-fill" height="none" />
+		<Icon icon="mingcute:up-fill" height="none" />
 	</button>
 </div>
 
@@ -262,8 +262,9 @@
 	}
 
 	.wheel {
+		margin-top: 1.5rem;
 		display: flex;
-		flex-direction: column;
 		align-items: center;
+		justify-content: space-evenly;
 	}
 </style>

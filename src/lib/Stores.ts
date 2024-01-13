@@ -17,15 +17,22 @@ export const customJs = writable<boolean | undefined>();
 
 // states
 export const onStates = readable([
-	'on',
 	'active',
-	'home',
-	'open',
+	'auto',
 	'cool',
-	'heat',
+	'cooling',
 	'dry',
+	'drying',
+	'fan',
 	'fan_only',
+	'heat',
+	'heat_cool',
+	'heating',
+	'home',
+	'on',
+	'open',
 	'playing',
+	'preheating',
 	'unlocked'
 ]);
 
