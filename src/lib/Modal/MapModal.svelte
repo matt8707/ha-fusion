@@ -244,6 +244,19 @@
 	<Modal size="large">
 		<h1 slot="title">{getName(undefined, entity)}</h1>
 
+		{#if !apiKey}
+			<div class="notice">
+				<Icon icon="ep:info-filled" height="none" style="width: 1rem; margin-right: 0.3rem;" />
+				{$lang('docs')}&nbsp;
+				<a
+					href="https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md"
+					target="_blank"
+				>
+					https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md
+				</a>
+			</div>
+		{/if}
+
 		<!-- container -->
 		<div
 			bind:this={container}
@@ -391,6 +404,22 @@
 		border: 2px solid transparent;
 		border-radius: 50%;
 		animation: pulse 5s infinite;
+	}
+
+	.notice {
+		margin-top: 1rem;
+		padding: 0.6rem 0.9rem;
+		border-radius: 0.6rem;
+		background: #ffc008;
+		color: #3b0f0f;
+		font-weight: 500;
+		align-content: end;
+		display: flex;
+	}
+
+	.notice a {
+		color: #187dd7;
+		font-weight: 500;
 	}
 
 	@keyframes pulse {
