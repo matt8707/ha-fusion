@@ -25,8 +25,8 @@ export function updateObj(sel: any, key: string, event?: any) {
 export function getSelected(id: number | undefined, data: Dashboard) {
 	return (
 		data.sidebar.find((item) => item.id === id) ||
-		data.views?.find(
-			(view) => view.sections?.flatMap((section) => section.items).find((item) => item?.id === id)
+		data.views?.find((view) =>
+			view.sections?.flatMap((section) => section.items).find((item) => item?.id === id)
 		)
 	);
 }
