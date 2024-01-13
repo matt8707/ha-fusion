@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 
 	export let sel: any = undefined;
+	export let disableChangeType: boolean | undefined = undefined;
 
 	/**
 	 * Checks if current id is in/from sidebar
@@ -98,7 +99,7 @@
 				{$lang('remove')}
 			</button>
 
-			{#if sel?.type && !['configure'].includes(sel.type)}
+			{#if !disableChangeType === true || sel?.type === 'configure'}
 				<button
 					transition:fade={{ duration: $motion }}
 					class="options action"
