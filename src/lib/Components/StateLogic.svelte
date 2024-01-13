@@ -25,7 +25,9 @@
 </script>
 
 <!-- Light -->
-{#if state === 'on' && brightness}
+{#if selected?.attribute}
+	{entity?.attributes[selected?.attribute]}
+{:else if state === 'on' && brightness}
 	{@const percentage = brightness / 255}
 	<!-- should never be 0% if on -->
 	{@const floor = percentage < 0.01 && percentage > 0 ? 0.01 : percentage}

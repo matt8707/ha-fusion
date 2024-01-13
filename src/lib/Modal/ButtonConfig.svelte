@@ -37,6 +37,13 @@
 		.sort()
 		.map((key) => ({ id: key, label: key }));
 
+	$: options_attr = Object.keys(entity.attributes)
+		.filter((key) => key !== 'friendly_name')
+		.map((key) => ({
+			id: key,
+			label: key
+		}));
+
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);
 		$dashboard = $dashboard;
@@ -87,7 +94,10 @@
 						{options}
 						placeholder={$lang('entity')}
 						value={entity_id}
-						on:change={(event) => set('entity_id', event)}
+						on:change={(event) => {
+							if (event?.detail === null) return;
+							set('entity_id', event);
+						}}
 					/>
 				{/if}
 			</div>
@@ -169,26 +179,35 @@
 
 		<h2>{$lang('color')}</h2>
 
-		<InputClear
-			condition={color}
-			on:clear={() => {
-				color = undefined;
-				set('color');
-			}}
-			let:padding
-		>
+		<div class="icon-gallery-container">
+			<InputClear
+				condition={color}
+				on:clear={() => {
+					color = undefined;
+					set('color');
+				}}
+				let:padding
+			>
+				<input
+					name={$lang('color')}
+					class="input"
+					type="text"
+					placeholder={$lang('color')}
+					autocomplete="off"
+					spellcheck="false"
+					bind:value={color}
+					on:change={(event) => set('color', event)}
+					style:padding
+				/>
+			</InputClear>
+
 			<input
-				name={$lang('color')}
-				class="input"
-				type="text"
-				placeholder={$lang('color')}
-				autocomplete="off"
-				spellcheck="false"
+				type="color"
 				bind:value={color}
 				on:change={(event) => set('color', event)}
-				style:padding
+				title={$lang('color')}
 			/>
-		</InputClear>
+		</div>
 
 		{#if !isNaN(parseFloat(entity?.state)) && !Number.isInteger(parseFloat(entity?.state))}
 			{@const precisionValues = [undefined, 0, 1, 2, 3, 4, 5]}
@@ -205,6 +224,20 @@
 					</button>
 				{/each}
 			</div>
+		{/if}
+
+		<h2>{$lang('attributes')}</h2>
+
+		{#if options_attr}
+			<Select
+				options={options_attr}
+				placeholder={$lang('state')}
+				value={sel?.attribute}
+				clearable={true}
+				on:change={(event) => {
+					set('attribute', event);
+				}}
+			/>
 		{/if}
 
 		<h2>{$lang('show_more_info')}</h2>
@@ -252,3 +285,15 @@
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
+
+<style>
+	input[type='color'] {
+		color-scheme: dark;
+		height: inherit;
+		width: 3.15rem;
+		border: 0;
+		border-radius: 0.2rem;
+		padding: 0;
+		cursor: pointer;
+	}
+</style>

@@ -9,6 +9,7 @@
 	export let placeholder: string;
 	export let value: string | undefined;
 	export let customItems = false;
+	export let clearable: boolean = false;
 
 	let container: HTMLDivElement;
 	let key = false;
@@ -26,7 +27,6 @@
 	 */
 	async function handleChange(event: any) {
 		const value = event?.detail?.id;
-		if (!value) return;
 
 		// dispatch to parent component
 		dispatch('change', value);
@@ -46,7 +46,9 @@
 	async function trigger() {
 		// fix `TypeError: scrollContainer is null`
 		await tick();
+		await tick();
 		// key change triggers rerender
+
 		key = !key;
 	}
 
@@ -54,7 +56,7 @@
 		name: 'select',
 		inputId: 'select',
 		virtualList: true,
-		clearable: false,
+		clearable,
 		i18n: {
 			empty: $lang('no_entities'),
 			nomatch: $lang('nothing_found')
