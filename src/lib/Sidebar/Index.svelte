@@ -28,6 +28,7 @@
 	let Time: typeof import('$lib/Sidebar/Time.svelte');
 	let Timer: typeof import('$lib/Sidebar/Timer.svelte');
 	let Weather: typeof import('$lib/Sidebar/Weather.svelte');
+	let WeatherForecast: typeof import('$lib/Sidebar/WeatherForecast.svelte');
 
 	const importsMap = {
 		bar: () => import('$lib/Sidebar/Bar.svelte').then((module) => (Bar = module)),
@@ -45,7 +46,9 @@
 		template: () => import('$lib/Sidebar/Template.svelte').then((module) => (Template = module)),
 		time: () => import('$lib/Sidebar/Time.svelte').then((module) => (Time = module)),
 		timer: () => import('$lib/Sidebar/Timer.svelte').then((module) => (Timer = module)),
-		weather: () => import('$lib/Sidebar/Weather.svelte').then((module) => (Weather = module))
+		weather: () => import('$lib/Sidebar/Weather.svelte').then((module) => (Weather = module)),
+		weatherforecast: () =>
+			import('$lib/Sidebar/WeatherForecast.svelte').then((module) => (WeatherForecast = module))
 	};
 
 	$: if ($dashboard?.sidebar) importComponents();
@@ -114,6 +117,8 @@
 				openModal(() => import('$lib/Modal/TimerConfig.svelte'), { sel });
 			} else if (sel?.type === 'weather') {
 				openModal(() => import('$lib/Modal/WeatherConfig.svelte'), { sel });
+			} else if (sel?.type === 'weatherforecast') {
+				openModal(() => import('$lib/Modal/WeatherForecastConfig.svelte'), { sel });
 			} else {
 				openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), { sel });
 
@@ -319,6 +324,17 @@
 								extra_sensor={item?.extra_sensor}
 								icon_pack={item?.icon_pack}
 								show_apparent={item?.show_apparent}
+							/>
+						</button>
+
+						<!-- WEATHER FORECAST -->
+					{:else if WeatherForecast && item?.type === 'weatherforecast'}
+						<button on:click={() => handleClick(item?.id)}>
+							<svelte:component
+								this={WeatherForecast.default}
+								entity_id={item?.entity_id}
+								icon_pack={item?.icon_pack}
+								days_to_show={item?.days_to_show}
 							/>
 						</button>
 					{/if}
