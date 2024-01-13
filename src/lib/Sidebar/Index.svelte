@@ -219,7 +219,7 @@
 						<!-- DIVIDER -->
 					{:else if Divider && item?.type === 'divider'}
 						<button on:click={() => handleClick(item?.id)} aria-label={item?.type} tabindex="-1">
-							<svelte:component this={Divider.default} />
+							<svelte:component this={Divider.default} mode={item?.mode} size={item?.size} />
 						</button>
 
 						<!-- GRAPH -->
