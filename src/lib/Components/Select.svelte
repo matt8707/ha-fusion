@@ -112,6 +112,11 @@
 			border-radius: 0.6rem !important;
 			background-color: #1d1b18 !important;
 			margin-top: -1px !important;
+
+			/* circumvent modal 'overflow: hidden' */
+			position: fixed !important;
+			width: 26.2rem !important;
+			z-index: 3;
 		}
 
 		.sv-dropdown-scroll {
