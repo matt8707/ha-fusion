@@ -21,9 +21,10 @@
 		{ id: 'weathericons', name: 'weather icons' }
 	];
 
-	$: weatherStates = Object.keys($states)
-		.filter((key) => key.startsWith('weather.'))
-		.sort()
+	$: weatherStates = Object.keys(
+		Object.fromEntries(Object.entries($states)
+			.filter(([key, value]) => key.startsWith('weather.') && value?.attributes?.forecast))
+	).sort()
 		.map((key) => ({ id: key, label: key }));
 
 	const range = {

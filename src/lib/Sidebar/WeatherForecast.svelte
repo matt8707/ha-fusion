@@ -42,7 +42,7 @@
 		date: string;
 		temperature: number;
 	}
-	$: forecast = entity?.attributes?.forecast.slice(0, days_to_show).map(function (item: any) {
+	$: forecast = entity?.attributes?.forecast?.slice(0, days_to_show).map(function (item: any) {
 		let icon: WeatherIconMapping =
 			iconSet.conditions[item?.condition as keyof WeatherIconConditions];
 		let x: Forecast = {
