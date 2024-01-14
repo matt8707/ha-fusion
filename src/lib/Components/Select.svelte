@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { lang } from '$lib/Stores';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import Svelecte from 'svelecte';
 	import SelectItem from '$lib/Components/SelectItem.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -32,30 +32,26 @@
 		dispatch('change', value);
 
 		// key
-		// trigger();
+		trigger();
 
 		const active = document?.activeElement;
-		if (value !== undefined) (active as HTMLInputElement)?.blur();
-
-		// blur input on:change otherwise have to click twice
-		// const element = container?.querySelector('#select') as HTMLElement;
-		// element?.blur();
-
-		// if (value === undefined) active?.focus();
+		if (active instanceof HTMLInputElement) {
+			value !== undefined ? active.blur() : active.focus();
+		}
 	}
 
 	/**
 	 * Component re-render to fix virtualList rendering
 	 * https://github.com/mskocik/svelecte/issues/196
 	 */
-	// async function trigger() {
-	// 	// fix `TypeError: scrollContainer is null`
-	// 	await tick();
-	// 	await tick();
-	// 	// key change triggers rerender
+	async function trigger() {
+		// fix `TypeError: scrollContainer is null`
+		await tick();
+		await tick();
 
-	// 	key = !key;
-	// }
+		// key change triggers rerender
+		key = !key;
+	}
 
 	const props = {
 		name: 'select',
