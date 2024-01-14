@@ -94,9 +94,13 @@
 		 * Unregister service worker because it
 		 * interferes with MJPEG camera streams
 		 */
-		const registrations = await navigator.serviceWorker.getRegistrations();
-		for (const registration of registrations) {
-			await registration.unregister();
+		try {
+			const registrations = await navigator.serviceWorker.getRegistrations();
+			for (const registration of registrations) {
+				await registration.unregister();
+			}
+		} catch (error) {
+			console.error('Error during service worker unregistration:', error);
 		}
 	});
 
