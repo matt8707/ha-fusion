@@ -92,6 +92,7 @@
 						{options}
 						placeholder={$lang('entity')}
 						value={entity_id}
+						keepFocus={true}
 						on:change={(event) => {
 							if (event?.detail === null) return;
 							set('entity_id', event);
@@ -232,14 +233,22 @@
 		<h2>{$lang('attributes')}</h2>
 
 		{#if options_attr}
-			<Select
-				options={options_attr}
-				placeholder={$lang('state')}
-				value={sel?.attribute}
-				on:change={(event) => {
-					set('attribute', event);
+			<InputClear
+				condition={sel?.attribute}
+				on:clear={() => {
+					set('attribute');
 				}}
-			/>
+				select={true}
+			>
+				<Select
+					options={options_attr}
+					placeholder={$lang('state')}
+					value={sel?.attribute}
+					on:change={(event) => {
+						set('attribute', event);
+					}}
+				/>
+			</InputClear>
 		{/if}
 
 		<h2>{$lang('show_more_info')}</h2>
