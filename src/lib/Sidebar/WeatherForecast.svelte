@@ -65,9 +65,9 @@
 				)}
 			</div>
 
-			<div class="icon" style="grid-area: {`f${i + 1}-icon`};">
+			<div style="grid-area: {`f${i + 1}-icon`};">
 				{#if forecast.icon.local}
-					<icon>
+					<icon class="icon">
 						<img
 							src={`${forecast.icon.icon_variant_day}.svg`}
 							alt={entity_state}
@@ -76,7 +76,7 @@
 						/>
 					</icon>
 				{:else}
-					<Icon icon={forecast.icon.icon_variant_day} width="100%" height="100%"></Icon>
+					<Icon class="icon" icon={forecast.icon.icon_variant_day} width="100%" height="100%"></Icon>
 				{/if}
 			</div>
 
@@ -108,7 +108,6 @@
 	}
 
 	.icon {
-		grid-area: icon;
 		width: 3.6rem;
 		height: 3.6rem;
 		display: flex;
