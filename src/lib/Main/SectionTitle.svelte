@@ -1,18 +1,13 @@
 <script lang="ts">
 	import { editMode, record } from '$lib/Stores';
-	import { onMount, createEventDispatcher } from 'svelte';
+	import { createEventDispatcher } from 'svelte';
 
 	export let value: string;
 
 	let width: number;
-	let prevValue: string;
 	let input: HTMLInputElement;
 
 	const dispatch = createEventDispatcher();
-
-	onMount(() => {
-		prevValue = value;
-	});
 
 	/**
 	 * Dispatches title change on submit or blur,
@@ -21,14 +16,9 @@
 	function handleSubmit() {
 		if (!$editMode) return;
 
-		if (value === '') {
-			value = prevValue;
-		}
-
 		dispatch('submit', value);
 		$record();
 
-		prevValue = value;
 		if (input) input.blur();
 	}
 
@@ -56,7 +46,8 @@
 		bind:this={input}
 		on:blur={handleSubmit}
 		on:keydown={handleKeydown}
-		style:width="{width + 1}px"
+		style:width="{value == '' ? width + 100 : width + 1}px"
+		placeholder="Name"
 		required={true}
 		autocomplete="off"
 		spellcheck="false"

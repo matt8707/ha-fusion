@@ -41,6 +41,7 @@
 	header h1 {
 		padding: 0;
 		font-size: 1.8rem;
+		height: 1.8rem;
 		font-weight: 600;
 		margin-block-start: 0;
 		margin-block-end: 0.4rem;
