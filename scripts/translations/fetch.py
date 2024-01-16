@@ -100,6 +100,7 @@ dir_keys = [
             ("return_home", ["ui.dialogs.more_info_control.vacuum.return_home"]),
             ("start_pause", ["ui.dialogs.more_info_control.vacuum.start_pause"]),
             ("battery", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.battery"]),
+            ("set_white", ["ui.dialogs.more_info_control.light.set_white"]),
         ],
     ),
     (  # MEDIA_PLAYER

@@ -127,6 +127,7 @@
 	"sensor": "Sensor",
 	"service": "Service",
 	"set_state": "\u0938\u094d\u0925\u093f\u0924\u093f \u0928\u093f\u0930\u094d\u0927\u093e\u0930\u093f\u0924 \u0915\u0930\u0947",
+	"set_white": "Set white",
 	"settings": "\u0915\u0949\u0902\u092b\u093c\u093f\u0917\u0930\u0947\u0936\u0928",
 	"shortcuts": "Shortcuts",
 	"show": "Show",
