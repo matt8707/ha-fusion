@@ -101,9 +101,9 @@
 			margin-top: -1px !important;
 
 			/* circumvent modal 'overflow: hidden' */
-			position: fixed !important;
+			/* position: fixed !important;
 			width: 26.2rem !important;
-			z-index: 3;
+			z-index: 3; */
 		}
 
 		.sv-dropdown-scroll {
