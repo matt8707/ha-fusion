@@ -1,22 +1,29 @@
-FROM node:20-alpine AS builder
+# first stage, can't use alpine for building armv7
+FROM node:21 AS builder
 WORKDIR /app
-COPY package*.json .
-RUN npm install --verbose
-COPY . .
-RUN npm run build --no-cache
-RUN npm prune --omit=dev
 
-FROM node:20-alpine
+# copy all files
+COPY . .
+
+# install, build and prune
+RUN npm install --verbose && \
+  npm run build && \
+  npm prune --production
+
+# second stage
+FROM node:21-alpine
 WORKDIR /app
+
+# copy files to /app
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/server.js .
-COPY package.json .
+COPY --from=builder /app/package.json .
 
-RUN ln -s /app/build/client/themes ./themes
+# set environment
+ENV PORT=5050 \
+  NODE_ENV=production \
+  ADDON=false
 
-ENV PORT 5050
-ENV NODE_ENV=production
 EXPOSE 5050
-
 CMD ["node", "server.js"]
