@@ -74,6 +74,7 @@ List grouped by domains and categorized based on their similar behaviors
   - [ ] idea: custom map if map camera
   - [ ] <https://github.com/matt8707/ha-fusion/issues/24>
 - [x] counter
+- [ ] group
 
 ### Date
 
