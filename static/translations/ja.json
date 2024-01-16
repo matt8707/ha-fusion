@@ -189,6 +189,7 @@
 	"sensor": "\u30bb\u30f3\u30b5\u30fc",
 	"service": "\u30b5\u30fc\u30d3\u30b9",
 	"set_state": "\u72b6\u614b\u3092\u8a2d\u5b9a",
+	"set_white": "\u767d\u306b\u8a2d\u5b9a",
 	"settings": "\u8a2d\u5b9a",
 	"shortcuts": "\u30b7\u30e7\u30fc\u30c8\u30ab\u30c3\u30c8",
 	"show": "\u8868\u793a",
