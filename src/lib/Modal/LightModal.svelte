@@ -62,7 +62,14 @@
 		: [attributes?.supported_color_modes].filter(Boolean);
 
 	$: colorMode = attributes?.color_mode;
-	$: selTab = selTabClicked ? selTab : supports?.COLOR ? 'color' : colorMode;
+	$: selTab = selTabClicked
+		? selTab
+		: colorMode === 'color_temp' || colorMode === 'white'
+			? colorMode
+			: supports?.COLOR
+				? 'color'
+				: colorMode;
+
 	$: toggle = entity?.state === 'on';
 	$: current = Math.round(rangeValue / 2.55);
 	$: brightness = entity?.attributes?.brightness;
