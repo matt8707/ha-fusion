@@ -21,6 +21,9 @@
 	let groupSel: string | undefined;
 	let groupEntity: HassEntity;
 
+	let selTab: string | undefined;
+	let selTabClicked = false;
+
 	// https://github.com/home-assistant/frontend/blob/dev/src/data/light.ts
 	enum LightColorMode {
 		UNKNOWN = 'unknown',
@@ -59,8 +62,7 @@
 		: [attributes?.supported_color_modes].filter(Boolean);
 
 	$: colorMode = attributes?.color_mode;
-
-	$: selTab = colorMode;
+	$: selTab = selTabClicked ? selTab : supports?.COLOR ? 'color' : colorMode;
 	$: toggle = entity?.state === 'on';
 	$: current = Math.round(rangeValue / 2.55);
 	$: brightness = entity?.attributes?.brightness;
@@ -85,6 +87,21 @@
 		callService($connection, 'light', 'toggle', {
 			entity_id: entity?.entity_id
 		});
+	}
+
+	/**
+	 * Handle click selTab (color mode)
+	 */
+	function handleSelTabClick(mode: string) {
+		selTabClicked = true;
+		selTab = mode;
+
+		if (mode === 'white') {
+			callService($connection, 'light', 'turn_on', {
+				entity_id: entity?.entity_id,
+				white: true
+			});
+		}
 	}
 
 	$: options = [
@@ -180,33 +197,37 @@
 			<h2>{$lang('change_color')}</h2>
 		{/if}
 
-		{#if supports?.COLOR && colorModes?.length > 1}
+		{#if colorModes?.length > 1}
 			<div class="button-container">
-				{#each colorModes as mode}
+				{#if colorModes?.includes('color_temp')}
 					<button
-						class:selected={selTab === mode}
-						on:click={() => {
-							selTab = mode;
-
-							// special case
-							if (mode === 'white') {
-								callService($connection, 'light', 'turn_on', {
-									entity_id: entity?.entity_id,
-									white: true
-								});
-							}
-						}}
+						class:selected={selTab === 'color_temp'}
+						on:click={() => handleSelTabClick('color_temp')}
 						use:Ripple={$ripple}
 					>
-						{#if mode === 'color_temp'}
-							{$lang('color_temp')}
-						{:else if mode === 'white'}
-							{$lang('set_white')}
-						{:else}
-							{$lang('color')}
-						{/if}
+						{$lang('color_temp')}
 					</button>
-				{/each}
+				{/if}
+
+				{#if supports?.COLOR}
+					<button
+						class:selected={selTab === 'color'}
+						on:click={() => handleSelTabClick('color')}
+						use:Ripple={$ripple}
+					>
+						{$lang('color')}
+					</button>
+				{/if}
+
+				{#if colorModes?.includes('white')}
+					<button
+						class:selected={selTab === 'white'}
+						on:click={() => handleSelTabClick('white')}
+						use:Ripple={$ripple}
+					>
+						{$lang('set_white')}
+					</button>
+				{/if}
 			</div>
 		{/if}
 
