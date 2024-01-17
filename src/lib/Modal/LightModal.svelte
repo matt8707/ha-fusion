@@ -157,7 +157,7 @@
 								rangeValue = brightness || 0;
 							}}
 						>
-							{getName(undefined, $states?.[selEntity])}
+							{getName(undefined, $states?.[selEntity], groupEntity?.attributes?.friendly_name)}
 						</button>
 					{/each}
 				</div>

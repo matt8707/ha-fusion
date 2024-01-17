@@ -19,9 +19,9 @@
 
 	export let demo: string | undefined = undefined;
 	export let sel: any;
+	export let sectionName: string | undefined = undefined;
 
 	$: entity_id = demo || sel?.entity_id;
-	$: name = sel?.name;
 	$: icon = sel?.icon;
 	$: color = sel?.color;
 	$: marquee = sel?.marquee;
@@ -157,7 +157,8 @@
 		if ($editMode) {
 			openModal(() => import('$lib/Modal/ButtonConfig.svelte'), {
 				demo: entity_id,
-				sel
+				sel,
+				sectionName
 			});
 		} else if (more_info === false) {
 			toggle();
@@ -408,7 +409,7 @@
 	<div class="right" on:click|stopPropagation={handleEvent}>
 		<!-- NAME -->
 		<div class="name" data-state={stateOn}>
-			{getName({ name }, entity) || $lang('unknown')}
+			{getName(sel, entity, sectionName) || $lang('unknown')}
 		</div>
 
 		<!-- STATE -->

@@ -15,6 +15,7 @@
 	export let isOpen: boolean;
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
+	export let sectionName: string | undefined = undefined;
 
 	$: entity = $states[sel?.entity_id as any] as HassEntity;
 	$: entity_id = entity?.entity_id;
@@ -79,7 +80,7 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div style:pointer-events="none">
-			<Button {sel} />
+			<Button {sel} {sectionName} />
 		</div>
 
 		<h2>{$lang('entity')}</h2>

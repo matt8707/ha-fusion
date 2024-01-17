@@ -43,8 +43,15 @@ export function getDomain(entity_id: string | undefined) {
  * Returns the name of a given entity
  * name | friendly_name | entity_id
  */
-export function getName(sel: any | undefined, entity: HassEntity | undefined) {
-	return sel?.name || entity?.attributes?.friendly_name || entity?.entity_id?.split('.')?.[1];
+export function getName(
+	sel: any | undefined,
+	entity: HassEntity | undefined,
+	sectionName: string | undefined = undefined
+) {
+	const name = sel?.name || entity?.attributes?.friendly_name || entity?.entity_id?.split('.')?.[1];
+	return !sel?.name && sectionName && name?.startsWith(sectionName + ' ')
+		? name?.substring(sectionName?.length + 1)
+		: name;
 }
 
 /**
