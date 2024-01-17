@@ -6,6 +6,7 @@
 	import Configure from '$lib/Main/Configure.svelte';
 
 	export let item: any;
+	export let sectionName: string | undefined = undefined;
 </script>
 
 {#if item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] && item?.type === 'media'}
@@ -15,7 +16,7 @@
 {#if item?.type === 'configure'}
 	<Configure sel={item} />
 {:else if item?.type === 'button'}
-	<Button sel={item} />
+	<Button sel={item} {sectionName} />
 {:else if item?.type === 'media'}
 	<Media sel={item} />
 {:else if item?.type === 'camera'}
