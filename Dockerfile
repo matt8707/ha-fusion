@@ -8,7 +8,7 @@ COPY . .
 # install, build and prune
 RUN npm install --verbose && \
   npm run build && \
-  npm prune --production
+  npm prune --omit=dev
 
 # second stage
 FROM node:21-alpine

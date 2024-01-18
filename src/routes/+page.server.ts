@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { dev } from '$app/environment';
 import yaml from 'js-yaml';
 import type { Configuration, Dashboard, Translations } from '$lib/Types';
@@ -19,7 +19,7 @@ async function loadFile(file: string) {
 		}
 	} catch (error) {
 		if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') {
-			console.error(`No existing file found for ${file}`);
+			// console.error(`No existing file found for ${file}`);
 		} else {
 			console.error(`Error reading or parsing ${file}:`, error);
 		}
@@ -36,18 +36,29 @@ export async function load({ request }): Promise<{
 	theme: any;
 	translations: Translations;
 }> {
-	const proto = request.headers.get('x-forwarded-proto');
-	const host = request.headers.get('x-forwarded-host');
-
 	// must be loaded first
 	const [configuration, dashboard] = await Promise.all([
 		loadFile('./data/configuration.yaml'),
 		loadFile('./data/dashboard.yaml')
 	]);
 
-	// set hassUrl from env for dev and docker setups
-	// forward headers for ios/mac app to work...
-	configuration.hassUrl = process.env.HASS_URL || `${proto}://${host}`;
+	// determine hassUrl
+	let hassUrl = process.env.HASS_URL || configuration.hassUrl;
+	if (!hassUrl) {
+		const proto = request.headers.get('x-forwarded-proto');
+		const host = request.headers.get('x-forwarded-host');
+		if (proto && host) hassUrl = `${proto}://${host}`;
+	}
+
+	// update hassUrl mismatch
+	if (hassUrl && hassUrl !== configuration.hassUrl) {
+		configuration.hassUrl = hassUrl;
+		try {
+			await writeFile('./data/configuration.yaml', yaml.dump(configuration), 'utf8');
+		} catch (error) {
+			console.error('error updating configuration.yaml:', error);
+		}
+	}
 
 	// initialize keys if missing
 	dashboard.views = dashboard.views || [];

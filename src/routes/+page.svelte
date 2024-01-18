@@ -67,7 +67,14 @@
 
 		console.debug('authenticating...');
 
-		options.hassUrl = $configuration?.hassUrl;
+		if ($configuration?.hassUrl) {
+			options.hassUrl = $configuration?.hassUrl;
+		} else {
+			// last resort get hassTokens else ERR_HASS_HOST_REQUIRED
+			const hassTokens = localStorage.getItem('hassTokens');
+			const parseHassTokens = hassTokens && JSON.parse(hassTokens);
+			options.hassUrl = parseHassTokens?.hassUrl;
+		}
 
 		try {
 			await authentication(options);
