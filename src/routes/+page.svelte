@@ -67,7 +67,14 @@
 
 		console.debug('authenticating...');
 
-		options.hassUrl = $configuration?.hassUrl;
+		if ($configuration?.hassUrl) {
+			options.hassUrl = $configuration?.hassUrl;
+		} else {
+			// last resort get hassTokens else ERR_HASS_HOST_REQUIRED
+			const hassTokens = localStorage.getItem('hassTokens');
+			const parseHassTokens = hassTokens && JSON.parse(hassTokens);
+			options.hassUrl = parseHassTokens?.hassUrl;
+		}
 
 		try {
 			await authentication(options);
@@ -94,13 +101,15 @@
 		 * Unregister service worker because it
 		 * interferes with MJPEG camera streams
 		 */
-		try {
-			const registrations = await navigator.serviceWorker.getRegistrations();
-			for (const registration of registrations) {
-				await registration.unregister();
+		if ('serviceWorker' in navigator) {
+			try {
+				const registrations = await navigator.serviceWorker.getRegistrations();
+				for (const registration of registrations) {
+					await registration.unregister();
+				}
+			} catch (error) {
+				console.error('Error during service worker unregistration:', error);
 			}
-		} catch (error) {
-			console.error('Error during service worker unregistration:', error);
 		}
 	});
 
