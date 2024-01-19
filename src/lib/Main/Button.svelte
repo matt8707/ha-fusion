@@ -264,6 +264,10 @@
 					openModal(() => import('$lib/Modal/CameraModal.svelte'), { sel });
 					break;
 
+				case 'water_heater':
+					openModal(() => import('$lib/Modal/WaterHeaterModal.svelte'), { sel });
+					break;
+
 				case 'humidifier':
 					openModal(() => import('$lib/Modal/HumidifierModal.svelte'), { sel });
 					break;

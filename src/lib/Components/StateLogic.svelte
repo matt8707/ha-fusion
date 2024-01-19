@@ -53,6 +53,10 @@
 {:else if getDomain(entity_id) === 'humidifier' && entity?.state === 'on' && attributes?.action}
 	{$lang('humidifier_' + attributes?.action)}
 
+	<!--  Water Heater -->
+{:else if getDomain(entity_id) === 'water_heater'}
+	{$lang('water_heater_' + entity?.state)}
+
 	<!--  Input Number / Number -->
 {:else if entity_id && (getDomain(entity_id) === 'input_number' || getDomain(entity_id) === 'number')}
 	{Number(state) || $lang('unknown')}

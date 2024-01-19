@@ -38,11 +38,11 @@ List grouped by domains and categorized based on their similar behaviors
 ### Climate
 
 - [x] climate
-  - [ ] horizontal temp select
-  - [ ] issue <https://github.com/matt8707/ha-fusion/issues/22>
+  - [x] horizontal temp select
+  - [x] issue <https://github.com/matt8707/ha-fusion/issues/22>
 - [x] fan
-- [ ] humidifier
-- [ ] water_heater
+- [x] humidifier
+- [x] water_heater
 
 ### Other
 
