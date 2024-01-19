@@ -33,7 +33,9 @@ export const onStates = readable([
 	'open',
 	'playing',
 	'preheating',
-	'unlocked'
+	'unlocked',
+	'cleaning',
+	'returning'
 ]);
 
 // drawer
