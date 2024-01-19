@@ -270,6 +270,10 @@
 					});
 					break;
 
+				case 'group':
+					openModal(() => import('$lib/Modal/GroupModal.svelte'), { sel });
+					break;
+
 				case 'device_tracker': {
 					if ($states?.[sel?.entity_id]?.attributes?.source_type === 'gps') {
 						openModal(() => import('$lib/Modal/DeviceTrackerModal.svelte'), { sel });
