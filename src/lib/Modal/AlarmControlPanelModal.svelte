@@ -118,40 +118,46 @@
 			/>
 		{/if}
 
-		<input type="password" class:reject bind:value={code} />
+		<div class="container">
+			<input type="password" class:reject bind:value={code} />
 
-		<div>
-			{#each [1, 2, 3, 4, 5, 6, 7, 8, 9] as digit}
-				<button on:click={() => addCode(digit)} use:Ripple={$ripple}>
-					{digit}
+			<div class="buttons">
+				{#each [1, 2, 3, 4, 5, 6, 7, 8, 9] as digit}
+					<button on:click={() => addCode(digit)} use:Ripple={$ripple}>
+						{digit}
+					</button>
+				{/each}
+
+				<button
+					on:click={clearCode}
+					use:Ripple={$ripple}
+					style:background-color={code === '' ? '' : '#422522'}
+					style:transition="background-color {$motion}ms ease"
+				>
+					<Icon
+						icon="gravity-ui:xmark"
+						height="none"
+						style={`width: 1.65rem; ${
+							code === '' ? '' : `color: #e15241; transition: background-color ${$motion}ms ease;`
+						}`}
+					></Icon>
 				</button>
-			{/each}
 
-			<button
-				on:click={clearCode}
-				use:Ripple={$ripple}
-				style:background-color={code === '' ? '' : '#422522'}
-				style:transition="background-color {$motion}ms ease"
-			>
-				<Icon
-					icon="gravity-ui:xmark"
-					height="none"
-					style={`width: 1.65rem; ${
-						code === '' ? '' : `color: #e15241; transition: background-color ${$motion}ms ease;`
-					}`}
-				></Icon>
-			</button>
+				<button on:click={() => addCode(0)} use:Ripple={$ripple}>0</button>
 
-			<button on:click={() => addCode(0)} use:Ripple={$ripple}>0</button>
-
-			<button on:click={enterCode} use:Ripple={$ripple} style:background-color="#293828">
-				<Icon icon="gravity-ui:check" height="none" style="width: 1.8rem; color: #67ad5b;"></Icon>
-			</button>
+				<button on:click={enterCode} use:Ripple={$ripple} style:background-color="#293828">
+					<Icon icon="gravity-ui:check" height="none" style="width: 1.8rem; color: #67ad5b;"></Icon>
+				</button>
+			</div>
 		</div>
 	</Modal>
 {/if}
 
 <style>
+	.container {
+		display: grid;
+	}
+
 	input[type='password'] {
 		text-align: center;
 		margin-bottom: 20px;
@@ -166,7 +172,7 @@
 		background: var(--theme-button-background-color-off);
 	}
 
-	div {
+	.buttons {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		column-gap: 2.2rem;
