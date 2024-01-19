@@ -157,6 +157,8 @@ dir_keys = [
             ("humidifier", ["entity_component", "humidifier", "name"]),
             ("humidifier_drying", ["entity_component", "_", "state_attributes", "action", "state", "drying"]),
             ("humidifier_humidifying", ["entity_component", "_", "state_attributes", "action", "state", "humidifying"]),
+            ("current_humidity", ["entity_component", "_", "state_attributes", "current_humidity", "name"]),
+            ("target_humidity", ["entity_component", "_", "state_attributes", "humidity", "name"]),
             ("humidifier_mode", ["entity_component", "_", "state_attributes", "mode", "name"]),
             ("humidifier_mode_auto", ["entity_component", "_", "state_attributes", "mode", "state", "auto"]),
             ("humidifier_mode_away", ["entity_component", "_", "state_attributes", "mode", "state", "away"]),
