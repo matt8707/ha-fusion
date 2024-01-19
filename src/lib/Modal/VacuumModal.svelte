@@ -14,47 +14,29 @@
 	$: entity = $states[sel?.entity_id];
 	$: state = entity?.state;
 	$: attributes = entity?.attributes;
+	$: supported_features = attributes?.supported_features;
+
+	$: supports = getSupport(supported_features, {
+		TURN_ON: 1,
+		TURN_OFF: 2,
+		PAUSE: 4,
+		STOP: 8,
+		RETURN_HOME: 16,
+		FAN_SPEED: 32,
+		BATTERY: 64,
+		STATUS: 128,
+		SEND_COMMAND: 256,
+		LOCATE: 512,
+		CLEAN_SPOT: 1024,
+		MAP: 2048,
+		STATE: 4096,
+		START: 8192
+	});
 
 	$: options = attributes?.fan_speed_list?.map((option: string) => ({
 		id: option,
 		label: $lang(option?.toLowerCase())
 	}));
-
-	/**
-	 * Construct support based on Feature
-	 * https://github.com/home-assistant/frontend/blob/dev/src/data/vacuum.ts
-	 */
-
-	let supports: { [key: string]: boolean } = {};
-
-	enum Feature {
-		TURN_ON = 1,
-		TURN_OFF = 2,
-		PAUSE = 4,
-		STOP = 8,
-		RETURN_HOME = 16,
-		FAN_SPEED = 32,
-		BATTERY = 64,
-		STATUS = 128,
-		SEND_COMMAND = 256,
-		LOCATE = 512,
-		CLEAN_SPOT = 1024,
-		MAP = 2048,
-		STATE = 4096,
-		START = 8192
-	}
-
-	$: if (sel?.entity_id) constructSupports();
-
-	function constructSupports() {
-		if (!attributes) return;
-
-		Object.keys(Feature)
-			.filter((key) => isNaN(Number(key)))
-			.forEach((key) => {
-				supports[key] = getSupport(attributes, Feature[key as keyof typeof Feature]);
-			});
-	}
 
 	/**
 	 * Handle click
@@ -103,7 +85,9 @@
 			/>
 		{/if}
 
-		<h2>{$lang('vacuum_commands')?.replace(':', '')}</h2>
+		{#if supports?.TURN_ON || supports?.TURN_OFF || supports?.START || supports?.PAUSE || supports?.STOP || supports?.LOCATE || supports?.RETURN_HOME}
+			<h2>{$lang('vacuum_commands')?.replace(':', '')}</h2>
+		{/if}
 
 		<div class="button-container">
 			{#if supports?.TURN_ON}

@@ -13,8 +13,8 @@
 	},
 	"devDependencies": {
 		"@iconify/svelte": "^3.1.6",
-		"@sveltejs/adapter-node": "^3.0.1",
-		"@sveltejs/kit": "^2.3.5",
+		"@sveltejs/adapter-node": "^4.0.0",
+		"@sveltejs/kit": "^2.4.1",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@types/d3-array": "^3.2.1",
 		"@types/d3-scale": "^4.0.8",
@@ -34,7 +34,7 @@
 		"svelte-fast-dimension": "^1.1.0",
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.11"
+		"vite": "^5.0.12"
 	},
 	"type": "module",
 	"dependencies": {
@@ -52,7 +52,7 @@
 		"d3-array": "^3.2.4",
 		"d3-scale": "^4.0.2",
 		"d3-shape": "^3.2.0",
-		"dotenv": "^16.3.1",
+		"dotenv": "^16.3.2",
 		"express": "^4.18.2",
 		"home-assistant-js-websocket": "^9.1.0",
 		"http-proxy-middleware": "^2.0.6",

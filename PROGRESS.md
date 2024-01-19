@@ -76,7 +76,7 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] counter
 - [x] group
 - [x] valve
-- [ ] lawn_mower
+- [x] lawn_mower
 
 ### Date
 

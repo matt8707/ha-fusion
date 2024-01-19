@@ -8,8 +8,6 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import Icon from '@iconify/svelte';
 	import { getName } from '$lib/Utils';
-	import StateLogic from '$lib/Components/StateLogic.svelte';
-	import ConfigButtons from './ConfigButtons.svelte';
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 
 	export let isOpen: boolean;

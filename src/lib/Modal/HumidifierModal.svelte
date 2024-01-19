@@ -12,8 +12,6 @@
 	export let isOpen: boolean;
 	export let sel: any;
 
-	let inputDisplay: undefined;
-
 	$: entity = $states?.[sel?.entity_id];
 	$: attr = entity?.attributes;
 	$: toggle = entity?.state === 'on';
@@ -103,9 +101,6 @@
 			bind:value={attr.humidity}
 			min={attr?.min_humidity}
 			max={attr?.max_humidity}
-			on:input={(event) => {
-				inputDisplay = event?.detail;
-			}}
 			on:change={(event) => {
 				handleEvent('set_humidity', event?.detail);
 			}}
@@ -115,7 +110,7 @@
 		<!-- attributes?.supported_features === 1 -->
 		{#if options}
 			<h2>
-				{$lang('humidifier_mode')}
+				{$lang('mode')}
 			</h2>
 
 			<Select

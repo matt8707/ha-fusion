@@ -135,12 +135,16 @@ export function relativeTime(timestamp: string, languageCode: string | undefined
 }
 
 /**
- * Determines if a feature is supported
- * from a list of entity attributes
+ * Returns an object of supported features
  */
-export const getSupport = (
-	attributes: {
-		[key: string]: any;
-	},
-	feature: number
-): boolean => (attributes.supported_features! & feature) !== 0;
+export function getSupport(
+	supported_features: number | undefined,
+	features: any
+): Record<string, boolean> {
+	if (!supported_features) return {};
+
+	return Object.entries(features).reduce((supports: Record<string, boolean>, [key, value]) => {
+		if (typeof value === 'number') supports[key] = (supported_features & value) !== 0;
+		return supports;
+	}, {});
+}
