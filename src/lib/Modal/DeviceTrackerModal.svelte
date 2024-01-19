@@ -8,10 +8,12 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import Icon from '@iconify/svelte';
 	import { getName } from '$lib/Utils';
+	import StateLogic from '$lib/Components/StateLogic.svelte';
+	import ConfigButtons from './ConfigButtons.svelte';
+	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
 
 	export let isOpen: boolean;
-	export let entity_id: string;
-	export let entity_picture: string | undefined;
+	export let sel: any;
 
 	let entity: HassEntity;
 	let map: Map;
@@ -54,7 +56,10 @@
 	};
 
 	/** Updates entity if `last_updated` attribute changes */
-	$: if ($states?.[entity_id]?.last_updated !== entity?.last_updated) entity = $states?.[entity_id];
+	$: if ($states?.[sel?.entity_id]?.last_updated !== entity?.last_updated)
+		entity = $states?.[sel?.entity_id];
+
+	$: entity_picture = entity?.attributes?.entity_picture;
 
 	$: coordinates = {
 		lon: entity?.attributes?.longitude,
@@ -85,13 +90,13 @@
 			themeButtons(mode);
 
 			// marker
-			markerIcon.style.backgroundImage = `url("${entity_picture}")`;
-			markerContainer.style.display = 'block';
 			new Marker({
 				element: markerContainer
 			})
 				.setLngLat([coordinates?.lon, coordinates?.lat])
 				.addTo(map);
+
+			markerContainer.style.display = 'block';
 		});
 
 		// controls
@@ -242,18 +247,22 @@
 
 {#if isOpen}
 	<Modal size="large">
-		<h1 slot="title">{getName(undefined, entity)}</h1>
+		<h1 slot="title">{getName(sel, entity)}</h1>
 
 		{#if !apiKey}
 			<div class="notice">
-				<Icon icon="ep:info-filled" height="none" style="width: 1rem; margin-right: 0.3rem;" />
-				{$lang('docs')}&nbsp;
-				<a
-					href="https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md"
-					target="_blank"
-				>
-					https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md
-				</a>
+				<span class="icon">
+					<Icon icon="ep:info-filled" height="none" />
+				</span>
+				<span class="text">
+					{$lang('docs')}&nbsp;
+					<a
+						href="https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md"
+						target="_blank"
+					>
+						https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md
+					</a>
+				</span>
 			</div>
 		{/if}
 
@@ -316,12 +325,9 @@
 			<div class="pulse" />
 
 			<button
-				use:Ripple={{
-					...$ripple,
-					color: 'rgba(255, 255, 255, 0.5)'
-				}}
 				id="marker"
 				bind:this={markerIcon}
+				style:background-image={`url("${entity_picture}")`}
 				on:click={() => {
 					if (popup?.isOpen()) {
 						popup.remove();
@@ -329,9 +335,15 @@
 						setTimeout(() => renderPopup(), 0);
 					}
 				}}
-				on:mouseenter={() => (markerIcon.style.cursor = 'pointer')}
-				on:mouseleave={() => (markerIcon.style.cursor = 'unset')}
-			/>
+				use:Ripple={{
+					...$ripple,
+					color: 'rgba(255, 255, 255, 0.5)'
+				}}
+			>
+				{#if !entity_picture}
+					<ComputeIcon entity_id={entity?.entity_id} />
+				{/if}
+			</button>
 		</div>
 
 		<style>
@@ -373,7 +385,7 @@
 <style>
 	.container {
 		width: 100%;
-		height: 100vh;
+		height: 75vh;
 		border-radius: 0.6rem;
 		font-family: inherit;
 		margin-top: 1rem;
@@ -394,6 +406,8 @@
 		background-color: black;
 		border: 2px solid white;
 		border-radius: 50%;
+		cursor: pointer;
+		color: white;
 	}
 
 	.marker-container .pulse {
@@ -415,6 +429,19 @@
 		font-weight: 500;
 		align-content: end;
 		display: flex;
+	}
+
+	.notice .icon {
+		width: 1.2rem;
+		height: 1.2rem;
+		margin-right: 0.6rem;
+		flex-shrink: 0;
+	}
+
+	.notice .text {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 
 	.notice a {
