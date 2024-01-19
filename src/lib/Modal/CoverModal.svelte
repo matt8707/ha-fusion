@@ -13,7 +13,7 @@
 
 	let request: Promise<unknown> | undefined = undefined;
 
-	$: entity = $states[selected?.entity_id];
+	$: entity = $states[selected?.entity_id] as HassEntity;
 	$: attributes = entity?.attributes;
 
 	$: supported_features = attributes?.supported_features;
