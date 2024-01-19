@@ -236,6 +236,10 @@
 					openModal(() => import('$lib/Modal/VacuumModal.svelte'), { sel });
 					break;
 
+				case 'lawn_mower':
+					openModal(() => import('$lib/Modal/LawnMowerModal.svelte'), { sel });
+					break;
+
 				case 'valve':
 					openModal(() => import('$lib/Modal/ValveModal.svelte'), { sel });
 					break;
