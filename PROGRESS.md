@@ -91,15 +91,15 @@ List grouped by domains and categorized based on their similar behaviors
 
 ### Device Tracker
 
-- [ ] device_tracker
+- [x] device_tracker
 - [x] person
-  - [ ] bug: if no entity_picture in map show icon
-  - [ ] bug: if no gps modal won't open
+  - [x] bug: if no entity_picture in map show icon
+  - [x] bug: if no gps modal won't open
   - [ ] idea: toggle icon pings phone?
-  - [ ] make api key more clear if missing
+  - [x] make api key more clear if missing
         <https://github.com/matt8707/ha-fusion/issues/121>
-- [ ] zone
-  - [ ] map with all person:, device_trackers etc
+- [x] zone
+  - [ ] idea: map with all persons?
 
 ### Untestable
 

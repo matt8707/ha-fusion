@@ -198,6 +198,8 @@
 				case 'scene':
 				case 'schedule':
 				case 'sun':
+				case 'person':
+				case 'zone':
 				case 'input_button':
 					openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
 					break;
@@ -269,44 +271,26 @@
 					break;
 
 				case 'device_tracker': {
-					const entity = $states?.[sel?.entity_id];
-					const attributes = entity?.attributes;
-					const entity_picture = attributes?.entity_picture;
-
-					// if attributes?.source_type === 'gps'
-					openModal(() => import('$lib/Modal/MapModal.svelte'), {
-						entity_id: entity?.entity_id,
-						entity_picture: entity_picture
-					});
+					if ($states?.[sel?.entity_id]?.attributes?.source_type === 'gps') {
+						openModal(() => import('$lib/Modal/DeviceTrackerModal.svelte'), { sel });
+					} else {
+						openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
+					}
 					break;
 				}
-				case 'person': {
-					const device_trackers = $states?.[sel?.entity_id]?.attributes?.device_trackers || [];
-					const gpsEntities = Object.values($states).filter(
-						(states) =>
-							device_trackers.includes(states.entity_id) && states.attributes?.source_type === 'gps'
-					);
 
-					if (!gpsEntities.length) return;
-					const entity_id = gpsEntities[0]?.entity_id;
-
-					openModal(async () => import('$lib/Modal/MapModal.svelte'), {
-						entity_id,
-						entity_picture: $states?.[sel?.entity_id]?.attributes?.entity_picture
-					});
-
-					break;
-				}
 				case 'cover':
 					openModal(() => import('$lib/Modal/CoverModal.svelte'), {
 						selected: sel
 					});
 					break;
+
 				case 'fan':
 					openModal(() => import('$lib/Modal/FanModal.svelte'), {
 						selected: sel
 					});
 					break;
+
 				default:
 					openModal(() => import('$lib/Modal/Unknown.svelte'), {
 						selected: sel
@@ -337,9 +321,6 @@
 					break;
 				case 'media_player':
 					module = await import('$lib/Modal/MediaPlayer.svelte');
-					break;
-				case 'person':
-					module = await import('$lib/Modal/MapModal.svelte');
 					break;
 				default:
 					module = await import('$lib/Modal/Unknown.svelte');
