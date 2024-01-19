@@ -154,28 +154,29 @@
 <style>
 	input[type='password'] {
 		text-align: center;
-		margin-bottom: 20px;
-		font-size: 3.2rem;
+		margin-bottom: 1.5rem;
+		font-size: 3rem;
 		border: none;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 		color: white;
-		width: 20rem;
-		margin: 2rem auto;
+		width: 100%;
+		margin-top: 1.5rem;
 		outline: none;
-		border-radius: 0.4rem 0.4rem 0 0;
+		border-radius: 0.5rem 0.5rem 0 0;
 		background: var(--theme-button-background-color-off);
 	}
 
 	div {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		column-gap: 2.2rem;
-		row-gap: 1.2rem;
-		margin: auto;
-		margin-bottom: 2.5rem;
+		grid-template-rows: repeat(4, 1fr);
+		grid-column-gap: 0rem;
+		grid-row-gap: 1rem;
+		padding: 10rem, 20rem, 30rem, 40rem;
 	}
 
 	button {
+		place-self: center;
 		cursor: pointer;
 		user-select: none;
 		background-color: var(--theme-button-background-color-off);
