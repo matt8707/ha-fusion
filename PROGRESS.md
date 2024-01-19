@@ -75,6 +75,8 @@ List grouped by domains and categorized based on their similar behaviors
   - [x] <https://github.com/matt8707/ha-fusion/issues/24>
 - [x] counter
 - [x] group
+- [x] valve
+- [ ] lawn_mower
 
 ### Date
 
@@ -100,15 +102,6 @@ List grouped by domains and categorized based on their similar behaviors
         <https://github.com/matt8707/ha-fusion/issues/121>
 - [x] zone
   - [ ] idea: map with all persons?
-
-### Untestable
-
-- [ ] geo_location
-- [ ] lawn_mower
-- [ ] notify
-- [ ] valve
-- [ ] wake_word
-- [ ] tts
 
 ## Object types
 

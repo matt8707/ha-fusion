@@ -413,6 +413,10 @@
 						? 'toggle-switch-variant'
 						: 'toggle-switch-variant-off'
 					: 'toggle-switch-variant',
+		valve:
+			stateObj?.attributes.device_class && stateObj?.attributes.device_class === 'gas'
+				? 'meter-gas'
+				: 'pipe-valve',
 		sensor:
 			stateObj?.attributes.device_class &&
 			stateObj?.attributes.device_class in FIXED_DEVICE_CLASS_ICONS

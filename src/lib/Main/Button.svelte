@@ -236,6 +236,11 @@
 					openModal(() => import('$lib/Modal/VacuumModal.svelte'), { sel });
 					break;
 
+
+				case 'valve':
+					openModal(() => import('$lib/Modal/ValveModal.svelte'), { sel });
+					break;
+
 				case 'image':
 					openModal(() => import('$lib/Modal/ImageModal.svelte'), { sel });
 					break;
