@@ -264,6 +264,10 @@
 					openModal(() => import('$lib/Modal/CameraModal.svelte'), { sel });
 					break;
 
+				case 'humidifier':
+					openModal(() => import('$lib/Modal/HumidifierModal.svelte'), { sel });
+					break;
+
 				case 'media_player':
 					openModal(() => import('$lib/Modal/MediaPlayer.svelte'), {
 						selected: sel

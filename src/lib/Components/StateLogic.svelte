@@ -49,9 +49,9 @@
 		{@html title}
 	{/if}
 
-	<!--  Timer -->
-{:else if entity_id && entity_id.split('.')[0] === 'timer'}
-	handle timer logic
+	<!--  Humidifier -->
+{:else if getDomain(entity_id) === 'humidifier' && entity?.state === 'on' && attributes?.action}
+	{$lang('humidifier_' + attributes?.action)}
 
 	<!--  Input Number / Number -->
 {:else if entity_id && (getDomain(entity_id) === 'input_number' || getDomain(entity_id) === 'number')}
