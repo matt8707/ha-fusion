@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { editMode, record } from '$lib/Stores';
+	import { editMode, record, lang } from '$lib/Stores';
 	import { onMount, createEventDispatcher } from 'svelte';
+	
 
 	export let value: string;
 
@@ -20,10 +21,6 @@
 	 */
 	function handleSubmit() {
 		if (!$editMode) return;
-
-		if (value === '') {
-			value = prevValue;
-		}
 
 		dispatch('submit', value);
 		$record();
@@ -51,13 +48,12 @@
 <form on:submit|preventDefault={handleSubmit}>
 	<input
 		class="input"
+		placeholder={$lang('section_name')}
 		name={value}
 		bind:value
 		bind:this={input}
 		on:blur={handleSubmit}
 		on:keydown={handleKeydown}
-		style:width="{width + 1}px"
-		required={true}
 		autocomplete="off"
 		spellcheck="false"
 	/>
@@ -72,7 +68,7 @@
 	}
 
 	.input {
-		border: none;
+		border: 0;
 		background: none;
 		font-size: inherit;
 		color: inherit;
@@ -80,9 +76,11 @@
 		text-align: inherit;
 		box-shadow: none;
 		font-family: inherit;
-		margin: 0;
-		padding: 0;
-		outline: none;
+		min-width: 100%;
+		margin: 10px;
+		padding: 10px;
+		outline: rgb(255, 192, 8) dashed 2px;
+		border-radius: 0.65rem;
 		cursor: unset;
 	}
 </style>
