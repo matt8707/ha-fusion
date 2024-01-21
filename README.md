@@ -43,7 +43,7 @@ If you're using the "Container" or "Core" installation methods, ha-fusion can be
    cd path/to/docker-compose.yml
    docker-compose up -d ha-fusion
    ```
-   
+
 #### Update
 
 To update to the latest version of ha-fusion, run the following commands:
@@ -52,6 +52,27 @@ To update to the latest version of ha-fusion, run the following commands:
 docker-compose pull ha-fusion
 docker-compose up -d ha-fusion
 ```
+
+<details>
+<summary>
+   <b>Alternative</b>
+</summary>
+
+Without docker-compose, updating the container involves additional steps. For each update, it's necessary to first stop the current container, remove it, pull the new image, and then execute the docker run command again.
+
+```bash
+docker run -d \
+  --name ha-fusion \
+  --network bridge \
+  -p 5050:5050 \
+  -v /path/to/ha-fusion:/app/data \
+  -e TZ=Europe/Stockholm \
+  -e HASS_URL=http://192.168.1.241:8123 \
+  --restart always \
+  ghcr.io/matt8707/ha-fusion
+```
+
+</details>
 
 ---
 
@@ -78,27 +99,6 @@ If you prefer to use Kubernetes, you can deploy ha-fusion using the provided Hel
    ```bash
    helm install ha-fusion .
    ```
-
-<details>
-<summary>
-   <b>Alternative</b>
-</summary>
-
-Without docker-compose, updating the container involves additional steps. For each update, it's necessary to first stop the current container, remove it, pull the new image, and then execute the docker run command again.
-
-```bash
-docker run -d \
-  --name ha-fusion \
-  --network bridge \
-  -p 5050:5050 \
-  -v /path/to/ha-fusion:/app/data \
-  -e TZ=Europe/Stockholm \
-  -e HASS_URL=http://192.168.1.241:8123 \
-  --restart always \
-  ghcr.io/matt8707/ha-fusion
-```
-
-</details>
 
 ...
 
