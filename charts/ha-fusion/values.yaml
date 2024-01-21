@@ -1,0 +1,44 @@
+# values.yaml
+replicaCount: 1
+
+
+image:
+  repository: ghcr.io/matt8707/ha-fusion
+  tag: "2024.1.6"
+  pullPolicy: IfNotPresent
+  imagepullsecret: []
+
+service:
+  type: ClusterIP
+  port: 5050
+  targetPort: 5050
+  protocol: TCP
+  name: http
+
+ingress:
+  enabled: false
+
+storageClassName: nfs-client
+storageSize: 1Gi
+
+env:
+  TZ: "Europe/Stockholm"
+  HASS_URL: "http://homeassistant.homeassistant.svc:8123"
+
+autoscaling:
+  enabled: false
+
+serviceAccount:
+  create: false
+
+livenessProbe:
+  path: /
+  port: http
+
+readinessProbe:
+  path: /
+  port: http
+
+nodeSelector: {}
+
+tolerations: []
