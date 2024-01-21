@@ -43,6 +43,8 @@ If you're using the "Container" or "Core" installation methods, ha-fusion can be
    cd path/to/docker-compose.yml
    docker-compose up -d ha-fusion
    ```
+   
+---
 
 ### Kubernetes
 
