@@ -101,7 +101,7 @@ dir_keys = [
             ("start_pause", ["ui.dialogs.more_info_control.vacuum.start_pause"]),
             ("battery", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.battery"]),
             ("weather_forecast", ["ui.panel.lovelace.editor.card.weather-forecast.name"]),
-            ("days_to_show", ["ui.panel.lovelace.editor.card.generic.days_to_show"]),
+            ("count", ["ui.panel.config.automation.editor.actions.type.repeat.count"]),
         ],
     ),
     (  # MEDIA_PLAYER
