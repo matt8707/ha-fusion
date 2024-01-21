@@ -206,5 +206,5 @@ export interface WeatherForecastItem {
 	entity_id?: string;
 	state?: string;
 	icon_pack?: string;
-	days_to_show?: number;
+	number_of_items?: number;
 }

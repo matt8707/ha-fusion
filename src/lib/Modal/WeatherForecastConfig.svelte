@@ -6,14 +6,24 @@
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
 	import { updateObj } from '$lib/Utils';
+	import type { HassEntity } from 'home-assistant-js-websocket';
 	import type { WeatherForecastItem } from '$lib/Types';
 
 	export let isOpen: boolean;
 	export let sel: WeatherForecastItem;
 
-	let days_to_show = sel?.days_to_show;
+	let number_of_items = sel?.number_of_items ?? 6;
 
 	let numberElement: HTMLInputElement;
+
+	let entity: HassEntity;
+	$: {
+		if (sel?.entity_id) {
+			if ($states?.[sel?.entity_id]?.last_updated !== entity?.last_updated) {
+				entity = $states?.[sel?.entity_id];
+			}
+		}
+	}
 
 	const iconOptions = [
 		{ id: 'materialsymbolslight', name: 'materialsymbolslight' },
@@ -27,9 +37,9 @@
 	).sort()
 		.map((key) => ({ id: key, label: key }));
 
-	const range = {
+	$: range = {
 		min: 1,
-		max: 6
+		max: Math.min(entity?.attributes?.forecast?.length ?? 7, 7)
 	};
 
 	function minMax(key: string | number | undefined) {
@@ -39,7 +49,7 @@
 	function handleNumberRange(event: any) {
 		console.log(event?.target?.value);
 		const value = minMax(event?.target?.value);
-		set('days_to_show', value);
+		set('number_of_items', value);
 		if (numberElement) numberElement.value = String(value);
 	}
 
@@ -61,7 +71,7 @@
 			<WeatherForecast
 				entity_id={sel?.entity_id}
 				icon_pack={sel?.icon_pack}
-				days_to_show={sel?.days_to_show}
+				number_of_items={sel?.number_of_items}
 			/>
 		</div>
 
@@ -88,18 +98,17 @@
 			/>
 		{/if}
 
-		<h2>{$lang('days_to_show')}</h2>
+		<h2>{$lang('count')}</h2>
 
 		{#if weatherStates}
 			<input
 				type="number"
 				class="input"
-				bind:value={days_to_show}
+				bind:value={number_of_items}
 				bind:this={numberElement}
-				placeholder="6"
 				min={range.min}
 				max={range.max}
-				on:input={handleNumberRange}
+				on:change={handleNumberRange}
 				autocomplete="off"
 			/>
 		{/if}

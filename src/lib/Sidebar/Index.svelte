@@ -334,7 +334,7 @@
 								this={WeatherForecast.default}
 								entity_id={item?.entity_id}
 								icon_pack={item?.icon_pack}
-								days_to_show={item?.days_to_show}
+								number_of_items={item?.number_of_items}
 							/>
 						</button>
 					{/if}

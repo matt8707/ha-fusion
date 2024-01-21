@@ -7,7 +7,7 @@
 
 	export let entity_id: string | undefined;
 	export let icon_pack: string | undefined;
-	export let days_to_show: number | undefined;
+	export let number_of_items: number | undefined;
 
 	let entity: HassEntity;
 	$: {
@@ -34,7 +34,8 @@
 		}
 	}
 
-	console.log(days_to_show);
+	// Because config may not include number_of_items, and some forecasts proviode 48 datapoints, we need to ensure it's correct
+	$: calculated = Math.min(number_of_items ?? 7, 7)
 
 	interface Forecast {
 		condition: string;
@@ -42,7 +43,8 @@
 		date: string;
 		temperature: number;
 	}
-	$: forecast = entity?.attributes?.forecast?.slice(0, days_to_show).map(function (item: any) {
+	let forecast: Forecast[]
+	$: forecast = entity?.attributes?.forecast?.slice(0, calculated).map(function (item: any) {
 		let icon: WeatherIconMapping =
 			iconSet.conditions[item?.condition as keyof WeatherIconConditions];
 		let x: Forecast = {
