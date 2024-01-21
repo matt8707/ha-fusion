@@ -69,6 +69,7 @@
 
 {#if languages}
 	<Select
+		keepFocus={true}
 		options={languages}
 		placeholder={$lang('language')}
 		value={$selectedLanguage}

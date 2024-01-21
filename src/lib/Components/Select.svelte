@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { lang } from '$lib/Stores';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import Svelecte from 'svelecte';
 	import SelectItem from '$lib/Components/SelectItem.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -10,6 +10,7 @@
 	export let value: string | undefined;
 	export let customItems = false;
 	export let clearable: boolean = false;
+	export let keepFocus: boolean | undefined = false;
 
 	let container: HTMLDivElement;
 	let key = false;
@@ -27,41 +28,35 @@
 	 */
 	async function handleChange(event: any) {
 		const value = event?.detail?.id;
+		if (keepFocus && value === undefined) return;
 
 		// dispatch to parent component
 		dispatch('change', value);
 
-		// key
-		// trigger();
+		// Component re-render to fix virtualList rendering
+		// https://github.com/mskocik/svelecte/issues/196
+		// await tick to fix `TypeError: scrollContainer is null`
+		await tick();
+		await tick();
+		key = !key;
 
 		const active = document?.activeElement;
-		if (value !== undefined) (active as HTMLInputElement)?.blur();
-
-		// blur input on:change otherwise have to click twice
-		// const element = container?.querySelector('#select') as HTMLElement;
-		// element?.blur();
-
-		// if (value === undefined) active?.focus();
+		if (active instanceof HTMLInputElement) {
+			value !== undefined ? active.blur() : active.focus();
+		}
 	}
-
-	/**
-	 * Component re-render to fix virtualList rendering
-	 * https://github.com/mskocik/svelecte/issues/196
-	 */
-	// async function trigger() {
-	// 	// fix `TypeError: scrollContainer is null`
-	// 	await tick();
-	// 	await tick();
-	// 	// key change triggers rerender
-
-	// 	key = !key;
-	// }
 
 	const props = {
 		name: 'select',
 		inputId: 'select',
 		virtualList: true,
+		vlHeight: 450,
+		vlItemSize: customItems ? 45 : 35,
 		clearable,
+		placeholder,
+		options,
+		controlItem: customItems ? SelectItem : undefined,
+		dropdownItem: customItems ? SelectItem : undefined,
 		i18n: {
 			empty: $lang('no_entities'),
 			nomatch: $lang('nothing_found')
@@ -72,7 +67,7 @@
     --sv-item-color: inherit;
     --sv-item-active-bg: #3f4042;
     --sv-highlight-bg: rgba(255, 222, 0, 0.4);
-		--sv-dropdown-height: 413px;
+		--sv-dropdown-height: 462px;
 		--sv-placeholder-color: rgba(255, 255, 255, 0.6);
   `
 	};
@@ -80,19 +75,7 @@
 
 <div bind:this={container}>
 	{#key key}
-		{#if customItems}
-			<Svelecte
-				bind:value
-				on:change={handleChange}
-				{options}
-				{placeholder}
-				controlItem={SelectItem}
-				dropdownItem={SelectItem}
-				{...props}
-			/>
-		{:else}
-			<Svelecte bind:value on:change={handleChange} {options} {placeholder} {...props} />
-		{/if}
+		<Svelecte bind:value on:change={handleChange} {...props} />
 	{/key}
 
 	<style>
@@ -116,6 +99,11 @@
 			border-radius: 0.6rem !important;
 			background-color: #1d1b18 !important;
 			margin-top: -1px !important;
+
+			/* circumvent modal 'overflow: hidden' */
+			/* position: fixed !important;
+			width: 26.2rem !important;
+			z-index: 3; */
 		}
 
 		.sv-dropdown-scroll {

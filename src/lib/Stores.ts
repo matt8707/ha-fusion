@@ -33,7 +33,17 @@ export const onStates = readable([
 	'open',
 	'playing',
 	'preheating',
-	'unlocked'
+	'unlocked',
+	// vacuum
+	'cleaning',
+	'returning',
+	// water_heater
+	'eco',
+	'electric',
+	'performance',
+	'high_demand',
+	'heat_pump',
+	'gas'
 ]);
 
 // drawer

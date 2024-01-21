@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { config, connected, dashboard, lang, motion, connection, event } from '$lib/Stores';
+	import {
+		config,
+		connected,
+		dashboard,
+		lang,
+		motion,
+		connection,
+		event,
+		configuration
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import { fade } from 'svelte/transition';
 
@@ -18,6 +27,8 @@
 			if (type === 'started' && $config?.state === 'RUNNING') {
 				message = undefined;
 				prev = 'CONNECTED';
+			} else if (type === 'ERR_HASS_HOST_REQUIRED' && !$connected) {
+				message = 'ERR_HASS_HOST_REQUIRED';
 			} else if (type === 'error' && !$connected) {
 				message = 'ERR_CANNOT_CONNECT';
 			}
@@ -64,7 +75,11 @@
 			if (prev === 'CONNECTED') {
 				message = $lang('connection_lost');
 
-				// ERROR
+				// ERR_HASS_HOST_REQUIRED
+			} else if (!$configuration?.hassUrl) {
+				setTimeoutHandler('ERR_HASS_HOST_REQUIRED');
+
+				// ERR_CANNOT_CONNECT
 			} else {
 				setTimeoutHandler('error');
 			}
@@ -91,7 +106,7 @@
 	<div
 		transition:fade={{ duration: $motion }}
 		style:width="calc({$dashboard?.sidebarWidth}px - 2.8rem)"
-		style:background={message === 'ERR_CANNOT_CONNECT'
+		style:background={message === 'ERR_CANNOT_CONNECT' || message === 'ERR_HASS_HOST_REQUIRED'
 			? '#ba0000'
 			: 'var(--theme-navigate-background-color)'}
 	>

@@ -200,7 +200,7 @@
 										tabindex="-1"
 										style={itemStyles(item?.type)}
 									>
-										<Content {item} />
+										<Content {item} sectionName={stackSection?.name} />
 									</div>
 								{/each}
 							</div>
@@ -228,7 +228,7 @@
 							tabindex="-1"
 							style={itemStyles(item?.type)}
 						>
-							<Content {item} />
+							<Content {item} sectionName={section?.name} />
 						</div>
 					{/each}
 				</div>

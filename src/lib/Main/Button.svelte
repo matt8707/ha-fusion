@@ -19,9 +19,9 @@
 
 	export let demo: string | undefined = undefined;
 	export let sel: any;
+	export let sectionName: string | undefined = undefined;
 
 	$: entity_id = demo || sel?.entity_id;
-	$: name = sel?.name;
 	$: icon = sel?.icon;
 	$: color = sel?.color;
 	$: marquee = sel?.marquee;
@@ -157,7 +157,8 @@
 		if ($editMode) {
 			openModal(() => import('$lib/Modal/ButtonConfig.svelte'), {
 				demo: entity_id,
-				sel
+				sel,
+				sectionName
 			});
 		} else if (more_info === false) {
 			toggle();
@@ -197,6 +198,8 @@
 				case 'scene':
 				case 'schedule':
 				case 'sun':
+				case 'person':
+				case 'zone':
 				case 'input_button':
 					openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
 					break;
@@ -233,6 +236,14 @@
 					openModal(() => import('$lib/Modal/VacuumModal.svelte'), { sel });
 					break;
 
+				case 'lawn_mower':
+					openModal(() => import('$lib/Modal/LawnMowerModal.svelte'), { sel });
+					break;
+
+				case 'valve':
+					openModal(() => import('$lib/Modal/ValveModal.svelte'), { sel });
+					break;
+
 				case 'image':
 					openModal(() => import('$lib/Modal/ImageModal.svelte'), { sel });
 					break;
@@ -261,51 +272,45 @@
 					openModal(() => import('$lib/Modal/CameraModal.svelte'), { sel });
 					break;
 
+				case 'water_heater':
+					openModal(() => import('$lib/Modal/WaterHeaterModal.svelte'), { sel });
+					break;
+
+				case 'humidifier':
+					openModal(() => import('$lib/Modal/HumidifierModal.svelte'), { sel });
+					break;
+
 				case 'media_player':
 					openModal(() => import('$lib/Modal/MediaPlayer.svelte'), {
 						selected: sel
 					});
 					break;
 
+				case 'group':
+					openModal(() => import('$lib/Modal/GroupModal.svelte'), { sel });
+					break;
+
 				case 'device_tracker': {
-					const entity = $states?.[sel?.entity_id];
-					const attributes = entity?.attributes;
-					const entity_picture = attributes?.entity_picture;
-
-					// if attributes?.source_type === 'gps'
-					openModal(() => import('$lib/Modal/MapModal.svelte'), {
-						entity_id: entity?.entity_id,
-						entity_picture: entity_picture
-					});
+					if ($states?.[sel?.entity_id]?.attributes?.source_type === 'gps') {
+						openModal(() => import('$lib/Modal/DeviceTrackerModal.svelte'), { sel });
+					} else {
+						openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
+					}
 					break;
 				}
-				case 'person': {
-					const device_trackers = $states?.[sel?.entity_id]?.attributes?.device_trackers || [];
-					const gpsEntities = Object.values($states).filter(
-						(states) =>
-							device_trackers.includes(states.entity_id) && states.attributes?.source_type === 'gps'
-					);
 
-					if (!gpsEntities.length) return;
-					const entity_id = gpsEntities[0]?.entity_id;
-
-					openModal(async () => import('$lib/Modal/MapModal.svelte'), {
-						entity_id,
-						entity_picture: $states?.[sel?.entity_id]?.attributes?.entity_picture
-					});
-
-					break;
-				}
 				case 'cover':
 					openModal(() => import('$lib/Modal/CoverModal.svelte'), {
 						selected: sel
 					});
 					break;
+
 				case 'fan':
 					openModal(() => import('$lib/Modal/FanModal.svelte'), {
 						selected: sel
 					});
 					break;
+
 				default:
 					openModal(() => import('$lib/Modal/Unknown.svelte'), {
 						selected: sel
@@ -336,9 +341,6 @@
 					break;
 				case 'media_player':
 					module = await import('$lib/Modal/MediaPlayer.svelte');
-					break;
-				case 'person':
-					module = await import('$lib/Modal/MapModal.svelte');
 					break;
 				default:
 					module = await import('$lib/Modal/Unknown.svelte');
@@ -408,7 +410,7 @@
 	<div class="right" on:click|stopPropagation={handleEvent}>
 		<!-- NAME -->
 		<div class="name" data-state={stateOn}>
-			{getName({ name }, entity) || $lang('unknown')}
+			{getName(sel, entity, sectionName) || $lang('unknown')}
 		</div>
 
 		<!-- STATE -->

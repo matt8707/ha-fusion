@@ -37,14 +37,14 @@
 				on:click={() => set('short_day', false)}
 				use:Ripple={$ripple}
 			>
-				{$lang('max')}
+				{$lang('max_length')}
 			</button>
 			<button
 				class:selected={sel?.short_day}
 				on:click={() => set('short_day', true)}
 				use:Ripple={$ripple}
 			>
-				{$lang('min')}
+				{$lang('min_length')}
 			</button>
 		</div>
 
@@ -56,14 +56,14 @@
 				on:click={() => set('short_month', false)}
 				use:Ripple={$ripple}
 			>
-				{$lang('max')}
+				{$lang('max_length')}
 			</button>
 			<button
 				class:selected={sel?.short_month}
 				on:click={() => set('short_month', true)}
 				use:Ripple={$ripple}
 			>
-				{$lang('min')}
+				{$lang('min_length')}
 			</button>
 		</div>
 

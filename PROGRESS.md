@@ -38,11 +38,11 @@ List grouped by domains and categorized based on their similar behaviors
 ### Climate
 
 - [x] climate
-  - [ ] horizontal temp select
-  - [ ] issue <https://github.com/matt8707/ha-fusion/issues/22>
+  - [x] horizontal temp select
+  - [x] issue <https://github.com/matt8707/ha-fusion/issues/22>
 - [x] fan
-- [ ] humidifier
-- [ ] water_heater
+- [x] humidifier
+- [x] water_heater
 
 ### Other
 
@@ -70,10 +70,13 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] input_text
 - [x] todo
   - [x] modal has a shopping_list functionality
-- [ ] vacuum
+- [x] vacuum
   - [ ] idea: custom map if map camera
-  - [ ] <https://github.com/matt8707/ha-fusion/issues/24>
+  - [x] <https://github.com/matt8707/ha-fusion/issues/24>
 - [x] counter
+- [x] group
+- [x] valve
+- [x] lawn_mower
 
 ### Date
 
@@ -90,24 +93,15 @@ List grouped by domains and categorized based on their similar behaviors
 
 ### Device Tracker
 
-- [ ] device_tracker
+- [x] device_tracker
 - [x] person
-  - [ ] bug: if no entity_picture in map show icon
-  - [ ] bug: if no gps modal won't open
+  - [x] bug: if no entity_picture in map show icon
+  - [x] bug: if no gps modal won't open
   - [ ] idea: toggle icon pings phone?
-  - [ ] make api key more clear if missing
+  - [x] make api key more clear if missing
         <https://github.com/matt8707/ha-fusion/issues/121>
-- [ ] zone
-  - [ ] map with all person:, device_trackers etc
-
-### Untestable
-
-- [ ] geo_location
-- [ ] lawn_mower
-- [ ] notify
-- [ ] valve
-- [ ] wake_word
-- [ ] tts
+- [x] zone
+  - [ ] idea: map with all persons?
 
 ## Object types
 

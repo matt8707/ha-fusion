@@ -11,41 +11,23 @@
 	export let isOpen: boolean;
 	export let sel: any;
 
-	$: entity = $states[sel?.entity_id];
-	$: entity_id = entity?.entity_id;
-	$: attributes = entity?.attributes;
-
 	// buttons or select, based on how many items
 	const MAX_ITEMS = 4;
 
-	/**
-	 * Construct support based on Feature
-	 * https://github.com/home-assistant/frontend/blob/dev/src/data/climate.ts
-	 */
+	$: entity = $states[sel?.entity_id];
+	$: entity_id = entity?.entity_id;
+	$: attributes = entity?.attributes;
+	$: supported_features = attributes?.supported_features;
 
-	let supports: { [key: string]: boolean } = {};
-
-	enum Feature {
-		TARGET_TEMPERATURE = 1,
-		TARGET_TEMPERATURE_RANGE = 2,
-		TARGET_HUMIDITY = 4,
-		FAN_MODE = 8,
-		PRESET_MODE = 16,
-		SWING_MODE = 32,
-		AUX_HEAT = 64
-	}
-
-	$: if (sel?.entity_id) constructSupports();
-
-	function constructSupports() {
-		if (!attributes) return;
-
-		Object.keys(Feature)
-			.filter((key) => isNaN(Number(key)))
-			.forEach((key) => {
-				supports[key] = getSupport(attributes, Feature[key as keyof typeof Feature]);
-			});
-	}
+	$: supports = getSupport(supported_features, {
+		TARGET_TEMPERATURE: 1,
+		TARGET_TEMPERATURE_RANGE: 2,
+		TARGET_HUMIDITY: 4,
+		FAN_MODE: 8,
+		PRESET_MODE: 16,
+		SWING_MODE: 32,
+		AUX_HEAT: 64
+	});
 
 	/**
 	 * Handles click
@@ -252,12 +234,6 @@
 				/>
 			{/if}
 		{/if}
-
-		<!-- <h2>Supports</h2>
-
-		{#each Object.entries(supports) as [feature, supported]}
-			<div>{feature}: {supported}</div>
-		{/each} -->
 
 		<ConfigButtons />
 	</Modal>

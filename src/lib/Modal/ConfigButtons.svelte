@@ -25,16 +25,20 @@
 	/**
 	 * Get id from a mainItem
 	 */
-	function mainItem(callback: (item: any) => any) {
-		const process = (section: any) => ({
-			...section,
-			items: section.items?.map(callback).filter((item: any) => item !== null) || [],
-			sections: section.sections?.map(process) || []
-		});
+	function mainItem(callback: any) {
+		const process = (section: any) => {
+			const items = section.items?.map(callback).filter((item: any) => item !== null);
+			const sections = section.sections?.map(process);
+			return {
+				...section,
+				...(items?.length ? { items } : {}),
+				...(sections?.length ? { sections } : {})
+			};
+		};
 
 		$dashboard.views = $dashboard.views.map((view) => ({
 			...view,
-			sections: view.sections?.map(process) || []
+			sections: view.sections?.map(process) ?? []
 		}));
 	}
 
@@ -63,7 +67,7 @@
 		if (sidebarItem()) {
 			removeSidebarItem();
 		} else if (sel?.type) {
-			mainItem((item) => (item?.id !== sel?.id ? item : null));
+			mainItem((item: { id: number }) => (item?.id !== sel?.id ? item : null));
 		} else if (sel.sections) {
 			await removeViewItem();
 		}

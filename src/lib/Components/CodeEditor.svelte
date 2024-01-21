@@ -279,4 +279,13 @@
 		overflow: hidden !important;
 		border-radius: 0.4rem;
 	}
+
+	/* circumvent modal 'overflow: hidden' */
+	:global(ul[aria-label='Completions']) {
+		position: fixed !important;
+	}
+
+	:global(ul[aria-label='Completions'] > li[role='option']) {
+		background-color: #353a42;
+	}
 </style>

@@ -53,7 +53,10 @@ docker-compose pull ha-fusion
 docker-compose up -d ha-fusion
 ```
 
-#### Alternative
+<details>
+<summary>
+   <b>Alternative</b>
+</summary>
 
 Without docker-compose, updating the container involves additional steps. For each update, it's necessary to first stop the current container, remove it, pull the new image, and then execute the docker run command again.
 
@@ -68,6 +71,10 @@ docker run -d \
   --restart always \
   ghcr.io/matt8707/ha-fusion
 ```
+
+</details>
+
+...
 
 ## Query strings
 
