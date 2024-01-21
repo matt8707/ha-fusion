@@ -12,7 +12,7 @@
 	export let isOpen: boolean;
 	export let sel: WeatherForecastItem;
 
-	let number_of_items = sel?.number_of_items ?? 6;
+	let number_of_items = sel?.number_of_items ?? 7;
 
 	let numberElement: HTMLInputElement;
 
