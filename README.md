@@ -44,6 +44,15 @@ If you're using the "Container" or "Core" installation methods, ha-fusion can be
    docker-compose up -d ha-fusion
    ```
    
+#### Update
+
+To update to the latest version of ha-fusion, run the following commands:
+
+```bash
+docker-compose pull ha-fusion
+docker-compose up -d ha-fusion
+```
+
 ---
 
 ### Kubernetes
@@ -69,15 +78,6 @@ If you prefer to use Kubernetes, you can deploy ha-fusion using the provided Hel
    ```bash
    helm install ha-fusion .
    ```
-
-#### Update
-
-To update to the latest version of ha-fusion, run the following commands:
-
-```bash
-docker-compose pull ha-fusion
-docker-compose up -d ha-fusion
-```
 
 <details>
 <summary>
