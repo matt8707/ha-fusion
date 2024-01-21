@@ -28,7 +28,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
           volumeMounts:
-            - name: data
+            - name: {{ .Values.pvcName }}
               mountPath: /app/data
           env:
             - name: TZ
@@ -50,6 +50,6 @@ spec:
             initialDelaySeconds: 3
             periodSeconds: 3
       volumes:
-        - name: data
+        - name: {{ .Values.pvcName }}
           persistentVolumeClaim:
-            claimName: data
+            claimName: {{ .Values.pvcName }}

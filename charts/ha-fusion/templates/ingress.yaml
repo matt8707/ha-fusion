@@ -5,17 +5,27 @@ kind: Ingress
 metadata:
   name: {{ include "my-ha-fusion.fullname" . }}
   namespace: {{ .Release.Namespace }}
-  annotations:
-{{ toYaml .Values.ingress.annotations | indent 4 }}
+  annotations: {{ .Values.ingress.annotations | toYaml | nindent 4 }}
+  labels:
+    app: {{ include "my-ha-fusion.name" . }}
 spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
   rules:
-    - host: {{ .Values.ingress.hosts.host }}
+    - host: {{ .Values.ingress.hosts }}
       http:
         paths:
-          - path: {{ .Values.ingress.hosts.paths.path }}
-            pathType: {{ .Values.ingress.hosts.paths.pathType }}
-{{- with .Values.ingress.tls }}
+          - path: {{ .Values.ingress.path | default "/" }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "my-ha-fusion.fullname" . }}
+                port:
+                  number: {{ .Values.service.port }}
+  {{- if .Values.ingress.tls.enabled }}
   tls:
-{{ toYaml . | indent 4 }}
+    - secretName: {{ .Values.ingress.tls.secretName }}
+      hosts:
+        - {{ .Values.ingress.hosts }}
+  {{- end }}
 {{- end }}
-{{- end }}
+
