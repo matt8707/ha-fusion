@@ -56,18 +56,27 @@
 
 		return x;
 	});
+
+	// Different forecast providers choose different intervals, we need to figure out display based on this
+	$: forecast_diff = ((new Date(forecast?.[1]?.date)).valueOf() - (new Date(forecast?.[0]?.date)).valueOf()) / 3600000
 </script>
 
 {#if entity_state}
-	<div class="container container-condensed">
+	<div class="container">
 		{#each forecast as forecast, i}
-			<div class="day" style="grid-area: {`f${i + 1}-day`}">
-				{new Intl.DateTimeFormat($selectedLanguage, { weekday: 'short' }).format(
-					new Date(forecast.date)
-				)}
-			</div>
+			<div class="item">
+				<div class="day">
+					{#if forecast_diff < 24}
+						{new Intl.DateTimeFormat($selectedLanguage, { hour: 'numeric' }).format(
+							new Date(forecast.date)
+						)}
+					{:else}
+						{new Intl.DateTimeFormat($selectedLanguage, { weekday: 'short' }).format(
+							new Date(forecast.date)
+						)}
+					{/if}
+				</div>
 
-			<div style="grid-area: {`f${i + 1}-icon`};">
 				{#if forecast.icon.local}
 					<icon class="icon">
 						<img
@@ -80,10 +89,10 @@
 				{:else}
 					<Icon class="icon" icon={forecast.icon.icon_variant_day} width="100%" height="100%"></Icon>
 				{/if}
-			</div>
 
-			<div class="temp" style="grid-area: {`f${i + 1}-temp`}">
-				{Math.round(forecast.temperature)}{attributes?.temperature_unit || '°'}
+				<div class="temp">
+					{Math.round(forecast.temperature)}{attributes?.temperature_unit || '°'}
+				</div>
 			</div>
 		{/each}
 	</div>
@@ -94,22 +103,38 @@
 {/if}
 
 <style>
-	.container {
-		padding: var(--theme-sidebar-item-padding);
+	.item {
 		display: grid;
-		grid-template-columns: repeat(6, 3rem);
-		grid-column-gap: 20px;
+		grid-column-gap: 0px;
 		grid-row-gap: 0px;
 		grid-template-areas:
-			'f1-day f2-day f3-day f4-day f5-day f6-day'
-			'f1-icon f2-icon f3-icon f4-icon f5-icon f6-icon'
-			'f1-temp f2-temp f3-temp f4-temp f5-temp f6-temp';
+			'day day'
+			'icon'
+			'temp temp';
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 		text-overflow: ellipsis;
 		overflow: hidden;
+		width: 3.6rem;
+	}
+	
+	.container {
+		padding: var(--theme-sidebar-item-padding);
+		display: flex;
+		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+		text-overflow: ellipsis;
+		overflow: hidden;
+		justify-content: space-between;
+	}
+
+	.day {
+		grid-area: 'day';
+		justify-content: center;
+		display: flex;
+		width: 3.6rem;
 	}
 
 	.icon {
+		grid-area: 'icon';
 		width: 3.6rem;
 		height: 3.6rem;
 		display: flex;
@@ -118,13 +143,8 @@
 		transform-origin: right;
 	}
 
-	.day {
-		justify-content: center;
-		display: flex;
-		width: 3.6rem;
-	}
-
 	.temp {
+		grid-area: 'temp';
 		justify-content: center;
 		display: flex;
 		white-space: nowrap;
