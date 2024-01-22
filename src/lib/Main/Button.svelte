@@ -392,7 +392,7 @@
 			style:--icon-color={iconColor}
 			style:background-image={!icon && attributes?.entity_picture
 				? `url(${attributes?.entity_picture})`
-				: 'none' || image
+				: image && icon
 					? `url(${icon})`
 					: 'none'}
 			class:image
