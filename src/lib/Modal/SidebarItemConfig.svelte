@@ -111,6 +111,9 @@
 			id: 'time',
 			type: $lang('time'),
 			component: Time,
+			props: {
+				hour12: sel?.hour12 || false
+			},
 			style: {
 				'text-align': 'center'
 			}
@@ -356,7 +359,6 @@
 		grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 		grid-gap: 1rem;
 		overflow: auto;
-		height: 80vh;
 		align-content: start;
 	}
 
