@@ -476,6 +476,17 @@ dir_keys = [
             ("attributes", ["ui.panel.developer-tools.tabs.states.attributes"]),
         ],
     ),
+    (  # PAGE-AUTHORIZE
+        f"{TRANSLATIONS}/page-authorize",
+        [
+            ("login", ["ui.panel.page-authorize.form.next"]),
+            ("username", ["ui.panel.page-authorize.form.providers.homeassistant.step.init.data.username"]),
+            ("password", ["ui.panel.page-authorize.form.providers.homeassistant.step.init.data.password"]),
+            ("authorizing_client", ["ui.panel.page-authorize.authorizing_client"]),
+            ("invalid_auth", ["ui.panel.page-authorize.form.providers.homeassistant.error.invalid_auth"]),
+            ("login_error", ["ui.panel.page-authorize.form.error"]),
+        ],
+    ),
 ]
 
 for _dir, _keys in dir_keys:

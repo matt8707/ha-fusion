@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { motion } from '$lib/Stores';
+	import { motion, connection } from '$lib/Stores';
 	import { fade } from 'svelte/transition';
 	import { Modals, closeModal } from 'svelte-modals';
 	import Loader from '$lib/Components/Loader.svelte';
@@ -18,7 +18,10 @@
 	<div
 		slot="backdrop"
 		class="backdrop"
-		on:click={closeModal}
+		on:click={() => {
+			if (!$connection) return;
+			closeModal();
+		}}
 		in:fade={{
 			duration: $motion,
 			easing: expoOut
