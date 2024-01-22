@@ -100,6 +100,8 @@ dir_keys = [
             ("return_home", ["ui.dialogs.more_info_control.vacuum.return_home"]),
             ("start_pause", ["ui.dialogs.more_info_control.vacuum.start_pause"]),
             ("battery", ["ui.dialogs.entity_registry.editor.device_classes.binary_sensor.battery"]),
+            ("weather_forecast", ["ui.panel.lovelace.editor.card.weather-forecast.name"]),
+            ("count", ["ui.panel.config.automation.editor.actions.type.repeat.count"]),
             ("set_white", ["ui.dialogs.more_info_control.light.set_white"]),
             ("vacuum_commands", ["ui.dialogs.more_info_control.vacuum.commands"]),
             ("target", ["ui.card.water_heater.target"]),

@@ -83,6 +83,7 @@ export type SidebarItem = BarItem &
 	TemplateItem &
 	TimeItem &
 	WeatherItem &
+	WeatherForecastItem &
 	DividerItem;
 
 export interface BarItem {
@@ -197,4 +198,13 @@ export interface WeatherItem {
 	extra_sensor?: string;
 	extra_sensor_icon?: string;
 	show_apparent?: boolean;
+}
+
+export interface WeatherForecastItem {
+	type?: string;
+	id?: number;
+	entity_id?: string;
+	state?: string;
+	icon_pack?: string;
+	number_of_items?: number;
 }

@@ -22,6 +22,7 @@
 	import Divider from '$lib/Sidebar/Divider.svelte';
 	import Navigate from '$lib/Sidebar/Navigate.svelte';
 	import Weather from '$lib/Sidebar/Weather.svelte';
+	import WeatherForecast from '$lib/Sidebar/WeatherForecast.svelte';
 	import Iframe from '$lib/Sidebar/Iframe.svelte';
 	import Image from '$lib/Sidebar/Image.svelte';
 	import Camera from '$lib/Sidebar/Camera.svelte';
@@ -181,6 +182,14 @@
 			}
 		},
 		{
+			id: 'weatherforecast',
+			type: $lang('weather_forecast'),
+			component: WeatherForecast,
+			props: {
+				entity_id: 'weather.forecast_home'
+			}
+		},
+		{
 			id: 'navigate',
 			type: $lang('navigate'),
 			component: Navigate,
@@ -229,6 +238,9 @@
 				break;
 			case 'weather':
 				openModal(() => import('$lib/Modal/WeatherConfig.svelte'), { sel });
+				break;
+			case 'weatherforecast':
+				openModal(() => import('$lib/Modal/WeatherForecastConfig.svelte'), { sel });
 				break;
 			case 'camera':
 				openModal(() => import('$lib/Modal/CameraConfig.svelte'), {
