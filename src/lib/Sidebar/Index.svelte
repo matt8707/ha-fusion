@@ -300,7 +300,11 @@
 						<!-- TIME -->
 					{:else if Time && item?.type === 'time'}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Time.default} seconds={item?.seconds} hour12={item?.hour12} />
+							<svelte:component
+								this={Time.default}
+								seconds={item?.seconds}
+								hour12={item?.hour12 || false}
+							/>
 						</button>
 
 						<!-- TIMER -->

@@ -26,7 +26,7 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<Time seconds={sel?.seconds} hour12={sel?.hour12} />
+			<Time seconds={sel?.seconds} hour12={sel?.hour12 || false} />
 		</div>
 
 		<h2>{$lang('time_format_header')}</h2>
