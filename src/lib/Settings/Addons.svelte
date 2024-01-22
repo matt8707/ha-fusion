@@ -8,7 +8,7 @@
 		target.type = event.type === 'focus' ? 'text' : 'password';
 	}
 
-	const href = 'https://github.com/matt8707/ha-fusion';
+	const href = 'https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md';
 </script>
 
 <h2>{$lang('addons')}</h2>
@@ -34,7 +34,7 @@
 		/>
 	</div>
 
-	<div class="item">
+	<!-- <div class="item">
 		<h3>YouTube</h3>
 
 		<input
@@ -46,7 +46,7 @@
 			spellcheck="false"
 			value={data?.configuration?.addons?.['youtube_watching']?.entity_id || ''}
 		/>
-	</div>
+	</div> -->
 </div>
 
 <style>
@@ -58,14 +58,14 @@
 
 	.item {
 		background-color: rgb(255, 255, 255, 0.025);
-		padding: 0.8rem 1rem 1.05rem 1rem;
-		border-radius: 0.6rem;
+		padding: 0.8rem 1rem 1rem 1rem;
+		border-radius: 0.4rem;
 		border: 1px solid rgba(255, 255, 255, 0.05);
 	}
 
 	.grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(1, 1fr);
 		gap: 0.5rem;
 	}
 
