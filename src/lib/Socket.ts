@@ -1,5 +1,5 @@
 import {
-	getAuth,
+	Auth,
 	createConnection,
 	subscribeConfig,
 	subscribeEntities,
@@ -7,44 +7,46 @@ import {
 	ERR_INVALID_AUTH,
 	ERR_CONNECTION_LOST,
 	ERR_HASS_HOST_REQUIRED,
-	ERR_INVALID_HTTPS_TO_HTTP
+	ERR_INVALID_HTTPS_TO_HTTP,
+	genClientId
 } from 'home-assistant-js-websocket';
-import type { SaveTokensFunc } from 'home-assistant-js-websocket';
-import { states, connection, config, authCallback, connected } from '$lib/Stores';
+import { states, connection, config, connected } from '$lib/Stores';
+import { openModal } from 'svelte-modals';
+import { base } from '$app/paths';
 
-export const options = {
-	hassUrl: undefined as string | undefined,
-	async loadTokens() {
-		try {
-			return JSON.parse(localStorage.hassTokens);
-		} catch (error) {
-			return undefined;
-		}
-	},
-	saveTokens(tokens: SaveTokensFunc) {
-		localStorage.hassTokens = JSON.stringify(tokens);
-	},
-	clearTokens() {
-		localStorage.hassTokens = null;
+export async function authenticate() {
+	const storage = localStorage.getItem('auth');
+	const data = storage ? JSON.parse(storage) : null;
+
+	if (data?.access_token) {
+		// connect
+		const auth = new Auth(data);
+		await webSocket(auth);
+	} else {
+		// login
+		const clientId = genClientId();
+		openModal(async () => import('$lib/Modal/LoginModal.svelte'), {
+			clientId,
+			flow_id: await getFlowId(clientId)
+		});
 	}
-};
+}
 
-export async function authentication(options: { hassUrl?: string }) {
-	let auth;
-
-	try {
-		auth = await getAuth(options);
-		if (auth.expired) {
-			auth.refreshAccessToken();
-		}
-	} catch (_error) {
-		handleError(_error);
-	}
-
+export async function webSocket(auth: Auth) {
 	try {
 		// connection
 		const conn = await createConnection({ auth });
 		connection.set(conn);
+
+		// states
+		subscribeEntities(conn, (hassEntities) => {
+			states.set(hassEntities);
+		});
+
+		// config
+		subscribeConfig(conn, (hassConfig) => {
+			config.set(hassConfig);
+		});
 
 		// events
 		conn.addEventListener('ready', () => {
@@ -61,48 +63,53 @@ export async function authentication(options: { hassUrl?: string }) {
 			console.error('ERR_INVALID_AUTH.');
 			connected.set(false);
 		});
+	} catch (error) {
+		switch (error) {
+			case ERR_INVALID_AUTH:
+				console.error('ERR_INVALID_AUTH');
 
-		// config
-		subscribeConfig(conn, (hassConfig) => {
-			config.set(hassConfig);
-		});
+				// data is invalid
+				localStorage.removeItem('auth');
+				location.reload();
+				break;
 
-		// states
-		subscribeEntities(conn, (hassEntities) => {
-			states.set(hassEntities);
-		});
+			case ERR_CANNOT_CONNECT:
+				console.error('ERR_CANNOT_CONNECT');
+				break;
 
-		// clear auth query string
-		if (location.search.includes('auth_callback=1')) {
-			authCallback.set(true);
-			history.replaceState(null, '', location.pathname);
+			case ERR_CONNECTION_LOST:
+				console.error('ERR_CONNECTION_LOST');
+				break;
+
+			case ERR_HASS_HOST_REQUIRED:
+				console.error('ERR_HASS_HOST_REQUIRED');
+				break;
+
+			case ERR_INVALID_HTTPS_TO_HTTP:
+				console.error('ERR_INVALID_HTTPS_TO_HTTP');
+				break;
+
+			default:
+				console.error(error);
 		}
-	} catch (_error) {
-		handleError(_error);
+		throw error;
 	}
 }
 
-// error string instead of code
-function handleError(_error: unknown) {
-	switch (_error) {
-		case ERR_INVALID_AUTH:
-			console.error('ERR_INVALID_AUTH');
-			options.clearTokens();
-			break;
-		case ERR_CANNOT_CONNECT:
-			console.error('ERR_CANNOT_CONNECT');
-			break;
-		case ERR_CONNECTION_LOST:
-			console.error('ERR_CONNECTION_LOST');
-			break;
-		case ERR_HASS_HOST_REQUIRED:
-			console.error('ERR_HASS_HOST_REQUIRED');
-			break;
-		case ERR_INVALID_HTTPS_TO_HTTP:
-			console.error('ERR_INVALID_HTTPS_TO_HTTP');
-			break;
-		default:
-			console.error(_error);
+export async function getFlowId(clientId: string) {
+	try {
+		const response = await fetch(`${base}/api/auth`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ clientId })
+		});
+
+		const data = await response.json();
+
+		return data.flow_id;
+	} catch (error) {
+		console.error('error fetching flow_id:', error);
 	}
-	throw _error;
 }

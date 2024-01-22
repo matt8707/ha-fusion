@@ -81,7 +81,7 @@
 
 				// ERR_CANNOT_CONNECT
 			} else {
-				setTimeoutHandler('error');
+				// setTimeoutHandler('error');
 			}
 			prev = undefined;
 		}

@@ -11,13 +11,13 @@
 		currentViewId,
 		selectedLanguage,
 		customJs,
-		authCallback,
 		filterDashboard,
 		disableMenuButton,
-		clickOriginatedFromMenu
+		clickOriginatedFromMenu,
+		connection
 	} from '$lib/Stores';
-	import { authentication, options } from '$lib/Socket';
-	import { onMount, onDestroy } from 'svelte';
+	import { authenticate } from '$lib/Socket';
+	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { modals } from 'svelte-modals';
 	import Theme from '$lib/Components/Theme.svelte';
@@ -50,44 +50,9 @@
 			$dashboard?.views?.find((view) => view?.isDndShadowItem);
 
 	/**
-	 * WebSocket, tries to reconnect if no previous connection has been made.
+	 * Connect to websocket
 	 */
-
-	let isConnecting = false;
-	let retryInterval: ReturnType<typeof setInterval>;
-
-	if (browser) {
-		connect();
-		retryInterval = setInterval(connect, 3000);
-	}
-
-	async function connect() {
-		if (isConnecting) return;
-		isConnecting = true;
-
-		console.debug('authenticating...');
-
-		if ($configuration?.hassUrl) {
-			options.hassUrl = $configuration?.hassUrl;
-		} else {
-			// last resort get hassTokens else ERR_HASS_HOST_REQUIRED
-			const hassTokens = localStorage.getItem('hassTokens');
-			const parseHassTokens = hassTokens && JSON.parse(hassTokens);
-			options.hassUrl = parseHassTokens?.hassUrl;
-		}
-
-		try {
-			await authentication(options);
-			console.debug('authenticated.');
-			clearInterval(retryInterval);
-		} catch (err) {
-			// catch but don't log
-		} finally {
-			isConnecting = false;
-		}
-	}
-
-	onDestroy(() => clearInterval(retryInterval));
+	if (browser) authenticate();
 
 	onMount(async () => {
 		/**
@@ -186,7 +151,7 @@
 		{#await import('$lib/Main/Index.svelte') then Main}
 			<svelte:component this={Main.default} {view} />
 		{/await}
-	{:else if $authCallback || options?.hassUrl}
+	{:else if $connection}
 		{#await import('$lib/Main/Intro.svelte') then Intro}
 			<svelte:component this={Intro.default} {data} />
 		{/await}
