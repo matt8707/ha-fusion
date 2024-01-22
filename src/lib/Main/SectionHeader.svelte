@@ -2,6 +2,7 @@
 	import { editMode } from '$lib/Stores';
 	import DragIndicator from '$lib/Main/DragIndicator.svelte';
 	import DeleteButton from '$lib/Main/DeleteButton.svelte';
+	import SectionTitle from '$lib/Main/SectionTitle.svelte';
 
 	export let view: any;
 	export let section: any;
@@ -10,13 +11,11 @@
 <header>
 	<h1 style:cursor={$editMode ? 'text' : 'initial'}>
 		{#if $editMode}
-			{#await import('$lib/Main/SectionTitle.svelte')}
-				{section.name}
-			{:then inPlaceEdit}
-				<svelte:component this={inPlaceEdit.default} bind:value={section.name} />
-			{/await}
+			<SectionTitle bind:value={section.name} />
+		{:else if section?.name === ''}
+			{@html '&nbsp;'}
 		{:else}
-			{section.name}
+			{section?.name}
 		{/if}
 	</h1>
 
