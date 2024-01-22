@@ -390,12 +390,16 @@
 			class="icon"
 			data-state={stateOn}
 			style:--icon-color={iconColor}
-			style:background-image={image ? `url(${icon})` : 'none'}
+			style:background-image={!icon && attributes?.entity_picture
+				? `url(${attributes?.entity_picture})`
+				: 'none' || image
+					? `url(${icon})`
+					: 'none'}
 			class:image
 		>
 			{#if loading}
 				<img src="loader.svg" alt="loading" style="margin:0 auto" />
-			{:else if image}
+			{:else if image || (!icon && attributes?.entity_picture)}
 				&nbsp;
 			{:else if icon}
 				<Icon {icon} height="auto" width="100%" />
@@ -476,6 +480,11 @@
 		border-radius: 50%;
 		display: grid;
 		align-items: center;
+		display: flex;
+		padding: 0.5rem;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
 	}
 
 	.name {
