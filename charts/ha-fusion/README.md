@@ -48,6 +48,12 @@ For custom configuration options, refer to the [values.yaml](./values.yaml) file
 
 | Parameter                     | Description                                     | Default Value                     | Required |
 | ----------------------------- | ----------------------------------------------- | --------------------------------- | -------- |
+| `ingress.ingressClassName`    | Ingress class name                              |                                    | `true`  |
+| `ingress.hosts`               | Hosts that the ingress should match             |                                   | `true`  |
+| `ingress.tls.secretName`      | Secret name for the TLS certificate             |                                    | `true`  |
+| `storageClassName`            | Storage class name for the PVC                  |                                  | `true`  |
+| `env.TZ`                      | Timezone for the container                      |                                   | `true`  |
+| `env.HASS_URL`                | URL for the Home Assistant server               |                                    | `true`  |
 | `replicaCount`                | Number of replicas for the deployment           | `1`                               | `false`  |
 | `image.repository`            | Docker image repository                         | `ghcr.io/matt8707/ha-fusion`     | `false`  |
 | `image.tag`                   | Docker image tag                                | `"latest"`                        | `false`  |
@@ -59,17 +65,11 @@ For custom configuration options, refer to the [values.yaml](./values.yaml) file
 | `service.protocol`            | Protocol used by the service                   | `TCP`                             | `false`  |
 | `service.name`                | Name of the service                             | `http`                            | `false`  |
 | `ingress.enabled`             | Whether ingress is enabled or not               | `true`                            | `false`  |
-| `ingress.ingressClassName`    | Ingress class name                              |                                    | `true`  |
 | `ingress.annotations`         | Annotations for the ingress                     | `{}`                              | `false`  |
 | `ingress.path`                | Path for the ingress                            | `/`                               | `false`  |
-| `ingress.hosts`               | Hosts that the ingress should match             |                                   | `true`  |
 | `ingress.tls.enabled`         | Whether TLS is enabled or not                   | `true`                            | `false`  |
-| `ingress.tls.secretName`      | Secret name for the TLS certificate             |                                    | `true`  |
 | `pvcName`                     | Persistent Volume Claim name                    | `ha-fusion`                       | `false`  |
-| `storageClassName`            | Storage class name for the PVC                  |                                  | `true`  |
 | `storageSize`                 | Size of the storage for the PVC                  | `1Gi`                             | `false`  |
-| `env.TZ`                      | Timezone for the container                      |                                   | `true`  |
-| `env.HASS_URL`                | URL for the Home Assistant server               |                                    | `true`  |
 | `serviceAccount.create`       | Whether to create a service account or not      | `false`                           | `false`  |
 | `livenessProbe.path`          | Path for the liveness probe                     | `/`                               | `false`  |
 | `livenessProbe.port`          | Port for the liveness probe                     | `http`                            | `false`  |
@@ -77,6 +77,7 @@ For custom configuration options, refer to the [values.yaml](./values.yaml) file
 | `readinessProbe.port`         | Port for the readiness probe                    | `http`                            | `false`  |
 | `nodeSelector`                | Node selector for the pod scheduling            | `{}`                              | `false`  |
 | `tolerations`                 | Tolerations for the pod scheduling              | `[]`                              | `false`  |
+
 
 ### Contributing
 
