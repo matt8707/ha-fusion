@@ -35,7 +35,7 @@
 	}
 
 	// Because config may not include number_of_items, and some forecasts proviode 48 datapoints, we need to ensure it's correct
-	$: calculated = Math.min(number_of_items ?? 7, 7)
+	$: calculated = Math.min(number_of_items ?? 7, 7);
 
 	interface Forecast {
 		condition: string;
@@ -43,7 +43,7 @@
 		date: string;
 		temperature: number;
 	}
-	let forecast: Forecast[]
+	let forecast: Forecast[];
 	$: forecast = entity?.attributes?.forecast?.slice(0, calculated).map(function (item: any) {
 		let icon: WeatherIconMapping =
 			iconSet.conditions[item?.condition as keyof WeatherIconConditions];
@@ -58,7 +58,8 @@
 	});
 
 	// Different forecast providers choose different intervals, we need to figure out display based on this
-	$: forecast_diff = ((new Date(forecast?.[1]?.date)).valueOf() - (new Date(forecast?.[0]?.date)).valueOf()) / 3600000
+	$: forecast_diff =
+		(new Date(forecast?.[1]?.date).valueOf() - new Date(forecast?.[0]?.date).valueOf()) / 3600000;
 </script>
 
 {#if entity_state}
@@ -87,7 +88,8 @@
 						/>
 					</icon>
 				{:else}
-					<Icon class="icon" icon={forecast.icon.icon_variant_day} width="100%" height="100%"></Icon>
+					<Icon class="icon" icon={forecast.icon.icon_variant_day} width="100%" height="100%"
+					></Icon>
 				{/if}
 
 				<div class="temp">
@@ -116,7 +118,7 @@
 		overflow: hidden;
 		width: 3.6rem;
 	}
-	
+
 	.container {
 		padding: var(--theme-sidebar-item-padding);
 		display: flex;
