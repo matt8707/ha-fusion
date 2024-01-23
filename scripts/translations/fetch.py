@@ -487,6 +487,11 @@ dir_keys = [
             ("authorizing_client", ["ui.panel.page-authorize.authorizing_client"]),
             ("invalid_auth", ["ui.panel.page-authorize.form.providers.homeassistant.error.invalid_auth"]),
             ("login_error", ["ui.panel.page-authorize.form.error"]),
+            ("invalid_code", ["ui.panel.page-authorize.form.providers.homeassistant.error.invalid_code"]),
+            ("mfa_code", ["ui.panel.page-authorize.form.providers.homeassistant.step.mfa.data.code"]),
+            ("mfa_description", ["ui.panel.page-authorize.form.providers.homeassistant.step.mfa.description"]),
+            ("abort_login", ["ui.panel.page-authorize.abort_intro"]),
+            ("start_over", ["ui.panel.page-authorize.form.start_over"]),
         ],
     ),
 ]
