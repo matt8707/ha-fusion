@@ -100,6 +100,8 @@ If you prefer to use Kubernetes, you can deploy ha-fusion using the provided Hel
    helm install ha-fusion .
    ```
 
+for more indepth instructions, see [Chart README.md](charts/ha-fusion/README.md)
+
 ...
 
 ## Query strings

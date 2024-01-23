@@ -32,33 +32,33 @@ ingress:
   # Whether ingress is enabled or not
   enabled: true
   # Ingress class name
-  ingressClassName: nginx
+  ingressClassName: ''
   # Annotations for the ingress
   annotations: {}
   # Path for the ingress
   path: /
   # Hosts that the ingress should match
-  hosts: ha-fusion.example.com
+  hosts: ''
   # TLS configuration for the ingress
   tls:
     # Whether TLS is enabled or not
     enabled: true
     # Secret name for the TLS certificate
-    secretName: ha-fusion.example.com-tls
+    secretName: ''
 
 # Persistent Volume Claim name
 pvcName: "ha-fusion"
 # Storage class name for the PVC
-storageClassName: ""
+storageClassName: ''
 # Size of the storage for the PVC
 storageSize: 1Gi
 
 # Environment variables for the container
 env:
   # Timezone for the container
-  TZ: "Europe/Stockholm"
+  TZ: ''
   # URL for the Home Assistant server
-  HASS_URL: "http://192.168.1.241:8123"
+  HASS_URL: ''
 
 # Service account configuration
 serviceAccount:
