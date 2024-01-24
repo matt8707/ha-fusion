@@ -78,19 +78,20 @@
 					{/if}
 				</div>
 
-				{#if forecast.icon.local}
-					<icon class="icon">
-						<img
-							src={`${forecast.icon.icon_variant_day}.svg`}
-							alt={entity_state}
-							width="100%"
-							height="100%"
-						/>
-					</icon>
-				{:else}
-					<Icon class="icon" icon={forecast.icon.icon_variant_day} width="100%" height="100%"
-					></Icon>
-				{/if}
+				<div class="icon">
+					{#if forecast.icon.local}
+						<icon class="ff-fill">
+							<img
+								src={`${forecast.icon.icon_variant_day}.svg`}
+								alt={entity_state}
+								width="100%"
+								height="100%"
+							/>
+						</icon>
+					{:else}
+						<Icon icon={forecast.icon.icon_variant_day} width="100%" height="100%"></Icon>
+					{/if}
+				</div>
 
 				<div class="temp">
 					{Math.round(forecast.temperature)}{attributes?.temperature_unit || '°'}
@@ -110,9 +111,9 @@
 		grid-column-gap: 0px;
 		grid-row-gap: 0px;
 		grid-template-areas:
-			'day day'
+			'day'
 			'icon'
-			'temp temp';
+			'temp';
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 		text-overflow: ellipsis;
 		overflow: hidden;
@@ -129,14 +130,14 @@
 	}
 
 	.day {
-		grid-area: 'day';
+		grid-area: day;
 		justify-content: center;
 		display: flex;
 		width: 3.6rem;
 	}
 
 	.icon {
-		grid-area: 'icon';
+		grid-area: icon;
 		width: 3.6rem;
 		height: 3.6rem;
 		display: flex;
@@ -146,12 +147,17 @@
 	}
 
 	.temp {
-		grid-area: 'temp';
+		grid-area: temp;
 		justify-content: center;
 		display: flex;
 		white-space: nowrap;
 		width: 3.6rem;
 		overflow: hidden;
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+	}
+
+	.ff-fill {
+		width: 3.6rem;
+		height: 3.6rem;
 	}
 </style>
