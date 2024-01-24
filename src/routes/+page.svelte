@@ -52,7 +52,12 @@
 	/**
 	 * Connect to websocket
 	 */
-	if (browser) authenticate();
+
+	$: console.log('$configuration?.hassUrl', $configuration?.hassUrl);
+
+	if (browser && $configuration?.hassUrl) {
+		authenticate($configuration.hassUrl);
+	}
 
 	onMount(async () => {
 		/**

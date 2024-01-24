@@ -1,12 +1,9 @@
 import type { RequestHandler } from './$types';
 import { json, error } from '@sveltejs/kit';
-import dotenv from 'dotenv';
-dotenv.config();
 
 export const POST: RequestHandler = async ({ request }) => {
 	try {
-		const hassUrl = process.env.HASS_URL;
-		const { clientId } = await request.json();
+		const { clientId, hassUrl } = await request.json();
 
 		const response = await fetch(`${hassUrl}/auth/login_flow`, {
 			method: 'POST',

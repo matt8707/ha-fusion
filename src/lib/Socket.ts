@@ -14,7 +14,7 @@ import { states, connection, config, connected } from '$lib/Stores';
 import { openModal } from 'svelte-modals';
 import { base } from '$app/paths';
 
-export async function authenticate() {
+export async function authenticate(hassUrl: string) {
 	const storage = localStorage.getItem('auth');
 	const data = storage ? JSON.parse(storage) : null;
 
@@ -27,7 +27,8 @@ export async function authenticate() {
 		const clientId = genClientId();
 		openModal(async () => import('$lib/Modal/LoginModal.svelte'), {
 			clientId,
-			flow_id: await getFlowId(clientId)
+			hassUrl,
+			flow_id: await getFlowId(clientId, hassUrl)
 		});
 	}
 }
@@ -96,14 +97,14 @@ export async function webSocket(auth: Auth) {
 	}
 }
 
-export async function getFlowId(clientId: string) {
+export async function getFlowId(clientId: string, hassUrl: string) {
 	try {
 		const response = await fetch(`${base}/api/auth`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ clientId })
+			body: JSON.stringify({ clientId, hassUrl })
 		});
 
 		const data = await response.json();
