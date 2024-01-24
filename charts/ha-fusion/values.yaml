@@ -1,0 +1,86 @@
+# values.yaml
+
+# Number of replicas for the deployment
+replicaCount: 1
+
+# Docker image configuration
+image:
+  # Docker image repository
+  repository: ghcr.io/matt8707/ha-fusion
+  # Docker image tag
+  tag: "latest"
+  # Docker image pull policy
+  pullPolicy: IfNotPresent
+  # Docker image pull secret, if any
+  imagepullsecret: []
+
+# Service configuration
+service:
+  # Service type
+  type: ClusterIP
+  # Service port
+  port: 5050
+  # Target port inside the pod
+  targetPort: 5050
+  # Protocol used by the service
+  protocol: TCP
+  # Name of the service
+  name: http
+
+# Ingress configuration
+ingress:
+  # Whether ingress is enabled or not
+  enabled: true
+  # Ingress class name
+  ingressClassName: ''
+  # Annotations for the ingress
+  annotations: {}
+  # Path for the ingress
+  path: /
+  # Hosts that the ingress should match
+  hosts: ''
+  # TLS configuration for the ingress
+  tls:
+    # Whether TLS is enabled or not
+    enabled: true
+    # Secret name for the TLS certificate
+    secretName: ''
+
+# Persistent Volume Claim name
+pvcName: "ha-fusion"
+# Storage class name for the PVC
+storageClassName: ''
+# Size of the storage for the PVC
+storageSize: 1Gi
+
+# Environment variables for the container
+env:
+  # Timezone for the container
+  TZ: ''
+  # URL for the Home Assistant server
+  HASS_URL: ''
+
+# Service account configuration
+serviceAccount:
+  # Whether to create a service account or not
+  create: false
+
+# Liveness probe configuration
+livenessProbe:
+  # Path for the liveness probe
+  path: /
+  # Port for the liveness probe
+  port: http
+
+# Readiness probe configuration
+readinessProbe:
+  # Path for the readiness probe
+  path: /
+  # Port for the readiness probe
+  port: http
+
+# Node selector for the pod scheduling
+nodeSelector: {}
+
+# Tolerations for the pod scheduling
+tolerations: []

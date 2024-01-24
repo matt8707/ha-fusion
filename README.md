@@ -74,6 +74,34 @@ docker run -d \
 
 </details>
 
+---
+
+### Kubernetes
+
+If you prefer to use Kubernetes, you can deploy ha-fusion using the provided Helm charts:
+
+1. **Clone the Repository**: Clone the ha-fusion repository to your local machine.
+
+   ```bash
+   git clone https://github.com/matt8707/ha-fusion.git
+   ```
+
+2. **Navigate to the Charts Directory**: Change to the charts directory.
+
+   ```bash
+   cd ha-fusion/charts
+   ```
+
+3. **Customize Values**: Modify the `values.yaml` file to suit your environment.
+
+4. **Deploy the Chart**: Run the following command to deploy ha-fusion to your Kubernetes cluster.
+
+   ```bash
+   helm install ha-fusion .
+   ```
+
+for more indepth instructions, see [Chart README.md](charts/ha-fusion/README.md)
+
 ...
 
 ## Query strings
