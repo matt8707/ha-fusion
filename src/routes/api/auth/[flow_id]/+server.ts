@@ -1,13 +1,10 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { json, error } from '@sveltejs/kit';
-import dotenv from 'dotenv';
-dotenv.config();
 
 export const POST: RequestHandler = async ({ params, request }) => {
 	try {
-		const hassUrl = process.env.HASS_URL;
 		const { flow_id } = params;
-		const { username, password, code, clientId } = await request.json();
+		const { username, password, code, clientId, hassUrl } = await request.json();
 
 		let payload;
 		if (username && password && clientId) {

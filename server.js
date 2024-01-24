@@ -25,7 +25,6 @@ if (HASS_URL) {
 app.use(handler);
 
 app.listen(PORT, () => {
-	console.debug(`ENV HASS_URL: ${HASS_URL}`);
 	console.debug(`ENV PORT: ${PORT}`);
 	console.debug(`ENV ADDON ${process.env.ADDON || false}`);
 });

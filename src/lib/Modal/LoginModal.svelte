@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { configuration, lang, motion } from '$lib/Stores';
+	import { lang, motion } from '$lib/Stores';
 	import Modal from '$lib/Modal/Index.svelte';
 	import { Auth } from 'home-assistant-js-websocket';
 	import { closeModal } from 'svelte-modals';
@@ -11,6 +11,7 @@
 
 	export let isOpen: boolean;
 	export let clientId: string | undefined;
+	export let hassUrl: string | undefined;
 	export let flow_id: string | undefined;
 
 	let invalidAuth: string | undefined;
@@ -24,12 +25,16 @@
 	let code = '';
 
 	async function handleSubmit() {
-		if (!flow_id || (step === 'mfa' && code === '')) return;
+		if (!flow_id || !hassUrl || (step === 'mfa' && code === '')) {
+			console.error({ flow_id, hassUrl, code });
+			return;
+		}
 		disabled = true;
 
 		try {
 			// submit data
-			const payload = step === 'init' ? { username, password, clientId } : { code, clientId };
+			const payload =
+				step === 'init' ? { username, password, clientId, hassUrl } : { code, clientId, hassUrl };
 			const response = await fetch(`${base}/api/auth/${flow_id}`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -67,14 +72,14 @@
 	async function handleSuccess(data: any) {
 		// update data
 		data.clientId = clientId;
-		data.hassUrl = $configuration?.hassUrl;
+		data.hassUrl = hassUrl;
 		data.expires = data.expires_in * 1000 + Date.now();
 
 		// save localStorage
 		localStorage.setItem('auth', JSON.stringify(data));
 
 		// connect to websocket
-		const auth = new Auth({ ...data, hassUrl: $configuration?.hassUrl, clientId });
+		const auth = new Auth({ ...data, hassUrl, clientId });
 		await webSocket(auth);
 
 		closeModal();
