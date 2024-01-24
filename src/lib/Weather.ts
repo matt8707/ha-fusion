@@ -103,78 +103,78 @@ export const iconMapMeteocons: WeatherIconSet = {
 	conditions: {
 		'clear-night': {
 			local: true,
-			icon_variant_day: '/weather/meteocons/clear-night-day',
-			icon_variant_night: '/weather/meteocons/clear-night-night'
+			icon_variant_day: 'weather/meteocons/clear-night-day',
+			icon_variant_night: 'weather/meteocons/clear-night-night'
 		},
 		cloudy: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/cloudy-day',
-			icon_variant_night: '/weather/meteocons/cloudy-night'
+			icon_variant_day: 'weather/meteocons/cloudy-day',
+			icon_variant_night: 'weather/meteocons/cloudy-night'
 		},
 		exceptional: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/exceptional-day',
-			icon_variant_night: '/weather/meteocons/exceptional-night'
+			icon_variant_day: 'weather/meteocons/exceptional-day',
+			icon_variant_night: 'weather/meteocons/exceptional-night'
 		},
 		fog: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/fog-day',
-			icon_variant_night: '/weather/meteocons/fog-night'
+			icon_variant_day: 'weather/meteocons/fog-day',
+			icon_variant_night: 'weather/meteocons/fog-night'
 		},
 		hail: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/hail-day',
-			icon_variant_night: '/weather/meteocons/hail-night'
+			icon_variant_day: 'weather/meteocons/hail-day',
+			icon_variant_night: 'weather/meteocons/hail-night'
 		},
 		lightning: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/lightning-day',
-			icon_variant_night: '/weather/meteocons/lightning-night'
+			icon_variant_day: 'weather/meteocons/lightning-day',
+			icon_variant_night: 'weather/meteocons/lightning-night'
 		},
 		'lightning-rainy': {
 			local: true,
-			icon_variant_day: '/weather/meteocons/lightning-rainy-day',
-			icon_variant_night: '/weather/meteocons/lightning-rainy-night'
+			icon_variant_day: 'weather/meteocons/lightning-rainy-day',
+			icon_variant_night: 'weather/meteocons/lightning-rainy-night'
 		},
 		partlycloudy: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/partlycloudy-day',
-			icon_variant_night: '/weather/meteocons/partlycloudy-night'
+			icon_variant_day: 'weather/meteocons/partlycloudy-day',
+			icon_variant_night: 'weather/meteocons/partlycloudy-night'
 		},
 		pouring: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/pouring-day',
-			icon_variant_night: '/weather/meteocons/pouring-night'
+			icon_variant_day: 'weather/meteocons/pouring-day',
+			icon_variant_night: 'weather/meteocons/pouring-night'
 		},
 		rainy: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/rainy-day',
-			icon_variant_night: '/weather/meteocons/rainy-night'
+			icon_variant_day: 'weather/meteocons/rainy-day',
+			icon_variant_night: 'weather/meteocons/rainy-night'
 		},
 		snowy: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/snowy-day',
-			icon_variant_night: '/weather/meteocons/snowy-night'
+			icon_variant_day: 'weather/meteocons/snowy-day',
+			icon_variant_night: 'weather/meteocons/snowy-night'
 		},
 		'snowy-rainy': {
 			local: true,
-			icon_variant_day: '/weather/meteocons/snowy-rainy-day',
-			icon_variant_night: '/weather/meteocons/snowy-rainy-night'
+			icon_variant_day: 'weather/meteocons/snowy-rainy-day',
+			icon_variant_night: 'weather/meteocons/snowy-rainy-night'
 		},
 		sunny: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/sunny-day',
-			icon_variant_night: '/weather/meteocons/sunny-night'
+			icon_variant_day: 'weather/meteocons/sunny-day',
+			icon_variant_night: 'weather/meteocons/sunny-night'
 		},
 		windy: {
 			local: true,
-			icon_variant_day: '/weather/meteocons/windy-day',
-			icon_variant_night: '/weather/meteocons/windy-night'
+			icon_variant_day: 'weather/meteocons/windy-day',
+			icon_variant_night: 'weather/meteocons/windy-night'
 		},
 		'windy-variant': {
 			local: true,
-			icon_variant_day: '/weather/meteocons/windy-variant-day',
-			icon_variant_night: '/weather/meteocons/windy-variant-night'
+			icon_variant_day: 'weather/meteocons/windy-variant-day',
+			icon_variant_night: 'weather/meteocons/windy-variant-night'
 		}
 	}
 };
