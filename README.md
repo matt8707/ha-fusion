@@ -163,3 +163,9 @@ npm run check
 npm run lint
 npm run format
 ```
+
+---
+
+## Contribute Translations
+
+[![inlang status badge](https://badge.inlang.com/?url=github.com/matt8707/ha-fusion)](https://fink.inlang.com/https://badge.inlang.com/?url=github.com/matt8707/ha-fusion?ref=badge)
