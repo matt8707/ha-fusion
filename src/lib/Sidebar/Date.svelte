@@ -3,6 +3,7 @@
 
 	export let short_day: boolean | undefined = undefined;
 	export let short_month: boolean | undefined = undefined;
+	export let show_year: boolean | undefined = undefined;
 	export let hide: string | undefined = undefined;
 
 	$: weekDay = $timer.toLocaleDateString($selectedLanguage, {
@@ -13,6 +14,10 @@
 		day: 'numeric',
 		month: short_month ? 'short' : 'long'
 	});
+
+	$: year = $timer.toLocaleDateString($selectedLanguage, {
+		year: 'numeric'
+	});
 </script>
 
 <div>
@@ -21,7 +26,11 @@
 	{/if}
 
 	{#if hide !== 'month'}
-		{shortDate}<br />
+		{shortDate}
+		{#if show_year}
+			{year}
+		{/if}
+		<br />
 	{/if}
 </div>
 

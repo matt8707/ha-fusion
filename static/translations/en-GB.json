@@ -196,5 +196,8 @@
 	"visible": "Visible",
 	"week": "Week",
 	"welcome_home": "Welcome Home",
-	"yes": "Yes"
+	"yes": "Yes",
+	"year": "Year",
+	"year_show": "show",
+	"year_hide": "hide"
 }

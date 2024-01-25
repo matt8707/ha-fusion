@@ -107,6 +107,7 @@ export interface DateItem {
 	id?: number;
 	short_day?: boolean;
 	short_month?: boolean;
+	show_year?: boolean;
 	hide?: string;
 }
 

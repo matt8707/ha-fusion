@@ -26,7 +26,7 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<Date short_day={sel?.short_day} short_month={sel?.short_month} hide={sel?.hide} />
+			<Date short_day={sel?.short_day} short_month={sel?.short_month} show_year={sel?.show_year} hide={sel?.hide} />
 		</div>
 
 		<!-- DAY -->
@@ -64,6 +64,25 @@
 				use:Ripple={$ripple}
 			>
 				{$lang('min_length')}
+			</button>
+		</div>
+
+		<!-- YEAR -->
+		<h2>{$lang('year')}</h2>
+		<div class="button-container">
+			<button
+				class:selected={!sel?.show_year}
+				on:click={() => set('show_year', false)}
+				use:Ripple={$ripple}
+			>
+				{$lang('year_hide')}
+			</button>
+			<button
+				class:selected={sel?.show_year}
+				on:click={() => set('show_year', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('year_show')}
 			</button>
 		</div>
 

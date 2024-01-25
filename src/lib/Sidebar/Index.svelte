@@ -217,6 +217,7 @@
 								this={Date.default}
 								short_day={item?.short_day}
 								short_month={item?.short_month}
+								show_year={item?.show_year}
 								hide={item?.hide}
 							/>
 						</button>
