@@ -45,6 +45,15 @@ export const onStates = readable([
 	'gas'
 ]);
 
+// climate states
+export const climateOnStates = readable([
+	'cooling',
+	'drying',
+	'fan',
+	'heating',
+	'preheating'
+]);
+
 // drawer
 export const drawerSearch = writable<string | undefined>();
 export const focusSearch = writable<boolean>(false);
