@@ -468,6 +468,7 @@
 		overflow: hidden;
 		gap: 1px;
 		margin-top: -1px;
+    	padding-right: var(--container-padding);
 	}
 
 	.icon {
