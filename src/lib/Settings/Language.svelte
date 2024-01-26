@@ -47,6 +47,8 @@
 
 			const data = await response.json();
 
+			document.documentElement.lang = $selectedLanguage
+
 			if (response.ok) {
 				$translation = data;
 			} else {
