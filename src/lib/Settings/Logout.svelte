@@ -8,7 +8,7 @@
 			title: $lang('log_out'),
 			message: $lang('confirm_log_out'),
 			confirm: async () => {
-				localStorage.removeItem('auth');
+				localStorage.removeItem('hassTokens');
 				location.reload();
 			},
 			cancel: () => {
