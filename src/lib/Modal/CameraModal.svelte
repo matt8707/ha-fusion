@@ -2,7 +2,6 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import { lang, states } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
-	import { getName } from '$lib/Utils';
 	import type { CameraItem } from '$lib/Types';
 	import Loader from '$lib/Components/Loader.svelte';
 
@@ -24,8 +23,6 @@
 		if (img) img.src = '';
 	});
 
-	const alt = getName(sel, entity);
-
 	let loaderVisible = true;
 
 	function handleLoader() {
@@ -37,14 +34,15 @@
 	<Modal size="large">
 		<h1 slot="title">{$lang('camera')}</h1>
 
+		<!-- svelte-ignore a11y-missing-attribute -->
 		<div class="container">
-			<img class="picture" src={entity_picture} {alt} />
+			<img class="picture" src={entity_picture} />
 
 			{#if loaderVisible}
 				<Loader />
 			{/if}
 
-			<img class="stream" src={entity_stream} {alt} bind:this={img} on:load={handleLoader} />
+			<img class="stream" src={entity_stream} bind:this={img} on:load={handleLoader} />
 		</div>
 	</Modal>
 {/if}
