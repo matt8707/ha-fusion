@@ -103,7 +103,7 @@
 				{$lang('month')}
 			</button>
 		</div>
-		{#if sel?.hide === 'none'}
+		{#if !sel?.hide || sel?.hide === 'none'}
 			<!-- Layout -->
 			<h2>{$lang('Layout')}</h2>
 			<div class="button-container">
