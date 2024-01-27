@@ -95,7 +95,6 @@
 						{options}
 						placeholder={$lang('entity')}
 						value={entity_id}
-						keepFocus={true}
 						on:change={(event) => {
 							set('attribute');
 							if (event?.detail === null) return;
