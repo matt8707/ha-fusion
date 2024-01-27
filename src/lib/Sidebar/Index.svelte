@@ -218,6 +218,7 @@
 								short_day={item?.short_day}
 								short_month={item?.short_month}
 								hide={item?.hide}
+								layout={item?.layout}
 							/>
 						</button>
 
