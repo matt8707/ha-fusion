@@ -19,7 +19,7 @@
 		};
 
 		try {
-			const response = await fetch(`${base}/api/list_languages`);
+			const response = await fetch(`${base}/_api/list_languages`);
 			const data = await response.json();
 
 			if (response.ok) {
@@ -39,7 +39,7 @@
 		$selectedLanguage = value;
 
 		try {
-			const response = await fetch(`${base}/api/get_translation`, {
+			const response = await fetch(`${base}/_api/get_translation`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ locale: value })

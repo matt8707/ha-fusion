@@ -59,7 +59,7 @@
 				$motion = 190;
 			}
 
-			const response = await fetch(`${base}/api/save_config`, {
+			const response = await fetch(`${base}/_api/save_config`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
