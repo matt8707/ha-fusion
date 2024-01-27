@@ -17,7 +17,7 @@
 	export let demo: string | undefined = undefined;
 	export let sectionName: string | undefined = undefined;
 
-	$: entity = $states[sel?.entity_id as any] as HassEntity;
+	$: entity = $states?.[sel?.entity_id as any] as HassEntity;
 	$: entity_id = entity?.entity_id;
 
 	if (demo) {
@@ -38,10 +38,12 @@
 		.sort()
 		.map((key) => ({ id: key, label: key }));
 
-	$: options_attr = Object.keys(entity.attributes).map((key) => ({
-		id: key,
-		label: key
-	}));
+	$: options_attr =
+		entity?.attributes &&
+		Object.keys(entity?.attributes).map((key) => ({
+			id: key,
+			label: key
+		}));
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);
