@@ -30,7 +30,7 @@ async function loadFile(file: string) {
 /**
  * Server load function
  */
-export async function load({ request }): Promise<{
+export async function load(): Promise<{
 	configuration: Configuration;
 	dashboard: Dashboard;
 	theme: any;
@@ -42,24 +42,7 @@ export async function load({ request }): Promise<{
 		loadFile('./data/dashboard.yaml')
 	]);
 
-	// determine hassUrl
-	let hassUrl = process.env.ADDON ? configuration.hassUrl : process.env.HASS_URL;
-
-	if (!hassUrl) {
-		const proto = request.headers.get('x-forwarded-proto');
-		const host = request.headers.get('x-forwarded-host');
-		if (proto && host) hassUrl = `${proto}://${host}`;
-	}
-
-	// update hassUrl
-	if (hassUrl && hassUrl !== configuration.hassUrl) {
-		configuration.hassUrl = hassUrl;
-		try {
-			await writeFile('./data/configuration.yaml', yaml.dump(configuration), 'utf8');
-		} catch (error) {
-			console.error('error updating configuration.yaml:', error);
-		}
-	}
+	configuration.hassUrl = process.env.HASS_URL;
 
 	// initialize keys if missing
 	dashboard.views = dashboard.views || [];

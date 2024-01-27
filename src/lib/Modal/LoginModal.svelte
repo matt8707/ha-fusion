@@ -1,64 +1,118 @@
 <script lang="ts">
-	import { lang, motion } from '$lib/Stores';
+	import { configuration, connection, lang, motion } from '$lib/Stores';
 	import Modal from '$lib/Modal/Index.svelte';
-	import { Auth } from 'home-assistant-js-websocket';
+	import { Auth, genClientId, genExpires, type AuthData } from 'home-assistant-js-websocket';
 	import { closeModal } from 'svelte-modals';
 	import { onMount } from 'svelte';
 	import Loader from '$lib/Components/Loader.svelte';
 	import { webSocket } from '$lib/Socket';
-	import { base } from '$app/paths';
 	import { fade, slide } from 'svelte/transition';
 
 	export let isOpen: boolean;
-	export let clientId: string | undefined;
-	export let hassUrl: string | undefined;
-	export let flow_id: string | undefined;
 
-	let invalidAuth: string | undefined;
+	let client_id: string;
+	let flow_id: string;
+
 	let disabled = false;
-	let focusElement: HTMLInputElement;
-	let step = 'init';
+	let usernameInput: HTMLInputElement;
+	let codeInput: HTMLInputElement;
+	let errorMessage: string | undefined;
 	let mfa_module_name: string | undefined;
+	let step = 'init';
 
 	let username = '';
 	let password = '';
 	let code = '';
 
+	$: if (codeInput) codeInput.focus();
+
+	// get flow_id and focus on username input
+	onMount(async () => {
+		client_id = genClientId();
+
+		try {
+			const response = await fetch('/auth/login_flow', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					client_id,
+					handler: ['homeassistant', null],
+					redirect_uri: client_id
+				})
+			});
+
+			const data = await response.json();
+
+			flow_id = data?.flow_id;
+		} catch (error) {
+			console.error('error fetching flow_id:', error);
+		}
+
+		if (usernameInput) {
+			usernameInput.focus();
+		}
+	});
+
 	async function handleSubmit() {
-		if (!flow_id || !hassUrl || (step === 'mfa' && code === '')) {
-			console.error({ flow_id, hassUrl, code });
+		if (!flow_id || !client_id || !$configuration?.hassUrl || (step === 'mfa' && code === '')) {
+			console.error({ flow_id, client_id, hassUrl: $configuration?.hassUrl, code });
 			return;
 		}
+
+		// fade ui when request is in progress
 		disabled = true;
 
 		try {
-			// submit data
-			const payload =
-				step === 'init' ? { username, password, clientId, hassUrl } : { code, clientId, hassUrl };
-			const response = await fetch(`${base}/api/auth/${flow_id}`, {
+			/**
+			 * Submits data, 'init' step `username`, `password`
+			 * and if 'mfa' step exists in response also `code`
+			 */
+			const payload = step === 'init' ? { username, password, client_id } : { code, client_id };
+			let response = await fetch(`/auth/login_flow/${flow_id}`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(payload)
 			});
 
-			if (!response.ok) {
-				throw new Error(`HTTP error! Status: ${response.status}`);
-			}
+			let data = await response.json();
 
-			const data = await response.json();
-
-			// if response is mfa change step
+			/**
+			 * Handles the mfa (multi-factor authentication) step by
+			 * setting the current step to 'mfa', clearing any error message,
+			 * and setting the 'mfa_module_name' from response, if no errors
+			 * are present. Early return, wait for mfa `code`...
+			 */
 			if (data?.step_id === 'mfa' && Object.keys(data?.errors)?.length === 0) {
 				step = 'mfa';
-
-				invalidAuth = undefined;
+				errorMessage = undefined;
 				mfa_module_name = data?.description_placeholders?.mfa_module_name;
 				return;
 			}
 
-			// handle response
-			if (data?.access_token) {
-				handleSuccess(data);
+			/**
+			 * If `create_entry` exchange `result` for auth data
+			 */
+			if (data?.type === 'create_entry') {
+				const body = new URLSearchParams({
+					code: data.result,
+					client_id,
+					grant_type: 'authorization_code'
+				});
+
+				response = await fetch('/auth/token', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body
+				});
+
+				data = await response.json();
+
+				// handle response
+				if (data?.access_token) {
+					handleTokens(data);
+				}
 			} else {
 				handleError(data);
 			}
@@ -69,20 +123,20 @@
 		}
 	}
 
-	async function handleSuccess(data: any) {
+	async function handleTokens(data: AuthData) {
 		// update data
-		data.clientId = clientId;
-		data.hassUrl = hassUrl;
-		data.expires = data.expires_in * 1000 + Date.now();
+		data.clientId = client_id;
+		data.hassUrl = $configuration.hassUrl as string;
+		data.expires = genExpires(data.expires_in);
 
 		// save localStorage
-		localStorage.setItem('auth', JSON.stringify(data));
+		localStorage.setItem('hassTokens', JSON.stringify(data));
 
 		// connect to websocket
-		const auth = new Auth({ ...data, hassUrl, clientId });
+		const auth = new Auth(data);
 		await webSocket(auth);
 
-		closeModal();
+		if ($connection) closeModal();
 	}
 
 	function handleError(data: any) {
@@ -92,7 +146,7 @@
 			data?.error?.reason === 'too_many_retry' ||
 			data?.error?.message === 'Invalid flow specified'
 		) {
-			invalidAuth = $lang('abort_login');
+			errorMessage = $lang('abort_login');
 			step = 'abort';
 			return;
 		}
@@ -101,23 +155,17 @@
 		switch (error) {
 			case 'invalid_auth':
 			case 'invalid_code':
-				invalidAuth = $lang('login_error')?.replace('{error}', $lang(error));
+				errorMessage = $lang('login_error')?.replace('{error}', $lang(error));
 				break;
 			default:
-				invalidAuth = 'An unknown error occurred';
+				errorMessage = 'An unknown error occurred';
 				break;
 		}
 	}
-
-	onMount(() => {
-		if (focusElement) {
-			focusElement.focus();
-		}
-	});
 </script>
 
 {#if isOpen}
-	<Modal backdropImage={false}>
+	<Modal>
 		<h1 slot="title">{$lang('login')}</h1>
 
 		{#if disabled}
@@ -126,11 +174,11 @@
 
 		<div style:opacity={disabled ? '0.5' : '1'} style:transition="opacity {$motion}ms ease">
 			<span
-				style:background-color={invalidAuth ? 'rgba(255, 0, 0, 0.34)' : 'rgba(255, 255, 255, 0.1)'}
+				style:background-color={errorMessage ? 'rgba(255, 0, 0, 0.34)' : 'rgba(255, 255, 255, 0.1)'}
 				style:transition="background-color {$motion}ms ease"
 			>
-				{#if invalidAuth}
-					<div transition:slide={{ duration: $motion / 1.5 }}>{invalidAuth}</div>
+				{#if errorMessage}
+					<div transition:slide={{ duration: $motion / 1.5 }}>{errorMessage}</div>
 				{:else if step === 'init'}
 					<div transition:slide={{ duration: $motion / 1.5 }}>
 						{$lang('authorizing_client').replace('{clientId}', '"Fusion"')}
@@ -146,7 +194,7 @@
 				{#if step === 'init'}
 					<h2>{$lang('username')}</h2>
 					<input
-						bind:this={focusElement}
+						bind:this={usernameInput}
 						bind:value={username}
 						class="input"
 						placeholder={$lang('username')}
@@ -162,7 +210,13 @@
 				{:else if step === 'mfa'}
 					<div in:fade={{ duration: $motion }} out:slide={{ duration: $motion }}>
 						<h2>{$lang('mfa_code')}</h2>
-						<input type="text" bind:value={code} class="input" placeholder={$lang('code')} />
+						<input
+							type="text"
+							bind:this={codeInput}
+							bind:value={code}
+							class="input"
+							placeholder={$lang('code')}
+						/>
 					</div>
 				{/if}
 

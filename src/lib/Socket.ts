@@ -7,15 +7,13 @@ import {
 	ERR_INVALID_AUTH,
 	ERR_CONNECTION_LOST,
 	ERR_HASS_HOST_REQUIRED,
-	ERR_INVALID_HTTPS_TO_HTTP,
-	genClientId
+	ERR_INVALID_HTTPS_TO_HTTP
 } from 'home-assistant-js-websocket';
 import { states, connection, config, connected } from '$lib/Stores';
 import { openModal } from 'svelte-modals';
-import { base } from '$app/paths';
 
-export async function authenticate(hassUrl: string) {
-	const storage = localStorage.getItem('auth');
+export async function authenticate() {
+	const storage = localStorage.getItem('hassTokens');
 	const data = storage ? JSON.parse(storage) : null;
 
 	if (data?.access_token) {
@@ -23,13 +21,8 @@ export async function authenticate(hassUrl: string) {
 		const auth = new Auth(data);
 		await webSocket(auth);
 	} else {
-		// login
-		const clientId = genClientId();
-		openModal(async () => import('$lib/Modal/LoginModal.svelte'), {
-			clientId,
-			hassUrl,
-			flow_id: await getFlowId(clientId, hassUrl)
-		});
+		// login modal
+		openModal(async () => import('$lib/Modal/LoginModal.svelte'));
 	}
 }
 
@@ -70,7 +63,7 @@ export async function webSocket(auth: Auth) {
 				console.error('ERR_INVALID_AUTH');
 
 				// data is invalid
-				localStorage.removeItem('auth');
+				localStorage.removeItem('hassTokens');
 				location.reload();
 				break;
 
@@ -94,23 +87,5 @@ export async function webSocket(auth: Auth) {
 				console.error(error);
 		}
 		throw error;
-	}
-}
-
-export async function getFlowId(clientId: string, hassUrl: string) {
-	try {
-		const response = await fetch(`${base}/api/auth`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ clientId, hassUrl })
-		});
-
-		const data = await response.json();
-
-		return data.flow_id;
-	} catch (error) {
-		console.error('error fetching flow_id:', error);
 	}
 }

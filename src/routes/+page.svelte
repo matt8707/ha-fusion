@@ -207,6 +207,7 @@
 				'main main';
 			min-height: 100vh;
 			overflow: hidden;
+			grid-template-rows: auto auto auto 1fr !important;
 		}
 	}
 </style>

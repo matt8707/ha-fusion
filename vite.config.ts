@@ -59,23 +59,11 @@ export default defineConfig({
 				target: process.env.HASS_URL,
 				changeOrigin: true
 			},
-			'/api/image/': {
+			'/api/': {
 				target: process.env.HASS_URL,
 				changeOrigin: true
 			},
-			'/api/image_proxy/': {
-				target: process.env.HASS_URL,
-				changeOrigin: true
-			},
-			'/api/media_player_proxy/': {
-				target: process.env.HASS_URL,
-				changeOrigin: true
-			},
-			'/api/camera_proxy/': {
-				target: process.env.HASS_URL,
-				changeOrigin: true
-			},
-			'/api/camera_proxy_stream/': {
+			'/auth/': {
 				target: process.env.HASS_URL,
 				changeOrigin: true
 			}
