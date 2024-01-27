@@ -163,7 +163,6 @@
 
 			<Select
 				{options}
-				keepFocus={true}
 				placeholder={$lang('mode')}
 				value={attributes?.preset_mode}
 				on:change={(event) => {
