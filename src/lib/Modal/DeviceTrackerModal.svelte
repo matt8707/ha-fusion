@@ -247,29 +247,29 @@
 	<Modal size="large">
 		<h1 slot="title">{getName(sel, entity)}</h1>
 
-		{#if !apiKey}
-			<div class="notice">
-				<span class="icon">
-					<Icon icon="ep:info-filled" height="none" />
-				</span>
-				<span class="text">
-					{$lang('docs')}&nbsp;
-					<a
-						href="https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md"
-						target="_blank"
-					>
-						https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md
-					</a>
-				</span>
-			</div>
-		{/if}
-
 		<!-- container -->
 		<div
 			bind:this={container}
 			class="container"
 			style:--popup-background={colors?.backgroundColor?.dark}
 		>
+			{#if !apiKey}
+				<div class="notice">
+					<span class="icon">
+						<Icon icon="ep:info-filled" height="none" />
+					</span>
+					<span class="text">
+						{$lang('docs')}&nbsp;
+						<a
+							href="https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md"
+							target="_blank"
+						>
+							https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md
+						</a>
+					</span>
+				</div>
+			{/if}
+
 			<!-- geolocate -->
 			<div bind:this={geolocate} class="maplibregl-ctrl maplibregl-ctrl-group" style:display="none">
 				<button
@@ -419,14 +419,15 @@
 	}
 
 	.notice {
-		margin-top: 1rem;
-		padding: 0.6rem 0.9rem;
-		border-radius: 0.6rem;
+		padding: 0.6rem 3.5rem 0.6rem 0.9rem;
 		background: #ffc008;
 		color: #3b0f0f;
 		font-weight: 500;
-		align-content: end;
 		display: flex;
+		position: absolute;
+		z-index: 1;
+		font-size: 0.9rem;
+		width: inherit;
 	}
 
 	.notice .icon {

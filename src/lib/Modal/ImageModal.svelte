@@ -27,5 +27,6 @@
 	img {
 		margin-top: 1rem;
 		border-radius: 0.6rem;
+		width: 100%;
 	}
 </style>
