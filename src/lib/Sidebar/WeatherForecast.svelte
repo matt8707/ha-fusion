@@ -64,7 +64,7 @@
 
 {#if entity_state}
 	<div class="container">
-		{#each forecast as forecast, i}
+		{#each forecast as forecast}
 			<div class="item">
 				<div class="day">
 					{#if forecast_diff < 24}

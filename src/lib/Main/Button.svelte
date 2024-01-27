@@ -102,9 +102,9 @@
 		};
 
 		switch (domain) {
-			case 'person':
-				console.debug('ping phone?');
-				break;
+			// case 'person':
+			// 	console.debug('ping phone?');
+			// 	break;
 
 			case 'remote':
 				callService($connection, 'homeassistant', 'toggle', { entity_id });
@@ -468,7 +468,7 @@
 		overflow: hidden;
 		gap: 1px;
 		margin-top: -1px;
-    	padding-right: var(--container-padding);
+		padding-right: var(--container-padding);
 	}
 
 	.icon {

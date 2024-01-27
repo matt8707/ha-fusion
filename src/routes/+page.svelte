@@ -52,11 +52,8 @@
 	/**
 	 * Connect to websocket
 	 */
-
-	$: console.log('$configuration?.hassUrl', $configuration?.hassUrl);
-
-	if (browser && $configuration?.hassUrl) {
-		authenticate($configuration.hassUrl);
+	if (browser) {
+		authenticate();
 	}
 
 	onMount(async () => {

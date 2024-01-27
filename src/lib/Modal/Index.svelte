@@ -133,8 +133,6 @@
 	}
 
 	function handlePointerDown(event: { target: any }) {
-		if (!$connection) return;
-
 		if (prevent(event.target)) {
 			return;
 		}
@@ -143,8 +141,6 @@
 	}
 
 	function handlePointerMove(event: { movementY: number; buttons: number }) {
-		if (!$connection) return;
-
 		if (draggingModal && event.buttons !== 0) {
 			let newTop = top + event.movementY;
 			if (event.movementY < 0 && newTop < 0) {
@@ -157,8 +153,6 @@
 	}
 
 	function handlePointerUp() {
-		if (!$connection) return;
-
 		draggingModal = false;
 		if (top - startTop > threshold) {
 			if (backdrop) backdrop.style.transition = 'none';
@@ -170,8 +164,6 @@
 	}
 
 	function handleKeydown(event: any) {
-		if (!$connection) return;
-
 		if (event.key === 'Escape') {
 			if (!$autocompleteOpen) closeModal();
 		}
