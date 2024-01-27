@@ -22,7 +22,7 @@
 		// load themes if not prop has already loaded
 		if (!themes) {
 			try {
-				const response = await fetch(`${base}/api/get_all_themes`);
+				const response = await fetch(`${base}/_api/get_all_themes`);
 				const data = await response.json();
 
 				if (response.ok) {

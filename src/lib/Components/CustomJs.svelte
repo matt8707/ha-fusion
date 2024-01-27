@@ -6,7 +6,7 @@
 
 	onMount(async () => {
 		try {
-			const response = await fetch(`${base}/api/custom_js`);
+			const response = await fetch(`${base}/_api/custom_js`);
 			const data = await response.json();
 
 			if (response.ok) {

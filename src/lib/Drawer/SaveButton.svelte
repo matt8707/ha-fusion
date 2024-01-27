@@ -28,7 +28,7 @@
 		if (!modified) return;
 
 		try {
-			const response = await fetch(`${base}/api/save_dashboard`, {
+			const response = await fetch(`${base}/_api/save_dashboard`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify($dashboard)
