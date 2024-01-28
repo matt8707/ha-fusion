@@ -14,6 +14,11 @@
 	export let data: any;
 	export let isOpen: boolean;
 
+	export let languages: {
+		id: string;
+		label: string;
+	}[];
+
 	let formElement: HTMLFormElement;
 	let timeout: ReturnType<typeof setTimeout> | null;
 	let responseCode: number | undefined;
@@ -101,7 +106,7 @@
 		<h1 slot="title">{$lang('settings')}</h1>
 
 		<form id="settings" name="settings" bind:this={formElement}>
-			<Language />
+			<Language {languages} />
 
 			<Addons {data} />
 
