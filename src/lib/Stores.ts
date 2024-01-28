@@ -8,7 +8,6 @@ export const config = writable<HassConfig>();
 export const states = writable<HassEntities>();
 
 export const connected = writable<boolean>();
-export const authCallback = writable(false);
 
 // user
 export const configuration = writable<Configuration>();
@@ -20,10 +19,7 @@ export const onStates = readable([
 	'active',
 	'auto',
 	'cool',
-	'cooling',
 	'dry',
-	'drying',
-	'fan',
 	'fan_only',
 	'heat',
 	'heat_cool',
@@ -32,7 +28,6 @@ export const onStates = readable([
 	'on',
 	'open',
 	'playing',
-	'preheating',
 	'unlocked',
 	// vacuum
 	'cleaning',
@@ -45,6 +40,17 @@ export const onStates = readable([
 	'heat_pump',
 	'gas'
 ]);
+
+// climate states
+export const climateHvacActionToMode = readable<Record<string, string>>({
+	cooling: 'cool',
+	drying: 'dry',
+	fan: 'fan_only',
+	preheating: 'heat',
+	heating: 'heat',
+	idle: 'off',
+	off: 'off'
+});
 
 // drawer
 export const drawerSearch = writable<string | undefined>();

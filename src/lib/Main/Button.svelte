@@ -8,6 +8,7 @@
 		lang,
 		motion,
 		onStates,
+		climateHvacActionToMode,
 		ripple,
 		states
 	} from '$lib/Stores';
@@ -71,7 +72,9 @@
 	// icon is image if extension, e.g. test.png
 	$: image = icon?.includes('.');
 
-	$: stateOn = $onStates?.includes(entity?.state);
+	$: stateOn = $onStates?.includes(
+        attributes?.hvac_action ? $climateHvacActionToMode?.[attributes?.hvac_action] : entity?.state
+    );
 
 	/**
 	 * Toggles the state of the specified entity
