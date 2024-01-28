@@ -108,6 +108,7 @@ export interface DateItem {
 	short_day?: boolean;
 	short_month?: boolean;
 	hide?: string;
+	layout?: string;
 }
 
 export interface GraphItem {
