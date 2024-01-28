@@ -1,5 +1,5 @@
 import {
-	Auth,
+	getAuth,
 	createConnection,
 	subscribeConfig,
 	subscribeEntities,
@@ -9,24 +9,38 @@ import {
 	ERR_HASS_HOST_REQUIRED,
 	ERR_INVALID_HTTPS_TO_HTTP
 } from 'home-assistant-js-websocket';
-import { states, connection, config, connected } from '$lib/Stores';
-import { openModal } from 'svelte-modals';
+import type { SaveTokensFunc } from 'home-assistant-js-websocket';
+import { states, connection, config, authCallback, connected } from '$lib/Stores';
 
-export async function authenticate() {
-	const storage = localStorage.getItem('hassTokens');
-	const data = storage ? JSON.parse(storage) : null;
-
-	if (data?.access_token) {
-		// connect
-		const auth = new Auth(data);
-		await webSocket(auth);
-	} else {
-		// login modal
-		openModal(async () => import('$lib/Modal/LoginModal.svelte'));
+export const options = {
+	hassUrl: undefined as string | undefined,
+	async loadTokens() {
+		try {
+			return JSON.parse(localStorage.hassTokens);
+		} catch (error) {
+			return undefined;
+		}
+	},
+	saveTokens(tokens: SaveTokensFunc) {
+		localStorage.hassTokens = JSON.stringify(tokens);
+	},
+	clearTokens() {
+		localStorage.hassTokens = null;
 	}
-}
+};
 
-export async function webSocket(auth: Auth) {
+export async function authentication(options: { hassUrl?: string }) {
+	let auth;
+
+	try {
+		auth = await getAuth(options);
+		if (auth.expired) {
+			auth.refreshAccessToken();
+		}
+	} catch (_error) {
+		handleError(_error);
+	}
+
 	try {
 		// connection
 		const conn = await createConnection({ auth });
@@ -57,35 +71,38 @@ export async function webSocket(auth: Auth) {
 			console.error('ERR_INVALID_AUTH.');
 			connected.set(false);
 		});
-	} catch (error) {
-		switch (error) {
-			case ERR_INVALID_AUTH:
-				console.error('ERR_INVALID_AUTH');
 
-				// data is invalid
-				localStorage.removeItem('hassTokens');
-				location.reload();
-				break;
-
-			case ERR_CANNOT_CONNECT:
-				console.error('ERR_CANNOT_CONNECT');
-				break;
-
-			case ERR_CONNECTION_LOST:
-				console.error('ERR_CONNECTION_LOST');
-				break;
-
-			case ERR_HASS_HOST_REQUIRED:
-				console.error('ERR_HASS_HOST_REQUIRED');
-				break;
-
-			case ERR_INVALID_HTTPS_TO_HTTP:
-				console.error('ERR_INVALID_HTTPS_TO_HTTP');
-				break;
-
-			default:
-				console.error(error);
+		// clear auth query string
+		if (location.search.includes('auth_callback=1')) {
+			authCallback.set(true);
+			history.replaceState(null, '', location.pathname);
 		}
-		throw error;
+	} catch (_error) {
+		handleError(_error);
 	}
+}
+
+// error string instead of code
+function handleError(_error: unknown) {
+	switch (_error) {
+		case ERR_INVALID_AUTH:
+			console.error('ERR_INVALID_AUTH');
+			options.clearTokens();
+			break;
+		case ERR_CANNOT_CONNECT:
+			console.error('ERR_CANNOT_CONNECT');
+			break;
+		case ERR_CONNECTION_LOST:
+			console.error('ERR_CONNECTION_LOST');
+			break;
+		case ERR_HASS_HOST_REQUIRED:
+			console.error('ERR_HASS_HOST_REQUIRED');
+			break;
+		case ERR_INVALID_HTTPS_TO_HTTP:
+			console.error('ERR_INVALID_HTTPS_TO_HTTP');
+			break;
+		default:
+			console.error(_error);
+	}
+	throw _error;
 }

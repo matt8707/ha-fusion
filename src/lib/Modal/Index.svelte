@@ -204,18 +204,16 @@
 					<slot name="title" />
 				</h1>
 
-				{#if $connection}
-					<button
-						on:click={() => {
-							closeModal();
-						}}
-						aria-label="close"
-						style:outline="none"
-						use:Ripple={$ripple}
-					>
-						<Icon icon="mingcute:close-fill" height="none" />
-					</button>
-				{/if}
+				<button
+					on:click={() => {
+						closeModal();
+					}}
+					aria-label="close"
+					style:outline="none"
+					use:Ripple={$ripple}
+				>
+					<Icon icon="mingcute:close-fill" height="none" />
+				</button>
 			</div>
 
 			<slot />
