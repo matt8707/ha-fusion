@@ -30,7 +30,7 @@ async function loadFile(file: string) {
 /**
  * Server load function
  */
-export async function load(): Promise<{
+export async function load({ request }): Promise<{
 	configuration: Configuration;
 	dashboard: Dashboard;
 	theme: any;
@@ -42,7 +42,44 @@ export async function load(): Promise<{
 		loadFile('./data/dashboard.yaml')
 	]);
 
-	configuration.hassUrl = process.env.HASS_URL;
+	// determine hassUrl
+	const ADDON = process.env.ADDON === 'true';
+	const HASS_PORT = process.env.HASS_PORT;
+	const EXPOSED_PORT = process.env.EXPOSED_PORT;
+
+	let hassUrl = process.env.HASS_URL;
+
+	if (ADDON) {
+		// headers
+		const source = request.headers.get('x-hass-source');
+		const forwardedProto = request.headers.get('x-forwarded-proto');
+		const forwardedHost = request.headers.get('x-forwarded-host');
+		const host = request.headers.get('host');
+
+		console.log({
+			source: source,
+			forwardedProto: forwardedProto,
+			forwardedHost: forwardedHost,
+			host: host
+		});
+
+		// ingress
+		if (source && forwardedProto && forwardedHost) {
+			hassUrl = `${forwardedProto}://${forwardedHost}`;
+		}
+
+		// exposed port
+		else if (host && EXPOSED_PORT && HASS_PORT) {
+			hassUrl = `http://${host.replace(EXPOSED_PORT, HASS_PORT)}`;
+		}
+	}
+
+	// hassUrl should be defined now
+	if (!hassUrl) {
+		throw new Error('hassUrl could not be determined');
+	}
+
+	configuration.hassUrl = hassUrl;
 
 	// initialize keys if missing
 	dashboard.views = dashboard.views || [];

@@ -10,7 +10,7 @@ import {
 	ERR_INVALID_HTTPS_TO_HTTP
 } from 'home-assistant-js-websocket';
 import type { SaveTokensFunc } from 'home-assistant-js-websocket';
-import { states, connection, config, authCallback, connected } from '$lib/Stores';
+import { states, connection, config, connected } from '$lib/Stores';
 
 export const options = {
 	hassUrl: undefined as string | undefined,
@@ -74,7 +74,6 @@ export async function authentication(options: { hassUrl?: string }) {
 
 		// clear auth query string
 		if (location.search.includes('auth_callback=1')) {
-			authCallback.set(true);
 			history.replaceState(null, '', location.pathname);
 		}
 	} catch (_error) {

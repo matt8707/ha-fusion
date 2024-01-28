@@ -14,7 +14,7 @@
 		filterDashboard,
 		disableMenuButton,
 		clickOriginatedFromMenu,
-		authCallback
+		connection
 	} from '$lib/Stores';
 	import { authentication, options } from '$lib/Socket';
 	import { onDestroy, onMount } from 'svelte';
@@ -155,6 +155,8 @@
 			$drawerSearch = undefined;
 		}
 	}
+
+	$: console.log('DEBUG:', $configuration?.hassUrl);
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -180,7 +182,7 @@
 		{#await import('$lib/Main/Index.svelte') then Main}
 			<svelte:component this={Main.default} {view} />
 		{/await}
-	{:else if $authCallback || options?.hassUrl}
+	{:else if $connection}
 		{#await import('$lib/Main/Intro.svelte') then Intro}
 			<svelte:component this={Intro.default} {data} />
 		{/await}
