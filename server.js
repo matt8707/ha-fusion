@@ -29,13 +29,11 @@ function customRouter(req) {
 		// ingress
 		if (source && forwardedProto && forwardedHost) {
 			target = `${forwardedProto}://${forwardedHost}`;
-			process.env.HASS_URL = target;
 		}
 
 		// exposed port
 		else if (host && EXPOSED_PORT && HASS_PORT) {
 			target = `http://${host.replace(EXPOSED_PORT, HASS_PORT)}`;
-			process.env.HASS_URL = target;
 		}
 	}
 
