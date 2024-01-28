@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
 		configuration,
+		editMode,
 		motion,
 		autocompleteOpen,
 		ripple,
@@ -121,7 +122,11 @@
 	});
 
 	function addAutoDismissIfNeeded() {
-		if ($configuration?.addons?.['auto_dismiss_modal']?.enabled === 'on' && !bypass_auto_dismiss) {
+		if (
+			$configuration?.addons?.['auto_dismiss_modal']?.enabled === 'on' &&
+			!bypass_auto_dismiss &&
+			$editMode === false
+		) {
 			modalTimeout = setTimeout(
 				() => {
 					closeModal();

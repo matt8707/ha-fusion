@@ -172,7 +172,7 @@
 <svelte:window on:keydown={handleKeyDown} />
 
 {#if isOpen}
-	<Modal size="large" on:transitionend={() => (transitionend = true)}>
+	<Modal size="large" on:transitionend={() => (transitionend = true)} bypass_auto_dismiss={true}>
 		<h1 slot="title">{$lang('raw')}</h1>
 
 		<br />
