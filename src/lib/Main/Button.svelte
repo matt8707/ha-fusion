@@ -8,7 +8,7 @@
 		lang,
 		motion,
 		onStates,
-		climateOnStates,
+		climateHvacActionToMode,
 		ripple,
 		states
 	} from '$lib/Stores';
@@ -36,8 +36,6 @@
 
 	/** display loader if no state change has occurred within `$motion`ms */
 	let delayLoading: ReturnType<typeof setTimeout> | null;
-
-	let stateOn: boolean;
 
 	/**
 	 * Observes changes in the `last_updated` property of an entity.
@@ -74,11 +72,9 @@
 	// icon is image if extension, e.g. test.png
 	$: image = icon?.includes('.');
 
-	$: if (getDomain(entity_id) === 'climate') {
-		stateOn = $climateOnStates?.includes(entity?.attributes.hvac_action);
-	} else {
-		stateOn = $onStates?.includes(entity?.state);
-	}
+	$: stateOn = $onStates?.includes(
+        attributes?.hvac_action ? $climateHvacActionToMode?.[attributes?.hvac_action] : entity?.state
+    );
 
 	/**
 	 * Toggles the state of the specified entity

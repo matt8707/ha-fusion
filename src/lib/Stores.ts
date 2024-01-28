@@ -46,13 +46,15 @@ export const onStates = readable([
 ]);
 
 // climate states
-export const climateOnStates = readable([
-	'cooling',
-	'drying',
-	'fan',
-	'heating',
-	'preheating'
-]);
+export const climateHvacActionToMode = readable<Record<string, string>>({
+	cooling: 'cool',
+	drying: 'dry',
+	fan: 'fan_only',
+	preheating: 'heat',
+	heating: 'heat',
+	idle: 'off',
+	off: 'off'
+});
 
 // drawer
 export const drawerSearch = writable<string | undefined>();
