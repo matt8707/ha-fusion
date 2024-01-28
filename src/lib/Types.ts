@@ -15,6 +15,10 @@ export interface Addons {
 	maptiler?: {
 		apikey: string;
 	};
+	auto_dismiss_modal?: {
+		enabled: string;
+		timeout: string;
+	};
 }
 
 export interface Dashboard {

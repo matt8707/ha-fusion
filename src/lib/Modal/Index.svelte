@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { motion, autocompleteOpen, ripple, connection, event, lang } from '$lib/Stores';
+	import {
+		configuration,
+		motion,
+		autocompleteOpen,
+		ripple,
+		connection,
+		event,
+		lang
+	} from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { modals, closeModal } from 'svelte-modals';
 	import { fly, scale } from 'svelte/transition';
@@ -12,6 +20,7 @@
 
 	export let backdropImage = true;
 	export let size: string | undefined = undefined;
+	export let bypass_auto_dismiss: boolean = false;
 
 	let backdrop: HTMLDivElement | null;
 	let contents: HTMLDivElement | null;
@@ -20,6 +29,7 @@
 	let top = 0;
 	let startTop = 0;
 	let threshold = window.innerHeight * 0.15;
+	let modalTimeout: ReturnType<typeof setTimeout>;
 
 	$: if (draggingModal && contents) {
 		contents.style.backdropFilter = 'blur(2rem)';
@@ -70,6 +80,7 @@
 	$: if (delayedModalCount === 1 && backdrop) debouncedOpacityChange();
 
 	onMount(() => {
+		addAutoDismissIfNeeded();
 		if (document?.body) document.body.style.overflow = 'hidden';
 
 		backdrop = document.querySelector('div.backdrop');
@@ -103,10 +114,31 @@
 	});
 
 	onDestroy(async () => {
+		clearAutoDismiss();
 		if ($modals.length === 0) {
 			document.body.style.overflow = 'unset';
 		}
 	});
+
+	function addAutoDismissIfNeeded() {
+		if ($configuration?.addons?.['auto_dismiss_modal']?.enabled === 'on' && !bypass_auto_dismiss) {
+			modalTimeout = setTimeout(
+				() => {
+					closeModal();
+				},
+				parseInt($configuration?.addons?.['auto_dismiss_modal']?.timeout) * 1000
+			);
+		}
+	}
+
+	function restartAutoDismiss() {
+		clearTimeout(modalTimeout);
+		addAutoDismissIfNeeded();
+	}
+
+	function clearAutoDismiss() {
+		clearTimeout(modalTimeout);
+	}
 
 	function prevent(target: any) {
 		const selectors = [
@@ -138,6 +170,7 @@
 		}
 		draggingModal = true;
 		startTop = top;
+		restartAutoDismiss();
 	}
 
 	function handlePointerMove(event: { movementY: number; buttons: number }) {
@@ -150,23 +183,30 @@
 		} else {
 			draggingModal = false;
 		}
+		restartAutoDismiss();
 	}
 
 	function handlePointerUp() {
 		draggingModal = false;
 		if (top - startTop > threshold) {
 			if (backdrop) backdrop.style.transition = 'none';
+			clearAutoDismiss();
 			closeModal();
 		} else {
 			if (backdrop) backdrop.style.transition = 'opacity 100ms ease-out';
 			top = 0;
 		}
+		restartAutoDismiss();
 	}
 
 	function handleKeydown(event: any) {
 		if (event.key === 'Escape') {
-			if (!$autocompleteOpen) closeModal();
+			if (!$autocompleteOpen) {
+				clearAutoDismiss();
+				closeModal();
+			}
 		}
+		restartAutoDismiss();
 	}
 </script>
 

@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { lang } from '$lib/Stores';
+	import { configuration, lang } from '$lib/Stores';
+	import InputClear from '$lib/Components/InputClear.svelte';
+	import Toggle from '$lib/Components/Toggle.svelte';
 
 	export let data: any;
 
@@ -12,7 +14,6 @@
 </script>
 
 <h2>{$lang('addons')}</h2>
-
 <p class="overflow">
 	{$lang('docs')} -
 	<a {href} target="blank">{href}</a>
@@ -32,6 +33,29 @@
 			on:focus={handleFocus}
 			on:blur={handleFocus}
 		/>
+	</div>
+
+	<div class="item">
+		<h3>{$lang('auto')} {$lang('closed')} {$lang('overview')}</h3>
+		<div class="container">
+			<div>
+				<input
+					name="dismiss_timeout"
+					class="input"
+					type="number"
+					placeholder="60"
+					autocomplete="off"
+					spellcheck="false"
+					value={data?.configuration?.addons?.['auto_dismiss_modal']?.timeout || ''}
+				/>
+			</div>
+			<div style:margin-left="1.3rem">
+				<Toggle
+					name="auto_dismiss_modal"
+					checked={data?.configuration?.addons?.['auto_dismiss_modal']?.enabled === 'on' || false}
+				/>
+			</div>
+		</div>
 	</div>
 
 	<!-- <div class="item">
@@ -67,6 +91,12 @@
 		display: grid;
 		grid-template-columns: repeat(1, 1fr);
 		gap: 0.5rem;
+	}
+
+	.container {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
 	}
 
 	h3 {

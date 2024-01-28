@@ -44,7 +44,13 @@
 
 			const addons = {
 				...(form.youtube_watching && { youtube_watching: { entity_id: form.youtube_watching } }),
-				...(form.maptiler && { maptiler: { apikey: form.maptiler } })
+				...(form.maptiler && { maptiler: { apikey: form.maptiler } }),
+				...((form.auto_dismiss_modal || form.dismiss_timeout) && {
+					auto_dismiss_modal: {
+						timeout: form.dismiss_timeout || 60,
+						enabled: form.auto_dismiss_modal || 'off'
+					}
+				})
 			};
 
 			const custom_js = form.custom_js ? Boolean(form.custom_js === 'true') : undefined;
@@ -102,7 +108,7 @@
 <svelte:window on:keydown={handleKeydown} />
 
 {#if isOpen}
-	<Modal>
+	<Modal bypass_auto_dismiss={true}>
 		<h1 slot="title">{$lang('settings')}</h1>
 
 		<form id="settings" name="settings" bind:this={formElement}>
