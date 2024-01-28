@@ -8,6 +8,7 @@ export const config = writable<HassConfig>();
 export const states = writable<HassEntities>();
 
 export const connected = writable<boolean>();
+export const authCallback = writable(false);
 
 // user
 export const configuration = writable<Configuration>();
