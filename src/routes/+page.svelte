@@ -59,6 +59,13 @@
 		authenticate($configuration.hassUrl);
 	}
 
+	/**
+	 * load the selected language
+	 */
+	 if (browser) {
+		setSelectedLanguage($selectedLanguage)
+	}
+
 	onMount(async () => {
 		/**
 		 * If the "menu" parameter in the URL is set to 'false'
@@ -82,6 +89,10 @@
 			}
 		}
 	});
+
+	function setSelectedLanguage(value: string) {
+		document.documentElement.lang = value;
+	}
 
 	/**
 	 * Toggles drawer visibility and resets
