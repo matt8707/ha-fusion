@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import { dev } from '$app/environment';
 import yaml from 'js-yaml';
 import type { Configuration, Dashboard, Translations } from '$lib/Types';
