@@ -115,7 +115,6 @@
 
 			<Select
 				{options}
-				keepFocus={true}
 				customItems={true}
 				placeholder={$lang('humidifier_mode')}
 				value={attr?.mode}

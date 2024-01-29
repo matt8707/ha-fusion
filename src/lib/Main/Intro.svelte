@@ -59,7 +59,7 @@
 		$selectedLanguage = value;
 
 		try {
-			const response = await fetch(`${base}/api/get_translation`, {
+			const response = await fetch(`${base}/_api/get_translation`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

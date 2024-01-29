@@ -31,7 +31,7 @@
 	 */
 	async function loadTheme(name: string) {
 		try {
-			const response = await fetch(`${base}/api/load_theme`, {
+			const response = await fetch(`${base}/_api/load_theme`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

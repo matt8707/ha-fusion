@@ -119,7 +119,6 @@
 
 			<Select
 				{options}
-				keepFocus={true}
 				customItems={true}
 				placeholder={$lang('mode')}
 				value={attributes?.operation_mode}

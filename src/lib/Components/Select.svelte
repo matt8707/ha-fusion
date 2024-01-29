@@ -10,7 +10,7 @@
 	export let value: string | undefined;
 	export let customItems = false;
 	export let clearable: boolean = false;
-	export let keepFocus: boolean | undefined = false;
+	export let keepFocus: boolean = true;
 
 	let container: HTMLDivElement;
 	let key = false;

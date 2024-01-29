@@ -219,6 +219,7 @@
 								short_month={item?.short_month}
 								show_year={item?.show_year}
 								hide={item?.hide}
+								layout={item?.layout}
 							/>
 						</button>
 

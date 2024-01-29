@@ -109,6 +109,7 @@ export interface DateItem {
 	short_month?: boolean;
 	show_year?: boolean;
 	hide?: string;
+	layout?: string;
 }
 
 export interface GraphItem {

@@ -5,6 +5,7 @@
 	export let short_month: boolean | undefined = undefined;
 	export let show_year: boolean | undefined = undefined;
 	export let hide: string | undefined = undefined;
+	export let layout: string | undefined = undefined;
 
 	$: weekDay = $timer.toLocaleDateString($selectedLanguage, {
 		weekday: short_day ? 'short' : 'long'
@@ -18,19 +19,26 @@
 	$: year = $timer.toLocaleDateString($selectedLanguage, {
 		year: 'numeric'
 	});
+
+	$: orientation = layout || 'vertical';
+
 </script>
 
 <div>
-	{#if hide !== 'day'}
-		{weekDay}<br />
-	{/if}
-
-	{#if hide !== 'month'}
-		{shortDate}
-		{#if show_year}
-			{year}
+	{#if orientation === 'vertical'}
+		{#if hide !== 'day'}
+			{weekDay}<br />
 		{/if}
-		<br />
+		{#if hide !== 'month'}
+			{shortDate}
+			{#if show_year}
+				{year}
+			{/if}
+			<br />
+		{/if}
+	{/if}
+	{#if orientation === 'horizontal'}
+		{weekDay},&nbsp;{shortDate}{#if show_year}&nbsp;{year}{/if}
 	{/if}
 </div>
 

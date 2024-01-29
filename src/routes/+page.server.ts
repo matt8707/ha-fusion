@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import { dev } from '$app/environment';
 import yaml from 'js-yaml';
 import type { Configuration, Dashboard, Translations } from '$lib/Types';
@@ -43,23 +43,43 @@ export async function load({ request }): Promise<{
 	]);
 
 	// determine hassUrl
-	let hassUrl = process.env.ADDON ? configuration.hassUrl : process.env.HASS_URL;
+	const ADDON = process.env.ADDON === 'true';
+	const HASS_PORT = process.env.HASS_PORT;
+	const EXPOSED_PORT = process.env.EXPOSED_PORT;
 
-	if (!hassUrl) {
-		const proto = request.headers.get('x-forwarded-proto');
-		const host = request.headers.get('x-forwarded-host');
-		if (proto && host) hassUrl = `${proto}://${host}`;
-	}
+	let hassUrl = process.env.HASS_URL;
 
-	// update hassUrl
-	if (hassUrl && hassUrl !== configuration.hassUrl) {
-		configuration.hassUrl = hassUrl;
-		try {
-			await writeFile('./data/configuration.yaml', yaml.dump(configuration), 'utf8');
-		} catch (error) {
-			console.error('error updating configuration.yaml:', error);
+	if (ADDON) {
+		// headers
+		const source = request.headers.get('x-hass-source');
+		const forwardedProto = request.headers.get('x-forwarded-proto');
+		const forwardedHost = request.headers.get('x-forwarded-host');
+		const host = request.headers.get('host');
+
+		console.log({
+			source: source,
+			forwardedProto: forwardedProto,
+			forwardedHost: forwardedHost,
+			host: host
+		});
+
+		// ingress
+		if (source && forwardedProto && forwardedHost) {
+			hassUrl = `${forwardedProto}://${forwardedHost}`;
+		}
+
+		// exposed port
+		else if (host && EXPOSED_PORT && HASS_PORT) {
+			hassUrl = `http://${host.replace(EXPOSED_PORT, HASS_PORT)}`;
 		}
 	}
+
+	// hassUrl should be defined now
+	if (!hassUrl) {
+		throw new Error('hassUrl could not be determined');
+	}
+
+	configuration.hassUrl = hassUrl;
 
 	// initialize keys if missing
 	dashboard.views = dashboard.views || [];

@@ -8,6 +8,7 @@
 		lang,
 		motion,
 		onStates,
+		climateHvacActionToMode,
 		ripple,
 		states
 	} from '$lib/Stores';
@@ -71,7 +72,9 @@
 	// icon is image if extension, e.g. test.png
 	$: image = icon?.includes('.');
 
-	$: stateOn = $onStates?.includes(entity?.state);
+	$: stateOn = $onStates?.includes(
+        attributes?.hvac_action ? $climateHvacActionToMode?.[attributes?.hvac_action] : entity?.state
+    );
 
 	/**
 	 * Toggles the state of the specified entity
@@ -102,9 +105,9 @@
 		};
 
 		switch (domain) {
-			case 'person':
-				console.debug('ping phone?');
-				break;
+			// case 'person':
+			// 	console.debug('ping phone?');
+			// 	break;
 
 			case 'remote':
 				callService($connection, 'homeassistant', 'toggle', { entity_id });
@@ -468,7 +471,7 @@
 		overflow: hidden;
 		gap: 1px;
 		margin-top: -1px;
-    	padding-right: var(--container-padding);
+		padding-right: var(--container-padding);
 	}
 
 	.icon {

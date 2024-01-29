@@ -26,7 +26,13 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<Date short_day={sel?.short_day} short_month={sel?.short_month} show_year={sel?.show_year} hide={sel?.hide} />
+			<Date
+				short_day={sel?.short_day}
+				short_month={sel?.short_month}
+				show_year={sel?.show_year}
+				hide={sel?.hide}
+				layout={sel?.layout}
+			/>
 		</div>
 
 		<!-- DAY -->
@@ -98,19 +104,45 @@
 			</button>
 			<button
 				class:selected={sel?.hide === 'day'}
-				on:click={() => set('hide', 'day')}
+				on:click={() => {
+					set('hide', 'day');
+					set('layout', 'vertical');
+				}}
 				use:Ripple={$ripple}
 			>
 				{$lang('day')}
 			</button>
 			<button
 				class:selected={sel?.hide === 'month'}
-				on:click={() => set('hide', 'month')}
+				on:click={() => {
+					set('hide', 'month');
+					set('layout', 'vertical');
+				}}
 				use:Ripple={$ripple}
 			>
 				{$lang('month')}
 			</button>
 		</div>
+		{#if !sel?.hide || sel?.hide === 'none'}
+			<!-- Layout -->
+			<h2>{$lang('Layout')}</h2>
+			<div class="button-container">
+				<button
+					class:selected={!sel?.layout || sel?.layout === 'vertical'}
+					on:click={() => set('layout', 'vertical')}
+					use:Ripple={$ripple}
+				>
+					{$lang('vertical')}
+				</button>
+				<button
+					class:selected={sel?.layout === 'horizontal'}
+					on:click={() => set('layout', 'horizontal')}
+					use:Ripple={$ripple}
+				>
+					{$lang('horizontal')}
+				</button>
+			</div>
+		{/if}
 
 		<ConfigButtons {sel} />
 	</Modal>
