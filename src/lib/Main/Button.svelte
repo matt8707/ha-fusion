@@ -73,8 +73,8 @@
 	$: image = icon?.includes('.');
 
 	$: stateOn = $onStates?.includes(
-        attributes?.hvac_action ? $climateHvacActionToMode?.[attributes?.hvac_action] : entity?.state
-    );
+		attributes?.hvac_action ? $climateHvacActionToMode?.[attributes?.hvac_action] : entity?.state
+	);
 
 	/**
 	 * Toggles the state of the specified entity

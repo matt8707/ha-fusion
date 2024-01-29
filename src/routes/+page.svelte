@@ -56,8 +56,8 @@
 	let retryInterval: ReturnType<typeof setInterval>;
 
 	if (browser) {
-    document.documentElement.lang = $selectedLanguage || 'en';
-    
+		document.documentElement.lang = $selectedLanguage || 'en';
+
 		connect();
 		retryInterval = setInterval(connect, 3000);
 	}
