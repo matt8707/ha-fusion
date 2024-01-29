@@ -16,8 +16,8 @@
 		clickOriginatedFromMenu,
 		connection
 	} from '$lib/Stores';
-	import { authenticate } from '$lib/Socket';
-	import { onMount } from 'svelte';
+	import { authentication, options } from '$lib/Socket';
+	import { onDestroy, onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { modals } from 'svelte-modals';
 	import Theme from '$lib/Components/Theme.svelte';
@@ -50,17 +50,40 @@
 			$dashboard?.views?.find((view) => view?.isDndShadowItem);
 
 	/**
-	 * Connect to websocket
+	 * WebSocket, tries to reconnect if no previous connection has been made.
 	 */
+	let isConnecting = false;
+	let retryInterval: ReturnType<typeof setInterval>;
 
-	$: console.log('$configuration?.hassUrl', $configuration?.hassUrl);
-
-	if (browser && $configuration?.hassUrl) {
-		// set html lang attribute
-		document.documentElement.lang = $selectedLanguage || 'en';
-
-		authenticate($configuration.hassUrl);
+	if (browser) {
+    document.documentElement.lang = $selectedLanguage || 'en';
+    
+		connect();
+		retryInterval = setInterval(connect, 3000);
 	}
+
+	async function connect() {
+		if (isConnecting) return;
+		isConnecting = true;
+
+		console.debug('authenticating...');
+
+		if ($configuration?.hassUrl) {
+			options.hassUrl = $configuration?.hassUrl;
+		}
+
+		try {
+			await authentication(options);
+			console.debug('authenticated.');
+			clearInterval(retryInterval);
+		} catch (err) {
+			// catch but don't log
+		} finally {
+			isConnecting = false;
+		}
+	}
+
+	onDestroy(() => clearInterval(retryInterval));
 
 	onMount(async () => {
 		/**
@@ -134,6 +157,8 @@
 			$drawerSearch = undefined;
 		}
 	}
+
+	$: console.log('DEBUG:', $configuration?.hassUrl);
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -213,6 +238,7 @@
 				'main main';
 			min-height: 100vh;
 			overflow: hidden;
+			grid-template-rows: auto auto auto 1fr !important;
 		}
 	}
 </style>

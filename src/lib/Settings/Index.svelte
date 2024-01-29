@@ -14,6 +14,11 @@
 	export let data: any;
 	export let isOpen: boolean;
 
+	export let languages: {
+		id: string;
+		label: string;
+	}[];
+
 	let formElement: HTMLFormElement;
 	let timeout: ReturnType<typeof setTimeout> | null;
 	let responseCode: number | undefined;
@@ -59,7 +64,7 @@
 				$motion = 190;
 			}
 
-			const response = await fetch(`${base}/api/save_config`, {
+			const response = await fetch(`${base}/_api/save_config`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -101,7 +106,7 @@
 		<h1 slot="title">{$lang('settings')}</h1>
 
 		<form id="settings" name="settings" bind:this={formElement}>
-			<Language />
+			<Language {languages} />
 
 			<Addons {data} />
 

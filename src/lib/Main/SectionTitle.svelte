@@ -5,7 +5,6 @@
 	export let value: string;
 
 	let width: number;
-	let prevValue: string;
 	let input: HTMLInputElement;
 
 	const dispatch = createEventDispatcher();

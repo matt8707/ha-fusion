@@ -2,44 +2,17 @@
 	import { base } from '$app/paths';
 	import { translation, selectedLanguage, lang } from '$lib/Stores';
 	import Select from '$lib/Components/Select.svelte';
-	import { onMount } from 'svelte';
 
-	let languages: {
+	export let languages: {
 		id: string;
 		label: string;
 	}[];
-
-	/**
-	 * Get languages
-	 */
-	onMount(async () => {
-		const getIntlName = (code: string, displayLanguage = code) => {
-			const name = new Intl.DisplayNames([displayLanguage], { type: 'language' }).of(code);
-			return (name || code).charAt(0).toUpperCase() + (name || code).slice(1);
-		};
-
-		try {
-			const response = await fetch(`${base}/api/list_languages`);
-			const data = await response.json();
-
-			if (response.ok) {
-				languages = data.map((code: string) => ({
-					id: code,
-					label: getIntlName(code)
-				}));
-			} else {
-				throw new Error(`${response.status}, ${data.message}`);
-			}
-		} catch (error) {
-			console.error(error);
-		}
-	});
 
 	async function loadSelectedLang(value: string) {
 		$selectedLanguage = value;
 
 		try {
-			const response = await fetch(`${base}/api/get_translation`, {
+			const response = await fetch(`${base}/_api/get_translation`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ locale: value })
@@ -69,9 +42,8 @@
 	<a {href} target="blank">{href}</a>
 </p>
 
-{#if languages}
+{#if languages.length !== 0}
 	<Select
-		keepFocus={true}
 		options={languages}
 		placeholder={$lang('language')}
 		value={$selectedLanguage}

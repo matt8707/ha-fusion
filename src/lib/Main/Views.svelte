@@ -110,7 +110,8 @@
 								flipDurationMs: $motion,
 								dragDisabled: !$editMode,
 								dropTargetStyle: {},
-								morphDisabled: true
+								morphDisabled: true,
+								zoneTabIndex: -1
 							}}
 							on:consider={handleDragEvent}
 							on:finalize={handleDragEvent}

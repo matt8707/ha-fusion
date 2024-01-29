@@ -43,23 +43,23 @@
 	}
 </script>
 
-{#if url && entity_picture}
-	<button
-		style:background-image="url({entity_picture})"
-		style:height="calc({$itemHeight}px * 4 + 0.4rem * 3)"
-		style:background-size={size}
-		on:click={handleClick}
-	>
-		{#if loaderVisible}
-			<div class="loader">
-				<Loader />
-			</div>
-		{/if}
+<button
+	style:background-image={entity_picture ? `url(${entity_picture})` : ''}
+	style:height="calc({$itemHeight}px * 4 + 0.4rem * 3)"
+	style:background-size={size}
+	on:click={handleClick}
+>
+	{#if loaderVisible}
+		<div class="loader">
+			<Loader />
+		</div>
+	{/if}
 
+	{#if url}
 		<!-- svelte-ignore a11y-missing-attribute -->
 		<img src={url} bind:this={img} style:object-fit={size} on:load={handleLoader} />
-	</button>
-{/if}
+	{/if}
+</button>
 
 <style>
 	button {
@@ -76,6 +76,9 @@
 		font-size: 1.5rem;
 		cursor: pointer;
 		overflow: hidden;
+
+		/* fix layout shift */
+		display: grid;
 	}
 
 	img {

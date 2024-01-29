@@ -49,6 +49,10 @@
 		{@html title}
 	{/if}
 
+	<!--  Climate -->
+{:else if getDomain(entity_id) === 'climate' && attributes?.hvac_action}
+	{$lang(attributes?.hvac_action)}
+
 	<!--  Humidifier -->
 {:else if getDomain(entity_id) === 'humidifier' && entity?.state === 'on' && attributes?.action}
 	{$lang('humidifier_' + attributes?.action)}
