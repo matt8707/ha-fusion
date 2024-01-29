@@ -56,14 +56,10 @@
 	$: console.log('$configuration?.hassUrl', $configuration?.hassUrl);
 
 	if (browser && $configuration?.hassUrl) {
-		authenticate($configuration.hassUrl);
-	}
+		// set html lang attribute
+		document.documentElement.lang = $selectedLanguage || 'en';
 
-	/**
-	 * load the selected language
-	 */
-	 if (browser) {
-		setSelectedLanguage($selectedLanguage)
+		authenticate($configuration.hassUrl);
 	}
 
 	onMount(async () => {
