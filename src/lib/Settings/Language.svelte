@@ -20,6 +20,8 @@
 
 			const data = await response.json();
 
+			document.documentElement.lang = $selectedLanguage || 'en'
+
 			if (response.ok) {
 				$translation = data;
 			} else {
