@@ -90,10 +90,6 @@
 		}
 	});
 
-	function setSelectedLanguage(value: string) {
-		document.documentElement.lang = value;
-	}
-
 	/**
 	 * Toggles drawer visibility and resets
 	 * the `$clickOriginatedFromMenu` flag.
