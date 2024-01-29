@@ -31,9 +31,7 @@
 		{/if}
 		{#if hide !== 'month'}
 			{shortDate}
-			{#if show_year}
-				{year}
-			{/if}
+			{#if show_year}&nbsp;{year}{/if}
 			<br />
 		{/if}
 	{/if}
