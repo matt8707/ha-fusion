@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { editMode, itemHeight, ripple } from '$lib/Stores';
+	import { editMode, itemHeight, ripple, lang } from '$lib/Stores';
 	import { openModal } from 'svelte-modals';
 	import Ripple from 'svelte-ripple';
 
@@ -64,7 +64,7 @@
 		on:pointerdown={handlePointer}
 		use:Ripple={{ ...$ripple, color: !$editMode ? 'rgba(0, 0, 0, 0.25)' : 'rgba(0, 0, 0, 0)' }}
 	>
-		<div class="contents" style:height="{$itemHeight}px">Placeholder</div>
+		<div class="contents" style:height="{$itemHeight}px">{$lang('placeholder')}</div>
 	</div>
 {:else}
 	<div
