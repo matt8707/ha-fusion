@@ -83,17 +83,8 @@
 		opacity: 0;
 		font-family: inherit;
 		width: 14.5rem;
-		/* display: grid; */
 		border-radius: 0.65rem;
 		margin: 0;
-		/* grid-template-columns: min-content auto;
-		grid-auto-flow: row;
-		grid-template-areas: 'left right'; */
-		/* --container-padding: 0.8rem; */
-
-		/* fix ripple */
-		transform: translateZ(0);
-		overflow: hidden;
 	}
 
 	.edit-mode {
