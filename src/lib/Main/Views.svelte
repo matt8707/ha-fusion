@@ -78,10 +78,10 @@
 
 	// navbar = 100% - (sidebar & padding & button & padding)
 	let editViewButtonWidth: number;
-	$: navWidth = `calc(100vw - (${$dashboard?.sidebarWidth}px + 2rem + ${editViewButtonWidth}px + 2rem))`;
+	$: navWidth = `calc(100vw - (${$dashboard?.sidebarWidth}px + 2rem + 2.7rem + 2rem))`;
 </script>
 
-<nav>
+<nav style:width={navWidth}>
 	<!-- only show if there are views and (editMode || !hide_views) -->
 	{#if $dashboard.views.length === 0 ? false : $editMode ? true : !$dashboard?.hide_views}
 		<section transition:slide={{ duration: $motion }}>
@@ -98,7 +98,7 @@
 				<EyeIndicator />
 			{/if}
 
-			<div class="navigation-container" style:width={navWidth}>
+			<div class="navigation-container">
 				<div class="fadecont" transition:fade={{ duration: $motion / 2 }}>
 					<div class="top-bar">
 						<div
@@ -166,9 +166,9 @@
 
 <style>
 	nav {
-		margin-top: 1.35rem;
+		margin: 1.35rem 2rem 0;
 		grid-area: nav;
-		padding: 0 2rem;
+		overflow: hidden;
 	}
 
 	section {
@@ -204,9 +204,8 @@
 		font-weight: 700;
 		cursor: pointer;
 		font-size: 1.14rem;
-		padding: 0;
 		position: relative;
-		padding-bottom: 3px;
+		padding: 0 0 3px;
 		white-space: nowrap;
 		scroll-snap-align: start;
 		font-family: inherit;
@@ -219,6 +218,7 @@
 		-webkit-overflow-scrolling: touch;
 		scrollbar-width: none;
 		-ms-overflow-style: none;
+		width: 100%;
 	}
 
 	.navigation-container::-webkit-scrollbar {
@@ -227,7 +227,7 @@
 
 	.underline {
 		position: absolute;
-		bottom: 0rem;
+		bottom: 0;
 		height: 3px;
 		background: white;
 	}
@@ -235,11 +235,14 @@
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		nav {
+			margin-left: 0;
+			margin-right: 0;
 			padding: 0 1.25rem;
+			width: auto !important;
 		}
 
 		.navigation-container {
-			width: calc(100vw - 160px) !important;
+			width: auto !important;
 		}
 	}
 </style>

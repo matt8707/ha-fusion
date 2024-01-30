@@ -51,7 +51,7 @@
 	button {
 		position: absolute;
 		top: 1rem;
-		right: 2rem;
+		right: 1rem;
 		width: 2.7rem;
 		background-color: transparent;
 		color: white;
