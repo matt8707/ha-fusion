@@ -45,22 +45,12 @@
 		margin-block-end: 0.4rem;
 	}
 
-	/* Phone and Tablet (landscape) */
-	@media all and (max-width: 1024px) {
-		header h1 {
-			font-size: 1.6rem;
-			font-weight: 500;
-		}
-	}
-
 	/* Phone and Tablet (portrait) */
 	@media all and (max-width: 768px) {
 		header h1 {
-			font-size: 1.4rem;
-			font-weight: 400;
+			font-size: 1.7rem;
 		}
 	}
-
 	.right {
 		display: flex;
 	}
