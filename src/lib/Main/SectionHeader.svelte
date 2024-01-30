@@ -45,6 +45,12 @@
 		margin-block-end: 0.4rem;
 	}
 
+	/* Phone and Tablet (portrait) */
+	@media all and (max-width: 768px) {
+		header h1 {
+			font-size: 1.7rem;
+		}
+	}
 	.right {
 		display: flex;
 	}
