@@ -11,6 +11,7 @@
 
 	import Button from '$lib/Main/Button.svelte';
 	import Camera from '$lib/Main/Camera.svelte';
+	import Placeholder from '$lib/Main/Placeholder.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Ripple from 'svelte-ripple';
 
@@ -64,6 +65,14 @@
 				demo: $demo.camera,
 				sel
 			}
+		},
+		{
+			id: 'placeholder',
+			type: $lang('placeholder'),
+			component: Placeholder,
+			props: {
+				sel
+			}
 		}
 		// {
 		// 	id: 'media',
@@ -97,6 +106,9 @@
 					demo: $demo.camera,
 					sel
 				});
+				break;
+			case 'placeholder':
+				openModal(() => import('$lib/Modal/PlaceholderConfig.svelte'), { sel });
 				break;
 			default:
 				openModal(() => import('$lib/Modal/MainItemConfig.svelte'), { sel });

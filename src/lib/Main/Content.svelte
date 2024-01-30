@@ -4,6 +4,7 @@
 	import Media from '$lib/Main/Media.svelte';
 	import Camera from '$lib/Main/Camera.svelte';
 	import Configure from '$lib/Main/Configure.svelte';
+	import Placeholder from '$lib/Main/Placeholder.svelte';
 
 	export let item: any;
 	export let sectionName: string | undefined = undefined;
@@ -21,6 +22,8 @@
 	<Media sel={item} />
 {:else if item?.type === 'camera'}
 	<Camera sel={item} />
+{:else if item?.type === 'placeholder'}
+	<Placeholder sel={item} />
 {/if}
 
 <style>
