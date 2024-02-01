@@ -51,7 +51,6 @@
 	}
 
 	function handleNumberRange(event: any) {
-		console.log(event?.target?.value);
 		const value = minMax(event?.target?.value);
 		set('number_of_items', value);
 		if (numberElement) numberElement.value = String(value);

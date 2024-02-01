@@ -6,19 +6,18 @@ import { fastDimension } from 'svelte-fast-dimension';
 const config = {
 	preprocess: [vitePreprocess(), fastDimension()],
 	kit: {
-		adapter: adapter(),
-		// handle ingress
-		// sveltekit 2, test if 'relative: true' can be removed...
-		// https://kit.svelte.dev/docs/migrating-to-sveltekit-2#paths-are-now-relative-by-default
-		paths: {
-			relative: true
-		}
+		adapter: adapter()
 	},
 	vitePlugin: {
 		// dev inspector
 		inspector: {
 			toggleKeyCombo: 'control-shift',
 			showToggleButton: 'never'
+		},
+		experimental: {
+			// disable console spam because of `svelecte@3.17.2` and `svelte-tiny-virtual-list@2.0.5`
+			// "The following packages have a svelte field in their package.json but no exports ..."
+			disableSvelteResolveWarnings: true
 		}
 	}
 };

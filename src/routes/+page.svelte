@@ -157,8 +157,6 @@
 			$drawerSearch = undefined;
 		}
 	}
-
-	$: console.log('DEBUG:', $configuration?.hassUrl);
 </script>
 
 <svelte:window on:keydown={handleKeydown} />

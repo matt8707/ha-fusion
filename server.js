@@ -54,7 +54,7 @@ function customRouter(req) {
 
 // production proxy
 app.use(
-	['/local/', '/api/', '/auth/'],
+	['/local/', '/api/'],
 	createProxyMiddleware({
 		target: '...',
 		router: customRouter,

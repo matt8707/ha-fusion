@@ -62,10 +62,6 @@ export default defineConfig({
 			'/api/': {
 				target: process.env.HASS_URL,
 				changeOrigin: true
-			},
-			'/auth/': {
-				target: process.env.HASS_URL,
-				changeOrigin: true
 			}
 		}
 	}

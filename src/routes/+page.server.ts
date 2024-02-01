@@ -56,13 +56,6 @@ export async function load({ request }): Promise<{
 		const forwardedHost = request.headers.get('x-forwarded-host');
 		const host = request.headers.get('host');
 
-		console.log({
-			source: source,
-			forwardedProto: forwardedProto,
-			forwardedHost: forwardedHost,
-			host: host
-		});
-
 		// ingress
 		if (source && forwardedProto && forwardedHost) {
 			hassUrl = `${forwardedProto}://${forwardedHost}`;

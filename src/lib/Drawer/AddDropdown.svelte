@@ -5,7 +5,7 @@
 	import type { ViewItem } from '$lib/Types';
 	import Icon from '@iconify/svelte';
 	import Ripple from 'svelte-ripple';
-	import { type SvelteComponent, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
 	export let view: ViewItem | undefined;
 
