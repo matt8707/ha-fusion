@@ -3,8 +3,11 @@
 	import Ripple from 'svelte-ripple';
 	import Icon from '@iconify/svelte';
 	import { generateId } from '$lib/Utils';
+	import { createEventDispatcher } from 'svelte';
 
 	export let view: any;
+
+	const dispatch = createEventDispatcher();
 
 	$: noViewsOrSectionsOrStacks =
 		!view ||
@@ -41,6 +44,8 @@
 
 		$dashboard = $dashboard;
 		$record();
+
+		dispatch('clicked');
 	}
 
 	/**

@@ -3,6 +3,9 @@
 	import Ripple from 'svelte-ripple';
 	import Icon from '@iconify/svelte';
 	import { generateId } from '$lib/Utils';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	/**
 	 * Creates a new sidebar object in sidebar items
@@ -17,6 +20,8 @@
 		];
 
 		$record();
+
+		dispatch('clicked');
 	}
 </script>
 

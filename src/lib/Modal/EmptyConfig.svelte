@@ -27,4 +27,3 @@
 		pointer-events: none;
 	}
 </style>
-
