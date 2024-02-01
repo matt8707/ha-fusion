@@ -15,7 +15,7 @@
 		"@iconify/svelte": "^3.1.6",
 		"@sveltejs/adapter-node": "^4.0.1",
 		"@sveltejs/kit": "^2.5.0",
-		"@sveltejs/vite-plugin-svelte": "^3.0.1",
+		"@sveltejs/vite-plugin-svelte": "^3.0.2",
 		"@types/d3-array": "^3.2.1",
 		"@types/d3-scale": "^4.0.8",
 		"@types/d3-shape": "^3.1.6",
