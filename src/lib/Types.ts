@@ -57,6 +57,10 @@ export interface ViewItem {
 	sections?: any[];
 }
 
+export interface EmptyItem {
+	id?: number;
+}
+
 export interface ButtonItem {
 	type?: string;
 	id?: number;

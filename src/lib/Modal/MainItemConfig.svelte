@@ -11,6 +11,7 @@
 
 	import Button from '$lib/Main/Button.svelte';
 	import Camera from '$lib/Main/Camera.svelte';
+	import Empty from '$lib/Main/Empty.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Ripple from 'svelte-ripple';
 
@@ -64,6 +65,14 @@
 				demo: $demo.camera,
 				sel
 			}
+		},
+		{
+			id: 'empty',
+			type: $lang('empty'),
+			component: Empty,
+			props: {
+				sel
+			}
 		}
 		// {
 		// 	id: 'media',
@@ -97,6 +106,9 @@
 					demo: $demo.camera,
 					sel
 				});
+				break;
+			case 'empty':
+				openModal(() => import('$lib/Modal/EmptyConfig.svelte'), { sel });
 				break;
 			default:
 				openModal(() => import('$lib/Modal/MainItemConfig.svelte'), { sel });
