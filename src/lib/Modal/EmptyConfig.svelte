@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { record, lang } from '$lib/Stores';
-	import { onDestroy } from 'svelte';
+	import { lang } from '$lib/Stores';
 	import type { EmptyItem } from '$lib/Types';
 	import Modal from '$lib/Modal/Index.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
@@ -8,8 +7,6 @@
 
 	export let isOpen: boolean;
 	export let sel: EmptyItem;
-
-	onDestroy(() => $record());
 </script>
 
 {#if isOpen}
@@ -17,7 +14,7 @@
 		<h1 slot="title">{$lang('empty')}</h1>
 		<h2>{$lang('preview')}</h2>
 
-		<div style:pointer-events="none">
+		<div>
 			<Empty {sel} />
 		</div>
 
@@ -26,4 +23,8 @@
 {/if}
 
 <style>
+	div {
+		pointer-events: none;
+	}
 </style>
+
