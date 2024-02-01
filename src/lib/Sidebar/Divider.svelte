@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { motion, editMode } from '$lib/Stores';
 
-	export let defaultValue: string | undefined = undefined;
+	export let defaultValue: string | undefined = '50';
 	export let size: number | undefined = undefined;
 	export let mode: string | undefined = undefined;
 
@@ -43,8 +43,8 @@
 
 	.empty {
 		border-radius: 0.6rem;
-		background-color: rgba(255, 190, 10, 0.25);
-		outline: 2px dashed #ffc107;
+		background-color: rgba(255, 255, 255, 0.25);
+		outline: 2px dashed #fff;
 		outline-offset: -2px;
 	}
 </style>
