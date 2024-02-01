@@ -33,7 +33,7 @@
 	async function handleClickEvent() {
 		if ($editMode) {
 			console.log('clicked Event in edit');
-			openModal(() => import('$lib/Modal/PlaceholderConfig.svelte'), { sel });
+			openModal(() => import('$lib/Modal/EmptyConfig.svelte'), { sel });
 		}
 	}
 
@@ -63,9 +63,7 @@
 		on:pointerenter={handlePointer}
 		on:pointerdown={handlePointer}
 		use:Ripple={{ ...$ripple, color: !$editMode ? 'rgba(0, 0, 0, 0.25)' : 'rgba(0, 0, 0, 0)' }}
-	>
-		<div class="contents" style:height="{$itemHeight}px">{$lang('placeholder')}</div>
-	</div>
+	></div>
 {:else}
 	<div
 		class="container no-visible"
@@ -88,21 +86,10 @@
 	}
 
 	.edit-mode {
-		background-color: var(--theme-button-background-color-off);
-		font-family: inherit;
-		width: '100%';
-		border-radius: 0.65rem;
-		margin: 0;
-	}
-
-	.contents {
-		display: grid;
-		align-items: center;
-		text-align: center;
-		font-weight: 500;
-		color: inherit;
-		color: var(--theme-button-name-color-off);
-		font-size: var(--sidebar-font-size);
+		border-radius: 0.6rem;
+		background-color: rgba(255, 255, 255, 0.25);
+		outline: 2px dashed #fff;
+		outline-offset: -2px;
 	}
 
 	/* Phone and Tablet (portrait) */

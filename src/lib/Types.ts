@@ -57,7 +57,7 @@ export interface ViewItem {
 	sections?: any[];
 }
 
-export interface PlaceholderItem {
+export interface EmptyItem {
 	id?: number;
 }
 
