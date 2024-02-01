@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { dashboard, lang, ripple, record } from '$lib/Stores';
-	import { tick } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 	import Ripple from 'svelte-ripple';
 	import Icon from '@iconify/svelte';
 	import { generateId } from '$lib/Utils';
+
+	const dispatch = createEventDispatcher();
 
 	/**
 	 * Adds a new view to `$dashboard`
@@ -45,6 +47,8 @@
 			});
 			button.click();
 		}
+
+		dispatch('clicked');
 	}
 </script>
 

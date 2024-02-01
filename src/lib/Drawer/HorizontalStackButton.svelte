@@ -3,6 +3,9 @@
 	import Ripple from 'svelte-ripple';
 	import Icon from '@iconify/svelte';
 	import { generateId } from '$lib/Utils';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let view: any;
 
@@ -29,6 +32,8 @@
 		$dashboard = $dashboard;
 
 		$record();
+
+		dispatch('clicked');
 	}
 </script>
 

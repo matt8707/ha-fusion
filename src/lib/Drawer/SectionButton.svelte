@@ -3,10 +3,13 @@
 	import Ripple from 'svelte-ripple';
 	import Icon from '@iconify/svelte';
 	import { generateId } from '$lib/Utils';
+	import { createEventDispatcher } from 'svelte';
 
 	export let view: any;
 
 	$: noViews = !$dashboard?.views?.length;
+
+	const dispatch = createEventDispatcher();
 
 	/**
 	 * Creates a new section object
@@ -29,6 +32,8 @@
 		$dashboard = $dashboard;
 
 		$record();
+
+		dispatch('clicked');
 	}
 </script>
 
