@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { states, lang, ripple, configuration } from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
-	import { Map, NavigationControl, Popup, Marker } from 'maplibre-gl';
+	import { Map, NavigationControl, Popup, Marker, type MapOptions } from 'maplibre-gl';
 	import 'maplibre-gl/dist/maplibre-gl.css';
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import Ripple from 'svelte-ripple';
@@ -67,7 +67,7 @@
 	onMount(async () => {
 		mode = !apiKey ? 'demo' : localStorage.getItem('darkMap') === 'true' ? 'dark' : 'light';
 
-		const options = {
+		const options: MapOptions = {
 			container,
 			style: styles[mode],
 			zoom,
