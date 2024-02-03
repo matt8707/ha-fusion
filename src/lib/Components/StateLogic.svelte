@@ -53,13 +53,25 @@
 {:else if getDomain(entity_id) === 'climate' && attributes?.hvac_action}
 	{$lang(attributes?.hvac_action)}
 
+	<!--  Climate -->
+{:else if getDomain(entity_id) === 'update'}
+	{#if attributes?.in_progress}
+		{typeof attributes?.in_progress === 'number'
+			? $lang('update_installing_progress').replace('{progress}', String(attributes?.in_progress))
+			: $lang('update_installing')}
+	{:else if state === 'on'}
+		{$lang('update_available')}
+	{:else if state === 'off'}
+		{$lang('update_up_to_date')}
+	{/if}
+
 	<!--  Humidifier -->
-{:else if getDomain(entity_id) === 'humidifier' && entity?.state === 'on' && attributes?.action}
+{:else if getDomain(entity_id) === 'humidifier' && state === 'on' && attributes?.action}
 	{$lang('humidifier_' + attributes?.action)}
 
 	<!--  Water Heater -->
 {:else if getDomain(entity_id) === 'water_heater'}
-	{$lang('water_heater_' + entity?.state)}
+	{$lang('water_heater_' + state)}
 
 	<!--  Input Number / Number -->
 {:else if entity_id && (getDomain(entity_id) === 'input_number' || getDomain(entity_id) === 'number')}
@@ -67,16 +79,16 @@
 	{#if attributes?.unit_of_measurement}{attributes.unit_of_measurement}{/if}
 
 	<!--  Camera -->
-{:else if entity_id && entity_id.split('.')[0] === 'camera'}
+{:else if getDomain(entity_id) === 'camera'}
 	<!-- instead of idle? -->
 	{$lang('camera')}
 
 	<!--  Weather -->
-{:else if entity_id && entity_id.split('.')[0] === 'weather'}
+{:else if getDomain(entity_id) === 'weather'}
 	{$lang('weather_' + state?.replace('_', '-')) || state || $lang('unknown')}
 
 	<!--  Text -->
-{:else if entity_id && (getDomain(entity_id) === 'input_text' || getDomain(entity_id) === 'text')}
+{:else if getDomain(entity_id) === 'input_text' || getDomain(entity_id) === 'text'}
 	{#if state === 'unknown'}
 		{$lang('unknown')}
 	{:else if state === ''}
@@ -101,7 +113,7 @@
 				{#if statePrecision}
 					{statePrecision}
 				{:else}
-					{@html $lang(state) || state}
+					{@html $lang(state)}
 				{/if}
 
 				<!-- Unit -->
@@ -115,7 +127,7 @@
 		{#if statePrecision}
 			{statePrecision}
 		{:else}
-			{@html $lang(state) || state}
+			{@html $lang(state)}
 		{/if}
 
 		<!-- Unit -->

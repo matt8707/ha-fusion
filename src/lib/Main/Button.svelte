@@ -33,6 +33,7 @@
 	let container: HTMLDivElement;
 	let loading: boolean;
 	let resetLoading: ReturnType<typeof setTimeout> | null;
+	let stateOn: boolean;
 
 	/** display loader if no state change has occurred within `$motion`ms */
 	let delayLoading: ReturnType<typeof setTimeout> | null;
@@ -72,9 +73,16 @@
 	// icon is image if extension, e.g. test.png
 	$: image = icon?.includes('.');
 
-	$: stateOn = $onStates?.includes(
-		attributes?.hvac_action ? $climateHvacActionToMode?.[attributes?.hvac_action] : entity?.state
-	);
+	$: if (attributes?.hvac_action) {
+		// climate
+		stateOn = $onStates?.includes($climateHvacActionToMode?.[attributes?.hvac_action]);
+	} else if (attributes?.in_progress) {
+		// update
+		stateOn = typeof attributes.in_progress === 'number';
+	} else {
+		// default
+		stateOn = $onStates?.includes(entity?.state);
+	}
 
 	/**
 	 * Toggles the state of the specified entity
@@ -195,7 +203,6 @@
 				case 'sensor':
 				case 'binary_sensor':
 				case 'stt':
-				case 'update':
 				case 'weather':
 				case 'button':
 				case 'scene':
@@ -205,6 +212,11 @@
 				case 'zone':
 				case 'input_button':
 					openModal(() => import('$lib/Modal/SensorModal.svelte'), { sel });
+					break;
+
+				// update
+				case 'update':
+					openModal(() => import('$lib/Modal/UpdateModal.svelte'), { sel });
 					break;
 
 				// number
