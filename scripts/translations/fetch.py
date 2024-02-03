@@ -118,6 +118,13 @@ dir_keys = [
             ("fan_speed_low", ["ui.card.fan.speed.low"]),
             ("fan_speed_medium", ["ui.card.fan.speed.medium"]),
             ("fan_speed_high", ["ui.card.fan.speed.high"]),
+            ("update_installing_progress", ["ui.card.update.installing_with_progress"]),
+            ("update_installing", ["ui.card.update.installing"]),
+            ("update_release_notes", ["ui.dialogs.more_info_control.update.release_announcement"]),
+            ("update_create_backup", ["ui.dialogs.more_info_control.update.create_backup"]),
+            ("update_skip", ["ui.dialogs.more_info_control.update.skip"]),
+            ("update_clear_skipped", ["ui.dialogs.more_info_control.update.clear_skipped"]),
+            ("update_install", [ "ui.dialogs.more_info_control.update.install"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -136,6 +143,16 @@ dir_keys = [
         f"{COMPONENTS}/camera/translations/",
         [
             ("camera", ["title"]),
+        ],
+    ),
+    (  # UPDATE
+        f"{COMPONENTS}/update/translations/",
+        [
+            ("update", ["title"]),
+            ("update_available", ["entity_component", "_", "state", "on"]),
+            ("update_up_to_date", ["entity_component", "_", "state", "off"]),
+            ("update_installed_version", ["entity_component", "_", "state_attributes", "installed_version", "name"]),
+            ("update_latest_version", ["entity_component", "_", "state_attributes", "latest_version", "name"]),
         ],
     ),
     (  # DOORBIRD (CAMERA)

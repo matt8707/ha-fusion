@@ -92,6 +92,11 @@
 	"turbo": "\u589e\u58d3",
 	"unlocked": "\u5df2\u89e3\u9396",
 	"unlocking": "\u89e3\u9396\u4e2d",
+	"update": "\u66f4\u65b0",
+	"update_available": "\u6709\u66f4\u65b0",
+	"update_installed_version": "\u5df2\u5b89\u88dd\u7248\u672c",
+	"update_latest_version": "\u6700\u65b0\u7248\u672c",
+	"update_up_to_date": "\u5df2\u6700\u65b0",
 	"vacuum": "\u6383\u5730\u6a5f\u5668\u4eba",
 	"vertical": "\u5782\u76f4\u64fa\u52d5",
 	"volume_level": "\u97f3\u91cf",
@@ -118,5 +123,5 @@
 	"weather_snowy_rainy": "\u6709\u96ea\u3001\u6709\u96e8",
 	"weather_sunny": "\u6674\u5929",
 	"weather_windy": "\u6709\u98a8",
-	"weather_windy_variant": "\u6709\u98a8"
+	"weather_windy_variant": "\u6709\u98a8\u3001\u591a\u96f2"
 }
