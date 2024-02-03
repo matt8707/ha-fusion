@@ -72,6 +72,12 @@ export interface ButtonItem {
 	precision: number;
 	more_info?: boolean;
 	attribute?: string;
+	extras?: {
+		state_template?: string;
+		service_domain?: string;
+		service_service?: string;
+		service_data?: object;
+	};
 }
 
 export type SidebarItem = BarItem &

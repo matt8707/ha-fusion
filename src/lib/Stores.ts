@@ -83,7 +83,7 @@ export const highlightView = writable<boolean>(false);
 // sidebar
 export const timers = writable<{ [key: string]: { pausedState: string } }>({});
 export const barErrors = writable<{ [key: string]: string }>({});
-export const templates = writable<{ [key: number]: string }>({});
+export const templates = writable<{ [key: string]: string }>({});
 export const demo = writable<{ [key: string]: string | undefined }>({
 	graph: undefined,
 	sensor: undefined,

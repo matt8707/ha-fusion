@@ -1,7 +1,17 @@
 <script lang="ts">
-	import { editMode, lang, selectedLanguage, states } from '$lib/Stores';
+	import {
+		config,
+		connection,
+		editMode,
+		lang,
+		selectedLanguage,
+		states,
+		templates
+	} from '$lib/Stores';
 	import { getDomain, isTimestamp, relativeTime } from '$lib/Utils';
 	import type { HassEntity } from 'home-assistant-js-websocket';
+	import { marked } from 'marked';
+	import { onDestroy } from 'svelte';
 
 	export let selected: any;
 	export let contentWidth: number | undefined = undefined;
@@ -18,14 +28,57 @@
 	$: percentage = attributes?.percentage;
 	$: media_title = attributes?.media_title;
 
+	let unsubscribe: () => void;
+	let state_template_error = false;
+
 	$: statePrecision =
 		selected?.precision !== undefined && !isNaN(parseFloat(entity?.state))
 			? parseFloat(entity?.state).toFixed(selected?.precision)
 			: undefined;
+
+	$: template = selected?.extras?.state_template;
+
+	$: if ($config?.state === 'RUNNING' && template) {
+		renderTemplate(template, selected?.id + '_state');
+	}
+
+	/**
+	 * Renders template by id to `$templates`
+	 */
+	async function renderTemplate(data: string, id: string) {
+		if (!$connection) return;
+
+		const handleResponse = (response: { result?: string }) => {
+			if (response?.result && id) {
+				$templates[id] = marked.parseInline(response.result) as string;
+				state_template_error = false;
+			}
+		};
+
+		const handleError = (err: any) => {
+			if (err?.code === 'template_error' && id) {
+				console.warn('render_template', err);
+				$templates[id] = err.message;
+				state_template_error = true;
+			}
+		};
+
+		try {
+			unsubscribe = await $connection.subscribeMessage(handleResponse, {
+				type: 'render_template',
+				template: data
+			});
+		} catch (error) {
+			handleError(error);
+		}
+	}
 </script>
 
-<!-- Light -->
-{#if selected?.attribute}
+<!-- Template -->
+{#if selected?.id && $templates?.[selected?.id + '_state']}
+	<span class:state_template_error>{@html $templates?.[selected?.id + '_state']}</span>
+	<!-- Light -->
+{:else if selected?.attribute}
 	{entity?.attributes[selected?.attribute]}
 {:else if state === 'on' && brightness}
 	{@const percentage = brightness / 255}

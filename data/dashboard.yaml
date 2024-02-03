@@ -13,6 +13,42 @@ views:
             id: 2171067078835
             items:
               - type: button
+                id: 1063494948270
+                entity_id: switch.switch_buero_pc_sonos_strip
+                name: O's PC, Sonos, Strip
+                extras:
+                  state_template: >
+                    {% if(is_state('switch.switch_buero_pc_sonos_strip', 'on'))
+                    %}
+                      {{ "An • " + states('sensor.switch_buero_pc_sonos_strip_power', with_unit=True) }}
+                    {% elif(is_state('switch.switch_buero_pc_sonos_strip',
+                    'off')) %}
+                      Aus
+                    {% else %}
+                      {{ states('switch.switch_buero_pc_sonos_strip') }}
+                    {% endif %}
+                icon: mdi:power-socket-de
+              - type: button
+                id: 1113219359563
+                entity_id: switch.switch_buero_monitore_co
+                name: J's PC, Monitore
+                more_info: false
+                icon: mdi:power-socket-de
+                extras:
+                  state_template: >
+                    {% if(is_state('switch.switch_buero_monitore_co', 'on')) %}
+                      {{ "An • " + states('sensor.switch_buero_monitore_co_power', with_unit=True) }}
+                    {% elif(is_state('switch.switch_buero_monitore_co', 'off'))
+                    %}
+                      Aus
+                    {% else %}
+                      {{ states('switch.switch_buero_monitore_co') }}
+                    {% endif %}
+                  service_domain: light
+                  service_service: turn_on
+                  service_data:
+                    entity_id: light.hue_buero
+              - type: button
                 entity_id: light.studio_dator
                 id: 5008685947164
               - type: button

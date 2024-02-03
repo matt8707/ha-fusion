@@ -23,12 +23,17 @@
 	export let sectionName: string | undefined = undefined;
 
 	$: entity_id = demo || sel?.entity_id;
+	$: service_entity_id = sel?.extras?.service_data?.entity_id || sel?.entity_id;
 	$: icon = sel?.icon;
 	$: color = sel?.color;
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
+	$: service_domain = sel?.extras?.service_domain;
+	$: service_service = sel?.extras?.service_service;
+	$: service_data = sel?.extras?.service_data;
 
 	let entity: HassEntity;
+	let service_entity: HassEntity;
 	let contentWidth: number;
 	let container: HTMLDivElement;
 	let loading: boolean;
@@ -38,16 +43,18 @@
 	let delayLoading: ReturnType<typeof setTimeout> | null;
 
 	/**
-	 * Observes changes in the `last_updated` property of an entity.
+	 * Observes changes in the `last_updated` property of an entity or the entity id used in the service call, if defined.
 	 * When the `last_updated` property changes:
 	 *
 	 * - Updates `entity` with the new state from `$states`
 	 * - Resets the `loading` state to `false`
 	 * - Clears any pending loading or reset timeouts
 	 */
-	$: if (entity_id && $states?.[entity_id]?.last_updated !== entity?.last_updated) {
-		entity = $states?.[entity_id];
-
+	$: if (
+		service_entity_id &&
+		$states?.[service_entity_id]?.last_updated !== service_entity?.last_updated
+	) {
+		service_entity = $states?.[service_entity_id];
 		loading = false;
 
 		if (delayLoading) {
@@ -59,6 +66,11 @@
 			clearTimeout(resetLoading);
 			resetLoading = null;
 		}
+	}
+
+	// Observes changes in the `last_updated` property of an entity (for ex. attributes).
+	$: if (entity_id && $states?.[entity_id]?.last_updated !== entity?.last_updated) {
+		entity = $states?.[entity_id];
 	}
 
 	$: attributes = entity?.attributes;
@@ -81,55 +93,69 @@
 	 * using the correct service call...
 	 */
 	function toggle() {
-		const domain = getDomain(entity_id);
-		const state = entity?.state;
-		if (!domain || !state) return;
+		if (service_data && service_domain && service_service) {
+			callService($connection, service_domain, service_service, service_data);
 
-		const services: Record<string, string> = {
-			automation: 'toggle',
-			button: 'press',
-			cover: 'toggle',
-			fan: 'toggle',
-			humidifier: 'toggle',
-			input_boolean: 'toggle',
-			input_button: 'press',
-			light: 'toggle',
-			lock: state === 'locked' ? 'unlock' : 'lock',
-			media_player: 'toggle',
-			scene: 'turn_on',
-			script: 'toggle',
-			siren: 'toggle',
-			switch: 'toggle',
-			timer: state === 'active' ? 'pause' : 'start',
-			vacuum: 'toggle'
-		};
+			// loader
+			delayLoading = setTimeout(() => {
+				loading = true;
+			}, $motion);
 
-		switch (domain) {
-			// case 'person':
-			// 	console.debug('ping phone?');
-			// 	break;
+			// loader 20s fallback
+			resetLoading = setTimeout(() => {
+				loading = false;
+			}, 20_000);
+		} else {
+			const domain = getDomain(entity_id);
+			const state = entity?.state;
+			if (!domain || !state) return;
 
-			case 'remote':
-				callService($connection, 'homeassistant', 'toggle', { entity_id });
-				break;
+			const services: Record<string, string> = {
+				automation: 'toggle',
+				button: 'press',
+				cover: 'toggle',
+				fan: 'toggle',
+				humidifier: 'toggle',
+				input_boolean: 'toggle',
+				input_button: 'press',
+				light: 'toggle',
+				lock: state === 'locked' ? 'unlock' : 'lock',
+				media_player: 'toggle',
+				scene: 'turn_on',
+				script: 'toggle',
+				siren: 'toggle',
+				switch: 'toggle',
+				timer: state === 'active' ? 'pause' : 'start',
+				vacuum: 'toggle'
+			};
 
-			default:
-				if (domain in services) {
-					callService($connection, domain, services[domain], { entity_id });
+			switch (domain) {
+				// case 'person':
+				// 	console.debug('ping phone?');
+				// 	break;
 
-					// loader
-					delayLoading = setTimeout(() => {
-						loading = true;
-					}, $motion);
+				case 'remote':
+					callService($connection, 'homeassistant', 'toggle', { entity_id });
+					break;
 
-					// loader 20s fallback
-					resetLoading = setTimeout(() => {
-						loading = false;
-					}, 20_000);
-				} else {
-					// not listed above just open modal
-					handleClickEvent();
-				}
+				default:
+					if (domain in services) {
+						callService($connection, domain, services[domain], { entity_id });
+
+						// loader
+						delayLoading = setTimeout(() => {
+							loading = true;
+						}, $motion);
+
+						// loader 20s fallback
+						resetLoading = setTimeout(() => {
+							loading = false;
+						}, 20_000);
+					} else {
+						// not listed above just open modal
+						handleClickEvent();
+					}
+			}
 		}
 	}
 
