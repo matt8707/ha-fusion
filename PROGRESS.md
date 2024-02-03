@@ -16,7 +16,7 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] binary_sensor
 - [x] stt
 - [x] update
-  - [ ] idea: update functionality in modal
+  - [x] idea: update functionality in modal
 - [x] weather
 - [x] schedule
 - [x] button
