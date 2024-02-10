@@ -5,7 +5,7 @@ import json
 
 output = {}
 
-TRANSLATIONS = "/usr/local/lib/python3.11/site-packages/hass_frontend/static/translations"
+TRANSLATIONS = "/usr/local/lib/python3.12/site-packages/hass_frontend/static/translations"
 COMPONENTS = "/usr/src/homeassistant/homeassistant/components"
 
 
@@ -124,7 +124,9 @@ dir_keys = [
             ("update_create_backup", ["ui.dialogs.more_info_control.update.create_backup"]),
             ("update_skip", ["ui.dialogs.more_info_control.update.skip"]),
             ("update_clear_skipped", ["ui.dialogs.more_info_control.update.clear_skipped"]),
-            ("update_install", [ "ui.dialogs.more_info_control.update.install"]),
+            ("update_install", ["ui.dialogs.more_info_control.update.install"]),
+            ("back", ["ui.common.back"]),
+            ("service_data", ["ui.components.service-control.data"]),
         ],
     ),
     (  # MEDIA_PLAYER

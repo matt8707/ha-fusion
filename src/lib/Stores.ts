@@ -1,12 +1,17 @@
 import { writable, readable, derived } from 'svelte/store';
-import type { Configuration, Dashboard, Translations, Views } from '$lib/Types';
-import type { Connection, HassConfig, HassEntities } from 'home-assistant-js-websocket';
+import type { Configuration, Dashboard, Template, Translations, Views } from '$lib/Types';
+import type {
+	Connection,
+	HassConfig,
+	HassEntities,
+	HassServices
+} from 'home-assistant-js-websocket';
 
 // hass
 export const connection = writable<Connection>();
 export const config = writable<HassConfig>();
 export const states = writable<HassEntities>();
-
+export const services = writable<HassServices>();
 export const connected = writable<boolean>();
 
 // user
@@ -64,6 +69,7 @@ export const editMode = writable(false);
 export const showDrawer = writable(false);
 export const motion = writable(190);
 export const itemHeight = readable(65);
+export const computedIconString = writable<string | undefined>();
 
 // language
 export const translation = writable<Translations>({});
@@ -83,7 +89,7 @@ export const highlightView = writable<boolean>(false);
 // sidebar
 export const timers = writable<{ [key: string]: { pausedState: string } }>({});
 export const barErrors = writable<{ [key: string]: string }>({});
-export const templates = writable<{ [key: number]: string }>({});
+export const templates = writable<Template>({});
 export const demo = writable<{ [key: string]: string | undefined }>({
 	graph: undefined,
 	sensor: undefined,
@@ -129,6 +135,7 @@ export const dragging = writable<boolean>(false);
 // codemirror
 export const autocompleteOpen = writable(false);
 export const autocompleteList = derived(states, ($states) => Object.keys($states));
+export const pasteContent = writable<string | undefined>();
 
 // event
 export const event = writable<string | undefined>();

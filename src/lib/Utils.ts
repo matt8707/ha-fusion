@@ -55,6 +55,61 @@ export function getName(
 }
 
 /**
+ * Returns togglable service
+ */
+export function getTogglableService(entity: HassEntity) {
+	const domain = getDomain(entity?.entity_id);
+	const state = entity?.state;
+
+	if (!domain || !state) return;
+
+	let service;
+
+	switch (domain) {
+		case 'automation':
+		case 'button':
+		case 'cover':
+		case 'fan':
+		case 'humidifier':
+		case 'input_boolean':
+		case 'light':
+		case 'media_player':
+		case 'script':
+		case 'siren':
+		case 'switch':
+			service = 'toggle';
+			break;
+
+		case 'input_button':
+			service = 'press';
+			break;
+
+		case 'lock':
+			service = state === 'locked' ? 'unlock' : 'lock';
+			break;
+
+		case 'remote':
+			return 'homeassistant.toggle';
+
+		case 'scene':
+			service = 'turn_on';
+			break;
+
+		case 'timer':
+			service = state === 'active' ? 'cancel' : 'start';
+			break;
+
+		case 'vacuum':
+			service = state === 'cleaning' ? 'pause' : 'start';
+			break;
+	}
+
+	if (service) {
+		return `${domain}.${service}`;
+	}
+}
+
+/**
  * Generates a unique 13-digit random ID
  * that doesn't collide with existing IDs
  */

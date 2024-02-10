@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states } from '$lib/Stores';
+	import { computedIconString, states } from '$lib/Stores';
 	import Icon from '@iconify/svelte';
 	import { getDomain } from '$lib/Utils';
 
@@ -100,11 +100,13 @@
 		group: 'google-circles-communities',
 		homeassistant: 'home-assistant',
 		homekit: 'home-automation',
+		image: 'image',
 		image_processing: 'image-filter-frames',
 		input_button: 'gesture-tap-button',
 		input_number: 'ray-vertex',
 		input_select: 'format-list-bulleted',
 		input_text: 'form-textbox',
+		lawn_mower: 'robot-mower',
 		light: 'lightbulb',
 		mailbox: 'mailbox',
 		notify: 'comment-alert',
@@ -121,6 +123,7 @@
 		stt: 'microphone-message',
 		switch_as_x: 'swap-horizontal',
 		text: 'form-textbox',
+		todo: 'clipboard-list',
 		threshold: 'chart-sankey',
 		time: 'clock',
 		timer: 'timer-outline',
@@ -128,6 +131,7 @@
 		update: 'package',
 		updater: 'cloud-upload',
 		vacuum: 'robot-vacuum',
+		wake_word: 'chat-sleep',
 		zone: 'map-marker-radius',
 		// dynamic
 		alarm_control_panel:
@@ -465,7 +469,7 @@
 		currentIcon = undefined;
 		if ($states && entity_id) {
 			const entity = $states[entity_id];
-			const domain = getDomain(entity?.entity_id);
+			const domain = getDomain(entity?.entity_id || entity_id);
 
 			if (entity?.attributes?.entity_picture && domain !== 'update') {
 				currentIcon = 'entity_picture';
@@ -477,8 +481,17 @@
 				const defaultIcon = (ICONS as Record<string, string>)[domain];
 				if (defaultIcon) {
 					currentIcon = 'mdi:' + defaultIcon;
+				} else if (!entity) {
+					// it's a service with no icon
+					currentIcon = 'mdi:room-service';
 				}
 			}
+
+			$computedIconString = currentIcon
+				? currentIcon === 'entity_picture'
+					? entity?.attributes?.entity_picture
+					: currentIcon
+				: undefined;
 		}
 	}
 </script>

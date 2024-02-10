@@ -182,7 +182,7 @@
 		duration: $motion * 3,
 		y: -35,
 		easing: expoOut,
-		opacity: 0.75
+		opacity: 0.9
 	}}
 	out:scale|global={{ duration: $motion / 2, start: 0.85 }}
 >
@@ -194,7 +194,7 @@
 		use:trapFocus
 	>
 		<div
-			style:width={size === 'large' ? '80vw' : '30rem'}
+			style:width={size === 'large' ? '80vw' : '40rem'}
 			class="contents"
 			bind:this={contents}
 			class:warning={!backdropImage}

@@ -1,5 +1,15 @@
 <script lang="ts">
-	import { dashboard, states, record, lang, ripple, history, historyIndex } from '$lib/Stores';
+	import {
+		dashboard,
+		states,
+		record,
+		lang,
+		ripple,
+		history,
+		historyIndex,
+		templates,
+		computedIconString
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Button from '$lib/Main/Button.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -8,17 +18,15 @@
 	import Ripple from 'svelte-ripple';
 	import InputClear from '$lib/Components/InputClear.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
-	import { updateObj, getDomain, getName } from '$lib/Utils';
+	import { updateObj, getDomain, getName, getTogglableService } from '$lib/Utils';
 	import type { ButtonItem } from '$lib/Types';
-	import type { HassEntity } from 'home-assistant-js-websocket';
+	import { openModal } from 'svelte-modals';
+	import parser from 'js-yaml';
 
 	export let isOpen: boolean;
 	export let sel: ButtonItem;
 	export let demo: string | undefined = undefined;
 	export let sectionName: string | undefined = undefined;
-
-	$: entity = $states?.[sel?.entity_id as any] as HassEntity;
-	$: entity_id = entity?.entity_id;
 
 	if (demo) {
 		// replace history entry with demo
@@ -26,24 +34,25 @@
 		set('entity_id', demo);
 	}
 
+	$: entity_id = sel?.entity_id;
 	let name = sel?.name;
-
-	// untested
 	let color = sel?.color;
-	// (maybe make reactive)
+	let icon = sel?.icon;
 
-	let icon: string | undefined = sel?.icon;
+	$: options =
+		$states &&
+		Object.keys($states)
+			.sort()
+			.map((key) => ({ id: key, label: key }));
 
-	$: options = Object.keys($states)
-		.sort()
-		.map((key) => ({ id: key, label: key }));
+	$: template = $templates?.[sel?.id];
 
-	$: options_attr =
-		entity?.attributes &&
-		Object.keys(entity?.attributes).map((key) => ({
-			id: key,
-			label: key
-		}));
+	// $: options = Object.keys($states)
+	// 	.sort()
+	// 	.map((key) => ({
+	// 		id: key,
+	// 		label: getName(undefined, $states[key])
+	// 	}));
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);
@@ -73,6 +82,30 @@
 	}
 
 	onDestroy(() => $record());
+
+	let servicePlaceholder: string;
+
+	$: if (entity_id || template?.service?.output) updateServicePlaceholder();
+
+	function updateServicePlaceholder() {
+		try {
+			// parse the `template.service`
+			if (template?.service?.output) {
+				const parsed = parser.load(template.service.output) as {
+					service: string;
+					data: Record<string, any>;
+				};
+				servicePlaceholder = parsed?.service || $lang('none');
+			} else {
+				// toggleService
+				const service = getTogglableService($states[sel?.entity_id]);
+				servicePlaceholder = service || $lang('none');
+			}
+		} catch (error) {
+			// error
+			servicePlaceholder = $lang('error');
+		}
+	}
 </script>
 
 {#if isOpen}
@@ -88,7 +121,7 @@
 		<h2>{$lang('entity')}</h2>
 
 		<div class="icon-gallery-container">
-			<div style:width="calc(100% - 3.15rem - 0.8rem)">
+			<div style:width="calc(100% - 3.15rem - 0.8rem - 3.15rem - 0.8rem)">
 				{#if options}
 					<Select
 						customItems={true}
@@ -96,7 +129,6 @@
 						placeholder={$lang('entity')}
 						value={entity_id}
 						on:change={(event) => {
-							set('attribute');
 							if (event?.detail === null) return;
 							set('entity_id', event);
 						}}
@@ -108,38 +140,78 @@
 				title={$lang('copy')}
 				class="icon-gallery"
 				on:click={handleClick}
-				style:padding="0 0.8rem"
 				tabindex="-1"
 				use:Ripple={$ripple}
+				style:padding="0.7rem"
 			>
 				<span style:pointer-events="none" style:display="contents">
-					<Icon icon="mdi:clipboard-text-multiple-outline" height="none" />
+					<Icon icon="iconoir:copy" height="none" />
 				</span>
+			</button>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={() => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'state'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.state?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" />
 			</button>
 		</div>
 
 		<h2>{$lang('name')}</h2>
 
-		<InputClear
-			condition={name}
-			on:clear={() => {
-				name = undefined;
-				set('name');
-			}}
-			let:padding
-		>
-			<input
-				name={$lang('name')}
-				class="input"
-				type="text"
-				placeholder={getName(sel, (entity_id && $states[entity_id]) || undefined) || $lang('name')}
-				autocomplete="off"
-				spellcheck="false"
-				bind:value={name}
-				on:change={(event) => set('name', event)}
-				style:padding
-			/>
-		</InputClear>
+		<div class="icon-gallery-container">
+			<InputClear
+				condition={name}
+				on:clear={() => {
+					name = undefined;
+					set('name');
+				}}
+				let:padding
+			>
+				<input
+					name={$lang('name')}
+					class="input"
+					type="text"
+					placeholder={template?.name?.output ||
+						getName(sel, (entity_id && $states[entity_id]) || undefined) ||
+						$lang('name')}
+					autocomplete="off"
+					spellcheck="false"
+					bind:value={name}
+					on:change={(event) => set('name', event)}
+					style:padding
+					disabled={Boolean(template?.name?.output)}
+					class:disabled={Boolean(template?.name?.output)}
+				/>
+			</InputClear>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={async () => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'name'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.name?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
+		</div>
 
 		<h2>
 			{$lang('icon')}
@@ -158,12 +230,16 @@
 					name={$lang('icon')}
 					class="input"
 					type="text"
-					placeholder={$lang('icon')}
+					placeholder={(sel?.template?.icon && template?.icon?.output) ||
+						$computedIconString ||
+						$lang('icon')}
 					autocomplete="off"
 					spellcheck="false"
 					bind:value={icon}
 					on:change={(event) => set('icon', event)}
 					style:padding
+					disabled={Boolean(sel?.template?.icon && template?.icon?.output)}
+					class:disabled={Boolean(sel?.template?.icon && template?.icon?.output)}
 				/>
 			</InputClear>
 
@@ -174,9 +250,27 @@
 				on:click={() => {
 					window.open('https://icon-sets.iconify.design/', '_blank');
 				}}
+				style:padding="0.84rem"
 			>
-				<Icon icon="vaadin:grid-small" height="none" />
+				<Icon icon="majesticons:open-line" height="none" />
 			</button>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={() => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'icon'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={sel?.template?.icon && template?.icon?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
 		</div>
 
 		<h2>{$lang('color')}</h2>
@@ -194,12 +288,18 @@
 					name={$lang('color')}
 					class="input"
 					type="text"
-					placeholder={$lang('color')}
+					placeholder={sel?.template?.color && template?.color?.output
+						? template?.color?.output
+						: $states?.[sel?.entity_id]?.attributes?.hs_color
+							? `hsl(${$states?.[sel?.entity_id]?.attributes?.hs_color}%, 50%)`
+							: 'rgb(75, 166, 237)'}
 					autocomplete="off"
 					spellcheck="false"
 					bind:value={color}
 					on:change={(event) => set('color', event)}
 					style:padding
+					disabled={Boolean(template?.color?.output)}
+					class:disabled={Boolean(template?.color?.output)}
 				/>
 			</InputClear>
 
@@ -214,47 +314,56 @@
 				on:change={(event) => set('color', event)}
 				title={$lang('color')}
 			/>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={() => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'color'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.color?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
 		</div>
 
-		{#if !isNaN(parseFloat(entity?.state)) && !Number.isInteger(parseFloat(entity?.state)) && (entity?.state.match(/\./g) || []).length === 1}
-			{@const precisionValues = [undefined, 0, 1, 2, 3, 4, 5]}
-			<h2>{$lang('precision')}</h2>
+		<h2>{$lang('service')}</h2>
 
-			<div class="button-container">
-				{#each precisionValues as precision}
-					<button
-						class:selected={sel?.precision === precision}
-						on:click={() => set('precision', precision)}
-						use:Ripple={$ripple}
-					>
-						{precision === undefined ? '∅' : precision}
-					</button>
-				{/each}
-			</div>
-		{/if}
+		<div class="icon-gallery-container">
+			<input
+				name={$lang('service')}
+				class="input"
+				type="text"
+				placeholder={servicePlaceholder}
+				autocomplete="off"
+				spellcheck="false"
+				disabled={true}
+				class:disabled={true}
+			/>
 
-		<h2>{$lang('attributes')}</h2>
-
-		{#key sel?.entity_id}
-			{#if options_attr}
-				<InputClear
-					condition={sel?.attribute}
-					on:clear={() => {
-						set('attribute');
-					}}
-					select={true}
-				>
-					<Select
-						options={options_attr}
-						placeholder={$lang('state')}
-						value={sel?.attribute}
-						on:change={(event) => {
-							set('attribute', event);
-						}}
-					/>
-				</InputClear>
-			{/if}
-		{/key}
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={() => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'service'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.service?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
+		</div>
 
 		<h2>{$lang('show_more_info')}</h2>
 
@@ -307,9 +416,30 @@
 		color-scheme: dark;
 		height: inherit;
 		width: 3.15rem;
-		border: 0;
-		border-radius: 0.2rem;
 		padding: 0;
+		-webkit-appearance: none;
+		appearance: none;
+		background-color: transparent;
 		cursor: pointer;
+		border: none;
+	}
+
+	input[type='color']::-webkit-color-swatch {
+		border-radius: 0.6rem;
+		border: none;
+	}
+
+	input[type='color']::-moz-color-swatch {
+		border-radius: 0.6rem;
+		border: none;
+	}
+
+	.template-active {
+		color: rgb(59, 15, 16) !important;
+		background-color: rgb(255, 193, 7) !important;
+	}
+
+	.disabled {
+		opacity: 0.4;
 	}
 </style>

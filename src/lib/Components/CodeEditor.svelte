@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { autocompleteOpen } from '$lib/Stores';
+	import { autocompleteOpen, pasteContent } from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { basicSetup } from 'codemirror';
 	import { EditorView, keymap } from '@codemirror/view';
@@ -12,7 +12,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let type: string;
-	export let value: string | undefined;
+	export let value: any;
 	export let transitionend: boolean;
 	export let autocompleteList: any = undefined;
 	export let init: any = undefined;
@@ -254,6 +254,31 @@
 				head: end
 			}
 		});
+	}
+
+	// inserts example template
+	$: if ($pasteContent) insertString();
+
+	function insertString() {
+		if (!view || !$pasteContent) return;
+
+		// clear
+		if ($pasteContent === '__clear__') {
+			view.dispatch({
+				changes: { from: 0, to: view.state.doc.length, insert: '' }
+			});
+			$pasteContent = undefined;
+			return;
+		}
+
+		// insert
+		const range = view.state.selection.ranges[0];
+		view.dispatch({
+			changes: { from: range.from, to: range.to, insert: $pasteContent },
+			selection: { anchor: range.from + $pasteContent.length }
+		});
+		$pasteContent = undefined;
+		view.focus();
 	}
 </script>
 
