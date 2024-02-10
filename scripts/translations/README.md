@@ -15,7 +15,7 @@ The easiest way to locate translations is to first copy them to your local machi
 # example
 docker exec -it homeassistant bash
 scp -r \
-  /usr/local/lib/python3.11/site-packages/hass_frontend/static/translations \
+  /usr/local/lib/python3.12/site-packages/hass_frontend/static/translations \
   matte@192.168.1.109:/Users/matte/Downloads
 ```
 
@@ -34,4 +34,4 @@ In `fetch.py` add your translation key using the following format;
 ("hello", ["ui.example.hello"]),
 ```
 
-Where `hello` is the key that will be used in the app and `"ui.example.hello"` is the Home Assistant translation key. It is important to put it under the correct path as well, for example under "Lovelace" for translations that exist in `/translations/lovelace` folder.
+Where `hello` is the key that will be used in fusion e.g. `$lang('hello')` and `"ui.example.hello"` is the Home Assistant translation key. It is important to put it under the correct path as well, for example under "Lovelace" for translations that exist in `/translations/lovelace` folder.
