@@ -109,7 +109,7 @@
 			siren: 'toggle',
 			switch: 'toggle',
 			timer: state === 'active' ? 'pause' : 'start',
-			vacuum: 'toggle'
+			vacuum: state === 'cleaning' ? 'pause' : 'start'
 		};
 
 		switch (domain) {
