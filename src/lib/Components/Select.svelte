@@ -129,5 +129,9 @@
 		.sv-dropdown-content .sv-item-content {
 			padding: 0.3rem !important;
 		}
+
+		.inputBox {
+			margin: 0 !important;
+		}
 	</style>
 </div>

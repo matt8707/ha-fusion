@@ -10,21 +10,27 @@
 		onStates,
 		climateHvacActionToMode,
 		ripple,
-		states
+		states,
+		templates,
+		config
 	} from '$lib/Stores';
-	import { getDomain, getName } from '$lib/Utils';
-	import Icon from '@iconify/svelte';
+	import { getDomain, getName, getTogglableService } from '$lib/Utils';
+	import Icon, { loadIcon } from '@iconify/svelte';
 	import { callService, type HassEntity } from 'home-assistant-js-websocket';
+	import { marked } from 'marked';
+	import { onDestroy } from 'svelte';
 	import { openModal } from 'svelte-modals';
 	import Ripple from 'svelte-ripple';
+	import parser from 'js-yaml';
 
 	export let demo: string | undefined = undefined;
 	export let sel: any;
 	export let sectionName: string | undefined = undefined;
 
 	$: entity_id = demo || sel?.entity_id;
-	$: icon = sel?.icon;
-	$: color = sel?.color;
+	$: template = $templates?.[sel?.id];
+	$: icon = (sel?.template?.icon && template?.icon?.output) || sel?.icon;
+	$: color = (sel?.template?.color && template?.color?.output) || sel?.color;
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
 
@@ -89,55 +95,49 @@
 	 * using the correct service call...
 	 */
 	function toggle() {
-		const domain = getDomain(entity_id);
-		const state = entity?.state;
-		if (!domain || !state) return;
+		// if service template
+		if (sel?.template?.service && template?.service?.output) {
+			try {
+				// template is string, try to parse it
+				const _template = parser.load(template?.service?.output) as {
+					service: string;
+					data: Record<string, string | number | boolean>;
+				};
 
-		const services: Record<string, string> = {
-			automation: 'toggle',
-			button: 'press',
-			cover: 'toggle',
-			fan: 'toggle',
-			humidifier: 'toggle',
-			input_boolean: 'toggle',
-			input_button: 'press',
-			light: 'toggle',
-			lock: state === 'locked' ? 'unlock' : 'lock',
-			media_player: 'toggle',
-			scene: 'turn_on',
-			script: 'toggle',
-			siren: 'toggle',
-			switch: 'toggle',
-			timer: state === 'active' ? 'pause' : 'start',
-			vacuum: 'toggle'
-		};
-
-		switch (domain) {
-			// case 'person':
-			// 	console.debug('ping phone?');
-			// 	break;
-
-			case 'remote':
-				callService($connection, 'homeassistant', 'toggle', { entity_id });
-				break;
-
-			default:
-				if (domain in services) {
-					callService($connection, domain, services[domain], { entity_id });
-
-					// loader
-					delayLoading = setTimeout(() => {
-						loading = true;
-					}, $motion);
-
-					// loader 20s fallback
-					resetLoading = setTimeout(() => {
-						loading = false;
-					}, 20_000);
-				} else {
-					// not listed above just open modal
-					handleClickEvent();
+				if (_template?.service) {
+					const [domain, service] = _template.service.split('.');
+					callService($connection, domain, service, _template?.data);
 				}
+			} catch (error) {
+				console.error('Template service YAML parse error:', error);
+			}
+
+			return;
+		}
+
+		// default
+		const service = getTogglableService(entity);
+
+		if (service) {
+			// use returned domain to handle specific cases such
+			// as 'remote', which uses 'homeassistant.toggle'
+			const [_domain, _service] = service.split('.');
+			callService($connection, _domain, _service, {
+				entity_id
+			});
+
+			// loader
+			delayLoading = setTimeout(() => {
+				loading = true;
+			}, $motion);
+
+			// loader 20s fallback
+			resetLoading = setTimeout(() => {
+				loading = false;
+			}, 20_000);
+		} else {
+			// not in getTogglableService just open modal
+			handleClickEvent();
 		}
 	}
 
@@ -364,6 +364,60 @@
 		}
 		if (module) module.default;
 	}
+
+	////// templates //////
+
+	$: if ($config?.state === 'RUNNING' && sel?.template) {
+		// for each changed entry in template
+		Object.entries(sel?.template as Record<string, string>).forEach(([key, value]) => {
+			const compareTemplate = value === template?.[key]?.input;
+			const compareEntityId = sel?.entity_id === template?.[key]?.entity_id;
+			if (compareTemplate && compareEntityId) return;
+			renderTemplate(key, value);
+		});
+	}
+
+	let unsubscribe: () => void;
+
+	async function renderTemplate(key: string, value: string) {
+		if (!$connection || !sel?.id) return;
+
+		try {
+			unsubscribe = await $connection.subscribeMessage(
+				(response: { result: string } | { error: string; level: 'ERROR' | 'WARNING' }) => {
+					let data: any = {
+						input: value
+					};
+
+					if ('result' in response) {
+						data.output =
+							key === 'state' || key === 'name'
+								? marked.parseInline(String(response.result))
+								: String(response.result);
+					} else if (response?.level === 'ERROR') {
+						console.error(response.error);
+						data.error = response.error;
+					}
+
+					data.entity_id = sel?.entity_id;
+
+					$templates[sel?.id] = { ...$templates[sel?.id], [key]: data };
+				},
+				{
+					type: 'render_template',
+					template: value,
+					report_errors: true,
+					variables: {
+						entity_id: sel?.entity_id
+					}
+				}
+			);
+		} catch (error) {
+			console.error('Template error:', error);
+		}
+	}
+
+	onDestroy(() => unsubscribe?.());
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -399,12 +453,13 @@
 			}
 		}}
 	>
-		<!-- rerender if `icon-entity_id` changes -->
-
 		<div
 			class="icon"
 			data-state={stateOn}
 			style:--icon-color={iconColor}
+			style:background-color={sel?.template?.color && template?.color?.output
+				? template?.color?.output
+				: undefined}
 			style:background-image={!icon && attributes?.entity_picture
 				? `url(${attributes?.entity_picture})`
 				: image && icon
@@ -417,11 +472,20 @@
 			{:else if image || (!icon && attributes?.entity_picture)}
 				&nbsp;
 			{:else if icon}
-				<Icon {icon} height="auto" width="100%" />
+				{#await loadIcon(icon)}
+					<!-- loading -->
+					<Icon icon="ooui:help-ltr" height="none" width="100%" />
+				{:then resolvedIcon}
+					<!-- exists -->
+					<Icon icon={resolvedIcon} height="none" width="100%" />
+				{:catch}
+					<!-- doesn't exist -->
+					<Icon icon="ooui:help-ltr" height="none" width="100%" />
+				{/await}
 			{:else if entity_id}
 				<ComputeIcon {entity_id} />
 			{:else}
-				<Icon icon="ooui:help-ltr" height="auto" width="100%" />
+				<Icon icon="ooui:help-ltr" height="none" width="100%" />
 			{/if}
 		</div>
 	</div>
@@ -429,7 +493,9 @@
 	<div class="right" on:click|stopPropagation={handleEvent}>
 		<!-- NAME -->
 		<div class="name" data-state={stateOn}>
-			{getName(sel, entity, sectionName) || $lang('unknown')}
+			{@html (sel?.template?.name && template?.name?.output) ||
+				getName(sel, entity, sectionName) ||
+				$lang('unknown')}
 		</div>
 
 		<!-- STATE -->
@@ -438,11 +504,19 @@
 		<div class="state" data-state={stateOn}>
 			{#if marquee}
 				<div style="width: min-content;" bind:clientWidth={contentWidth}>
-					<StateLogic {entity_id} selected={sel} {contentWidth} />
+					{#if sel?.template?.state && template?.state?.output}
+						{@html sel?.template?.state && template?.state?.output}
+					{:else}
+						<StateLogic {entity_id} selected={sel} {contentWidth} />
+					{/if}
 				</div>
 			{:else}
 				<div style="overflow: hidden; text-overflow: ellipsis;">
-					<StateLogic {entity_id} selected={sel} {contentWidth} />
+					{#if sel?.template?.state && template?.state?.output}
+						{@html sel?.template?.state && template?.state?.output}
+					{:else}
+						<StateLogic {entity_id} selected={sel} {contentWidth} />
+					{/if}
 				</div>
 			{/if}
 		</div>

@@ -62,16 +62,35 @@ export interface EmptyItem {
 }
 
 export interface ButtonItem {
-	type?: string;
-	id?: number;
-	entity_id?: string;
+	type: string;
+	id: number;
+	entity_id: string;
 	name?: string;
 	icon?: string;
 	color?: string;
 	marquee?: boolean;
-	precision: number;
 	more_info?: boolean;
-	attribute?: string;
+	service?: string;
+	template?: {
+		[key: string]: {
+			state?: string;
+			name?: string;
+			icon?: string;
+			color?: string;
+			service?: string;
+		};
+	};
+}
+
+export interface Template {
+	[id: number]: {
+		[key: string]: {
+			input: string | undefined;
+			output: string | undefined;
+			error: string | undefined;
+			entity_id: string | undefined;
+		};
+	};
 }
 
 export type SidebarItem = BarItem &

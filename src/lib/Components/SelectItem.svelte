@@ -31,7 +31,7 @@
 		<div class="icon-text-wrapper">
 			<div class="icon-container">
 				{#if item?.icon && !isDisabled}
-					<Icon icon={item?.icon} height="auto" width="100%" />
+					<Icon icon={item?.icon} height="none" width="100%" />
 				{:else if item?.label && !isDisabled}
 					<ComputeIcon entity_id={item.label} />
 				{/if}
@@ -40,6 +40,11 @@
 			{@html isSelected
 				? `${formatter(item, isSelected, inputValue)}`
 				: highlightSearch(item, isSelected, inputValue, formatter, disableHighlight)}
+
+			<!-- <div class="item-container">
+				<span class="label">{item?.label}</span>
+				<span class="id">{item?.id}</span>
+			</div> -->
 		</div>
 	</div>
 	{#if isSelected && isMultiple}
@@ -51,14 +56,14 @@
 	.icon-text-wrapper {
 		display: flex;
 		align-items: center;
-		gap: 0.8rem;
+		gap: 0.7rem;
+		font-size: 0.95rem;
 	}
 
 	.icon-container {
-		--icon-size: 1.5rem;
 		display: flex;
-		min-width: var(--icon-size);
-		width: var(--icon-size);
-		height: var(--icon-size);
+		width: 1.2rem;
+		height: 1.2rem;
+		align-items: center;
 	}
 </style>
