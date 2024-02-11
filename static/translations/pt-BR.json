@@ -103,6 +103,7 @@
 	"mfa_description": "Abra o {mfa_module_name} no seu dispositivo para ver seu c\u00f3digo de autentica\u00e7\u00e3o de dois fatores e confirmar sua identidade:",
 	"min_length": "Comprimento m\u00ednimo",
 	"minutes": "Minutos",
+	"mobile": "Celular",
 	"month": "M\u00eas",
 	"motion": "Movimento",
 	"name": "Nome",

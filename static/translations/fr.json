@@ -168,6 +168,7 @@
 	"mfa_description": "Ouvrez le {mfa_module_name} sur votre appareil pour afficher votre code d'authentification \u00e0 deux facteurs.",
 	"min_length": "Longueur minimum",
 	"minutes": "Minutes",
+	"mobile": "T\u00e9l\u00e9phone",
 	"mode": "Mode",
 	"month": "Mois",
 	"motion": "Mouvement",
