@@ -169,6 +169,7 @@
 	"mfa_description": "Apri {mfa_module_name} sul tuo dispositivo per visualizzare il codice di autenticazione a due fattori.",
 	"min_length": "Lunghezza minima",
 	"minutes": "Minuti",
+	"mobile": "Mobile",
 	"mode": "Modalit\u00e0",
 	"month": "Mese",
 	"motion": "Movimento",

@@ -123,6 +123,7 @@
 	"mfa_description": "Open the {mfa_module_name} on your device to view your two-factor authentication code.",
 	"min_length": "Minimum length",
 	"minutes": "Minutes",
+	"mobile": "Mobile",
 	"month": "Month",
 	"motion": "Pokret",
 	"name": "Name",

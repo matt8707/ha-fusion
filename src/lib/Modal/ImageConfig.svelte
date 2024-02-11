@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, dashboard, lang, history, historyIndex, record } from '$lib/Stores';
+	import { states, dashboard, lang, history, historyIndex, record, ripple } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Image from '$lib/Sidebar/Image.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -8,6 +8,7 @@
 	import InputClear from '$lib/Components/InputClear.svelte';
 	import { updateObj } from '$lib/Utils';
 	import type { ImageItem } from '$lib/Types';
+	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
 	export let sel: ImageItem;
@@ -80,6 +81,26 @@
 				style:padding
 			/>
 		</InputClear>
+
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>

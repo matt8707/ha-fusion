@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { dashboard, states, connection, lang, history, historyIndex, record } from '$lib/Stores';
+	import {
+		dashboard,
+		states,
+		connection,
+		lang,
+		history,
+		historyIndex,
+		record,
+		ripple
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Graph from '$lib/Sidebar/Graph.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -8,6 +17,7 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import { updateObj, getName } from '$lib/Utils';
 	import type { GraphItem } from '$lib/Types';
+	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
 	export let sel: GraphItem;
@@ -181,6 +191,26 @@
 			min={range.min}
 			max={range.max}
 		/>
+
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>

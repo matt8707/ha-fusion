@@ -103,7 +103,7 @@
 				{$lang('remove')}
 			</button>
 
-			{#if !disableChangeType === true || sel?.type === 'configure'}
+			{#if !disableChangeType === true}
 				<button
 					transition:fade={{ duration: $motion }}
 					class="options action"

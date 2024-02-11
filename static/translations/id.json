@@ -169,6 +169,7 @@
 	"mfa_description": "Buka {mfa_module_name} pada perangkat Anda untuk melihat kode autentikasi dua faktor Anda:",
 	"min_length": "Panjang minimum",
 	"minutes": "Menit",
+	"mobile": "Seluler",
 	"mode": "Mode",
 	"month": "Bulan",
 	"motion": "Gerakan",

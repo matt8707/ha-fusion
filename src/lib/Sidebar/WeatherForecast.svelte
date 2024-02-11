@@ -5,9 +5,9 @@
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import Icon from '@iconify/svelte';
 
-	export let entity_id: string | undefined;
-	export let icon_pack: string | undefined;
-	export let number_of_items: number | undefined;
+	export let entity_id: string | undefined = undefined;
+	export let icon_pack: string | undefined = undefined;
+	export let number_of_items: number | undefined = undefined;
 
 	let entity: HassEntity;
 	$: {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, dashboard, lang, history, historyIndex, record } from '$lib/Stores';
+	import { states, dashboard, lang, history, historyIndex, record, ripple } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Radial from '$lib/Sidebar/Radial.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -7,6 +7,7 @@
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
 	import { updateObj, getName } from '$lib/Utils';
+	import Ripple from 'svelte-ripple';
 	import type { RadialItem } from '$lib/Types';
 
 	export let isOpen: boolean;
@@ -113,6 +114,26 @@
 			on:input={handleNumberRange}
 			autocomplete="off"
 		/>
+
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>
