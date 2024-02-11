@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, dashboard, lang, record } from '$lib/Stores';
+	import { states, dashboard, lang, record, ripple } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import WeatherForecast from '$lib/Sidebar/WeatherForecast.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -8,6 +8,7 @@
 	import { updateObj } from '$lib/Utils';
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import type { WeatherForecastItem } from '$lib/Types';
+	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
 	export let sel: WeatherForecastItem;
@@ -115,6 +116,26 @@
 				autocomplete="off"
 			/>
 		{/if}
+
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>

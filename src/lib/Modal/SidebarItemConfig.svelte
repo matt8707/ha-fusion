@@ -57,6 +57,17 @@
 		if (searchElement) {
 			searchElement.focus();
 		}
+
+		// if changing type reset object
+		if (sel) {
+			(Object.keys(sel) as Array<keyof SidebarItem>).forEach((key) => {
+				if (key !== 'id') {
+					delete (sel as any)[key];
+				}
+			});
+			sel.type = 'configure';
+			$dashboard = $dashboard;
+		}
 	});
 
 	$: filter = itemTypes

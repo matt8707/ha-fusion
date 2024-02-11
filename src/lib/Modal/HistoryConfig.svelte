@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, dashboard, lang, record, history, historyIndex } from '$lib/Stores';
+	import { states, dashboard, lang, record, history, historyIndex, ripple } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import History from '$lib/Sidebar/History.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -7,6 +7,7 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import { updateObj } from '$lib/Utils';
 	import type { HistoryItem } from '$lib/Types';
+	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
 	export let sel: HistoryItem;
@@ -72,6 +73,26 @@
 				on:change={(event) => set('period', event)}
 			/>
 		{/if}
+
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>

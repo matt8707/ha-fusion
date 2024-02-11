@@ -1,7 +1,7 @@
 <script lang="ts">
 	// store
 	import { dashboard, motion, showDrawer, editMode, record, dragging } from '$lib/Stores';
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { dndzone } from 'svelte-dnd-action';
 	import { openModal } from 'svelte-modals';
@@ -145,6 +145,24 @@
 			$dragging = false;
 		}
 	}
+
+	// media query js
+	let matches = false;
+
+	onMount(() => {
+		const handleMediaQueryChange = (event: { matches: boolean }) => {
+			matches = event.matches;
+		};
+
+		const mediaQuery = window.matchMedia('(max-width: 768px)');
+		matches = mediaQuery.matches;
+
+		mediaQuery.addEventListener('change', handleMediaQueryChange);
+		// cleanup
+		return () => {
+			mediaQuery.removeEventListener('change', handleMediaQueryChange);
+		};
+	});
 </script>
 
 <aside
@@ -174,6 +192,7 @@
 			on:finalize={handleSort}
 		>
 			{#each $dashboard.sidebar as item (item.id)}
+				{@const hide_mobile = matches && item?.hide_mobile && !$editMode}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-static-element-interactions -->
 				<div
@@ -187,7 +206,7 @@
 						: 'initial'}
 				>
 					<!-- BAR -->
-					{#if Bar && item?.type === 'bar'}
+					{#if Bar && item?.type === 'bar' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Bar.default}
@@ -199,7 +218,7 @@
 						</button>
 
 						<!-- CAMERA -->
-					{:else if Camera && item?.type === 'camera'}
+					{:else if Camera && item?.type === 'camera' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component this={Camera.default} sel={item} />
 						</button>
@@ -211,7 +230,7 @@
 						</div>
 
 						<!-- DATE -->
-					{:else if Date && item?.type === 'date'}
+					{:else if Date && item?.type === 'date' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Date.default}
@@ -223,13 +242,13 @@
 						</button>
 
 						<!-- DIVIDER -->
-					{:else if Divider && item?.type === 'divider'}
+					{:else if Divider && item?.type === 'divider' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)} aria-label={item?.type} tabindex="-1">
 							<svelte:component this={Divider.default} mode={item?.mode} size={item?.size} />
 						</button>
 
 						<!-- GRAPH -->
-					{:else if Graph && item?.type === 'graph'}
+					{:else if Graph && item?.type === 'graph' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Graph.default}
@@ -241,7 +260,7 @@
 						</button>
 
 						<!-- HISTORY -->
-					{:else if History && item?.type === 'history'}
+					{:else if History && item?.type === 'history' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={History.default}
@@ -251,19 +270,19 @@
 						</button>
 
 						<!-- IFRAME -->
-					{:else if Iframe && item?.type === 'iframe'}
+					{:else if Iframe && item?.type === 'iframe' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component this={Iframe.default} url={item?.url} size={item?.size} />
 						</button>
 
 						<!-- IMAGE -->
-					{:else if Image && item?.type === 'image'}
+					{:else if Image && item?.type === 'image' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component this={Image.default} entity_id={item?.entity_id} url={item?.url} />
 						</button>
 
 						<!-- NAVIGATE -->
-					{:else if Navigate && item?.type === 'navigate'}
+					{:else if Navigate && item?.type === 'navigate' && !hide_mobile}
 						{#key $editMode}
 							<div
 								on:click|preventDefault={() => {
@@ -275,7 +294,7 @@
 						{/key}
 
 						<!-- RADIAL -->
-					{:else if Radial && item?.type === 'radial'}
+					{:else if Radial && item?.type === 'radial' && !hide_mobile}
 						<div on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Radial.default}
@@ -286,7 +305,7 @@
 						</div>
 
 						<!-- SENSOR -->
-					{:else if Sensor && item?.type === 'sensor'}
+					{:else if Sensor && item?.type === 'sensor' && !hide_mobile}
 						<div on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Sensor.default}
@@ -298,13 +317,13 @@
 						</div>
 
 						<!-- TEMPLATE -->
-					{:else if Template && item?.type === 'template'}
+					{:else if Template && item?.type === 'template' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component this={Template.default} sel={item} />
 						</button>
 
 						<!-- TIME -->
-					{:else if Time && item?.type === 'time'}
+					{:else if Time && item?.type === 'time' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Time.default}
@@ -314,13 +333,13 @@
 						</button>
 
 						<!-- TIMER -->
-					{:else if Timer && item?.type === 'timer'}
+					{:else if Timer && item?.type === 'timer' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component this={Timer.default} sel={item} />
 						</button>
 
 						<!-- WEATHER -->
-					{:else if Weather && item?.type === 'weather'}
+					{:else if Weather && item?.type === 'weather' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Weather.default}
@@ -333,7 +352,7 @@
 						</button>
 
 						<!-- WEATHER FORECAST -->
-					{:else if WeatherForecast && item?.type === 'weatherforecast'}
+					{:else if WeatherForecast && item?.type === 'weatherforecast' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={WeatherForecast.default}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, dashboard, lang, history, historyIndex, record } from '$lib/Stores';
+	import { states, dashboard, lang, history, historyIndex, record, ripple } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Timer from '$lib/Sidebar/Timer.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -7,6 +7,7 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import { updateObj } from '$lib/Utils';
 	import type { TimerItem } from '$lib/Types';
+	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
 	export let sel: TimerItem;
@@ -54,6 +55,26 @@
 					customItems={true}
 				/>
 			{/if}
+		</div>
+
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
 		</div>
 
 		<ConfigButtons {sel} />

@@ -1,9 +1,12 @@
 <script lang="ts">
-	import { lang } from '$lib/Stores';
+	import { dashboard, lang, record, ripple } from '$lib/Stores';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
 	import Navigate from '$lib/Sidebar/Navigate.svelte';
+	import Ripple from 'svelte-ripple';
 	import type { NavigateItem } from '$lib/Types';
+	import { updateObj } from '$lib/Utils';
+	import { onDestroy } from 'svelte';
 
 	export let isOpen: boolean;
 	export let sel: NavigateItem;
@@ -12,6 +15,13 @@
 	function handleEvent() {
 		modalTransitionEnd = true;
 	}
+
+	function set(key: string, event?: any) {
+		sel = updateObj(sel, key, event);
+		$dashboard = $dashboard;
+	}
+
+	onDestroy(() => $record());
 </script>
 
 {#if isOpen}
@@ -24,17 +34,26 @@
 			<Navigate {modalTransitionEnd} />
 		</div>
 
-		<p>{$lang('no_options')}</p>
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>
 {/if}
-
-<style>
-	p {
-		color: #ffc008;
-		margin-block-start: 0.6rem;
-		margin-block-end: 0;
-		font-weight: 500;
-	}
-</style>

@@ -115,6 +115,7 @@ export interface BarItem {
 	entity_id?: string;
 	name?: string;
 	math?: string;
+	hide_mobile?: boolean;
 }
 
 export interface CameraItem {
@@ -123,6 +124,7 @@ export interface CameraItem {
 	entity_id?: string;
 	stream?: boolean;
 	size?: string;
+	hide_mobile?: boolean;
 }
 
 export interface DateItem {
@@ -132,6 +134,7 @@ export interface DateItem {
 	short_month?: boolean;
 	hide?: string;
 	layout?: string;
+	hide_mobile?: boolean;
 }
 
 export interface GraphItem {
@@ -141,6 +144,7 @@ export interface GraphItem {
 	entity_id?: string;
 	period?: string;
 	stroke?: number;
+	hide_mobile?: boolean;
 }
 
 export interface HistoryItem {
@@ -148,6 +152,7 @@ export interface HistoryItem {
 	id?: number;
 	entity_id?: string;
 	period?: string;
+	hide_mobile?: boolean;
 }
 
 export interface IframeItem {
@@ -155,6 +160,7 @@ export interface IframeItem {
 	id?: number;
 	url?: string;
 	size?: string;
+	hide_mobile?: boolean;
 }
 
 export interface ImageItem {
@@ -162,6 +168,7 @@ export interface ImageItem {
 	id?: number;
 	entity_id?: string;
 	url?: string;
+	hide_mobile?: boolean;
 }
 
 export interface DividerItem {
@@ -169,11 +176,13 @@ export interface DividerItem {
 	id?: number;
 	mode?: string;
 	size?: number;
+	hide_mobile?: boolean;
 }
 
 export interface NavigateItem {
 	type?: string;
 	id?: number;
+	hide_mobile?: boolean;
 }
 
 export interface RadialItem {
@@ -182,6 +191,7 @@ export interface RadialItem {
 	entity_id?: string;
 	name?: string;
 	stroke?: number;
+	hide_mobile?: boolean;
 }
 
 export interface SensorItem {
@@ -191,12 +201,14 @@ export interface SensorItem {
 	prefix?: string;
 	suffix?: string;
 	date?: boolean;
+	hide_mobile?: boolean;
 }
 
 export interface TemplateItem {
 	type?: string;
 	id?: number;
 	template?: string;
+	hide_mobile?: boolean;
 }
 
 export interface TimeItem {
@@ -204,12 +216,14 @@ export interface TimeItem {
 	id?: number;
 	hour12?: boolean;
 	seconds?: boolean;
+	hide_mobile?: boolean;
 }
 
 export interface TimerItem {
 	type?: string;
 	id?: number;
 	entity_id?: string;
+	hide_mobile?: boolean;
 }
 
 export interface WeatherItem {
@@ -222,6 +236,7 @@ export interface WeatherItem {
 	extra_sensor?: string;
 	extra_sensor_icon?: string;
 	show_apparent?: boolean;
+	hide_mobile?: boolean;
 }
 
 export interface WeatherForecastItem {
@@ -231,4 +246,5 @@ export interface WeatherForecastItem {
 	state?: string;
 	icon_pack?: string;
 	number_of_items?: number;
+	hide_mobile?: boolean;
 }

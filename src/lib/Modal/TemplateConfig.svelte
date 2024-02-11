@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dashboard, record, lang, autocompleteList } from '$lib/Stores';
+	import { dashboard, record, lang, autocompleteList, ripple } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Template from '$lib/Sidebar/Template.svelte';
 	import CodeEditor from '$lib/Components/CodeEditor.svelte';
@@ -7,6 +7,7 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import { updateObj } from '$lib/Utils';
 	import type { TemplateItem } from '$lib/Types';
+	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
 	export let sel: TemplateItem;
@@ -71,6 +72,26 @@
 				set('template', value);
 			}}
 		/>
+
+		<h2>{$lang('mobile')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_mobile !== true}
+				on:click={() => set('hide_mobile')}
+				use:Ripple={$ripple}
+			>
+				{$lang('visible')}
+			</button>
+
+			<button
+				class:selected={sel?.hide_mobile === true}
+				on:click={() => set('hide_mobile', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('hidden')}
+			</button>
+		</div>
 
 		<ConfigButtons {sel} />
 	</Modal>
