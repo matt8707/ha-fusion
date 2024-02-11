@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { motion, autocompleteOpen, ripple, connection, event, lang } from '$lib/Stores';
+	import { motion, autocompleteOpen, ripple } from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { modals, closeModal } from 'svelte-modals';
 	import { fly, scale } from 'svelte/transition';
@@ -84,22 +84,6 @@
 				backdrop.style.backgroundColor = 'rgba(0,0,0,0.3)';
 			}
 		}
-
-		$connection?.subscribeMessage(
-			(message: any) => {
-				if (message?.variables?.trigger?.event?.data?.event === 'close_popup') {
-					closeModal();
-					$event = $lang('event_fired')?.replace('{type}', '"close_popup"');
-				}
-			},
-			{
-				type: 'subscribe_trigger',
-				trigger: {
-					platform: 'event',
-					event_type: 'HA_FUSION'
-				}
-			}
-		);
 	});
 
 	onDestroy(async () => {

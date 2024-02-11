@@ -9,7 +9,7 @@
 		event,
 		configuration
 	} from '$lib/Stores';
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
 	let message: string | undefined;
@@ -87,13 +87,21 @@
 		}
 	}
 
+	onMount(() => {
+		// if event is 'refresh' it's temporarily stored in sessionStorage
+		if (sessionStorage.getItem('event') === 'refresh') {
+			$event = 'refresh';
+			sessionStorage.removeItem('event');
+		}
+	});
+
 	onDestroy(() => clearTimeout(timeout));
 
 	// external event toast
 	$: if ($event) displayEvent();
 	function displayEvent() {
 		clearTimeout(timeout);
-		message = $event;
+		message = $lang('event_fired')?.replace('{type}', `"${$event}"`);
 
 		timeout = setTimeout(() => {
 			message = undefined;
