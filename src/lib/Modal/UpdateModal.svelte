@@ -10,6 +10,7 @@
 	import { cubicOut } from 'svelte/easing';
 	import { marked } from 'marked';
 	import Ripple from 'svelte-ripple';
+	import { slide } from 'svelte/transition';
 
 	export let isOpen: boolean;
 	export let sel: any;
@@ -141,8 +142,14 @@
 
 		<!-- RELEASE_NOTES -->
 		{#if supports?.RELEASE_NOTES}
-			<div class="release-notes">
-				{@html releaseNotes}
+			<div class="release-notes" style:display={!releaseNotes ? 'flex' : 'block'}>
+				{#if !releaseNotes}
+					<img src="loader.svg" alt="loading" class="loader" />
+				{:else}
+					<div transition:slide={{ duration: $motion }} style:display="inline-block">
+						{@html releaseNotes}
+					</div>
+				{/if}
 				<style>
 					.release-notes a {
 						color: rgb(36 167 255);
@@ -234,9 +241,16 @@
 
 	.release-notes {
 		background-color: rgba(0, 0, 0, 0.2);
-		padding: 0.05rem 1.7rem 0.8rem 1.7rem;
+		padding: 0.4rem 1.7rem 0.6rem 1.7rem;
 		border-radius: 0.65rem;
-		margin: 1.4rem 0 0 0;
+		margin-top: 1.4rem;
+		min-height: 8rem;
+	}
+
+	.loader {
+		margin: 0 auto;
+		width: 2rem;
+		opacity: 0.75;
 	}
 
 	/* -- input[type='checkbox'] -- */
@@ -245,7 +259,7 @@
 		display: flex;
 		align-items: center;
 		flex-grow: 1;
-		padding: 1.3rem 0 0 0;
+		padding-top: 1.3rem;
 		width: 100%;
 		justify-content: space-between;
 	}
