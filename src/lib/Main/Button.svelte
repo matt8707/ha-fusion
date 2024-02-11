@@ -79,15 +79,20 @@
 	// icon is image if extension, e.g. test.png
 	$: image = icon?.includes('.');
 
-	$: if (attributes?.hvac_action) {
+	$: if (sel?.template?.state && template?.state?.output) {
+		// template
+		stateOn = $onStates?.includes(template?.state?.output?.toLocaleLowerCase());
+	} else if (attributes?.hvac_action) {
 		// climate
-		stateOn = $onStates?.includes($climateHvacActionToMode?.[attributes?.hvac_action]);
+		stateOn = $onStates?.includes(
+			$climateHvacActionToMode?.[attributes?.hvac_action]?.toLocaleLowerCase()
+		);
 	} else if (attributes?.in_progress) {
 		// update
 		stateOn = typeof attributes.in_progress === 'number';
 	} else {
 		// default
-		stateOn = $onStates?.includes(entity?.state);
+		stateOn = $onStates?.includes(entity?.state?.toLocaleLowerCase());
 	}
 
 	/**
@@ -505,7 +510,7 @@
 			{#if marquee}
 				<div style="width: min-content;" bind:clientWidth={contentWidth}>
 					{#if sel?.template?.state && template?.state?.output}
-						{@html sel?.template?.state && template?.state?.output}
+						{@html sel?.template?.state && $lang(template?.state?.output)}
 					{:else}
 						<StateLogic {entity_id} selected={sel} {contentWidth} />
 					{/if}
@@ -513,7 +518,7 @@
 			{:else}
 				<div style="overflow: hidden; text-overflow: ellipsis;">
 					{#if sel?.template?.state && template?.state?.output}
-						{@html sel?.template?.state && template?.state?.output}
+						{@html sel?.template?.state && $lang(template?.state?.output)}
 					{:else}
 						<StateLogic {entity_id} selected={sel} {contentWidth} />
 					{/if}
