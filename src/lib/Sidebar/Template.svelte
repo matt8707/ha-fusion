@@ -25,7 +25,7 @@
 
 		const handleResponse = (response: { result?: string }) => {
 			if (response?.result && id) {
-				$templates[id] = marked.parseInline(response.result) as any;
+				$templates[id] = marked.parse(response.result) as any;
 				error = false;
 			}
 		};
