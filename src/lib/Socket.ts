@@ -10,7 +10,8 @@ import {
 	ERR_INVALID_HTTPS_TO_HTTP
 } from 'home-assistant-js-websocket';
 import type { SaveTokensFunc } from 'home-assistant-js-websocket';
-import { states, connection, config, connected } from '$lib/Stores';
+import { states, connection, config, connected, event } from '$lib/Stores';
+import { closeModal } from 'svelte-modals';
 
 export const options = {
 	hassUrl: undefined as string | undefined,
@@ -76,6 +77,45 @@ export async function authentication(options: { hassUrl?: string }) {
 		if (location.search.includes('auth_callback=1')) {
 			history.replaceState(null, '', location.pathname);
 		}
+
+		// events
+		const getEvent = (message: any) => {
+			return message?.variables?.trigger?.event?.data?.event;
+		};
+
+		// close_popup
+		conn?.subscribeMessage(
+			(message: any) => {
+				if (getEvent(message) === 'close_popup') {
+					event.set('close_popup');
+					closeModal();
+				}
+			},
+			{
+				type: 'subscribe_trigger',
+				trigger: {
+					platform: 'event',
+					event_type: 'HA_FUSION'
+				}
+			}
+		);
+
+		// refresh
+		conn?.subscribeMessage(
+			(message: any) => {
+				if (getEvent(message) === 'refresh') {
+					sessionStorage.setItem('event', 'refresh');
+					location.reload();
+				}
+			},
+			{
+				type: 'subscribe_trigger',
+				trigger: {
+					platform: 'event',
+					event_type: 'HA_FUSION'
+				}
+			}
+		);
 	} catch (_error) {
 		handleError(_error);
 	}
