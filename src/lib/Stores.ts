@@ -1,5 +1,12 @@
 import { writable, readable, derived } from 'svelte/store';
-import type { Configuration, Dashboard, Template, Translations, Views } from '$lib/Types';
+import type {
+	Configuration,
+	Dashboard,
+	PersistentNotification,
+	Template,
+	Translations,
+	Views
+} from '$lib/Types';
 import type {
 	Connection,
 	HassConfig,
@@ -139,3 +146,6 @@ export const pasteContent = writable<string | undefined>();
 
 // event
 export const event = writable<string | undefined>();
+export const persistentNotifications = writable<{
+	[notificationId: string]: PersistentNotification;
+}>({});

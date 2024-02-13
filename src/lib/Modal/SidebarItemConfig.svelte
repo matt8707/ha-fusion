@@ -32,6 +32,7 @@
 	import Timer from '$lib/Sidebar/Timer.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Radial from '$lib/Sidebar/Radial.svelte';
+	import Notifications from '$lib/Sidebar/Notifications.svelte';
 	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
@@ -118,6 +119,11 @@
 			props: {
 				entity_id: $demo.bar
 			}
+		},
+		{
+			id: 'notifications',
+			type: 'Notifications',
+			component: Notifications
 		},
 		{
 			id: 'time',
@@ -235,69 +241,95 @@
 			case 'time':
 				openModal(() => import('$lib/Modal/TimeConfig.svelte'), { sel });
 				break;
+
 			case 'date':
 				openModal(() => import('$lib/Modal/DateConfig.svelte'), { sel });
 				break;
+
 			case 'divider':
 				openModal(() => import('$lib/Modal/DividerConfig.svelte'), { sel });
 				break;
+
 			case 'sensor':
 				openModal(() => import('$lib/Modal/SensorConfig.svelte'), {
 					sel,
 					demo: $demo.sensor
 				});
 				break;
+
 			case 'weather':
 				openModal(() => import('$lib/Modal/WeatherConfig.svelte'), { sel });
 				break;
+
 			case 'weatherforecast':
 				openModal(() => import('$lib/Modal/WeatherForecastConfig.svelte'), { sel });
 				break;
+
 			case 'camera':
 				openModal(() => import('$lib/Modal/CameraConfig.svelte'), {
 					sel,
 					demo: $demo.camera
 				});
 				break;
+
 			case 'image':
-				openModal(() => import('$lib/Modal/ImageConfig.svelte'), { sel, demo: imageData });
+				openModal(() => import('$lib/Modal/ImageConfig.svelte'), {
+					sel,
+					demo: imageData
+				});
 				break;
+
 			case 'iframe':
 				openModal(() => import('$lib/Modal/IframeConfig.svelte'), { sel });
 				break;
+
 			case 'history':
-				openModal(() => import('$lib/Modal/HistoryConfig.svelte'), { sel, demo: $demo.history });
+				openModal(() => import('$lib/Modal/HistoryConfig.svelte'), {
+					sel,
+					demo: $demo.history
+				});
 				break;
+
 			case 'bar':
 				openModal(() => import('$lib/Modal/BarConfig.svelte'), {
 					sel,
 					demo: $demo.bar
 				});
 				break;
+
 			case 'navigate':
 				openModal(() => import('$lib/Modal/NavigateConfig.svelte'), { sel });
 				break;
+
+			case 'notifications':
+				openModal(() => import('$lib/Modal/NotificationsConfig.svelte'), { sel });
+				break;
+
 			case 'radial':
 				openModal(() => import('$lib/Modal/RadialConfig.svelte'), {
 					sel,
 					demo: $demo.radial
 				});
 				break;
+
 			case 'graph':
 				openModal(() => import('$lib/Modal/GraphConfig.svelte'), {
 					sel,
 					demo: $demo.graph
 				});
 				break;
+
 			case 'template':
 				openModal(() => import('$lib/Modal/TemplateConfig.svelte'), { sel });
 				break;
+
 			case 'timer':
 				openModal(() => import('$lib/Modal/TimerConfig.svelte'), {
 					sel,
 					demo: $demo.timer
 				});
 				break;
+
 			default:
 				openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), { sel });
 		}
