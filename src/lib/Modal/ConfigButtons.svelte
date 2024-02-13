@@ -109,7 +109,6 @@
 					class="options action"
 					on:click={() => {
 						handleChangeType();
-						$record();
 					}}
 					use:Ripple={$ripple}
 				>
