@@ -20,7 +20,6 @@
 	let reject: boolean;
 	let timeout: ReturnType<typeof setTimeout> | undefined;
 	let selectedService: string | undefined;
-	let unsubscribe: () => void;
 
 	function addCode(key: number) {
 		code += key;
@@ -56,7 +55,6 @@
 	}
 
 	onDestroy(() => {
-		unsubscribe?.();
 		clearTimeout(timeout);
 	});
 

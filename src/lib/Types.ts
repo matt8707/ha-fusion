@@ -93,6 +93,14 @@ export interface Template {
 	};
 }
 
+export interface PersistentNotification {
+	created_at: string;
+	message: string;
+	notification_id: string;
+	title: string;
+	status: 'read' | 'unread';
+}
+
 export type SidebarItem = BarItem &
 	CameraItem &
 	DateItem &

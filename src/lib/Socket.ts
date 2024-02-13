@@ -10,8 +10,9 @@ import {
 	ERR_INVALID_HTTPS_TO_HTTP
 } from 'home-assistant-js-websocket';
 import type { SaveTokensFunc } from 'home-assistant-js-websocket';
-import { states, connection, config, connected, event } from '$lib/Stores';
+import { states, connection, config, connected, event, persistentNotifications } from '$lib/Stores';
 import { closeModal } from 'svelte-modals';
+import type { PersistentNotification } from '$lib/Types';
 
 export const options = {
 	hassUrl: undefined as string | undefined,
@@ -78,7 +79,7 @@ export async function authentication(options: { hassUrl?: string }) {
 			history.replaceState(null, '', location.pathname);
 		}
 
-		// events
+		// custom events
 		const getEvent = (message: any) => {
 			return message?.variables?.trigger?.event?.data?.event;
 		};
@@ -114,6 +115,38 @@ export async function authentication(options: { hassUrl?: string }) {
 					platform: 'event',
 					event_type: 'HA_FUSION'
 				}
+			}
+		);
+
+		// notifications
+		conn?.subscribeMessage(
+			(data: {
+				type: 'added' | 'removed' | 'current' | 'updated';
+				notifications: Record<string, PersistentNotification>;
+			}) => {
+				// initial
+				if (data?.type === 'current') {
+					persistentNotifications.set(data?.notifications);
+
+					// update
+				} else if (data?.type === 'added' || data?.type === 'updated') {
+					persistentNotifications.update((notifications) => ({
+						...notifications,
+						...data?.notifications
+					}));
+
+					// remove
+				} else if (data?.type === 'removed') {
+					persistentNotifications.update((notifications) => {
+						Object.keys(data?.notifications).forEach((notificationId) => {
+							delete notifications[notificationId];
+						});
+						return { ...notifications };
+					});
+				}
+			},
+			{
+				type: 'persistent_notification/subscribe'
 			}
 		);
 	} catch (_error) {

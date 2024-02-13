@@ -127,6 +127,9 @@ dir_keys = [
             ("update_install", ["ui.dialogs.more_info_control.update.install"]),
             ("back", ["ui.common.back"]),
             ("service_data", ["ui.components.service-control.data"]),
+            ("notifications_empty", ["ui.notification_drawer.empty"]),
+            ("notifications", ["ui.notification_drawer.title"]),
+            ("notifications_dismiss", ["ui.notification_toast.dismiss"]),
         ],
     ),
     (  # MEDIA_PLAYER

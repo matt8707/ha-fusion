@@ -22,6 +22,7 @@
 	let Iframe: typeof import('$lib/Sidebar/Iframe.svelte');
 	let Image: typeof import('$lib/Sidebar/Image.svelte');
 	let Navigate: typeof import('$lib/Sidebar/Navigate.svelte');
+	let Notifications: typeof import('$lib/Sidebar/Notifications.svelte');
 	let Radial: typeof import('$lib/Sidebar/Radial.svelte');
 	let Sensor: typeof import('$lib/Sidebar/Sensor.svelte');
 	let Template: typeof import('$lib/Sidebar/Template.svelte');
@@ -41,6 +42,8 @@
 		iframe: () => import('$lib/Sidebar/Iframe.svelte').then((module) => (Iframe = module)),
 		image: () => import('$lib/Sidebar/Image.svelte').then((module) => (Image = module)),
 		navigate: () => import('$lib/Sidebar/Navigate.svelte').then((module) => (Navigate = module)),
+		notifications: () =>
+			import('$lib/Sidebar/Notifications.svelte').then((module) => (Notifications = module)),
 		radial: () => import('$lib/Sidebar/Radial.svelte').then((module) => (Radial = module)),
 		sensor: () => import('$lib/Sidebar/Sensor.svelte').then((module) => (Sensor = module)),
 		template: () => import('$lib/Sidebar/Template.svelte').then((module) => (Template = module)),
@@ -105,6 +108,8 @@
 				openModal(() => import('$lib/Modal/ImageConfig.svelte'), { sel });
 			} else if (sel?.type === 'navigate') {
 				openModal(() => import('$lib/Modal/NavigateConfig.svelte'), { sel });
+			} else if (sel?.type === 'notifications') {
+				openModal(() => import('$lib/Modal/NotificationsConfig.svelte'), { sel });
 			} else if (sel?.type === 'radial') {
 				openModal(() => import('$lib/Modal/RadialConfig.svelte'), { sel });
 			} else if (sel?.type === 'sensor') {
@@ -201,6 +206,7 @@
 					class="sidebar_edit_mode"
 					style:display={item?.type === 'divider' ||
 					item?.type === 'camera' ||
+					item?.type === 'notifications' ||
 					item?.type === 'configure'
 						? 'flex'
 						: 'initial'}
@@ -273,6 +279,12 @@
 					{:else if Iframe && item?.type === 'iframe' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component this={Iframe.default} url={item?.url} size={item?.size} />
+						</button>
+
+						<!-- NOTIFICATIONS -->
+					{:else if Notifications && item?.type === 'notifications'}
+						<button on:click={() => handleClick(item?.id)}>
+							<svelte:component this={Notifications.default} />
 						</button>
 
 						<!-- IMAGE -->
