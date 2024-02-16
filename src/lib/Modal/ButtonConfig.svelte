@@ -37,6 +37,7 @@
 	$: entity_id = sel?.entity_id;
 	let name = sel?.name;
 	let color = sel?.color;
+	let background_color = sel?.background_color;
 	let icon = sel?.icon;
 
 	$: options =
@@ -332,6 +333,67 @@
 				<Icon icon="ph:brackets-curly-bold" height="none" /></button
 			>
 		</div>
+
+		<h2>{'Background'}</h2>
+
+		<div class="icon-gallery-container">
+			<InputClear
+				condition={background_color}
+				on:clear={() => {
+					background_color = undefined;
+					set('background_color');
+				}}
+				let:padding
+			>
+				<input
+					name={'Background'}
+					class="input"
+					type="text"
+					placeholder={sel?.template?.background_color && template?.background_color?.output
+						? template?.background_color?.output
+						: $states?.[sel?.entity_id]?.attributes?.hs_color
+							? `hsl(${$states?.[sel?.entity_id]?.attributes?.hs_color}%, 50%)`
+							: 'rgb(75, 166, 237)'}
+					autocomplete="off"
+					spellcheck="false"
+					bind:value={background_color}
+					on:change={(event) => set('background_color', event)}
+					style:padding
+					disabled={Boolean(template?.background_color?.output)}
+					class:disabled={Boolean(template?.background_color?.output)}
+				/>
+			</InputClear>
+
+			<input
+				type="color"
+				bind:value={background_color}
+				on:click={() => {
+					if (background_color === undefined) {
+						background_color = '#ffffff';
+					}
+				}}
+				on:change={(event) => set('background_color', event)}
+				title={'Background'}
+			/>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={() => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'background_color'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.background_color?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
+		</div>
+
 
 		<h2>{$lang('service')}</h2>
 

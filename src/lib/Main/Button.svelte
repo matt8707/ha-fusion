@@ -31,6 +31,7 @@
 	$: template = $templates?.[sel?.id];
 	$: icon = (sel?.template?.icon && template?.icon?.output) || sel?.icon;
 	$: color = (sel?.template?.color && template?.color?.output) || sel?.color;
+	$: background_color = (sel?.template?.background_color && template?.background_color?.output) || sel?.background_color;
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
 
@@ -434,6 +435,7 @@
 	data-state={stateOn}
 	tabindex="-1"
 	style={!$editMode ? 'cursor: pointer;' : ''}
+	style:background-color={background_color?background_color: undefined}
 	style:height="{$itemHeight}px"
 	on:pointerenter={handlePointer}
 	on:pointerdown={handlePointer}

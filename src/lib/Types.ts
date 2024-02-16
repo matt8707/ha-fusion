@@ -68,6 +68,7 @@ export interface ButtonItem {
 	name?: string;
 	icon?: string;
 	color?: string;
+	background_color?: string;
 	marquee?: boolean;
 	more_info?: boolean;
 	service?: string;
@@ -77,6 +78,7 @@ export interface ButtonItem {
 			name?: string;
 			icon?: string;
 			color?: string;
+			background_color?: string;
 			service?: string;
 		};
 	};
