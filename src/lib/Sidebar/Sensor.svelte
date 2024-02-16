@@ -20,6 +20,8 @@
 <div
 	class="container"
 	class:visible={!entity || state || $editMode}
+	style:padding-top={!entity || state || $editMode ? '' : '0'}
+	style:padding-bottom={!entity || state || $editMode ? '' : '0'}
 	style:transition="grid-template-rows {$motion}ms ease, padding {$motion}ms ease"
 >
 	<div class="expandable">
@@ -62,11 +64,11 @@
 		/* need to specify to properly show emoji */
 		font-family: 'Inter Variable';
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+		padding: var(--theme-sidebar-item-padding);
 	}
 
 	.visible {
 		grid-template-rows: 1fr;
-		padding: var(--theme-sidebar-item-padding);
 	}
 
 	.expandable {
