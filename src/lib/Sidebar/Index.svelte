@@ -205,7 +205,9 @@
 					animate:flip={{ duration: loaded ? $motion : 0 }}
 					class="sidebar_edit_mode"
 					style:display={item?.type === 'divider' ||
+					item?.type === 'date' ||
 					item?.type === 'camera' ||
+					item?.type === 'time' ||
 					item?.type === 'notifications' ||
 					item?.type === 'configure'
 						? 'flex'
@@ -282,9 +284,9 @@
 						</button>
 
 						<!-- NOTIFICATIONS -->
-					{:else if Notifications && item?.type === 'notifications'}
+					{:else if Notifications && item?.type === 'notifications' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Notifications.default} />
+							<svelte:component this={Notifications.default} sel={item} />
 						</button>
 
 						<!-- IMAGE -->

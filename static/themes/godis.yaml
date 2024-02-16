@@ -20,8 +20,8 @@ theme:
   modal-background-color: rgba(0,0,0,0.3)
   border-radius: 0.4rem
   sidebar-font-size: 1.04rem
-  sidebar-item-padding: 0.6rem 0
-  sidebar-padding: 0 2rem
+  sidebar-item-padding: 0.6rem 0.6rem
+  sidebar-padding: 0 1.4rem
   drawer-font-size: 0.95rem
   sidebar-divider: 1px solid rgba(255, 255, 255, 0.3)
   navigate-background-color: rgba(255, 255, 255, 0.15)
