@@ -95,6 +95,7 @@
 	"error_save_yaml": "Tidak dapat menyimpan YAML: {error}",
 	"event_fired": "Peristiwa {type} berhasil dijalankan!",
 	"exit_edit_mode": "Selesai",
+	"expand": "Perluas",
 	"fan": "Kipas angin",
 	"fan_direction": "Arah",
 	"fan_forward": "Depan",

@@ -67,6 +67,7 @@
 	"error_save_yaml": "Unable to save YAML: {error}",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
+	"expand": "\u0e02\u0e22\u0e32\u0e22",
 	"fan_direction": "\u0e17\u0e34\u0e28\u0e17\u0e32\u0e07",
 	"fan_forward": "\u0e02\u0e49\u0e32\u0e07\u0e2b\u0e19\u0e49\u0e32",
 	"fan_oscillate": "\u0e01\u0e32\u0e23\u0e2a\u0e48\u0e32\u0e22",

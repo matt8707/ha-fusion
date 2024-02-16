@@ -95,6 +95,7 @@
 	"error_save_yaml": "No se puede guardar YAML: {error}",
 	"event_fired": "\u00a1Evento {type} disparado con \u00e9xito!",
 	"exit_edit_mode": "Hecho",
+	"expand": "Expandir",
 	"fan": "Ventilador",
 	"fan_direction": "Direcci\u00f3n",
 	"fan_forward": "Adelante",

@@ -66,6 +66,7 @@
 	"error_save_yaml": "Kan ikkje lagre YAML: {error}",
 	"event_fired": "Arrangementet {type} velukka!",
 	"exit_edit_mode": "Ferdig",
+	"expand": "Utvid",
 	"fan_direction": "Retning",
 	"fan_forward": "Framover",
 	"fan_oscillate": "Sving",

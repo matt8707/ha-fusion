@@ -95,6 +95,7 @@
 	"error_save_yaml": "Nepodarilo sa ulo\u017ei\u0165 YAML: {error}",
 	"event_fired": "Udalos\u0165 {type} \u00faspe\u0161ne odoslan\u00e1!",
 	"exit_edit_mode": "Hotovo",
+	"expand": "Rozbali\u0165",
 	"fan": "Ventil\u00e1tor",
 	"fan_direction": "Smer",
 	"fan_forward": "Dopredu",

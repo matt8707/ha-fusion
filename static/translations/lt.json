@@ -95,6 +95,7 @@
 	"error_save_yaml": "Ne\u012fmanoma \u012fra\u0161yti YAML: {error}",
 	"event_fired": "\u012evykis {type} s\u0117kmingai aktyvuotas!",
 	"exit_edit_mode": "Atlikta",
+	"expand": "I\u0161skleisti",
 	"fan": "Ventiliatorius",
 	"fan_direction": "Kryptis",
 	"fan_forward": "Pirmyn",

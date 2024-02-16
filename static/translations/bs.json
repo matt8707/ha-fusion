@@ -64,6 +64,7 @@
 	"error_save_yaml": "Nije mogu\u0107e sa\u010duvati YAML: {error}",
 	"event_fired": "Doga\u0111aj {type} uspje\u0161no pokrenut!",
 	"exit_edit_mode": "Gotovo",
+	"expand": "Pro\u0161iriti",
 	"fan_direction": "Smjer",
 	"fan_forward": "Naprijed",
 	"fan_oscillate": "Oscilirati",

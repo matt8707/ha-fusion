@@ -94,6 +94,7 @@
 	"error_save_yaml": "Imposibil de salvat YAML: {error}",
 	"event_fired": "Evenimentul {type} declan\u0219at cu succes!",
 	"exit_edit_mode": "Am terminat",
+	"expand": "Extindere",
 	"fan": "Ventilator",
 	"fan_direction": "Direc\u0163ie",
 	"fan_forward": "\u00cenainte",

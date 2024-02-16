@@ -95,6 +95,7 @@
 	"error_save_yaml": "Kan YAML niet opslaan: {error}",
 	"event_fired": "Gebeurtenis {type} met succes uitgevoerd!",
 	"exit_edit_mode": "Klaar",
+	"expand": "Uitbreiden",
 	"fan": "Ventilator",
 	"fan_direction": "Richting",
 	"fan_forward": "Voorwaarts",

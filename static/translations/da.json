@@ -93,6 +93,7 @@
 	"error_save_yaml": "Kunne ikke gemme YAML: {error}",
 	"event_fired": "H\u00e6ndelse {type} blev afsendt!",
 	"exit_edit_mode": "F\u00e6rdig",
+	"expand": "Udvid",
 	"fan": "Bl\u00e6ser",
 	"fan_direction": "Retning",
 	"fan_forward": "Frem",

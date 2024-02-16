@@ -130,6 +130,7 @@ dir_keys = [
             ("notifications_empty", ["ui.notification_drawer.empty"]),
             ("notifications", ["ui.notification_drawer.title"]),
             ("notifications_dismiss", ["ui.notification_toast.dismiss"]),
+            ("expand", ["ui.components.target-picker.expand"]),
         ],
     ),
     (  # MEDIA_PLAYER
