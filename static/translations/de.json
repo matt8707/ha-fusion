@@ -95,6 +95,7 @@
 	"error_save_yaml": "YAML konnte nicht gespeichert werden: {error}",
 	"event_fired": "Ereignis {type} erfolgreich ausgel\u00f6st!",
 	"exit_edit_mode": "Fertig",
+	"expand": "Erweitern",
 	"fan": "L\u00fcfter",
 	"fan_direction": "Richtung",
 	"fan_forward": "Vorw\u00e4rts",

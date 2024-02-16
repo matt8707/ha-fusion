@@ -64,6 +64,7 @@
 	"error_save_yaml": "Kann de YAML net sp\u00e4icheren: {error}",
 	"event_fired": "Event {type} erfollegr\u00e4ich gestart",
 	"exit_edit_mode": "Benotzer Interface Edit\u00e9ierungsmodus verloossen",
+	"expand": "Expand",
 	"fan_direction": "Richtung",
 	"fan_forward": "Vir",
 	"fan_oscillate": "Pendele",

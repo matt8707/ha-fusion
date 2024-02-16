@@ -95,6 +95,7 @@
 	"error_save_yaml": "YAML-i ei saa salvestada: {error}",
 	"event_fired": "S\u00fcndmus {type} vallandus edukalt!",
 	"exit_edit_mode": "Valmis",
+	"expand": "Laienda",
 	"fan": "Vent",
 	"fan_direction": "Suund",
 	"fan_forward": "Edaspidi",

@@ -95,6 +95,7 @@
 	"error_save_yaml": "Impossible d'enregistrer le YAML\u00a0: {error}",
 	"event_fired": "L'\u00e9v\u00e9nement {type} a \u00e9t\u00e9 d\u00e9clench\u00e9 avec succ\u00e8s\u00a0!",
 	"exit_edit_mode": "Termin\u00e9",
+	"expand": "D\u00e9velopper",
 	"fan": "Ventile",
 	"fan_direction": "Direction",
 	"fan_forward": "En avant",

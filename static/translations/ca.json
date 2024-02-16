@@ -95,6 +95,7 @@
 	"error_save_yaml": "No es pot desar YAML: {error}",
 	"event_fired": "Esdeveniment {type} disparat correctament!",
 	"exit_edit_mode": "Fet",
+	"expand": "Expandeix",
 	"fan": "Ventilaci\u00f3",
 	"fan_direction": "Direcci\u00f3",
 	"fan_forward": "Endavant",

@@ -63,6 +63,7 @@
 	"error_save_yaml": "Ne eblas konservi YAML: {error}",
 	"event_fired": "Evento {type} sukcese furoris!",
 	"exit_edit_mode": "Eliri UI-redaktre\u011dimon",
+	"expand": "Expand",
 	"fan_direction": "Direction",
 	"fan_forward": "Forward",
 	"fan_oscillate": "Oscillate",

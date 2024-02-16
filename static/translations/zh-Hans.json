@@ -63,6 +63,7 @@
 	"error_save_yaml": "\u65e0\u6cd5\u4fdd\u5b58 YAML\uff1a{error}",
 	"event_fired": "\u4e8b\u4ef6 {type} \u6210\u529f\u89e6\u53d1\uff01",
 	"exit_edit_mode": "\u5b8c\u6210",
+	"expand": "\u5c55\u5f00",
 	"fan_direction": "\u65b9\u5411",
 	"fan_forward": "\u6b63\u5411",
 	"fan_oscillate": "\u6447\u5934",

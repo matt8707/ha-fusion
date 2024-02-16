@@ -95,6 +95,7 @@
 	"error_save_yaml": "Nie mo\u017cna zapisa\u0107 YAML: {error}",
 	"event_fired": "Uda\u0142o si\u0119 wywo\u0142a\u0107 zdarzenie {type}!",
 	"exit_edit_mode": "Gotowe",
+	"expand": "Rozwi\u0144",
 	"fan": "wentylator",
 	"fan_direction": "Kierunek",
 	"fan_forward": "Naprz\u00f3d",
