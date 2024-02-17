@@ -26,6 +26,7 @@
 	export let isOpen: boolean;
 	export let sel: ButtonItem;
 	export let type: 'set_state' | 'name' | 'icon' | 'color' | 'service' | 'state'| 'background_color' | 'title_color' |'state_color';
+	export let typeTitle:string;
 
 	let template = sel?.template?.[type];
 	let modalTransitionEnd = false;
@@ -108,7 +109,7 @@
 
 {#if isOpen}
 	<Modal on:transitionend={handleEvent}>
-		<h1 slot="title">{$lang(type)}</h1>
+		<h1 slot="title">{typeTitle}</h1>
 
 		<h2>
 			{$lang('preview')}

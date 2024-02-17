@@ -161,7 +161,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'set_state'
+						type: 'set_state',
+						typeTitle: $lang('entity')
 					});
 				}}
 				style:padding="0.85rem"
@@ -207,7 +208,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'name'
+						type: 'name',
+						typeTitle: $lang('name')
 					});
 				}}
 				style:padding="0.85rem"
@@ -253,7 +255,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'state'
+						type: 'state',
+						typeTitle: $lang('state')
 					});
 				}}
 				style:padding="0.85rem"
@@ -313,7 +316,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'icon'
+						type: 'icon',
+						typeTitle: $lang('icon')
 					});
 				}}
 				style:padding="0.85rem"
@@ -373,7 +377,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'color'
+						type: 'color',
+						typeTitle: $lang('color')
 					});
 				}}
 				style:padding="0.85rem"
@@ -383,7 +388,7 @@
 			>
 		</div>
 
-		<h2>{'Background'}</h2>
+		<h2>{$lang('color')} ({$lang('button')})</h2>
 
 		<div class="icon-gallery-container">
 			<InputClear
@@ -395,7 +400,7 @@
 				let:padding
 			>
 				<input
-					name={'Background'}
+					name={$lang('color') + ' (' + $lang('button') + ')'}
 					class="input"
 					type="text"
 					placeholder={sel?.template?.background_color && template?.background_color?.output
@@ -422,7 +427,7 @@
 					}
 				}}
 				on:change={(event) => set('background_color', event)}
-				title={'Background'}
+				title={$lang('color') + ' (' + $lang('button') + ')'}
 			/>
 
 			<button
@@ -433,7 +438,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'background_color'
+						type: 'background_color',
+						typeTitle: $lang('color') + ' (' + $lang('button') + ')'
 					});
 				}}
 				style:padding="0.85rem"
@@ -443,7 +449,7 @@
 			>
 		</div>
 
-		<h2>{'TitleColor'}</h2>
+		<h2>{$lang('color')} ({$lang('name')})</h2>
 
 		<div class="icon-gallery-container">
 			<InputClear
@@ -455,7 +461,7 @@
 				let:padding
 			>
 				<input
-					name={'TitleColor'}
+					name={$lang('color') + ' (' + $lang('name') + ')'}
 					class="input"
 					type="text"
 					placeholder={sel?.template?.title_color && template?.title_color?.output
@@ -482,7 +488,7 @@
 					}
 				}}
 				on:change={(event) => set('title_color', event)}
-				title={'TitleColor'}
+				title={$lang('color') + ' (' + $lang('name') + ')'}
 			/>
 
 			<button
@@ -493,7 +499,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'title_color'
+						type: 'title_color',
+						typeTitle: $lang('color') + ' (' + $lang('name') + ')'
 					});
 				}}
 				style:padding="0.85rem"
@@ -503,7 +510,7 @@
 			>
 		</div>
 
-		<h2>{'StateColor'}</h2>
+		<h2>{$lang('color')} ({$lang('state')})</h2>
 
 		<div class="icon-gallery-container">
 			<InputClear
@@ -515,7 +522,7 @@
 				let:padding
 			>
 				<input
-					name={'StateColor'}
+					name={$lang('color') + ' (' + $lang('state') + ')'}
 					class="input"
 					type="text"
 					placeholder={sel?.template?.state_color && template?.state_color?.output
@@ -542,7 +549,7 @@
 					}
 				}}
 				on:change={(event) => set('state_color', event)}
-				title={'StateColor'}
+				title={$lang('color') + ' (' + $lang('state') + ')'}
 			/>
 
 			<button
@@ -553,7 +560,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'state_color'
+						type: 'state_color',
+						typeTitle: $lang('color') + ' (' + $lang('state') + ')'
 					});
 				}}
 				style:padding="0.85rem"
@@ -585,7 +593,8 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'service'
+						type: 'service',
+						typeTitle: $lang('service')
 					});
 				}}
 				style:padding="0.85rem"
