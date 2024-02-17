@@ -95,6 +95,7 @@
 	"error_save_yaml": "YAML\uc744 \uc800\uc7a5\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4: {error}",
 	"event_fired": "{type} \uc774\ubca4\ud2b8\uac00 \uc131\uacf5\uc801\uc73c\ub85c \ubc1c\ud589\ub418\uc5c8\uc2b5\ub2c8\ub2e4!",
 	"exit_edit_mode": "\uc644\ub8cc",
+	"expand": "\ud655\uc7a5\ud558\uae30",
 	"fan": "\uc1a1\ud48d",
 	"fan_direction": "\ubc29\ud5a5",
 	"fan_forward": "\uc55e\uc73c\ub85c",

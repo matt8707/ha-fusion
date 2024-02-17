@@ -74,8 +74,10 @@ export interface ButtonItem {
 	marquee?: boolean;
 	more_info?: boolean;
 	service?: string;
+	state: any;
 	template?: {
 		[key: string]: {
+			set_state?: string;
 			state?: string;
 			name?: string;
 			icon?: string;

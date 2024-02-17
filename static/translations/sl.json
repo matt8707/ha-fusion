@@ -78,6 +78,7 @@
 	"error_save_yaml": "YAML-a ni mogo\u010de shraniti: {error}",
 	"event_fired": "Dogodek {type} uspe\u0161no zagnan!",
 	"exit_edit_mode": "Kon\u010dano",
+	"expand": "Raz\u0161iri",
 	"fan_direction": "Smer",
 	"fan_forward": "Naprej",
 	"fan_only": "Samo ventilacija",

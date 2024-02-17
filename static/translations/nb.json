@@ -92,6 +92,7 @@
 	"error_save_yaml": "Kan ikke lagre YAML: {error}",
 	"event_fired": "Arrangementet {type} vellykket!",
 	"exit_edit_mode": "Ferdig",
+	"expand": "Utvide",
 	"fan": "Vifte",
 	"fan_direction": "Retning",
 	"fan_forward": "Framover",

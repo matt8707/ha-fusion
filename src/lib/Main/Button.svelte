@@ -82,9 +82,9 @@
 	// icon is image if extension, e.g. test.png
 	$: image = icon?.includes('.');
 
-	$: if (sel?.template?.state && template?.state?.output) {
+	$: if (sel?.template?.set_state && template?.set_state?.output) {
 		// template
-		stateOn = $onStates?.includes(template?.state?.output?.toLocaleLowerCase());
+		stateOn = $onStates?.includes(template?.set_state?.output?.toLocaleLowerCase());
 	} else if (attributes?.hvac_action) {
 		// climate
 		stateOn = $onStates?.includes(
@@ -516,16 +516,20 @@
 		<div class="state" data-state={stateOn} style:color={state_color?state_color:undefined}>
 			{#if marquee}
 				<div style="width: min-content;" bind:clientWidth={contentWidth}>
-					{#if sel?.template?.state && template?.state?.output}
-						{@html sel?.template?.state && $lang(template?.state?.output)}
+					{#if sel?.state || (sel?.template?.state && template?.state?.output)}
+						{@html sel?.state || template?.state?.output}
+					{:else if sel?.template?.set_state && template?.set_state?.output}
+						{@html sel?.template?.set_state && $lang(template?.set_state?.output)}
 					{:else}
 						<StateLogic {entity_id} selected={sel} {contentWidth} />
 					{/if}
 				</div>
 			{:else}
 				<div style="overflow: hidden; text-overflow: ellipsis;">
-					{#if sel?.template?.state && template?.state?.output}
-						{@html sel?.template?.state && $lang(template?.state?.output)}
+					{#if sel?.state || (sel?.template?.state && template?.state?.output)}
+						{@html sel?.state || template?.state?.output}
+					{:else if sel?.template?.set_state && template?.set_state?.output}
+						{@html sel?.template?.set_state && $lang(template?.set_state?.output)}
 					{:else}
 						<StateLogic {entity_id} selected={sel} {contentWidth} />
 					{/if}

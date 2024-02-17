@@ -95,6 +95,7 @@
 	"error_save_yaml": "Nelze ulo\u017eit YAML: {error}",
 	"event_fired": "Ud\u00e1lost {type} \u00fasp\u011b\u0161n\u011b spu\u0161t\u011bna!",
 	"exit_edit_mode": "Hotovo",
+	"expand": "Rozbalit",
 	"fan": "V\u011btr\u00e1n\u00ed",
 	"fan_direction": "Sm\u011br",
 	"fan_forward": "Vp\u0159ed",

@@ -90,6 +90,7 @@
 	"error_save_yaml": "Kh\u00f4ng th\u1ec3 l\u01b0u YAML: {error}",
 	"event_fired": "S\u1ef1 ki\u1ec7n {type} \u0111\u00e3 \u0111\u01b0\u1ee3c k\u00edch ho\u1ea1t th\u00e0nh c\u00f4ng!",
 	"exit_edit_mode": "Xong",
+	"expand": "M\u1edf r\u1ed9ng",
 	"fan": "Qu\u1ea1t",
 	"fan_direction": "H\u01b0\u1edbng",
 	"fan_forward": "V\u1ec1 ph\u00eda tr\u01b0\u1edbc",

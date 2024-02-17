@@ -95,6 +95,7 @@
 	"error_save_yaml": "Impossibile salvare YAML: {error}",
 	"event_fired": "Evento {type} eseguito correttamente!",
 	"exit_edit_mode": "Fatto",
+	"expand": "Espandi",
 	"fan": "Ventilatore",
 	"fan_direction": "Direzione",
 	"fan_forward": "Avanti",

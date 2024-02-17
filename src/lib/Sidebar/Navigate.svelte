@@ -115,7 +115,7 @@
 	.selected {
 		background-color: var(--theme-navigate-background-color);
 		border-radius: 0.4rem;
-		width: calc(100% + 1.2rem);
+		width: 100%;
 	}
 
 	.navigate {

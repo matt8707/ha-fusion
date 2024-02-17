@@ -25,7 +25,7 @@
 
 	export let isOpen: boolean;
 	export let sel: ButtonItem;
-	export let type: 'state' | 'name' | 'icon' | 'color' | 'service'| 'background_color' | 'title_color' |'state_color';
+	export let type: 'set_state' | 'name' | 'icon' | 'color' | 'service' | 'state'| 'background_color' | 'title_color' |'state_color';
 
 	let template = sel?.template?.[type];
 	let modalTransitionEnd = false;
@@ -142,7 +142,7 @@
 		<h2>{$lang('shortcuts')}</h2>
 
 		<div class="container">
-			{#if type === 'state'}
+			{#if type === 'set_state' || type === 'state'}
 				<button
 					class="template-example"
 					on:click={() => {
@@ -460,7 +460,7 @@ data: {}`;
 					sel.template[type] = event.detail;
 
 					// example, remove sel.icon in favour of sel.template.icon
-					if (type !== 'state') {
+					if (type !== 'set_state') {
 						delete sel[type];
 					}
 

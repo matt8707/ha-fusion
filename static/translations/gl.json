@@ -67,6 +67,7 @@
 	"error_save_yaml": "Incapaz de gardar YAML: {error}",
 	"event_fired": "O evento {type} disparouse con \u00e9xito!",
 	"exit_edit_mode": "Feito",
+	"expand": "Expandir",
 	"fan_direction": "Direcci\u00f3n",
 	"fan_forward": "Adiante",
 	"fan_oscillate": "Oscilaci\u00f3n",

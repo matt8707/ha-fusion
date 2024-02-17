@@ -41,6 +41,7 @@
 	let title_color = sel?.title_color;
 	let state_color = sel?.state_color;
 	let icon = sel?.icon;
+	let state = sel?.state;
 
 	$: options =
 		$states &&
@@ -160,11 +161,11 @@
 					if (!sel?.id) return;
 					openModal(() => import('$lib/Modal/Templater.svelte'), {
 						sel,
-						type: 'state'
+						type: 'set_state'
 					});
 				}}
 				style:padding="0.85rem"
-				class:template-active={template?.state?.output}
+				class:template-active={template?.set_state?.output}
 			>
 				<Icon icon="ph:brackets-curly-bold" height="none" />
 			</button>
@@ -211,6 +212,52 @@
 				}}
 				style:padding="0.85rem"
 				class:template-active={template?.name?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
+		</div>
+
+		<h2>{$lang('state')}</h2>
+
+		<div class="icon-gallery-container">
+			<InputClear
+				condition={state}
+				on:clear={() => {
+					state = undefined;
+					set('state');
+				}}
+				let:padding
+			>
+				<input
+					name={$lang('state')}
+					class="input"
+					type="text"
+					placeholder={template?.state?.output ||
+						(entity_id && $states?.[entity_id]?.state) ||
+						$lang('state')}
+					autocomplete="off"
+					spellcheck="false"
+					bind:value={state}
+					on:change={(event) => set('state', event)}
+					style:padding
+					disabled={Boolean(template?.state?.output)}
+					class:disabled={Boolean(template?.state?.output)}
+				/>
+			</InputClear>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={async () => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'state'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.state?.output}
 			>
 				<Icon icon="ph:brackets-curly-bold" height="none" /></button
 			>

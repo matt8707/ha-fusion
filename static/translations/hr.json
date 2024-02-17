@@ -64,6 +64,7 @@
 	"error_save_yaml": "Nije mogu\u0107e spremiti YAML: {error}",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
+	"expand": "Expand",
 	"fan_direction": "Smjer",
 	"fan_forward": "Naprijed",
 	"fan_oscillate": "Oscilirati",

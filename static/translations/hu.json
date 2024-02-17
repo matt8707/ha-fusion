@@ -95,6 +95,7 @@
 	"error_save_yaml": "Nem siker\u00fclt menteni a YAML-t: {error}",
 	"event_fired": "{type} esem\u00e9ny sikeresen megh\u00edvva!",
 	"exit_edit_mode": "K\u00e9sz",
+	"expand": "Kiterjeszt\u00e9s",
 	"fan": "Ventil\u00e1tor",
 	"fan_direction": "Ir\u00e1ny",
 	"fan_forward": "El\u0151re",

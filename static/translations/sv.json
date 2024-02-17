@@ -95,6 +95,7 @@
 	"error_save_yaml": "Det gick inte att spara YAML: {error}",
 	"event_fired": "H\u00e4ndelse {type} utl\u00f6stes!",
 	"exit_edit_mode": "Avsluta UI-redigeringsl\u00e4ge",
+	"expand": "Expandera",
 	"fan": "Fl\u00e4kt",
 	"fan_direction": "Riktning",
 	"fan_forward": "Fram\u00e5t",

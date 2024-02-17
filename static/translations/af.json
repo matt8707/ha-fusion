@@ -64,6 +64,7 @@
 	"error_save_yaml": "Kan nie YAML stoor nie: {error}",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Verlaat UI-wysigingsmodus",
+	"expand": "Expand",
 	"fan_direction": "Rigting",
 	"fan_forward": "Forward",
 	"fan_oscillate": "Ossilleer",

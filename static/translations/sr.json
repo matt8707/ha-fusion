@@ -76,6 +76,7 @@
 	"error_save_yaml": "Unable to save YAML: {error}",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
+	"expand": "Pro\u0161iri",
 	"fan_direction": "Direction",
 	"fan_forward": "Forward",
 	"fan_only": "Ventilator",

@@ -94,6 +94,7 @@
 	"error_save_yaml": "N\u00e3o foi poss\u00edvel guardar o c\u00f3digo YAML: {error}",
 	"event_fired": "Evento {type} espoletado com sucesso!",
 	"exit_edit_mode": "Feito",
+	"expand": "Expandir",
 	"fan": "Ventila\u00e7\u00e3o",
 	"fan_direction": "Dire\u00e7\u00e3o",
 	"fan_forward": "Para a frente",
