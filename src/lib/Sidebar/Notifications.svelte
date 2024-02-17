@@ -7,7 +7,8 @@
 		persistentNotifications,
 		selectedLanguage,
 		timer,
-		ripple
+		ripple,
+		configuration
 	} from '$lib/Stores';
 	import { relativeTime } from '$lib/Utils';
 	import { callService } from 'home-assistant-js-websocket';
@@ -17,6 +18,9 @@
 
 	export let sel: any;
 	let expanded = false;
+
+	$: length = Object.entries($persistentNotifications)?.length;
+	$: empty = length < 1;
 
 	function handleClick(key: string) {
 		if ($editMode) return;
@@ -31,8 +35,24 @@
 		});
 	}
 
-	$: length = Object.entries($persistentNotifications)?.length;
-	$: empty = length < 1;
+	// modify markdown links
+	marked.setOptions({
+		renderer: (() => {
+			const renderer = new marked.Renderer();
+			const linkRenderer = renderer.link;
+			renderer.link = (href, title, text) => {
+				const localLink = href.startsWith('/');
+
+				if (localLink && $configuration?.hassUrl) {
+					href = `${$configuration?.hassUrl}${href}`;
+				}
+
+				const html = linkRenderer.call(renderer, href, title, text);
+				return html.replace(/^<a /, `<a target="_blank" `);
+			};
+			return renderer;
+		})()
+	});
 </script>
 
 {#if sel?.expand === false || (empty && $editMode)}
@@ -99,6 +119,11 @@
 							.notification-title p,
 							.notification-message p {
 								all: unset;
+							}
+
+							.notification-title a,
+							.notification-message a {
+								color: rgb(36 167 255);
 							}
 						</style>
 					</div>
