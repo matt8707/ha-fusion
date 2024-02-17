@@ -32,6 +32,7 @@
 	$: icon = (sel?.template?.icon && template?.icon?.output) || sel?.icon;
 	$: color = (sel?.template?.color && template?.color?.output) || sel?.color;
 	$: background_color = (sel?.template?.background_color && template?.background_color?.output) || sel?.background_color;
+	$: title_color = (sel?.template?.title_color && template?.title_color?.output) || sel?.title_color;
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
 
@@ -499,7 +500,10 @@
 
 	<div class="right" on:click|stopPropagation={handleEvent}>
 		<!-- NAME -->
-		<div class="name" data-state={stateOn}>
+		<div class="name" 
+		data-state={stateOn}
+		style:color={title_color?title_color: undefined}
+		>
 			{@html (sel?.template?.name && template?.name?.output) ||
 				getName(sel, entity, sectionName) ||
 				$lang('unknown')}

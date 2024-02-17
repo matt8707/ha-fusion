@@ -38,6 +38,7 @@
 	let name = sel?.name;
 	let color = sel?.color;
 	let background_color = sel?.background_color;
+	let title_color = sel?.title_color;
 	let icon = sel?.icon;
 
 	$: options =
@@ -389,6 +390,66 @@
 				}}
 				style:padding="0.85rem"
 				class:template-active={template?.background_color?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
+		</div>
+
+		<h2>{'TitleColor'}</h2>
+
+		<div class="icon-gallery-container">
+			<InputClear
+				condition={title_color}
+				on:clear={() => {
+					title_color = undefined;
+					set('title_color');
+				}}
+				let:padding
+			>
+				<input
+					name={'TitleColor'}
+					class="input"
+					type="text"
+					placeholder={sel?.template?.title_color && template?.title_color?.output
+						? template?.title_color?.output
+						: $states?.[sel?.entity_id]?.attributes?.hs_color
+							? `hsl(${$states?.[sel?.entity_id]?.attributes?.hs_color}%, 50%)`
+							: 'rgb(75, 166, 237)'}
+					autocomplete="off"
+					spellcheck="false"
+					bind:value={title_color}
+					on:change={(event) => set('title_color', event)}
+					style:padding
+					disabled={Boolean(template?.title_color?.output)}
+					class:disabled={Boolean(template?.title_color?.output)}
+				/>
+			</InputClear>
+
+			<input
+				type="color"
+				bind:value={title_color}
+				on:click={() => {
+					if (title_color === undefined) {
+						title_color = '#ffffff';
+					}
+				}}
+				on:change={(event) => set('title_color', event)}
+				title={'TitleColor'}
+			/>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={() => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'title_color'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.title_color?.output}
 			>
 				<Icon icon="ph:brackets-curly-bold" height="none" /></button
 			>
