@@ -70,6 +70,7 @@ export interface ButtonItem {
 	color?: string;
 	background_color?: string;
 	title_color?: string;
+	state_color?: string;
 	marquee?: boolean;
 	more_info?: boolean;
 	service?: string;
@@ -81,6 +82,7 @@ export interface ButtonItem {
 			color?: string;
 			background_color?: string;
 			title_color?: string;
+			state_color?: string;
 			service?: string;
 		};
 	};

@@ -25,7 +25,7 @@
 
 	export let isOpen: boolean;
 	export let sel: ButtonItem;
-	export let type: 'state' | 'name' | 'icon' | 'color' | 'service'| 'background_color' | 'title_color';
+	export let type: 'state' | 'name' | 'icon' | 'color' | 'service'| 'background_color' | 'title_color' |'state_color';
 
 	let template = sel?.template?.[type];
 	let modalTransitionEnd = false;
@@ -342,6 +342,35 @@
 					<span class="yellow">%&rbrace;</span>
 				</button>
 			{:else if type === 'title_color'}
+				<button
+					class="template-example"
+					on:click={() => {
+						$pasteContent = `{% if is_state(entity_id, "on") %}
+  green
+{% else %}
+  darkred
+{% endif %}`;
+					}}
+					use:Ripple={$ripple}
+				>
+					<span class="yellow">&lbrace;%</span>
+					<span class="purple">if</span>
+					<span class="red"
+						>is_state(entity_id,
+						<span class="green">"on"</span>)
+					</span>
+					<span class="yellow">%&rbrace;</span>
+					green
+					<span class="yellow">&lbrace;%</span>
+					<span class="purple">else</span>
+					<span class="yellow">%&rbrace;</span>
+					darkred
+					<span class="yellow">&lbrace;%</span>
+					<span class="purple">endif</span>
+					<span class="yellow">%&rbrace;</span>
+				</button>				
+											
+			{:else if type === 'state_color'}
 				<button
 					class="template-example"
 					on:click={() => {

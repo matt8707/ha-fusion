@@ -39,6 +39,7 @@
 	let color = sel?.color;
 	let background_color = sel?.background_color;
 	let title_color = sel?.title_color;
+	let state_color = sel?.state_color;
 	let icon = sel?.icon;
 
 	$: options =
@@ -455,6 +456,65 @@
 			>
 		</div>
 
+		<h2>{'StateColor'}</h2>
+
+		<div class="icon-gallery-container">
+			<InputClear
+				condition={state_color}
+				on:clear={() => {
+					state_color = undefined;
+					set('state_color');
+				}}
+				let:padding
+			>
+				<input
+					name={'StateColor'}
+					class="input"
+					type="text"
+					placeholder={sel?.template?.state_color && template?.state_color?.output
+						? template?.state_color?.output
+						: $states?.[sel?.entity_id]?.attributes?.hs_color
+							? `hsl(${$states?.[sel?.entity_id]?.attributes?.hs_color}%, 50%)`
+							: 'rgb(75, 166, 237)'}
+					autocomplete="off"
+					spellcheck="false"
+					bind:value={state_color}
+					on:change={(event) => set('state_color', event)}
+					style:padding
+					disabled={Boolean(template?.state_color?.output)}
+					class:disabled={Boolean(template?.state_color?.output)}
+				/>
+			</InputClear>
+
+			<input
+				type="color"
+				bind:value={state_color}
+				on:click={() => {
+					if (state_color === undefined) {
+						state_color = '#ffffff';
+					}
+				}}
+				on:change={(event) => set('state_color', event)}
+				title={'StateColor'}
+			/>
+
+			<button
+				use:Ripple={$ripple}
+				title={$lang('template')}
+				class="icon-gallery"
+				on:click={() => {
+					if (!sel?.id) return;
+					openModal(() => import('$lib/Modal/Templater.svelte'), {
+						sel,
+						type: 'state_color'
+					});
+				}}
+				style:padding="0.85rem"
+				class:template-active={template?.state_color?.output}
+			>
+				<Icon icon="ph:brackets-curly-bold" height="none" /></button
+			>
+		</div>		
 
 		<h2>{$lang('service')}</h2>
 

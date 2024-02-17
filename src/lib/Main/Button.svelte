@@ -33,6 +33,7 @@
 	$: color = (sel?.template?.color && template?.color?.output) || sel?.color;
 	$: background_color = (sel?.template?.background_color && template?.background_color?.output) || sel?.background_color;
 	$: title_color = (sel?.template?.title_color && template?.title_color?.output) || sel?.title_color;
+	$: state_color = (sel?.template?.state_color && template?.state_color?.output) || sel?.state_color;
 	$: marquee = sel?.marquee;
 	$: more_info = sel?.more_info;
 
@@ -512,7 +513,7 @@
 		<!-- STATE -->
 
 		<!-- only bind clientWidth if marquee is set and use svelte-fast-dimension -->
-		<div class="state" data-state={stateOn}>
+		<div class="state" data-state={stateOn} style:color={state_color?state_color:undefined}>
 			{#if marquee}
 				<div style="width: min-content;" bind:clientWidth={contentWidth}>
 					{#if sel?.template?.state && template?.state?.output}
