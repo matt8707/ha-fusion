@@ -185,10 +185,12 @@
 
 	.icon {
 		flex-shrink: 1;
-		width: 3.1rem;
-		height: 3.1rem;
+		width: 3.35rem;
+		height: 3.35rem;
 		align-self: center;
 		margin-bottom: -0.2rem;
+		margin-left: -0.25rem;
+		margin-top: -0.05rem;
 	}
 
 	.column {
@@ -196,7 +198,7 @@
 		flex-direction: column;
 		margin-left: 0.2rem;
 		flex-grow: 1;
-		margin-left: 0.5rem;
+		margin-left: 0.6rem;
 	}
 
 	.name {

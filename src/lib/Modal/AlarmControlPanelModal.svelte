@@ -106,7 +106,6 @@
 			<h2>{$lang('alarm_modes_label')}</h2>
 
 			<Select
-				customItems={true}
 				{options}
 				placeholder={$lang('alarm_modes_label')}
 				value={'alarm_disarm'}

@@ -100,7 +100,7 @@
 			'input',
 			'pre',
 			'[class^="cm-"]', // codemirror
-			'[class^="sv-"]', // svelecte
+			'[slot="item"]', // select
 			'[class^="maplibregl-"]', // maplibre
 			'.IroHandle, .IroSliderGradient, .IroWheelBorder' // iro
 		];

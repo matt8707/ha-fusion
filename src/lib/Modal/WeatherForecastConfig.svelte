@@ -27,9 +27,9 @@
 	}
 
 	const iconOptions = [
-		{ id: 'materialsymbolslight', name: 'materialsymbolslight' },
-		{ id: 'meteocons', name: 'meteocons' },
-		{ id: 'weathericons', name: 'weather icons' }
+		{ id: 'materialsymbolslight', label: 'materialsymbolslight' },
+		{ id: 'meteocons', label: 'meteocons' },
+		{ id: 'weathericons', label: 'weather icons' }
 	];
 
 	$: weatherStates = Object.keys(
@@ -83,7 +83,8 @@
 
 		{#if weatherStates}
 			<Select
-				customItems={true}
+				computeIcons={true}
+				defaultIcon="mdi:weather-cloudy"
 				options={weatherStates}
 				placeholder={$lang('entity')}
 				value={sel?.entity_id}

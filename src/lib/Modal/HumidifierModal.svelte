@@ -115,8 +115,7 @@
 
 			<Select
 				{options}
-				customItems={true}
-				placeholder={$lang('humidifier_mode')}
+				placeholder={$lang('mode')}
 				value={attr?.mode}
 				on:change={(event) => {
 					handleEvent('set_mode', event?.detail);

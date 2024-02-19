@@ -115,13 +115,13 @@
 	.selected {
 		background-color: var(--theme-navigate-background-color);
 		border-radius: 0.4rem;
-		width: 100%;
 	}
 
 	.navigate {
 		z-index: 0;
 		position: absolute;
 		pointer-events: none;
+		width: 100%;
 	}
 
 	.name {

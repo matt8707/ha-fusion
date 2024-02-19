@@ -119,7 +119,6 @@
 
 			<Select
 				{options}
-				customItems={true}
 				placeholder={$lang('mode')}
 				value={attributes?.operation_mode}
 				on:change={(event) => {

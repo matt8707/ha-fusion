@@ -1,15 +1,19 @@
 <script lang="ts">
-	import { computedIconString, states } from '$lib/Stores';
+	import { states } from '$lib/Stores';
 	import Icon from '@iconify/svelte';
 	import { getDomain } from '$lib/Utils';
+	import { createEventDispatcher, onMount } from 'svelte';
 
 	export let entity_id: string;
+	export let getIconString: boolean | undefined = undefined;
 
 	let stateObj: any;
 	let currentIcon: string | undefined;
 
 	$: if (entity_id) stateObj = $states?.[entity_id];
 	$: state = stateObj?.state;
+
+	const dispatch = createEventDispatcher();
 
 	const FIXED_DEVICE_CLASS_ICONS: any = {
 		apparent_power: 'flash',
@@ -465,34 +469,46 @@
 		'windy-variant': 'weather-windy-variant'
 	};
 
-	$: {
-		currentIcon = undefined;
-		if ($states && entity_id) {
-			const entity = $states[entity_id];
-			const domain = getDomain(entity?.entity_id || entity_id);
+	function dispatchIconString() {
+		if (!getIconString) return;
 
-			if (entity?.attributes?.entity_picture && domain !== 'update') {
-				currentIcon = 'entity_picture';
-			} else if (entity?.attributes?.icon && String(entity.attributes.icon).startsWith('mdi')) {
-				currentIcon = entity.attributes.icon.toString();
-			} else if (domain === 'weather' && entity?.state) {
-				currentIcon = 'mdi:' + WEATHER_ICONS[entity.state];
-			} else if (domain) {
-				const defaultIcon = (ICONS as Record<string, string>)[domain];
-				if (defaultIcon) {
-					currentIcon = 'mdi:' + defaultIcon;
-				} else if (!entity) {
-					// it's a service with no icon
-					currentIcon = 'mdi:room-service';
-				}
+		const icon = currentIcon
+			? currentIcon === 'entity_picture'
+				? $states?.[entity_id]?.attributes?.entity_picture
+				: currentIcon
+			: undefined;
+
+		dispatch('iconString', icon);
+	}
+
+	onMount(() => {
+		dispatchIconString();
+	});
+
+	function getCurrentIcon() {
+		const entity = $states[entity_id];
+		const domain = getDomain(entity?.entity_id || entity_id);
+
+		if (entity?.attributes?.entity_picture && domain !== 'update') {
+			return 'entity_picture';
+		} else if (entity?.attributes?.icon && String(entity.attributes.icon).startsWith('mdi')) {
+			return entity.attributes.icon.toString();
+		} else if (domain === 'weather' && entity?.state) {
+			return 'mdi:' + WEATHER_ICONS[entity.state];
+		} else if (domain) {
+			const defaultIcon = (ICONS as Record<string, string>)[domain];
+			if (defaultIcon) {
+				return 'mdi:' + defaultIcon;
+			} else if (!entity) {
+				// it's a service with no icon
+				return 'mdi:room-service';
 			}
-
-			$computedIconString = currentIcon
-				? currentIcon === 'entity_picture'
-					? entity?.attributes?.entity_picture
-					: currentIcon
-				: undefined;
 		}
+		dispatchIconString();
+	}
+
+	$: if ($states && entity_id) {
+		currentIcon = getCurrentIcon();
 	}
 </script>
 
