@@ -24,16 +24,15 @@
 		<p>{message}</p>
 
 		<div class="bottom-buttons">
-			<button on:click={confirm} use:Ripple={$ripple}>
-				{$lang('ok')}
-			</button>
-
 			<button
-				bind:this={cancelButton}
-				on:click={cancel}
+				on:click={confirm}
 				style:background-color="#ae2e2e"
 				use:Ripple={{ ...$ripple, color: 'rgba(0, 0, 0, 0.35)' }}
 			>
+				{$lang('ok')}
+			</button>
+
+			<button bind:this={cancelButton} on:click={cancel} use:Ripple={$ripple}>
 				{$lang('cancel')}
 			</button>
 		</div>

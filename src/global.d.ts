@@ -1,5 +1,3 @@
-declare module 'svelecte';
-declare module 'svelecte/item';
 declare module 'svelte-ripple';
 declare module 'svelte-confetti';
 

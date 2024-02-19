@@ -72,7 +72,7 @@
 
 		{#if sel && options}
 			<Select
-				customItems={true}
+				computeIcons={true}
 				{options}
 				placeholder={$lang('sensor')}
 				value={entity_id}

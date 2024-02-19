@@ -56,7 +56,6 @@
 		 * Get services
 		 */
 		if (!$services) {
-			console.log('subbing');
 			subscribeServices($connection, (hassServices) => {
 				services.set(hassServices);
 			});
@@ -334,12 +333,14 @@
 
 			{#if servicesOptions}
 				<Select
-					customItems={true}
+					defaultIcon="mdi:room-service"
+					computeIcons={true}
 					options={servicesOptions}
 					placeholder={$lang('service')}
 					value={service}
 					on:change={async (event) => {
 						if (event?.detail === null) return;
+						service = event?.detail;
 						$pasteContent = '__clear__';
 						await tick();
 						$pasteContent = `service: ${event?.detail}

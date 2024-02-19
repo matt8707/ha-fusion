@@ -53,9 +53,10 @@
 				<Select
 					value={sel?.entity_id}
 					placeholder={$lang('entity')}
+					defaultIcon="mdi:image"
 					on:change={(event) => set('entity_id', event)}
 					{options}
-					customItems={true}
+					computeIcons={true}
 				/>
 			{/if}
 		</div>

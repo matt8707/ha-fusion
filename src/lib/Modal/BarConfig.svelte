@@ -65,7 +65,6 @@
 
 		{#if options}
 			<Select
-				customItems={true}
 				{options}
 				placeholder={$lang('entity')}
 				value={entity_id}

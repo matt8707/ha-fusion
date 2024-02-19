@@ -74,7 +74,7 @@
 				placeholder={$lang('entity')}
 				on:change={(event) => set('entity_id', event)}
 				{options}
-				customItems={true}
+				computeIcons={true}
 			/>
 		{/if}
 

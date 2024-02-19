@@ -126,9 +126,8 @@
 				</div>
 			{:else if optionsHvacModes}
 				<Select
-					customItems={true}
 					options={optionsHvacModes}
-					placeholder={$lang('entity')}
+					placeholder={$lang('hvac_modes')}
 					value={entity?.state}
 					on:change={(event) => {
 						if (event?.detail === null) return;
@@ -196,9 +195,8 @@
 				</div>
 			{:else if optionsFanModes}
 				<Select
-					customItems={true}
 					options={optionsFanModes}
-					placeholder={$lang('entity')}
+					placeholder={$lang('fan_modes')}
 					value={attributes?.fan_mode}
 					on:change={(event) => {
 						if (event?.detail === null) return;
@@ -223,9 +221,8 @@
 				</div>
 			{:else if optionsSwingModes}
 				<Select
-					customItems={true}
 					options={optionsSwingModes}
-					placeholder={$lang('entity')}
+					placeholder={$lang('swing_modes')}
 					value={attributes?.swing_mode}
 					on:change={(event) => {
 						if (event?.detail === null) return;

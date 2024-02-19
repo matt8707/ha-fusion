@@ -43,11 +43,11 @@
 	};
 
 	const periodOptions = [
-		{ id: '5minute', name: $lang('period_5minute') },
-		{ id: 'hour', name: $lang('period_hour') },
-		{ id: 'day', name: $lang('period_day') },
-		{ id: 'week', name: $lang('period_week') },
-		{ id: 'month', name: $lang('period_month') }
+		{ id: '5minute', label: $lang('period_5minute') },
+		{ id: 'hour', label: $lang('period_hour') },
+		{ id: 'day', label: $lang('period_day') },
+		{ id: 'week', label: $lang('period_week') },
+		{ id: 'month', label: $lang('period_month') }
 	];
 
 	function minMax(key: string | number | undefined) {
@@ -116,7 +116,7 @@
 
 		{#if options}
 			<Select
-				customItems={true}
+				computeIcons={true}
 				{options}
 				placeholder={$lang('sensor')}
 				value={sel.entity_id}

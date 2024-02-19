@@ -17,7 +17,7 @@
 	// init icon
 	let extra_sensor_icon: string | undefined = sel?.extra_sensor_icon;
 
-	const iconOptions = [{ id: 'meteocons', name: 'meteocons' }];
+	const iconOptions = [{ id: 'meteocons', label: 'meteocons' }];
 
 	$: weatherStates = Object.keys($states)
 		.filter((key) => key.startsWith('weather.'))
@@ -57,10 +57,11 @@
 
 		{#if weatherStates}
 			<Select
-				customItems={true}
+				computeIcons={true}
 				options={weatherStates}
 				placeholder={$lang('entity')}
 				value={sel?.entity_id}
+				defaultIcon="mdi:weather-cloudy"
 				on:change={(event) => set('entity_id', event)}
 			/>
 		{/if}
@@ -69,7 +70,8 @@
 
 		{#if sensorStates}
 			<Select
-				customItems={true}
+				computeIcons={true}
+				defaultIcon="mdi:weather-cloudy"
 				options={sensorStates}
 				placeholder={$lang('sensor')}
 				value={sel?.weather_sensor}
@@ -92,7 +94,8 @@
 
 		{#if sensorStates}
 			<Select
-				customItems={true}
+				computeIcons={true}
+				defaultIcon="mdi:weather-cloudy"
 				options={sensorStates}
 				placeholder={$lang('sensor')}
 				value={sel?.extra_sensor}

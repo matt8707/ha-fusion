@@ -151,6 +151,7 @@
 	font-size: inherit;
 	cursor: pointer;
 	width: 3.15rem;
+	height: 3.15rem;
 	display: grid;
 	align-items: center;
 }

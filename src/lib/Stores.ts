@@ -76,7 +76,6 @@ export const editMode = writable(false);
 export const showDrawer = writable(false);
 export const motion = writable(190);
 export const itemHeight = readable(65);
-export const computedIconString = writable<string | undefined>();
 
 // language
 export const translation = writable<Translations>({});

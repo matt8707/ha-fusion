@@ -110,7 +110,7 @@
 			<h2>{$lang('entity')}</h2>
 
 			<Select
-				customItems={true}
+				computeIcons={true}
 				{options}
 				placeholder={$lang('camera')}
 				value={entity?.entity_id}

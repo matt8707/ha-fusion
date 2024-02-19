@@ -163,7 +163,7 @@
 				</div>
 			{:else}
 				<Select
-					customItems={true}
+					computeIcons={true}
 					{options}
 					value={groupEntity?.entity_id}
 					placeholder={$lang('entity')}

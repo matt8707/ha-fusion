@@ -163,6 +163,7 @@
 
 			<Select
 				{options}
+				defaultIcon="mdi:fan"
 				placeholder={$lang('mode')}
 				value={attributes?.preset_mode}
 				on:change={(event) => {

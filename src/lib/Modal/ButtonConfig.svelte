@@ -7,8 +7,7 @@
 		ripple,
 		history,
 		historyIndex,
-		templates,
-		computedIconString
+		templates
 	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Button from '$lib/Main/Button.svelte';
@@ -39,6 +38,7 @@
 	let color = sel?.color;
 	let icon = sel?.icon;
 	let state = sel?.state;
+	let computedIcon: string;
 
 	$: options =
 		$states &&
@@ -48,38 +48,9 @@
 
 	$: template = $templates?.[sel?.id];
 
-	// $: options = Object.keys($states)
-	// 	.sort()
-	// 	.map((key) => ({
-	// 		id: key,
-	// 		label: getName(undefined, $states[key])
-	// 	}));
-
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);
 		$dashboard = $dashboard;
-	}
-
-	async function handleClick(event: { target: HTMLButtonElement }) {
-		const button: HTMLButtonElement = event.target;
-		if (button) button.style.animation = '';
-
-		if (entity_id && navigator.clipboard) {
-			try {
-				await navigator.clipboard.writeText(entity_id);
-
-				if (button) {
-					button.style.animation = 'copy-animation 800ms forwards';
-
-					button.addEventListener('animationend', function callback() {
-						button.style.animation = '';
-						button.removeEventListener('animationend', callback);
-					});
-				}
-			} catch (err) {
-				console.error('Failed to copy to clipboard', err);
-			}
-		}
 	}
 
 	onDestroy(() => $record());
@@ -121,34 +92,23 @@
 
 		<h2>{$lang('entity')}</h2>
 
-		<div class="icon-gallery-container">
-			<div style:width="calc(100% - 3.15rem - 0.8rem - 3.15rem - 0.8rem)">
-				{#if options}
-					<Select
-						customItems={true}
-						{options}
-						placeholder={$lang('entity')}
-						value={entity_id}
-						on:change={(event) => {
-							if (event?.detail === null) return;
-							set('entity_id', event);
-						}}
-					/>
-				{/if}
+		<div style="display: flex; gap: 0.8rem;">
+			<div class="full-width">
+				<Select
+					{options}
+					placeholder={$lang('entity')}
+					value={entity_id}
+					on:change={(event) => {
+						if (event?.detail === null) return;
+						set('entity_id', event);
+					}}
+					computeIcons={true}
+					getIconString={true}
+					on:iconString={(event) => {
+						computedIcon = event?.detail;
+					}}
+				/>
 			</div>
-
-			<button
-				title={$lang('copy')}
-				class="icon-gallery"
-				on:click={handleClick}
-				tabindex="-1"
-				use:Ripple={$ripple}
-				style:padding="0.7rem"
-			>
-				<span style:pointer-events="none" style:display="contents">
-					<Icon icon="iconoir:copy" height="none" />
-				</span>
-			</button>
 
 			<button
 				use:Ripple={$ripple}
@@ -278,7 +238,7 @@
 					class="input"
 					type="text"
 					placeholder={(sel?.template?.icon && template?.icon?.output) ||
-						$computedIconString ||
+						computedIcon ||
 						$lang('icon')}
 					autocomplete="off"
 					spellcheck="false"
@@ -488,5 +448,10 @@
 
 	.disabled {
 		opacity: 0.4;
+	}
+
+	.full-width {
+		width: -webkit-fill-available;
+		width: -moz-available;
 	}
 </style>
