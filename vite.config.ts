@@ -17,7 +17,7 @@ export default defineConfig({
 	optimizeDeps: {
 		include: [
 			// include all because of dynamic imports, this prevents: ✨ optimized dependencies changed. reloading
-			// (pnpm ls -P | grep -Ev 'codemirror|@fontsource' | awk '/dependencies:/{flag=1; next} flag{print "\047" $1 "\047,"}'; echo "'svelecte/item',"; echo "'@iconify/svelte',"; echo "'svelte-fast-dimension/action'")
+			// (pnpm ls -P | grep -Ev 'codemirror|@fontsource' | awk '/dependencies:/{flag=1; next} flag{print "\047" $1 "\047,"}'; echo "'@iconify/svelte',"; echo "'svelte-fast-dimension/action'")
 			'@jaames/iro',
 			'd3-array',
 			'd3-scale',
@@ -27,14 +27,14 @@ export default defineConfig({
 			'home-assistant-js-websocket',
 			'http-proxy-middleware',
 			'js-yaml',
+			'konva',
 			'maplibre-gl',
 			'marked',
-			'svelecte',
 			'svelte-confetti',
 			'svelte-dnd-action',
 			'svelte-modals',
 			'svelte-ripple',
-			'svelecte/item',
+			'svelte-tiny-virtual-list',
 			'@iconify/svelte',
 			'svelte-fast-dimension/action'
 		],
