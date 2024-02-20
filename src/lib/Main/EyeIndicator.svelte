@@ -4,6 +4,8 @@
 	import { openModal } from 'svelte-modals';
 	import Icon from '@iconify/svelte';
 
+	export let eyeWidth: number;
+
 	/**
 	 * Opens modal and highlights `hide_views`
 	 */
@@ -14,7 +16,12 @@
 	}
 </script>
 
-<button class="edit eye" on:click={handleIconClick} transition:fade={{ duration: $motion }}>
+<button
+	class="edit eye"
+	on:click={handleIconClick}
+	transition:fade={{ duration: $motion }}
+	bind:offsetWidth={eyeWidth}
+>
 	<Icon icon="charm:eye-slash" height="none" />
 </button>
 
@@ -34,16 +41,14 @@
 		display: flex;
 		font-family: inherit;
 		white-space: nowrap;
-		margin-left: 0.4rem;
 		margin-top: 0.25rem;
 	}
 
 	.eye {
-		margin-left: 0.4rem;
-		width: 1.8rem;
+		width: 2.2rem;
 		background-color: transparent;
 		color: white;
 		padding: 0;
-		margin-right: 0.4rem;
+		padding-right: 0.4rem;
 	}
 </style>

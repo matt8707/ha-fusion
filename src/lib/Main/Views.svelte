@@ -76,9 +76,10 @@
 		}
 	});
 
-	// navbar = 100% - (sidebar & padding & button & padding)
+	// navbar = 100% - (sidebar & padding & eye & button & padding + safety margin)
 	let editViewButtonWidth: number;
-	$: navWidth = `calc(100vw - (${$dashboard?.sidebarWidth}px + 2rem + ${editViewButtonWidth}px + 2rem))`;
+	let eyeWidth: number;
+	$: navWidth = `calc(100vw - (${$dashboard?.sidebarWidth}px + 2rem + ${eyeWidth || 0}px + ${editViewButtonWidth}px + 2rem + 0.1rem))`;
 </script>
 
 <nav>
@@ -95,7 +96,7 @@
 			{/if}
 
 			{#if $dashboard?.hide_views}
-				<EyeIndicator />
+				<EyeIndicator bind:eyeWidth />
 			{/if}
 
 			<div class="navigation-container" style:width={navWidth}>

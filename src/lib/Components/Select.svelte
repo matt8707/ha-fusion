@@ -8,6 +8,7 @@
 	import Icon from '@iconify/svelte';
 	import { expoOut } from 'svelte/easing';
 	import { getName } from '$lib/Utils';
+	import { text } from '@sveltejs/kit';
 
 	export let value: string | undefined;
 	export let placeholder: string;
@@ -25,7 +26,7 @@
 
 	let listOpen = false;
 	let search: string;
-	let container: HTMLDivElement;
+	let wrapper: HTMLDivElement;
 	let input: HTMLInputElement;
 	let selectedIndex: number;
 
@@ -58,6 +59,15 @@
 						option.id.toLowerCase().includes(search.toLowerCase())
 				)
 			: [];
+
+	$: itemCount = filter?.length;
+
+	$: inputProps = {
+		type: 'text',
+		class: 'input',
+		placeholder,
+		style: `padding-left: ${options?.[selectedIndex]?.icon || computeIcons ? '3.1rem' : '1rem'}`
+	};
 
 	function handleKeydown(event: any) {
 		if (!listOpen) return;
@@ -117,12 +127,7 @@
 	}
 
 	function handlePointerDown(event: PointerEvent) {
-		if (
-			listOpen &&
-			container &&
-			!container.contains(event.target as Node) &&
-			event.target !== input
-		) {
+		if (listOpen && wrapper && !wrapper.contains(event.target as Node) && event.target !== input) {
 			listOpen = false;
 		}
 	}
@@ -140,8 +145,8 @@
 	</code>
 {/if}
 
-<div class="icon-input-container">
-	<div class="icon-input">
+<div class="container">
+	<div class="icon">
 		{#if computeIcons && value}
 			<!-- key value to properly update getIconString? -->
 			{#key value}
@@ -154,62 +159,53 @@
 		{/if}
 	</div>
 
-	<div class="chevron-input">
-		<Icon icon="fa-solid:chevron-down" height="none" />
+	<div class="icon chevron">
+		<Icon icon="fluent:chevron-down-16-filled" height="none" />
 	</div>
 
 	{#if listOpen}
 		<input
-			class="input"
-			style:padding-left={options?.[selectedIndex]?.icon || computeIcons ? '3.1rem' : '1rem'}
 			bind:value={search}
 			bind:this={input}
-			type="text"
-			{placeholder}
 			on:focus={handleFocus}
 			on:input={() => {
 				highlightedIndex = 0;
 				scrollToIndex = highlightedIndex;
 			}}
+			{...inputProps}
 		/>
 	{:else}
 		<!-- only to display label -->
 		<input
-			class="input"
-			style:padding-left={options?.[selectedIndex]?.icon || computeIcons ? '3.1rem' : '1rem'}
 			value={options?.[selectedIndex]?.label || ''}
-			type="text"
-			{placeholder}
 			on:focus={async () => {
 				listOpen = true;
 				await tick();
 				input?.focus();
 			}}
+			{...inputProps}
 		/>
 	{/if}
 </div>
 
 {#if listOpen && filter}
 	<div
-		class="wrapper list"
+		class="wrapper"
+		bind:this={wrapper}
 		in:slide={{ duration: $motion * 1.5, easing: expoOut }}
 		out:slide={{ duration: $motion, easing: expoOut }}
-		bind:this={container}
 	>
 		<VirtualList
 			width="100%"
 			{itemSize}
 			{height}
-			itemCount={filter?.length}
+			{itemCount}
 			{scrollToIndex}
 			{scrollToAlignment}
 			{scrollToBehaviour}
 			{overscanCount}
 		>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<div
-				data-index={index}
+			<button
 				slot="item"
 				let:index
 				let:style
@@ -219,7 +215,6 @@
 				}}
 				on:click={() => {
 					value = filter?.[index]?.id;
-
 					listOpen = false;
 					if (input) input?.blur();
 				}}
@@ -230,7 +225,7 @@
 					class:selected={value === filter?.[index]?.id}
 				>
 					{#if filter?.[index]?.icon || computeIcons}
-						<div class="icon">
+						<div class="item-icon">
 							{#if filter?.[index]?.icon}
 								<Icon icon={String(filter?.[index]?.icon)} height="none" />
 							{:else if computeIcons}
@@ -239,7 +234,7 @@
 						</div>
 					{/if}
 
-					<div class="grid">
+					<div class="label-grid">
 						{#if renderName}
 							<span class="name">
 								{getName(undefined, $states?.[filter?.[index]?.label])}
@@ -249,24 +244,54 @@
 						{filter?.[index]?.label}
 					</div>
 				</div>
-			</div>
+			</button>
 		</VirtualList>
 	</div>
 {/if}
 
 <style>
-	.wrapper {
+	.container {
 		position: relative;
-		border-radius: 0.6rem;
-		overflow: hidden;
-		background-color: #1d1b18;
 	}
 
 	.icon {
-		width: 1.28rem;
-		height: 1.28rem;
-		align-items: center;
 		display: flex;
+		position: absolute;
+		height: 3.3rem;
+		width: 3.3rem;
+		align-items: center;
+		padding: 1rem;
+		pointer-events: none;
+		margin-top: -1px;
+	}
+
+	.chevron {
+		right: 0;
+	}
+
+	.input {
+		padding-right: 3rem !important;
+	}
+
+	/* list */
+
+	.wrapper {
+		position: relative;
+		background-color: #1d1b18;
+		border-radius: 0.6rem;
+		overflow: hidden;
+	}
+
+	[slot='item'] {
+		all: unset;
+	}
+
+	.highlighted {
+		background-color: rgba(255, 255, 255, 0.05);
+	}
+
+	.selected {
+		background-color: rgba(255, 255, 255, 0.1);
 	}
 
 	.item {
@@ -279,54 +304,22 @@
 		height: 100%;
 	}
 
-	.name {
-		font-size: 0.8rem;
-		opacity: 0.4;
-		margin-top: -1px;
+	.item-icon {
+		display: flex;
+		align-items: center;
+		width: 1.28rem;
+		height: 1.28rem;
 	}
 
-	.grid {
+	.label-grid {
 		display: grid;
 		gap: 0.2rem;
 		overflow: hidden;
 	}
 
-	.selected {
-		background-color: rgba(255, 255, 255, 0.1) !important;
-	}
-
-	.highlighted {
-		background-color: rgba(255, 255, 255, 0.05);
-	}
-
-	.icon-input-container {
-		position: relative;
-	}
-
-	.icon-input {
-		display: flex;
-		position: absolute;
-		height: 3.3rem;
-		width: 3.3rem;
-		align-items: center;
-		padding: 1rem;
-		pointer-events: none;
-		margin-top: -1px;
-	}
-
-	.input {
-		padding-right: 3rem !important;
-	}
-
-	.chevron-input {
-		display: flex;
-		position: absolute;
-		height: 3.3rem;
-		width: 3.3rem;
-		align-items: center;
-		padding: 1rem;
-		pointer-events: none;
-		right: 0;
+	.name {
+		font-size: 0.8rem;
+		opacity: 0.4;
 		margin-top: -1px;
 	}
 </style>
