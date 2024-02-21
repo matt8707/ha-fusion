@@ -241,10 +241,9 @@ export interface WeatherItem {
 	id?: number;
 	entity_id?: string;
 	state?: string;
-	weather_sensor?: string;
 	icon_pack?: string;
-	extra_sensor?: string;
-	extra_sensor_icon?: string;
+	sensor?: string;
+	icon?: string;
 	show_apparent?: boolean;
 	hide_mobile?: boolean;
 }
@@ -255,6 +254,6 @@ export interface WeatherForecastItem {
 	entity_id?: string;
 	state?: string;
 	icon_pack?: string;
-	number_of_items?: number;
+	days_to_show?: number;
 	hide_mobile?: boolean;
 }

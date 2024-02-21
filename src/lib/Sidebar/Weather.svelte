@@ -1,115 +1,75 @@
 <script lang="ts">
-	/**
-	 * Rewrite
-	 */
-
-	import { states, selectedLanguage, lang } from '$lib/Stores';
+	import { states, lang } from '$lib/Stores';
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import Icon from '@iconify/svelte';
 
-	export let entity_id: string | undefined;
-	export let extra_sensor: string | undefined = undefined;
-	export let extra_sensor_icon: string | undefined = undefined;
-	export let weather_sensor: string | undefined = undefined;
-	export let icon_pack: string | undefined = undefined;
-	export let show_apparent: boolean | undefined = undefined;
-
-	let precipitation: string | undefined;
-	let path: string;
+	export let sel: any;
 
 	let entity: HassEntity;
-	$: {
-		if (entity_id) {
-			if ($states?.[entity_id]?.last_updated !== entity?.last_updated) {
-				entity = $states?.[entity_id];
-			}
-		}
+	$: if (sel?.entity_id && $states?.[sel?.entity_id]?.last_updated !== entity?.last_updated) {
+		entity = $states?.[sel?.entity_id];
 	}
 
-	$: entity_state = entity?.state;
 	$: attributes = entity?.attributes;
-	$: sun = $states?.['sun.sun']?.state;
 
-	$: if (extra_sensor) {
-		precipitation = $states?.[extra_sensor]?.state;
-	}
+	// icon pack
+	$: below_horizon = $states?.['sun.sun']?.state === 'below_horizon';
+	$: src = `weather/meteocons/${entity?.state}-${below_horizon ? 'night' : 'day'}.svg`;
 
-	$: {
-		if (icon_pack === 'meteocons') {
-			path = 'meteocons';
-		} else {
-			path = 'meteocons';
-		}
-	}
+	// sensor
+	$: sensor = sel?.sensor && $states?.[sel?.sensor];
 </script>
 
-{#if entity_state}
+{#if entity?.state !== 'unavailable'}
 	<div class="container">
-		<icon class="icon">
-			{#if entity_state !== 'unavailable'}
-				{#if sun === 'below_horizon'}
-					<img
-						src={`weather/${path}/${entity_state}-night.svg`}
-						alt={entity_state}
-						width="100%"
-						height="100%"
-					/>
-				{:else}
-					<img
-						src={`weather/${path}/${entity_state}-day.svg`}
-						alt={entity_state}
-						width="100%"
-						height="100%"
-					/>
-				{/if}
-			{/if}
-		</icon>
+		<div class="icon">
+			<!-- svelte-ignore a11y-missing-attribute -->
+			<img {src} width="100%" height="100%" />
+		</div>
 
 		{#if attributes?.temperature}
-			{#if show_apparent}
-				<div class="temp">
+			<div class="temperature">
+				{#if sel?.show_apparent}
 					{Math.round(attributes?.temperature)}{#if attributes.apparent_temperature}({Math.round(
 							attributes?.apparent_temperature
 						)}){/if}{attributes?.temperature_unit || '°'}
-				</div>
-			{:else}
-				<div class="temp">
+				{:else}
 					{Math.round(attributes?.temperature)}{attributes?.temperature_unit || '°'}
-				</div>
-			{/if}
+				{/if}
+			</div>
 		{/if}
 
 		<div class="state">
-			{#if weather_sensor && $states?.[weather_sensor]?.state}
-				<span>{$states?.[weather_sensor]?.state}</span>
-			{:else if entity_state}
+			{#if sel?.state && $states?.[sel?.state]?.state}
+				<span>{$states?.[sel?.state]?.state}</span>
+			{:else if entity?.state}
 				<span>
-					{$lang(`weather_${entity_state?.replace('-', '_')}`)}
+					{$lang(`weather_${entity?.state?.replace('-', '_')}`)}
 				</span>
 			{/if}
 		</div>
 
-		{#if precipitation}
-			<div class="rain">
-				<div class="inline-icon">
-					<Icon icon={extra_sensor_icon || 'mdi:drop'} height="none" />
+		{#if sensor}
+			<div class="sensor">
+				<div class="sensor-icon">
+					<Icon icon={sel?.icon || 'codicon:blank'} height="none" />
 				</div>
-				{#if typeof precipitation === 'string'}
-					{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(
-						parseFloat(precipitation) / 100
-					)}
+
+				{sensor?.state}
+				{#if sensor?.attributes?.unit_of_measurement}
+					{sensor?.attributes?.unit_of_measurement}
 				{/if}
 			</div>
 		{/if}
 	</div>
 {:else}
-	<div class="container-empty">
+	<div class="empty">
 		{$lang('weather')}
 	</div>
 {/if}
 
 <style>
-	.container-empty {
+	.empty {
 		word-wrap: break-word;
 		padding: 0.5em;
 		overflow: hidden;
@@ -122,7 +82,7 @@
 		grid-template-columns: min-content auto auto;
 		grid-template-rows: auto auto;
 		grid-template-areas:
-			'icon temp rain'
+			'icon temperature sensor'
 			'icon state state';
 		align-items: center;
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
@@ -142,8 +102,8 @@
 		margin-left: 0.1rem;
 	}
 
-	.temp {
-		grid-area: temp;
+	.temperature {
+		grid-area: temperature;
 		justify-self: start;
 		align-self: end;
 		display: flex;
@@ -173,8 +133,8 @@
 		height: 100%;
 	}
 
-	.rain {
-		grid-area: rain;
+	.sensor {
+		grid-area: sensor;
 		justify-self: end;
 		align-self: end;
 		display: flex;
@@ -182,11 +142,11 @@
 		align-items: flex-end;
 	}
 
-	.inline-icon {
+	.sensor-icon {
 		width: 1.22rem;
 		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-		gap: -0.5rem;
 		display: flex;
-		margin-right: 0.1rem;
+		margin-right: 0.2rem;
+		align-self: center;
 	}
 </style>

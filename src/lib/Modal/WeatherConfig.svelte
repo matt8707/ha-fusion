@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, dashboard, lang, record, ripple } from '$lib/Stores';
+	import { states, dashboard, lang, record, ripple, history, historyIndex } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Weather from '$lib/Sidebar/Weather.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -13,18 +13,27 @@
 
 	export let isOpen: boolean;
 	export let sel: WeatherItem;
+	export let demo: string | undefined = undefined;
 
-	// init icon
-	let extra_sensor_icon: string | undefined = sel?.extra_sensor_icon;
+	if (demo) {
+		// replace history entry with demo
+		$history.splice($historyIndex, 1);
+		set('entity_id', demo);
+	}
+
+	let icon: string | undefined = sel?.icon;
+
+	$: entity = sel?.entity_id && ($states?.[sel?.entity_id] as any);
+	$: attributes = entity && entity?.attributes;
 
 	const iconOptions = [{ id: 'meteocons', label: 'meteocons' }];
 
-	$: weatherStates = Object.keys($states)
+	$: options = Object.keys($states)
 		.filter((key) => key.startsWith('weather.'))
 		.sort()
 		.map((key) => ({ id: key, label: key }));
 
-	$: sensorStates = Object.keys($states)
+	$: sensorOptions = Object.keys($states)
 		.filter((key) => key.startsWith('sensor.'))
 		.sort()
 		.map((key) => ({ id: key, label: key }));
@@ -44,21 +53,15 @@
 		<h2>{$lang('preview')}</h2>
 
 		<div class="preview">
-			<Weather
-				entity_id={sel?.entity_id}
-				weather_sensor={sel?.weather_sensor}
-				extra_sensor={sel?.extra_sensor}
-				icon_pack={sel?.icon_pack}
-				show_apparent={sel?.show_apparent}
-			/>
+			<Weather {sel} />
 		</div>
 
 		<h2>{$lang('entity')}</h2>
 
-		{#if weatherStates}
+		{#if options}
 			<Select
 				computeIcons={true}
-				options={weatherStates}
+				{options}
 				placeholder={$lang('entity')}
 				value={sel?.entity_id}
 				defaultIcon="mdi:weather-cloudy"
@@ -66,62 +69,64 @@
 			/>
 		{/if}
 
-		<h2>{$lang('weather')}</h2>
+		<h2>{$lang('state')}</h2>
 
-		{#if sensorStates}
+		{#if sensorOptions}
 			<Select
 				computeIcons={true}
 				defaultIcon="mdi:weather-cloudy"
-				options={sensorStates}
-				placeholder={$lang('sensor')}
-				value={sel?.weather_sensor}
-				on:change={(event) => set('weather_sensor', event)}
+				options={sensorOptions}
+				placeholder="{$lang('state')} ({$lang('optional')})"
+				value={sel?.state}
+				on:change={(event) => set('state', event)}
+				clearable={true}
 			/>
 		{/if}
 
-		<h2>{$lang('icon')}</h2>
+		<h2>{$lang('icons')}</h2>
 
 		{#if iconOptions}
 			<Select
 				options={iconOptions}
 				placeholder={$lang('icon')}
-				value={sel?.icon_pack}
+				value={sel?.icon_pack || 'meteocons'}
 				on:change={(event) => set('icon_pack', event)}
 			/>
 		{/if}
 
-		<h2>{$lang('sensor')} extra</h2>
+		<h2>{$lang('sensor')}</h2>
 
-		{#if sensorStates}
+		{#if sensorOptions}
 			<Select
 				computeIcons={true}
 				defaultIcon="mdi:weather-cloudy"
-				options={sensorStates}
-				placeholder={$lang('sensor')}
-				value={sel?.extra_sensor}
-				on:change={(event) => set('extra_sensor', event)}
+				options={sensorOptions}
+				placeholder="{$lang('sensor')} ({$lang('optional')})"
+				value={sel?.sensor}
+				on:change={(event) => set('sensor', event)}
+				clearable={true}
 			/>
 		{/if}
 
 		<h2>
-			{$lang('icon')} extra
+			{$lang('icon')}
 		</h2>
 
 		<div class="icon-gallery-container">
 			<InputClear
-				condition={extra_sensor_icon}
+				condition={icon}
 				on:clear={() => {
-					extra_sensor_icon = undefined;
-					set('extra_sensor_icon');
+					icon = undefined;
+					set('icon');
 				}}
 				let:padding
 			>
 				<input
 					class="input"
 					type="text"
-					placeholder={$lang('icon')}
-					bind:value={extra_sensor_icon}
-					on:change={(event) => set('extra_sensor_icon', event)}
+					placeholder="codicon:blank"
+					bind:value={icon}
+					on:change={(event) => set('icon', event)}
 					style:padding
 					autocomplete="off"
 					spellcheck="false"
@@ -129,38 +134,38 @@
 			</InputClear>
 
 			<button
+				use:Ripple={$ripple}
 				title={$lang('icon')}
 				class="icon-gallery"
 				on:click={() => {
 					window.open('https://icon-sets.iconify.design/', '_blank');
 				}}
-				use:Ripple={$ripple}
+				style:padding="0.84rem"
 			>
-				<Icon icon="vaadin:grid-small" height="none" />
+				<Icon icon="majesticons:open-line" height="none" />
 			</button>
 		</div>
-		{#if sel?.entity_id}
-			{#if $states[sel?.entity_id].attributes.apparent_temperature}
-				<h2>Apparent temperature</h2>
 
-				<div class="button-container">
-					<button
-						class:selected={!sel?.show_apparent}
-						on:click={() => set('show_apparent', false)}
-						use:Ripple={$ripple}
-					>
-						{$lang('no')}
-					</button>
+		{#if attributes?.apparent_temperature}
+			<h2>{$lang('apparent_temperature')}</h2>
 
-					<button
-						class:selected={sel?.show_apparent}
-						on:click={() => set('show_apparent', true)}
-						use:Ripple={$ripple}
-					>
-						{$lang('yes')}
-					</button>
-				</div>
-			{/if}
+			<div class="button-container">
+				<button
+					class:selected={!sel?.show_apparent}
+					on:click={() => set('show_apparent', false)}
+					use:Ripple={$ripple}
+				>
+					{$lang('no')}
+				</button>
+
+				<button
+					class:selected={sel?.show_apparent}
+					on:click={() => set('show_apparent', true)}
+					use:Ripple={$ripple}
+				>
+					{$lang('yes')}
+				</button>
+			</div>
 		{/if}
 
 		<h2>{$lang('mobile')}</h2>

@@ -50,7 +50,7 @@
 		time: () => import('$lib/Sidebar/Time.svelte').then((module) => (Time = module)),
 		timer: () => import('$lib/Sidebar/Timer.svelte').then((module) => (Timer = module)),
 		weather: () => import('$lib/Sidebar/Weather.svelte').then((module) => (Weather = module)),
-		weatherforecast: () =>
+		weather_forecast: () =>
 			import('$lib/Sidebar/WeatherForecast.svelte').then((module) => (WeatherForecast = module))
 	};
 
@@ -64,11 +64,15 @@
 		const types = [...new Set($dashboard.sidebar.map((item) => item.type))];
 		const promises = [];
 
+		// counter for supported and not yet imported imports
+		let validImportsCount = 0;
+
 		for (let type of types) {
 			const module = importsMap[type as keyof typeof importsMap];
 			if (!imported.includes(type) && module) {
 				promises.push(module());
 				imported.push(type);
+				validImportsCount++;
 			}
 		}
 
@@ -78,7 +82,7 @@
 		 * Wait for all imports to complete then set `loaded` flag
 		 * to prevent flip animation before components has loaded.
 		 */
-		if (imported.length === types.length) {
+		if (imported.length >= validImportsCount) {
 			loaded = true;
 		}
 	}
@@ -122,7 +126,7 @@
 				openModal(() => import('$lib/Modal/TimerConfig.svelte'), { sel });
 			} else if (sel?.type === 'weather') {
 				openModal(() => import('$lib/Modal/WeatherConfig.svelte'), { sel });
-			} else if (sel?.type === 'weatherforecast') {
+			} else if (sel?.type === 'weather_forecast') {
 				openModal(() => import('$lib/Modal/WeatherForecastConfig.svelte'), { sel });
 			} else {
 				openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), { sel });
@@ -355,25 +359,13 @@
 						<!-- WEATHER -->
 					{:else if Weather && item?.type === 'weather' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component
-								this={Weather.default}
-								entity_id={item?.entity_id}
-								weather_sensor={item?.state}
-								extra_sensor={item?.extra_sensor}
-								icon_pack={item?.icon_pack}
-								show_apparent={item?.show_apparent}
-							/>
+							<svelte:component this={Weather.default} sel={item} />
 						</button>
 
 						<!-- WEATHER FORECAST -->
-					{:else if WeatherForecast && item?.type === 'weatherforecast' && !hide_mobile}
+					{:else if WeatherForecast && item?.type === 'weather_forecast' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component
-								this={WeatherForecast.default}
-								entity_id={item?.entity_id}
-								icon_pack={item?.icon_pack}
-								number_of_items={item?.number_of_items}
-							/>
+							<svelte:component this={WeatherForecast.default} sel={item} />
 						</button>
 					{/if}
 				</div>

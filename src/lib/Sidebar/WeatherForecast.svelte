@@ -5,37 +5,34 @@
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import Icon from '@iconify/svelte';
 
-	export let entity_id: string | undefined = undefined;
-	export let icon_pack: string | undefined = undefined;
-	export let number_of_items: number | undefined = undefined;
+	export let sel: any;
 
 	let entity: HassEntity;
 	$: {
-		if (entity_id) {
-			if ($states?.[entity_id]?.last_updated !== entity?.last_updated) {
-				entity = $states?.[entity_id];
+		if (sel?.entity_id) {
+			if ($states?.[sel?.entity_id]?.last_updated !== entity?.last_updated) {
+				entity = $states?.[sel?.entity_id];
 			}
 		}
 	}
 
-	$: entity_state = entity?.state;
 	$: attributes = entity?.attributes;
 
 	let iconSet: WeatherIconSet;
 	$: {
-		if (icon_pack === 'materialsymbolslight') {
+		if (sel?.icon_pack === 'materialsymbolslight') {
 			iconSet = iconMapMaterialSymbolsLight;
-		} else if (icon_pack === 'meteocons') {
+		} else if (sel?.icon_pack === 'meteocons') {
 			iconSet = iconMapMeteocons;
-		} else if (icon_pack === 'weathericons') {
+		} else if (sel?.icon_pack === 'weathericons') {
 			iconSet = iconMapWeatherIcons;
 		} else {
 			iconSet = iconMapMeteocons;
 		}
 	}
 
-	// Because config may not include number_of_items, and some forecasts proviode 48 datapoints, we need to ensure it's correct
-	$: calculated = Math.min(number_of_items ?? 7, 7);
+	// Because config may not include days_to_show, and some forecasts proviode 48 datapoints, we need to ensure it's correct
+	$: calculated = Math.min(sel?.days_to_show ?? 7, 7);
 
 	interface Forecast {
 		condition: string;
@@ -62,7 +59,7 @@
 		(new Date(forecast?.[1]?.date).valueOf() - new Date(forecast?.[0]?.date).valueOf()) / 3600000;
 </script>
 
-{#if entity_state}
+{#if forecast}
 	<div class="container">
 		{#each forecast as forecast}
 			<div class="item">
@@ -81,12 +78,8 @@
 				<div class="icon">
 					{#if forecast.icon.local}
 						<icon class="ff-fill">
-							<img
-								src={`${forecast.icon.icon_variant_day}.svg`}
-								alt={entity_state}
-								width="100%"
-								height="100%"
-							/>
+							<!-- svelte-ignore a11y-missing-attribute -->
+							<img src="{forecast.icon.icon_variant_day}.svg" width="100%" height="100%" />
 						</icon>
 					{:else}
 						<Icon icon={forecast.icon.icon_variant_day} width="100%" height="100%"></Icon>
@@ -127,6 +120,9 @@
 		text-overflow: ellipsis;
 		overflow: hidden;
 		justify-content: space-between;
+		padding-left: 0;
+		padding-right: 0.25rem;
+		margin-left: -0.1rem;
 	}
 
 	.day {

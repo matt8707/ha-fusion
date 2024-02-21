@@ -16,7 +16,7 @@
 	import Ripple from 'svelte-ripple';
 	import { marked } from 'marked';
 
-	export let sel: any;
+	export let sel: any = undefined;
 	let expanded = false;
 
 	$: length = Object.entries($persistentNotifications)?.length;

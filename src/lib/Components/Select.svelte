@@ -3,12 +3,11 @@
 	import { motion, states } from '$lib/Stores';
 	import { tick } from 'svelte';
 	import VirtualList, { type Alignment, type ScrollBehaviour } from 'svelte-tiny-virtual-list';
-	import { slide } from 'svelte/transition';
+	import { scale, slide } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import { expoOut } from 'svelte/easing';
 	import { getName } from '$lib/Utils';
-	import { text } from '@sveltejs/kit';
 
 	export let value: string | undefined;
 	export let placeholder: string;
@@ -16,6 +15,7 @@
 	export let getIconString: boolean | undefined = undefined;
 	export let defaultIcon: string | undefined = undefined;
 	export let renderName: boolean | undefined = undefined;
+	export let clearable: boolean | undefined = undefined;
 	export let options: {
 		id: string;
 		label: string;
@@ -41,7 +41,9 @@
 
 	const dispatch = createEventDispatcher();
 
-	$: if (value) dispatch('change', value);
+	$: if ((value === undefined && clearable) || value) {
+		dispatch('change', value);
+	}
 
 	$: if (!listOpen) {
 		search = '';
@@ -159,9 +161,27 @@
 		{/if}
 	</div>
 
-	<div class="icon chevron">
-		<Icon icon="fluent:chevron-down-16-filled" height="none" />
-	</div>
+	{#if listOpen || !value || !clearable}
+		<button
+			class:chevron={!listOpen}
+			class="icon close"
+			style:transform={listOpen ? 'scaleY(-1)' : 'none'}
+			style:transition="transform {$motion / 1.5}ms ease"
+			transition:scale={{ duration: $motion }}
+		>
+			<Icon icon="octicon:chevron-down-12" height="none" />
+		</button>
+	{:else if value && clearable}
+		<button
+			class="icon close"
+			on:click={() => {
+				value = undefined;
+			}}
+			transition:scale={{ duration: $motion }}
+		>
+			<Icon icon="mingcute:close-fill" height="none" />
+		</button>
+	{/if}
 
 	{#if listOpen}
 		<input
@@ -234,7 +254,7 @@
 						</div>
 					{/if}
 
-					<div class="label-grid">
+					<div class="label">
 						{#if renderName}
 							<span class="name">
 								{getName(undefined, $states?.[filter?.[index]?.label])}
@@ -260,13 +280,21 @@
 		height: 3.3rem;
 		width: 3.3rem;
 		align-items: center;
-		padding: 1rem;
-		pointer-events: none;
+		padding: 1.05rem;
 		margin-top: -1px;
+		background: none;
+		border: none;
+		color: lightgrey;
 	}
 
 	.chevron {
 		right: 0;
+		pointer-events: none;
+	}
+
+	.close {
+		right: 0;
+		cursor: pointer;
 	}
 
 	.input {
@@ -311,7 +339,7 @@
 		height: 1.28rem;
 	}
 
-	.label-grid {
+	.label {
 		display: grid;
 		gap: 0.2rem;
 		overflow: hidden;

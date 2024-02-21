@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { editMode, lang, motion, ripple } from '$lib/Stores';
+	import { editMode, lang, motion, ripple, selectedLanguage } from '$lib/Stores';
 	import { fade } from 'svelte/transition';
 	import { modals, closeModal } from 'svelte-modals';
 	import Modal from '$lib/Modal/Index.svelte';
@@ -51,7 +51,7 @@
 			const formMotion = form.motion ? Boolean(form.motion === 'true') : undefined;
 
 			const json: any = {
-				locale: form.select || undefined
+				locale: $selectedLanguage
 			};
 
 			if (Object.keys(addons).length > 0) json.addons = addons;

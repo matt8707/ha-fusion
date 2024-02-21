@@ -68,6 +68,27 @@ export function getHistoryEntity(states: HassEntities) {
 }
 
 /**
+ * Get random weather entity
+ */
+export function getWeatherEntity(states: HassEntities) {
+	const list = Object.values(states).filter((e) => e.entity_id.startsWith('weather.'));
+	return list.length ? random(list).entity_id : undefined;
+}
+
+/**
+ * Get random weather entity with forecast attribute
+ */
+export function getWeatherForecastEntity(states: HassEntities) {
+	const list = Object.values(states).filter(
+		(entity) =>
+			entity.entity_id.startsWith('weather.') &&
+			entity.attributes &&
+			'forecast' in entity.attributes
+	);
+	return list.length ? random(list).entity_id : undefined;
+}
+
+/**
  * Graph sensor entity
  * list_statistic_ids and validate_statistics
  */
