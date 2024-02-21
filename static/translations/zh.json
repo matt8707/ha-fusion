@@ -1,6 +1,7 @@
 {
 	"above_horizon": "\u65e5\u51fa",
 	"active": "\u555f\u7528",
+	"apparent_temperature": "\u8996\u5728\u6eab\u5ea6",
 	"armed": "\u5df2\u8b66\u6212",
 	"armed_away": "\u96e2\u5bb6\u8b66\u6212",
 	"armed_custom_bypass": "\u81ea\u8a02\u5ffd\u7565\u8b66\u6212",

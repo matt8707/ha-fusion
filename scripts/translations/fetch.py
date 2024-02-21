@@ -131,6 +131,7 @@ dir_keys = [
             ("notifications", ["ui.notification_drawer.title"]),
             ("notifications_dismiss", ["ui.notification_toast.dismiss"]),
             ("expand", ["ui.components.target-picker.expand"]),
+            ("weather_forecast", ["ui.card.weather.forecast"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -331,6 +332,7 @@ dir_keys = [
             ("weather_sunny", ["entity_component", "_", "state", "sunny"]),
             ("weather_windy", ["entity_component", "_", "state", "windy"]),
             ("weather_windy_variant", ["entity_component", "_", "state", "windy-variant"]),
+            ("apparent_temperature", ["entity_component", "_", "state_attributes", "apparent_temperature", "name"]),
         ],
     ),
     (  # CLIMATE
@@ -489,6 +491,9 @@ dir_keys = [
             ("add_item", ["ui.panel.lovelace.cards.todo-list.add_item"]),
             ("aspect_ratio", ["ui.panel.lovelace.editor.card.generic.aspect_ratio"]),
             ("mobile", ["ui.panel.lovelace.editor.condition-editor.condition.screen.breakpoints_list.mobile"]),
+            ("optional", ["ui.panel.lovelace.editor.card.config.optional"]),
+            ("icons", ["ui.panel.lovelace.editor.features.types.climate-hvac-modes.style_list.icons"]),
+            ("days_to_show", ["ui.panel.lovelace.editor.card.generic.days_to_show"]),
         ],
     ),
     (  # DEVELOPER-TOOLS
