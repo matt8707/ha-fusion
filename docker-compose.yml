@@ -10,5 +10,5 @@ services:
       - 5050:5050
     environment:
       TZ: Europe/Stockholm
-      HASS_URL: http://192.168.1.241:8123
+      HASS_URL: http://192.168.1.88:8123
     restart: always
