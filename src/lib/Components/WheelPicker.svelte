@@ -50,7 +50,14 @@
 
 		// if temperature elements
 		if (container.children.length > 0) {
-			const temperature = stateObj?.attributes?.temperature;
+			// round temperature to ignore decimals
+			let temperature = Math.round(stateObj?.attributes?.temperature);
+
+			// but don't round below or over minmax temp
+			if (minTemp && maxTemp) {
+				temperature = Math.max(minTemp, Math.min(maxTemp, temperature));
+			}
+
 			value = temperatures.indexOf(temperature);
 
 			// fallback
