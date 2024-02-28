@@ -141,3 +141,12 @@ export function getCameraEntity(states: HassEntities) {
 	const entity = random(filtered);
 	if (entity) return entity.entity_id;
 }
+
+/**
+ * Get random person entity
+ */
+export function getPersonEntity(states: HassEntities) {
+	const filtered = Object.values(states).filter((entity) => entity.entity_id.startsWith('person.'));
+	const entity = random(filtered);
+	if (entity) return entity.entity_id;
+}

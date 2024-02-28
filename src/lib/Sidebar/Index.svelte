@@ -23,6 +23,7 @@
 	let Image: typeof import('$lib/Sidebar/Image.svelte');
 	let Navigate: typeof import('$lib/Sidebar/Navigate.svelte');
 	let Notifications: typeof import('$lib/Sidebar/Notifications.svelte');
+	let Person: typeof import('$lib/Sidebar/Person.svelte');	
 	let Radial: typeof import('$lib/Sidebar/Radial.svelte');
 	let Sensor: typeof import('$lib/Sidebar/Sensor.svelte');
 	let Template: typeof import('$lib/Sidebar/Template.svelte');
@@ -44,6 +45,7 @@
 		navigate: () => import('$lib/Sidebar/Navigate.svelte').then((module) => (Navigate = module)),
 		notifications: () =>
 			import('$lib/Sidebar/Notifications.svelte').then((module) => (Notifications = module)),
+		person: () => import('$lib/Sidebar/Person.svelte').then((module) => (Person = module)),			
 		radial: () => import('$lib/Sidebar/Radial.svelte').then((module) => (Radial = module)),
 		sensor: () => import('$lib/Sidebar/Sensor.svelte').then((module) => (Sensor = module)),
 		template: () => import('$lib/Sidebar/Template.svelte').then((module) => (Template = module)),
@@ -114,6 +116,8 @@
 				openModal(() => import('$lib/Modal/NavigateConfig.svelte'), { sel });
 			} else if (sel?.type === 'notifications') {
 				openModal(() => import('$lib/Modal/NotificationsConfig.svelte'), { sel });
+			} else if (sel?.type === 'person') {
+				openModal(() => import('$lib/Modal/PersonConfig.svelte'), { sel });					
 			} else if (sel?.type === 'radial') {
 				openModal(() => import('$lib/Modal/RadialConfig.svelte'), { sel });
 			} else if (sel?.type === 'sensor') {
@@ -311,6 +315,18 @@
 							</div>
 						{/key}
 
+						<!-- PERSON -->
+					{:else if Person && item?.type === 'person'}
+						<div on:click={() => handleClick(item?.id)}>
+							<svelte:component
+								this={Person.default}
+								entity_id={item?.entity_id}
+								battery_level_sensor={item?.battery_level_sensor}
+								entity_id_2={item?.entity_id_2}
+								battery_level_sensor_2={item?.battery_level_sensor_2}								
+							/>
+						</div>
+						
 						<!-- RADIAL -->
 					{:else if Radial && item?.type === 'radial' && !hide_mobile}
 						<div on:click={() => handleClick(item?.id)}>
