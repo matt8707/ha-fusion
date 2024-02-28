@@ -22,6 +22,7 @@
 	import Sensor from '$lib/Sidebar/Sensor.svelte';
 	import Time from '$lib/Sidebar/Time.svelte';
 	import Date from '$lib/Sidebar/Date.svelte';
+	import DateTime from '$lib/Sidebar/DateTime.svelte';
 	import Divider from '$lib/Sidebar/Divider.svelte';
 	import Navigate from '$lib/Sidebar/Navigate.svelte';
 	import Weather from '$lib/Sidebar/Weather.svelte';
@@ -189,6 +190,14 @@
 				'text-align': 'center'
 			}
 		},
+		{
+			id: 'datetime',
+			type: $lang('date_time'),
+			component: DateTime,
+			style: {
+				'text-align': 'center'
+			}
+		},				
 		{
 			id: 'radial',
 			type: 'Radial',
@@ -362,7 +371,10 @@
 					sel,
 					demo: $demo.person
 				});
-				break;					
+				break;		
+			case 'datetime':
+				openModal(() => import('$lib/Modal/DateTimeConfig.svelte'), { sel });
+				break;							
 
 			default:
 				openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), { sel });

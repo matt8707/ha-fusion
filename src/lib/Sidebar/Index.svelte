@@ -16,6 +16,7 @@
 	let Camera: typeof import('$lib/Sidebar/Camera.svelte');
 	let Configure: typeof import('$lib/Sidebar/Configure.svelte');
 	let Date: typeof import('$lib/Sidebar/Date.svelte');
+	let DateTime: typeof import('$lib/Sidebar/DateTime.svelte');	
 	let Divider: typeof import('$lib/Sidebar/Divider.svelte');
 	let Graph: typeof import('$lib/Sidebar/Graph.svelte');
 	let History: typeof import('$lib/Sidebar/History.svelte');
@@ -37,6 +38,7 @@
 		camera: () => import('$lib/Sidebar/Camera.svelte').then((module) => (Camera = module)),
 		configure: () => import('$lib/Sidebar/Configure.svelte').then((module) => (Configure = module)),
 		date: () => import('$lib/Sidebar/Date.svelte').then((module) => (Date = module)),
+		datetime: () => import('$lib/Sidebar/DateTime.svelte').then((module) => (DateTime = module)),
 		divider: () => import('$lib/Sidebar/Divider.svelte').then((module) => (Divider = module)),
 		graph: () => import('$lib/Sidebar/Graph.svelte').then((module) => (Graph = module)),
 		history: () => import('$lib/Sidebar/History.svelte').then((module) => (History = module)),
@@ -102,6 +104,8 @@
 				openModal(() => import('$lib/Modal/CameraConfig.svelte'), { sel });
 			} else if (sel?.type === 'date') {
 				openModal(() => import('$lib/Modal/DateConfig.svelte'), { sel });
+			} else if (sel?.type === 'datetime') {
+				openModal(() => import('$lib/Modal/DateTimeConfig.svelte'), { sel });								
 			} else if (sel?.type === 'divider') {
 				openModal(() => import('$lib/Modal/DividerConfig.svelte'), { sel });
 			} else if (sel?.type === 'graph') {
@@ -256,6 +260,12 @@
 								layout={item?.layout}
 							/>
 						</button>
+
+						<!-- DATE & TIME -->
+					{:else if DateTime && item?.type === 'datetime'}
+						<button on:click={() => handleClick(item?.id)}>
+							<svelte:component this={DateTime.default} seconds={item?.seconds} hour12={item?.hour12} year={item?.year}/>		
+						</button>						
 
 						<!-- DIVIDER -->
 					{:else if Divider && item?.type === 'divider' && !hide_mobile}
