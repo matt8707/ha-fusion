@@ -131,6 +131,15 @@
 {:else if state === 'on' && percentage}
 	{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(percentage * 0.01)}
 
+	<!--  Door/window -->
+{:else if getDomain(entity_id) === 'binary_sensor' && attributes?.device_class === 'door'|| attributes?.device_class === 'window' }
+	{#if state === 'on'}
+		{$lang('open')}
+	{:else}
+		{$lang('closed')}
+	{/if}	
+
+	
 	<!-- State  -->
 {:else if state}
 	{#if selected?.marquee && contentWidth && contentWidth > 153 && !$editMode}
