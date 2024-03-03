@@ -17,7 +17,6 @@
 	$: brightness = attributes?.brightness;
 	$: percentage = attributes?.percentage;
 	$: media_title = attributes?.media_title;
-	$: media_artist = attributes?.media_artist;	
 </script>
 
 <!-- Light -->
@@ -30,36 +29,6 @@
 	{Intl.NumberFormat($selectedLanguage, { style: 'percent' }).format(floor)}
 
 	<!-- Media -->
-{:else if state === 'playing' && attributes?.media_content_id.includes(':8096/')}
-	{@const title = `<span title=${media_title}>${media_title}</span>`}
-	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
-		{#await import('$lib/Components/Marquee.svelte')}
-		{:then Marquee}
-			<svelte:component this={Marquee.default}>
-				{@html 'Music Assistant'}
-				{@html '&nbsp;'.repeat(4)}
-			</svelte:component>
-		{/await}
-	{:else}
-		{@html 'Music Assistant'}
-	{/if}
-	
-{:else if media_artist && media_title && state === 'playing'}
-	{@const title = `<span title=${media_title}>${media_title}</span>`}
-	{@const artist = `<span title=${media_artist}>${media_artist}</span>`}
-	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
-		{#await import('$lib/Components/Marquee.svelte')}
-			{@html title}
-		{:then Marquee}
-			<svelte:component this={Marquee.default}>
-				{media_artist} - {media_title}
-				{@html '&nbsp;'.repeat(4)}
-			</svelte:component>
-		{/await}
-	{:else}
-		{@html artist + ' - ' + title }
-	{/if}
-
 {:else if media_title && state === 'playing'}
 	{@const title = `<span title=${media_title}>${media_title}</span>`}
 	{#if selected?.marquee === true && contentWidth && contentWidth > 153 && !$editMode}
