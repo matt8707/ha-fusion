@@ -3,28 +3,26 @@ import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import dotenv from 'dotenv';
 
-dotenv.config();
-
-let logTarget;
-
 const app = express();
 
 // environment
+dotenv.config();
 const ADDON = process.env.ADDON === 'true';
-const PORT = process.env.PORT;
-const HASS_PORT = process.env.HASS_PORT;
-const EXPOSED_PORT = process.env.EXPOSED_PORT;
+const { PORT, HASS_PORT, EXPOSED_PORT } = process.env;
 
-// dynamically set target for proxy middleware
-function customRouter(req) {
+// dynamically set target
+const entryMiddleware = async (req, res, next) => {
+	// default
 	let target = process.env.HASS_URL;
 
 	if (ADDON) {
 		// headers
-		const source = req.headers['x-hass-source'];
-		const forwardedProto = req.headers['x-forwarded-proto'];
-		const forwardedHost = req.headers['x-forwarded-host'];
-		const host = req.headers['host'];
+		const {
+			'x-hass-source': source,
+			'x-forwarded-proto': forwardedProto,
+			'x-forwarded-host': forwardedHost,
+			host
+		} = req.headers;
 
 		// ingress
 		if (source && forwardedProto && forwardedHost) {
@@ -33,7 +31,8 @@ function customRouter(req) {
 
 		// exposed port
 		else if (host && EXPOSED_PORT && HASS_PORT) {
-			target = `http://${host.replace(EXPOSED_PORT, HASS_PORT)}`;
+			const proto = req.secure ? 'https' : 'http';
+			target = `${proto}://${host.replace(EXPOSED_PORT, HASS_PORT)}`;
 		}
 	}
 
@@ -42,27 +41,22 @@ function customRouter(req) {
 		throw new Error('Proxy target could not be determined');
 	}
 
-	// log actual target instead of placeholder `...` because
-	// the router gets invoked before headers are processed
-	if (!logTarget) {
-		logTarget = `... -> ${target}`;
-		console.log(logTarget);
-	}
-
-	return target;
-}
+	// add header for +page.server.ts
+	req.headers['X-Proxy-Target'] = target;
+	req.target = target;
+	next();
+};
 
 // production proxy
-app.use(
-	['/local/', '/api/'],
-	createProxyMiddleware({
-		target: '...',
-		router: customRouter,
-		changeOrigin: true
-	})
-);
+const proxy = createProxyMiddleware({
+	pathFilter: ['/local/', '/api/'],
+	router: (req) => req.target,
+	changeOrigin: true
+});
 
-// let sveltekit handle everything else
+app.use(entryMiddleware, proxy);
+
+// let SvelteKit handle everything else, including serving prerendered pages and static assets
 app.use(handler);
 
 app.listen(PORT, () => {
