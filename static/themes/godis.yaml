@@ -19,10 +19,10 @@ theme:
   button-state-color-off: rgb(200, 200, 200)
   modal-background-color: rgba(0,0,0,0.3)
   border-radius: 0.4rem
-  sidebar-font-size: 1.04rem
+  sidebar-font-size: 1rem
   sidebar-item-padding: 0.6rem 0.6rem
   sidebar-padding: 0 1.4rem
-  drawer-font-size: 0.95rem
+  drawer-font-size: 0.925rem
   sidebar-divider: 1px solid rgba(255, 255, 255, 0.3)
   navigate-background-color: rgba(255, 255, 255, 0.15)
   app-color: '#722b6e'
