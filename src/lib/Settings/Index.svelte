@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { editMode, lang, motion, ripple, selectedLanguage } from '$lib/Stores';
+	import { configuration, editMode, lang, motion, ripple, selectedLanguage } from '$lib/Stores';
 	import { fade } from 'svelte/transition';
 	import { modals, closeModal } from 'svelte-modals';
 	import Modal from '$lib/Modal/Index.svelte';
 	import Language from '$lib/Settings/Language.svelte';
 	import Addons from '$lib/Settings/Addons.svelte';
 	import Motion from '$lib/Settings/Motion.svelte';
+	import Token from '$lib/Settings/Token.svelte';
 	import CustomJs from '$lib/Settings/CustomJs.svelte';
 	import Logout from '$lib/Settings/Logout.svelte';
 	import Ripple from 'svelte-ripple';
@@ -47,12 +48,18 @@
 				...(form.maptiler && { maptiler: { apikey: form.maptiler } })
 			};
 
+			const token = form.token || undefined;
 			const custom_js = form.custom_js ? Boolean(form.custom_js === 'true') : undefined;
 			const formMotion = form.motion ? Boolean(form.motion === 'true') : undefined;
 
 			const json: any = {
 				locale: $selectedLanguage
 			};
+
+			if (token) {
+				json.token = token;
+				$configuration.token = token as string;
+			}
 
 			if (Object.keys(addons).length > 0) json.addons = addons;
 			if (custom_js) json.custom_js = custom_js;
@@ -107,6 +114,8 @@
 
 		<form id="settings" name="settings" bind:this={formElement}>
 			<Language {languages} />
+
+			<Token />
 
 			<Addons {data} />
 

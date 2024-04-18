@@ -1,5 +1,6 @@
 import {
 	getAuth,
+	createLongLivedTokenAuth,
 	createConnection,
 	subscribeConfig,
 	subscribeEntities,
@@ -9,12 +10,12 @@ import {
 	ERR_HASS_HOST_REQUIRED,
 	ERR_INVALID_HTTPS_TO_HTTP
 } from 'home-assistant-js-websocket';
-import type { SaveTokensFunc } from 'home-assistant-js-websocket';
+import type { Auth, AuthData } from 'home-assistant-js-websocket';
 import { states, connection, config, connected, event, persistentNotifications } from '$lib/Stores';
-import { closeModal } from 'svelte-modals';
-import type { PersistentNotification } from '$lib/Types';
+import { openModal, closeModal } from 'svelte-modals';
+import type { Configuration, PersistentNotification } from '$lib/Types';
 
-export const options = {
+const options = {
 	hassUrl: undefined as string | undefined,
 	async loadTokens() {
 		try {
@@ -23,7 +24,7 @@ export const options = {
 			return undefined;
 		}
 	},
-	saveTokens(tokens: SaveTokensFunc) {
+	saveTokens(tokens: AuthData | null) {
 		localStorage.hassTokens = JSON.stringify(tokens);
 	},
 	clearTokens() {
@@ -31,19 +32,31 @@ export const options = {
 	}
 };
 
-export async function authentication(options: { hassUrl?: string }) {
-	let auth;
-
-	try {
-		auth = await getAuth(options);
-		if (auth.expired) {
-			auth.refreshAccessToken();
-		}
-	} catch (_error) {
-		handleError(_error);
+export async function authentication(configuration: Configuration) {
+	if (!configuration?.hassUrl) {
+		console.error('hassUrl is undefined...');
+		return;
 	}
 
+	let auth: Auth | undefined;
+
 	try {
+		// long lived access token
+		if (configuration?.token) {
+			auth = createLongLivedTokenAuth(configuration?.hassUrl, configuration?.token);
+
+			// companion app and ingress causes issues with auth redirect
+			// open special modal to enter long lived access token
+		} else if (navigator.userAgent.includes('Home Assistant')) {
+			openModal(() => import('$lib/Components/TokenModal.svelte'));
+			return;
+
+			// default auth flow
+		} else {
+			auth = await getAuth({ ...options, hassUrl: configuration?.hassUrl });
+			if (auth.expired) auth.refreshAccessToken();
+		}
+
 		// connection
 		const conn = await createConnection({ auth });
 		connection.set(conn);

@@ -16,7 +16,7 @@
 		clickOriginatedFromMenu,
 		connection
 	} from '$lib/Stores';
-	import { authentication, options } from '$lib/Socket';
+	import { authentication } from '$lib/Socket';
 	import { onDestroy, onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { modals } from 'svelte-modals';
@@ -68,12 +68,8 @@
 
 		console.debug('authenticating...');
 
-		if ($configuration?.hassUrl) {
-			options.hassUrl = $configuration?.hassUrl;
-		}
-
 		try {
-			await authentication(options);
+			await authentication($configuration);
 			console.debug('authenticated.');
 			clearInterval(retryInterval);
 		} catch (err) {
@@ -81,6 +77,19 @@
 		} finally {
 			isConnecting = false;
 		}
+	}
+
+	/**
+	 * Reconnect if long-lived access token changes
+	 */
+	$: if ($configuration?.token) updateConnection();
+
+	function updateConnection() {
+		if (isConnecting || !browser) return;
+		clearInterval(retryInterval);
+
+		connect();
+		retryInterval = setInterval(connect, 3000);
 	}
 
 	onDestroy(() => clearInterval(retryInterval));

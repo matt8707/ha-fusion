@@ -6,6 +6,7 @@ export interface Configuration {
 	custom_js?: boolean;
 	motion?: boolean;
 	addons?: Addons;
+	token?: string;
 }
 
 export interface Addons {
