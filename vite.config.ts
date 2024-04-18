@@ -16,7 +16,7 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		include: [
-			// include all because of dynamic imports, this prevents: ✨ optimized dependencies changed. reloading
+			// include all because of dynamic imports, prevents: ✨ optimized dependencies changed. reloading
 			// (pnpm ls -P | grep -Ev 'codemirror|@fontsource' | awk '/dependencies:/{flag=1; next} flag{print "\047" $1 "\047,"}'; echo "'@iconify/svelte',"; echo "'svelte-fast-dimension/action'")
 			'@jaames/iro',
 			'd3-array',
@@ -24,6 +24,7 @@ export default defineConfig({
 			'd3-shape',
 			'dotenv',
 			'express',
+			'hls.js',
 			'home-assistant-js-websocket',
 			'http-proxy-middleware',
 			'js-yaml',
