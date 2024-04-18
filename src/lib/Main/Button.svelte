@@ -543,7 +543,7 @@
 		grid-template-columns: min-content auto;
 		grid-auto-flow: row;
 		grid-template-areas: 'left right';
-		--container-padding: 0.8rem;
+		--container-padding: 0.72rem;
 
 		/* fix ripple */
 		transform: translateZ(0);
@@ -556,6 +556,7 @@
 	}
 
 	.left {
+		display: inherit;
 		padding: var(--container-padding);
 	}
 
@@ -564,13 +565,11 @@
 		flex-direction: column;
 		justify-content: center;
 		overflow: hidden;
-		gap: 1px;
-		margin-top: -1px;
 		padding-right: var(--container-padding);
 	}
 
 	.icon {
-		--icon-size: 2.5rem;
+		--icon-size: 2.4rem;
 		grid-area: icon;
 		height: var(--icon-size);
 		width: var(--icon-size);
@@ -594,7 +593,8 @@
 		color: var(--theme-button-name-color-off);
 		overflow: hidden;
 		text-overflow: ellipsis;
-		font-size: var(--sidebar-font-size);
+		font-size: 0.95rem;
+		margin-top: -1px;
 	}
 
 	.state {
@@ -604,7 +604,8 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		color: var(--theme-button-state-color-off);
-		font-size: var(--theme-drawer-font-size);
+		font-size: 0.925rem;
+		margin-top: 1px;
 	}
 
 	.container[data-state='true'] {
