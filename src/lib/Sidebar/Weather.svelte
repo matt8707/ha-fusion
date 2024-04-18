@@ -20,7 +20,7 @@
 	$: sensor = sel?.sensor && $states?.[sel?.sensor];
 </script>
 
-{#if entity?.state !== 'unavailable'}
+{#if entity && entity?.state !== 'unavailable'}
 	<div class="container">
 		<div class="icon">
 			<!-- svelte-ignore a11y-missing-attribute -->
