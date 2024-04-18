@@ -293,7 +293,7 @@
 	"update_installing": "Installerer",
 	"update_installing_progress": "Installerer ({progress}%)",
 	"update_latest_version": "Nyeste version",
-	"update_release_notes": "L\u00e6s udgivelsesmeddelelsen",
+	"update_release_notes": "L\u00e6s opdateringens udgivelsesmeddelelse",
 	"update_skip": "Spring over",
 	"update_up_to_date": "Opdateret",
 	"url": "Webadresse",
@@ -329,7 +329,7 @@
 	"weather_snowy_rainy": "Sne, regn",
 	"weather_sunny": "Solrigt",
 	"weather_windy": "Bl\u00e6sende",
-	"weather_windy_variant": "Bl\u00e6sende",
+	"weather_windy_variant": "Bl\u00e6sende, overskyet",
 	"week": "Uge",
 	"welcome_home": "Velkommen hjem",
 	"yes": "Ja"

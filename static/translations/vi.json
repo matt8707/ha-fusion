@@ -37,7 +37,6 @@
 	"buffering": "\u0110ang \u0111\u1ec7m",
 	"button": "N\u00fat b\u1ea5m",
 	"buttons": "N\u00fat b\u1ea5m",
-	"camera": "M\u00e1y \u1ea3nh",
 	"cancel": "Hu\u1ef7 B\u1ecf",
 	"card_configuration": "C\u1ea5u h\u00ecnh th\u1ebb",
 	"change_color": "\u0110\u1ed5i m\u00e0u",
@@ -318,7 +317,6 @@
 	"weather_snowy_rainy": "M\u01b0a, tuy\u1ebft",
 	"weather_sunny": "N\u1eafng \u0111\u1eb9p",
 	"weather_windy": "Co\u0301 gio\u0301",
-	"weather_windy_variant": "Co\u0301 gio\u0301",
 	"week": "Tu\u1ea7n",
 	"welcome_home": "Ch\u00e0o m\u1eebng b\u1ea1n v\u1ec1 nh\u00e0",
 	"yes": "C\u00f3"

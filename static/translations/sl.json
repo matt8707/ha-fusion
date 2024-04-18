@@ -31,7 +31,6 @@
 	"brightness": "Svetlost",
 	"button": "Gumb",
 	"buttons": "Gumbi",
-	"camera": "Kamera",
 	"cancel": "Prekli\u010di",
 	"card_configuration": "Nastavitve kartice",
 	"change_color": "Sprememba barve",
@@ -266,7 +265,6 @@
 	"weather_snowy_rainy": "Sne\u017eenje, de\u017eevno",
 	"weather_sunny": "Son\u010dno",
 	"weather_windy": "Vetrovno",
-	"weather_windy_variant": "Vetrovno",
 	"week": "Teden",
 	"welcome_home": "Dobrodo\u0161li Doma",
 	"yes": "Da"
