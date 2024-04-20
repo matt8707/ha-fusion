@@ -1,22 +1,52 @@
 <script lang="ts">
-	import { states, selectedLanguage, lang } from '$lib/Stores';
+	import { states, selectedLanguage, lang, connection, forecasts } from '$lib/Stores';
 	import { iconMapMaterialSymbolsLight, iconMapMeteocons, iconMapWeatherIcons } from '$lib/Weather';
 	import type { WeatherIconSet, WeatherIconConditions, WeatherIconMapping } from '$lib/Weather';
-	import type { HassEntity } from 'home-assistant-js-websocket';
 	import Icon from '@iconify/svelte';
+	import { getSupport } from '$lib/Utils';
 
 	export let sel: any;
 
-	let entity: HassEntity;
-	$: {
-		if (sel?.entity_id) {
-			if ($states?.[sel?.entity_id]?.last_updated !== entity?.last_updated) {
-				entity = $states?.[sel?.entity_id];
-			}
-		}
-	}
-
+	$: entity = $states?.[sel?.entity_id];
 	$: attributes = entity?.attributes;
+	$: supported_features = attributes?.supported_features;
+
+	$: supports = getSupport(supported_features, {
+		FORECAST_DAILY: 1,
+		FORECAST_HOURLY: 2,
+		FORECAST_TWICE_DAILY: 4
+	});
+
+	// get forecast data when sel changes
+	// TODO: also update periodically
+	$: if (sel) getForecast();
+
+	function getForecast() {
+		// fallback if forecast_type is not defined select first true
+		const _default = Object.keys(supports)
+			?.find((key) => supports[key])
+			?.replace('FORECAST_', '')
+			?.toLowerCase();
+
+		// dont get forecast if it's already stored
+		const entityMatches = sel?.entity_id === $forecasts[sel?.id]?.entity_id;
+		const typeMatches = (sel?.forecast_type || _default) === $forecasts[sel?.id]?.type;
+		const dragging = sel?.id === 'id:dnd-shadow-placeholder-0000';
+		if ((entityMatches && typeMatches) || dragging || !$states) return;
+
+		// console.debug('fire!', sel?.id);
+
+		$connection?.subscribeMessage(
+			(data: any) => {
+				$forecasts[sel?.id] = { ...data, entity_id: sel?.entity_id, subscribed: Date.now() };
+			},
+			{
+				type: 'weather/subscribe_forecast',
+				entity_id: sel?.entity_id,
+				forecast_type: sel?.forecast_type || _default
+			}
+		);
+	}
 
 	let iconSet: WeatherIconSet;
 	$: {
@@ -41,7 +71,7 @@
 		temperature: number;
 	}
 	let forecast: Forecast[];
-	$: forecast = entity?.attributes?.forecast?.slice(0, calculated).map(function (item: any) {
+	$: forecast = $forecasts?.[sel?.id]?.forecast?.slice(0, calculated).map(function (item: any) {
 		let icon: WeatherIconMapping =
 			iconSet.conditions[item?.condition as keyof WeatherIconConditions];
 		let x: Forecast = {
@@ -93,7 +123,7 @@
 		{/each}
 	</div>
 {:else}
-	<div class="container-empty">
+	<div class="empty">
 		{$lang('weather_forecast')}
 	</div>
 {/if}
@@ -123,6 +153,15 @@
 		padding-left: 0;
 		padding-right: 0.25rem;
 		margin-left: -0.1rem;
+		height: 7.5rem;
+	}
+
+	.empty {
+		word-wrap: break-word;
+		padding: 0.5em;
+		overflow: hidden;
+		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+		height: 7.5rem;
 	}
 
 	.day {

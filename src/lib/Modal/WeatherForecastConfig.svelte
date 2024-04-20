@@ -5,13 +5,11 @@
 	import Select from '$lib/Components/Select.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
-	import { updateObj } from '$lib/Utils';
-	import type { HassEntity } from 'home-assistant-js-websocket';
-	import type { WeatherForecastItem } from '$lib/Types';
+	import { getSupport, updateObj } from '$lib/Utils';
 	import Ripple from 'svelte-ripple';
 
 	export let isOpen: boolean;
-	export let sel: WeatherForecastItem;
+	export let sel: any;
 	export let demo: string | undefined = undefined;
 
 	if (demo) {
@@ -20,16 +18,19 @@
 		set('entity_id', demo);
 	}
 
+	$: entity = $states[sel?.entity_id];
+	$: attributes = entity?.attributes;
+	$: supported_features = attributes?.supported_features;
+
+	$: supports = getSupport(supported_features, {
+		FORECAST_DAILY: 1,
+		FORECAST_HOURLY: 2,
+		FORECAST_TWICE_DAILY: 4
+	});
+
 	let days_to_show = sel?.days_to_show ?? 7;
 
 	let numberElement: HTMLInputElement;
-
-	let entity: HassEntity;
-	$: if (sel?.entity_id) {
-		if ($states?.[sel?.entity_id]?.last_updated !== entity?.last_updated) {
-			entity = $states?.[sel?.entity_id];
-		}
-	}
 
 	const iconOptions = [
 		{ id: 'meteocons', label: 'meteocons' },
@@ -37,13 +38,8 @@
 		{ id: 'materialsymbolslight', label: 'materialsymbolslight' }
 	];
 
-	$: weatherStates = Object.keys(
-		Object.fromEntries(
-			Object.entries($states).filter(
-				([key, value]) => key.startsWith('weather.') && value?.attributes?.forecast
-			)
-		)
-	)
+	$: options = Object.keys($states)
+		.filter((key) => key.startsWith('weather.'))
 		.sort()
 		.map((key) => ({ id: key, label: key }));
 
@@ -82,14 +78,18 @@
 
 		<h2>{$lang('entity')}</h2>
 
-		{#if weatherStates}
+		{#if options}
 			<Select
 				computeIcons={true}
 				defaultIcon="mdi:weather-cloudy"
-				options={weatherStates}
+				{options}
 				placeholder={$lang('entity')}
 				value={sel?.entity_id}
-				on:change={(event) => set('entity_id', event)}
+				on:change={(event) => {
+					// remove 'forecast_type' when changing entity_id
+					set('forecast_type');
+					set('entity_id', event);
+				}}
 			/>
 		{/if}
 
@@ -106,7 +106,7 @@
 
 		<h2>{$lang('days_to_show')}</h2>
 
-		{#if weatherStates}
+		{#if options}
 			<input
 				type="number"
 				class="input"
@@ -117,6 +117,42 @@
 				on:change={handleNumberRange}
 				autocomplete="off"
 			/>
+		{/if}
+
+		{#if Object.keys(supports).filter((key) => supports[key]).length > 1}
+			<h2>{$lang('forecast_type')}</h2>
+
+			<div class="button-container">
+				{#if supports?.FORECAST_DAILY}
+					<button
+						class:selected={sel?.forecast_type === 'daily' || !sel?.forecast_type}
+						on:click={() => set('forecast_type', 'daily')}
+						use:Ripple={$ripple}
+					>
+						{$lang('forecast_daily')}
+					</button>
+				{/if}
+
+				{#if supports?.FORECAST_HOURLY}
+					<button
+						class:selected={sel?.forecast_type === 'hourly'}
+						on:click={() => set('forecast_type', 'hourly')}
+						use:Ripple={$ripple}
+					>
+						{$lang('forecast_hourly')}
+					</button>
+				{/if}
+
+				{#if supports?.FORECAST_TWICE_DAILY}
+					<button
+						class:selected={sel?.forecast_type === 'twice_daily'}
+						on:click={() => set('forecast_type', 'twice_daily')}
+						use:Ripple={$ripple}
+					>
+						{$lang('forecast_twice_daily')}
+					</button>
+				{/if}
+			</div>
 		{/if}
 
 		<h2>{$lang('mobile')}</h2>
