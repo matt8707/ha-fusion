@@ -494,6 +494,10 @@ dir_keys = [
             ("optional", ["ui.panel.lovelace.editor.card.config.optional"]),
             ("icons", ["ui.panel.lovelace.editor.features.types.climate-hvac-modes.style_list.icons"]),
             ("days_to_show", ["ui.panel.lovelace.editor.card.generic.days_to_show"]),
+            ("forecast_type", ["ui.panel.lovelace.editor.card.weather-forecast.forecast_type"]),
+            ("forecast_daily", ["ui.panel.lovelace.editor.card.weather-forecast.daily"]),
+            ("forecast_hourly", ["ui.panel.lovelace.editor.card.weather-forecast.hourly"]),
+            ("forecast_twice_daily", ["ui.panel.lovelace.editor.card.weather-forecast.twice_daily"]),
         ],
     ),
     (  # DEVELOPER-TOOLS
