@@ -18,11 +18,6 @@ const config = {
 		inspector: {
 			toggleKeyCombo: 'control-shift',
 			showToggleButton: 'never'
-		},
-		experimental: {
-			// disable console spam because of `svelte-tiny-virtual-list@2.0.5`
-			// "The following packages have a svelte field in their packag ..."
-			disableSvelteResolveWarnings: true
 		}
 	}
 };
