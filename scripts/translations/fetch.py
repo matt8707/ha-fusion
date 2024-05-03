@@ -150,6 +150,8 @@ dir_keys = [
         f"{COMPONENTS}/camera/translations/",
         [
             ("camera", ["title"]),
+            ("recording", ["entity_component", "_", "state", "recording"]),
+            ("streaming", ["entity_component", "_", "state", "streaming"]),
         ],
     ),
     (  # UPDATE
