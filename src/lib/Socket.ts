@@ -93,31 +93,18 @@ export async function authentication(configuration: Configuration) {
 		}
 
 		// custom events
-		const getEvent = (message: any) => {
-			return message?.variables?.trigger?.event?.data?.event;
-		};
-
-		// close_popup
 		conn?.subscribeMessage(
 			(message: any) => {
-				if (getEvent(message) === 'close_popup') {
+				const trigger = message?.variables?.trigger?.event?.data?.event;
+
+				// close_popup
+				if (trigger === 'close_popup') {
 					event.set('close_popup');
 					closeModal();
 				}
-			},
-			{
-				type: 'subscribe_trigger',
-				trigger: {
-					platform: 'event',
-					event_type: 'HA_FUSION'
-				}
-			}
-		);
 
-		// refresh
-		conn?.subscribeMessage(
-			(message: any) => {
-				if (getEvent(message) === 'refresh') {
+				// refresh
+				else if (trigger === 'refresh') {
 					sessionStorage.setItem('event', 'refresh');
 					location.reload();
 				}
