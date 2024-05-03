@@ -21,7 +21,7 @@
 {:else if item?.type === 'media'}
 	<Media sel={item} />
 {:else if item?.type === 'camera'}
-	<Camera sel={item} />
+	<Camera sel={item} responsive={false} muted={true} controls={false} />
 {:else if item?.type === 'empty'}
 	<Empty sel={item} />
 {/if}

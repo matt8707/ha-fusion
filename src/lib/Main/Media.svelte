@@ -174,10 +174,11 @@
 		font-weight: 500;
 		color: inherit;
 		white-space: nowrap;
+		color: var(--theme-button-name-color-off);
 		overflow: hidden;
 		text-overflow: ellipsis;
-		font-size: var(--sidebar-font-size);
-		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+		font-size: 0.95rem;
+		margin-top: -1px;
 	}
 
 	.state {
@@ -186,24 +187,30 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		font-size: var(--theme-drawer-font-size);
-		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+		color: var(--theme-button-state-color-off);
+		font-size: 0.925rem;
+		margin-top: 1px;
 	}
 
 	.icon {
-		--icon-size: 2.5rem;
+		--icon-size: 2.4rem;
 		grid-area: icon;
 		height: var(--icon-size);
 		width: var(--icon-size);
-		justify-self: center;
-		align-self: center;
 		color: rgb(200 200 200);
 		background-color: rgba(0, 0, 0, 0.25);
-		padding: 0.5rem;
 		border-radius: 50%;
+		display: grid;
+		align-items: center;
+		display: flex;
+		padding: 0.5rem;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
 	}
 
 	.left {
+		display: inherit;
 		padding: var(--container-padding);
 	}
 
@@ -212,9 +219,7 @@
 		flex-direction: column;
 		justify-content: center;
 		overflow: hidden;
-		gap: 1px;
-		margin-top: -1px;
-		color: white;
+		padding-right: var(--container-padding);
 	}
 
 	.test {
