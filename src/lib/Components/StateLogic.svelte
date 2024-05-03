@@ -73,11 +73,6 @@
 	{Number(state) || $lang('unknown')}
 	{#if attributes?.unit_of_measurement}{attributes.unit_of_measurement}{/if}
 
-	<!--  Camera -->
-{:else if getDomain(entity_id) === 'camera'}
-	<!-- instead of idle? -->
-	{$lang('camera')}
-
 	<!--  Weather -->
 {:else if getDomain(entity_id) === 'weather'}
 	{$lang('weather_' + state?.replace('_', '-')) || state || $lang('unknown')}

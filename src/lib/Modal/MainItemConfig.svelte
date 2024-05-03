@@ -74,7 +74,10 @@
 			component: Camera,
 			props: {
 				demo: $demo.camera,
-				sel
+				sel,
+				responsive: true,
+				controls: false,
+				muted: true
 			}
 		},
 		{
@@ -196,8 +199,8 @@
 
 <style>
 	.camera {
-		transform: scale(0.5);
-		transform-origin: top left;
+		padding: 1rem 1.2rem;
+		height: inherit;
 	}
 
 	.container {

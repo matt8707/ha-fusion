@@ -9,6 +9,7 @@
 
 	let stateObj: any;
 	let currentIcon: string | undefined;
+	let src: string | undefined;
 
 	$: if (entity_id) stateObj = $states?.[entity_id];
 	$: state = stateObj?.state;
@@ -481,8 +482,19 @@
 		dispatch('iconString', icon);
 	}
 
+	function loadEntityPicture(entity_picture: string) {
+		const img = new Image();
+		img.onload = () => (src = entity_picture);
+		img.onerror = () => (src = undefined);
+		img.src = entity_picture;
+	}
+
 	onMount(() => {
 		dispatchIconString();
+
+		if (currentIcon === 'entity_picture') {
+			loadEntityPicture(stateObj?.attributes?.entity_picture);
+		}
 	});
 
 	function getCurrentIcon() {
@@ -515,7 +527,11 @@
 {#if currentIcon === 'entity_picture'}
 	<!--  entity_picture  -->
 
-	<div style:background-image="url({stateObj?.attributes?.entity_picture})" />
+	{#if src}
+		<img {src} alt="" />
+	{:else}
+		<Icon icon="ph:image-broken-duotone" height="auto" width="100%" />
+	{/if}
 {:else if currentIcon}
 	<!--  icon  -->
 
@@ -525,11 +541,11 @@
 {/if}
 
 <style>
-	div {
-		background-size: cover;
-		background-position: center center;
+	img {
 		width: 100%;
 		height: 100%;
 		border-radius: 50%;
+		object-fit: cover;
+		object-position: center;
 	}
 </style>
