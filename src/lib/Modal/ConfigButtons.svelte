@@ -25,20 +25,23 @@
 	/**
 	 * Get id from a mainItem
 	 */
-	function mainItem(callback: any) {
-		const process = (section: any) => {
-			const items = section.items?.map(callback).filter((item: any) => item !== null);
-			const sections = section.sections?.map(process);
-			return {
-				...section,
-				...(items?.length ? { items } : {}),
-				...(sections?.length ? { sections } : {})
-			};
-		};
-
+	function mainItem() {
 		$dashboard.views = $dashboard.views.map((view) => ({
 			...view,
-			sections: view.sections?.map(process) ?? []
+			sections: view.sections?.map((section) => ({
+				...section,
+				sections:
+					section.type === 'horizontal-stack' && section.sections
+						? section.sections.map((nestedSection) => ({
+								...nestedSection,
+								items: nestedSection.items?.filter((item) => item.id !== sel.id)
+							}))
+						: section.sections,
+				items:
+					section.type !== 'horizontal-stack'
+						? section.items?.filter((item) => item.id !== sel.id)
+						: section.items
+			}))
 		}));
 	}
 
@@ -67,7 +70,7 @@
 		if (sidebarItem()) {
 			removeSidebarItem();
 		} else if (sel?.type) {
-			mainItem((item: { id: number }) => (item?.id !== sel?.id ? item : null));
+			mainItem();
 		} else if (sel.sections) {
 			await removeViewItem();
 		}
