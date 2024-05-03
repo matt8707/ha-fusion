@@ -13,6 +13,7 @@ function random(list: HassEntity[] | any[]) {
  * number | %
  */
 export function getPercentageEntity(states: HassEntities) {
+	if (states === undefined) return;
 	const filtered = Object.values(states).filter(
 		(entity) =>
 			entity.attributes &&
@@ -30,6 +31,7 @@ export function getPercentageEntity(states: HassEntities) {
  * binary_sensor | sensor | state.length > 5 | !unavailable | !unknown
  */
 export function getSensorEntity(states: HassEntities) {
+	if (states === undefined) return;
 	const sensors = Object.values(states).filter(
 		(entity) =>
 			entity.entity_id.startsWith('binary_sensor.') || entity.entity_id.startsWith('sensor.')
@@ -53,6 +55,7 @@ export function getSensorEntity(states: HassEntities) {
  * Get random timer entity
  */
 export function getTimerEntity(states: HassEntities) {
+	if (states === undefined) return;
 	const timers = Object.values(states).filter((e) => e.entity_id.startsWith('timer.'));
 	return timers.length ? random(timers).entity_id : undefined;
 }
@@ -61,6 +64,7 @@ export function getTimerEntity(states: HassEntities) {
  * Get random history entity
  */
 export function getHistoryEntity(states: HassEntities) {
+	if (states === undefined) return;
 	const list = Object.values(states).filter(
 		(entity) => entity.state === 'on' || entity.state === 'off'
 	);
@@ -71,6 +75,7 @@ export function getHistoryEntity(states: HassEntities) {
  * Get random weather entity
  */
 export function getWeatherEntity(states: HassEntities) {
+	if (states === undefined) return;
 	const list = Object.values(states).filter((e) => e.entity_id.startsWith('weather.'));
 	return list.length ? random(list).entity_id : undefined;
 }
@@ -79,6 +84,7 @@ export function getWeatherEntity(states: HassEntities) {
  * Get random weather entity with forecast attribute
  */
 export function getWeatherForecastEntity(states: HassEntities) {
+	if (states === undefined) return;
 	const list = Object.values(states).filter(
 		(entity) =>
 			entity.entity_id.startsWith('weather.') &&
@@ -97,6 +103,7 @@ export function getGraphEntity(
 	connection: any,
 	callback: (id: string | undefined) => void
 ) {
+	if (states === undefined) return;
 	connection.subscribe(async (conn: Connection) => {
 		if (!conn) {
 			callback(undefined);
@@ -137,6 +144,7 @@ export function getGraphEntity(
  * Get random camera entity
  */
 export function getCameraEntity(states: HassEntities) {
+	if (states === undefined) return;
 	const filtered = Object.values(states).filter((entity) => entity.entity_id.startsWith('camera.'));
 	const entity = random(filtered);
 	if (entity) return entity.entity_id;
