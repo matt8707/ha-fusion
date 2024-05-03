@@ -1,5 +1,5 @@
 # first stage, can't use alpine for building armv7
-FROM node:21 AS builder
+FROM node:22 AS builder
 WORKDIR /app
 
 # copy all files
@@ -11,7 +11,7 @@ RUN npm install --verbose && \
   npm prune --omit=dev
 
 # second stage
-FROM node:21-alpine
+FROM node:22-alpine
 WORKDIR /app
 
 # copy files to /app
