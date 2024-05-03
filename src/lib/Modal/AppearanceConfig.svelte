@@ -147,13 +147,14 @@
 							<div
 								class="image-area"
 								style:background-image="url('{base}/themes/{theme?.title}_thumbnail.webp')"
-							/>
+							></div>
+
 							<div class="description-area">
 								<div class="description">
 									<div class="name">{theme?.title}</div>
 									<div class="author">{theme?.author}</div>
 									<div class="edit-area">
-										<button
+										<div
 											use:Ripple={{
 												...$ripple,
 												color: 'rgba(0, 0, 0, 0.35)'
@@ -164,9 +165,12 @@
 													theme: theme
 												});
 											}}
+											on:keydown
+											role="button"
+											tabindex="0"
 										>
 											<Icon icon="solar:pen-2-bold-duotone" height="none" />
-										</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -182,7 +186,7 @@
 						style:width
 						style:height
 						style:transition
-					/>
+					></div>
 				{/if}
 			</div>
 		{/if}

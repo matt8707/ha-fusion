@@ -96,7 +96,7 @@
 		{/each}
 
 		{#if !$draggingView && modalTransitionEnd}
-			<div class="navigate selected" style:top style:left style:height style:transition />
+			<div class="navigate selected" style:top style:left style:height style:transition></div>
 		{/if}
 	{:else}
 		{$lang('navigate')}

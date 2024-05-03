@@ -14,7 +14,7 @@
 			style:height={size || '150px'}
 			style:pointer-events={$editMode ? 'none' : 'unset'}
 			title={$lang('iframe')}
-		/>
+		></iframe>
 	{:else}
 		<div class="placeholder center" style:height={size || '150px'}>
 			<div class="icon">

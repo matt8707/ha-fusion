@@ -108,8 +108,7 @@
 				<div class="icon">
 					{#if forecast.icon.local}
 						<icon class="ff-fill">
-							<!-- svelte-ignore a11y-missing-attribute -->
-							<img src="{forecast.icon.icon_variant_day}.svg" width="100%" height="100%" />
+							<img src="{forecast.icon.icon_variant_day}.svg" width="100%" height="100%" alt="" />
 						</icon>
 					{:else}
 						<Icon icon={forecast.icon.icon_variant_day} width="100%" height="100%"></Icon>

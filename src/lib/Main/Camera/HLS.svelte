@@ -130,7 +130,7 @@
 		style:display={$editMode ? 'none' : 'initial'}
 		style:width={responsive ? '100%' : 'calc(14.5rem * 2 + 0.4rem)'}
 		style:object-fit={size}
-	/>
+	></video>
 {/if}
 
 <style>

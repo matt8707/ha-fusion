@@ -35,7 +35,7 @@
 <svelte:document on:pointermove={handlePointerMove} on:pointerup={handlePointer} />
 
 <div class="handle" on:pointerdown={handlePointer}>
-	<div class="area" />
+	<div class="area"></div>
 </div>
 
 <div class="icon" transition:fade={{ duration: $motion }}>

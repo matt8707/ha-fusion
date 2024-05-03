@@ -31,7 +31,7 @@
 </script>
 
 <div>
-	<span style:width="{$fill * 100}%" />
+	<span style:width="{$fill * 100}%"></span>
 	<input
 		name="slider"
 		type="range"

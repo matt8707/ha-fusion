@@ -14,15 +14,16 @@
 	}
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
 	on:click={handleClick}
 	class="container"
 	style:height="{$itemHeight}px"
 	style:opacity={$editMode ? '1' : '0'}
 	style:transition="opacity {$motion}ms ease"
-/>
+	on:keydown
+	role="button"
+	tabindex="0"
+></div>
 
 <style>
 	.container {

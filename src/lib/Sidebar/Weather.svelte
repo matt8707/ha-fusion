@@ -23,8 +23,7 @@
 {#if entity && entity?.state !== 'unavailable'}
 	<div class="container">
 		<div class="icon">
-			<!-- svelte-ignore a11y-missing-attribute -->
-			<img {src} width="100%" height="100%" />
+			<img {src} width="100%" height="100%" alt="" />
 		</div>
 
 		{#if attributes?.temperature}

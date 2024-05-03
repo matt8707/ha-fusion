@@ -115,7 +115,7 @@
 				max="100"
 				style:opacity={inProgress ? '1' : '0.5'}
 				style:transition="opacity {$motion}ms ease"
-			/>
+			></progress>
 		{/if}
 
 		<!-- SPECIFIC_VERSION -->

@@ -173,7 +173,7 @@
 	style:margin-top={supportedColorModes?.length !== 1 ? '2em' : '0'}
 	style:opacity={entity?.state === 'off' ? '0.25' : 'unset'}
 	style:transition="all {$motion}ms ease"
-/>
+></div>
 
 {#if tempSelected && kelvinNumber && interacting}
 	<span

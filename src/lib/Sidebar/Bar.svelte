@@ -88,7 +88,7 @@
 			class="fill"
 			style:transition={mounted ? `width ${$motion}ms ease` : 'none'}
 			style:width="{expression}%"
-		/>
+		></div>
 	</div>
 </div>
 

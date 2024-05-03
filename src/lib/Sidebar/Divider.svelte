@@ -19,7 +19,7 @@
 			style:height={`${size || defaultValue}px`}
 			style:opacity={$editMode ? '1' : '0'}
 			style:transition="opacity {$motion}ms ease, height {$motion}ms ease"
-		/>
+		></div>
 	{:else}
 		<div class="hr-padding" bind:clientHeight>
 			<hr />

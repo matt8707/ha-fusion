@@ -282,7 +282,7 @@
 	}
 </script>
 
-<div class="editor" bind:this={editor} />
+<div class="editor" bind:this={editor}></div>
 
 <style>
 	.editor {

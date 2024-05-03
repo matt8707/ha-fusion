@@ -11,7 +11,7 @@
 </script>
 
 {#if item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] && item?.type === 'media'}
-	<div class="shadow" />
+	<div class="shadow"></div>
 {/if}
 
 {#if item?.type === 'configure'}

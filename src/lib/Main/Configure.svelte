@@ -31,13 +31,14 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
 	style:height="{$itemHeight}px"
 	on:click={handleClick}
 	style:cursor={$editMode ? 'unset' : 'pointer'}
-/>
+	on:keydown
+	role="button"
+	tabindex="0"
+></div>
 
 <style>
 	div {

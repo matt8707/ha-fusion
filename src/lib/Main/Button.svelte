@@ -457,6 +457,9 @@
 				handleEvent(event);
 			}
 		}}
+		on:keydown
+		role="button"
+		tabindex="0"
 	>
 		<div
 			class="icon"
@@ -495,7 +498,7 @@
 		</div>
 	</div>
 
-	<div class="right" on:click|stopPropagation={handleEvent}>
+	<div class="right" on:click|stopPropagation={handleEvent} on:keydown role="button" tabindex="0">
 		<!-- NAME -->
 		<div class="name" data-state={stateOn}>
 			{@html (sel?.template?.name && template?.name?.output) ||

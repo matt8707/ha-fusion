@@ -250,8 +250,7 @@
 									on:input={(event) => handleStatus(event, item.uid)}
 								/>
 							</label>
-							<!-- svelte-ignore a11y-click-events-have-key-events -->
-							<!-- svelte-ignore a11y-no-static-element-interactions -->
+
 							<span
 								class="item-name"
 								on:click={async () => {
@@ -262,13 +261,14 @@
 										inputElement.focus();
 									}
 								}}
+								on:keydown
+								role="button"
+								tabindex="0"
 							>
 								{#if selectedId === item.uid}
 									<form on:submit={handleSubmit}>
-										<!-- svelte-ignore a11y-autofocus -->
 										<input
 											id={item.uid}
-											autofocus={true}
 											value={item.summary}
 											class="inputname"
 											on:change={(event) => handleRename(event, item.uid)}

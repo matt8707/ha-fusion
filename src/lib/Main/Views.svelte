@@ -157,7 +157,7 @@
 							style:left="{left}px"
 							style:opacity={$draggingView ? '0' : '1'}
 							style:transition="width {$motion}ms ease, left {$draggingView ? '0' : $motion}ms ease"
-						/>
+						></div>
 					{/key}
 				</div>
 			</div>

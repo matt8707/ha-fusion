@@ -78,9 +78,14 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div id="markdown" on:click={handleEvent} on:pointerenter={handleEvent}>
+<div
+	id="markdown"
+	on:click={handleEvent}
+	on:pointerenter={handleEvent}
+	on:keydown
+	role="button"
+	tabindex="0"
+>
 	{#if demo}
 		<div class="template">
 			<span>&#123;&#123;</span> template <span>&#125;&#125;</span>

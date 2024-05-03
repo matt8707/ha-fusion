@@ -283,7 +283,7 @@
 						});
 					}}
 				>
-					<span class="maplibregl-ctrl-icon mapboxgl-ctrl-icon" />
+					<span class="maplibregl-ctrl-icon mapboxgl-ctrl-icon"></span>
 				</button>
 			</div>
 		</div>
@@ -320,7 +320,7 @@
 
 		<!-- marker -->
 		<div class="marker-container" bind:this={markerContainer}>
-			<div class="pulse" />
+			<div class="pulse"></div>
 
 			<button
 				id="marker"

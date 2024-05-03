@@ -56,8 +56,6 @@
 </script>
 
 {#if sel?.expand === false || (empty && $editMode)}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		transition:slide={{ duration: $motion }}
 		class="toggle"
@@ -66,6 +64,9 @@
 			if ($editMode || empty) return;
 			expanded = !expanded;
 		}}
+		on:keydown
+		role="button"
+		tabindex="0"
 	>
 		{#if !empty}
 			{length}

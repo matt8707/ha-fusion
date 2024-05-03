@@ -31,7 +31,7 @@
 	{/if}
 
 	{#if condition && select}
-		<div class="divider" transition:fade={{ duration: $motion / 2 }} />
+		<div class="divider" transition:fade={{ duration: $motion / 2 }}></div>
 	{/if}
 </div>
 

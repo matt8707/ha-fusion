@@ -93,7 +93,7 @@
 			class="triangle"
 			in:fade={{ duration: $motion / 3, easing: cubicOut }}
 			out:fade={{ duration: $motion / 3, easing: cubicOut }}
-		/>
+		></div>
 	{/if}
 </div>
 

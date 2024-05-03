@@ -14,7 +14,6 @@
 </svelte:head>
 
 <Modals>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		slot="backdrop"
 		class="backdrop"
@@ -26,9 +25,10 @@
 			easing: expoOut
 		}}
 		out:fade={{ duration: $motion / 2 }}
+		on:keydown
 		role="button"
 		tabindex="0"
-	/>
+	></div>
 
 	<div slot="loading">
 		<Loader />

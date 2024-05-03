@@ -5,7 +5,7 @@
 
 <label class="switch">
 	<input name="toggle" type="checkbox" bind:checked on:change />
-	<span class="slider" data-exclude-drag-modal />
+	<span class="slider" data-exclude-drag-modal></span>
 </label>
 
 <style>

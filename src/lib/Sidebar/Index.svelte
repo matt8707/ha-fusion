@@ -237,7 +237,7 @@
 
 						<!-- CONFIGURE -->
 					{:else if Configure && item?.type === 'configure'}
-						<div role="button" tabindex="0" on:click={() => handleClick(item?.id)}>
+						<div on:click={() => handleClick(item?.id)} on:keydown role="button" tabindex="0">
 							<svelte:component this={Configure.default} sel={item} />
 						</div>
 
@@ -306,6 +306,9 @@
 								on:click|preventDefault={() => {
 									if ($editMode) handleClick(item?.id);
 								}}
+								on:keydown
+								role="button"
+								tabindex="0"
 							>
 								<svelte:component this={Navigate.default} />
 							</div>
@@ -313,7 +316,7 @@
 
 						<!-- RADIAL -->
 					{:else if Radial && item?.type === 'radial' && !hide_mobile}
-						<div on:click={() => handleClick(item?.id)}>
+						<div on:click={() => handleClick(item?.id)} on:keydown role="button" tabindex="0">
 							<svelte:component
 								this={Radial.default}
 								entity_id={item?.entity_id}
@@ -324,7 +327,7 @@
 
 						<!-- SENSOR -->
 					{:else if Sensor && item?.type === 'sensor' && !hide_mobile}
-						<div on:click={() => handleClick(item?.id)}>
+						<div on:click={() => handleClick(item?.id)} on:keydown role="button" tabindex="0">
 							<svelte:component
 								this={Sensor.default}
 								entity_id={item?.entity_id}
