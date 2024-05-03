@@ -53,8 +53,10 @@ export default defineConfig({
 			'codemirror'
 		]
 	},
-	// development proxy endpoints
 	server: {
+		// required for webrtc
+		host: true,
+		// development proxy endpoints
 		proxy: {
 			'/local/': {
 				target: process.env.HASS_URL,
