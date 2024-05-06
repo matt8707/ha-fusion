@@ -38,6 +38,8 @@
 	"buffering": "Buffering",
 	"button": "Tombol",
 	"buttons": "Tombol",
+	"calendar": "Kalender",
+	"calendar_error": "Tidak dapat mengambil acara untuk kalender:",
 	"camera": "Kamera",
 	"cancel": "Batalkan",
 	"card_configuration": "Konfigurasi kartu",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Entitas tidak ditemukan",
 	"error": "Kesalahan",
 	"error_save_yaml": "Tidak dapat menyimpan YAML: {error}",
+	"event_delete": "Hapus acara",
 	"event_fired": "Peristiwa {type} berhasil dijalankan!",
 	"exit_edit_mode": "Selesai",
 	"expand": "Perluas",
@@ -286,6 +289,7 @@
 	"time_format_description": "Pilih pemformatan waktu",
 	"time_format_header": "Format waktu",
 	"timer": "Timer",
+	"today": "Hari ini",
 	"todo_list": "Daftar tugas",
 	"toggle": "Alihkan",
 	"token": "Token akses yang berumur panjang",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "Berangin, berawan",
 	"week": "Pekan",
 	"welcome_home": "Selamat Datang",
+	"year": "tahun",
 	"yes": "Ya"
 }

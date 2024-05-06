@@ -37,6 +37,8 @@
 	"buffering": "Bufferen",
 	"button": "Knop",
 	"buttons": "Knoppen",
+	"calendar": "Kalender",
+	"calendar_error": "Kon de gebeurtenissen niet ophalen voor de agenda's:",
 	"camera": "Camera",
 	"cancel": "Annuleren",
 	"card_configuration": "Kaartconfiguratie",
@@ -94,6 +96,7 @@
 	"entity_not_found": "Entiteit niet gevonden",
 	"error": "Fout",
 	"error_save_yaml": "Kan YAML niet opslaan: {error}",
+	"event_delete": "Gebeurtenis verwijderen",
 	"event_fired": "Gebeurtenis {type} met succes uitgevoerd!",
 	"exit_edit_mode": "Klaar",
 	"expand": "Uitbreiden",
@@ -284,6 +287,7 @@
 	"time_format_description": "Kies hoe tijden worden weergegeven.",
 	"time_format_header": "Tijdnotatie",
 	"timer": "Timer",
+	"today": "Vandaag",
 	"todo_list": "Takenlijst",
 	"toggle": "Omschakelen",
 	"token": "Toegangtokens met lange levensduur",
@@ -341,5 +345,6 @@
 	"weather_windy": "Winderig",
 	"week": "Week",
 	"welcome_home": "Welkom thuis",
+	"year": "jaar",
 	"yes": "Ja"
 }

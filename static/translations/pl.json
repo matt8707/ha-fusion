@@ -38,6 +38,8 @@
 	"buffering": "buforowanie",
 	"button": "Przycisk",
 	"buttons": "Przyciski",
+	"calendar": "Kalendarz",
+	"calendar_error": "Nie mo\u017cna pobra\u0107 wydarze\u0144 dla kalendarzy:",
 	"camera": "Kamera",
 	"cancel": "Anuluj",
 	"card_configuration": "Konfiguracja karty",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Nie znaleziono encji",
 	"error": "b\u0142\u0105d",
 	"error_save_yaml": "Nie mo\u017cna zapisa\u0107 YAML: {error}",
+	"event_delete": "Usu\u0144 wydarzenie",
 	"event_fired": "Uda\u0142o si\u0119 wywo\u0142a\u0107 zdarzenie {type}!",
 	"exit_edit_mode": "Gotowe",
 	"expand": "Rozwi\u0144",
@@ -275,6 +278,7 @@
 	"time_format_description": "Wybierz spos\u00f3b formatowania czasu.",
 	"time_format_header": "Format czasu",
 	"timer": "Minutnik",
+	"today": "Dzisiaj",
 	"todo_list": "Lista zada\u0144",
 	"toggle": "Prze\u0142\u0105cz",
 	"token": "D\u0142ugotrwa\u0142e tokeny dost\u0119pu",
@@ -333,5 +337,6 @@
 	"weather_windy": "wietrznie",
 	"week": "Tydzie\u0144",
 	"welcome_home": "Witaj w domu",
+	"year": "rok",
 	"yes": "Tak"
 }

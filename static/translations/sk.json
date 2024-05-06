@@ -38,6 +38,8 @@
 	"buffering": "Na\u010d\u00edtanie",
 	"button": "Tla\u010didlo",
 	"buttons": "Tla\u010didl\u00e1",
+	"calendar": "Kalend\u00e1r",
+	"calendar_error": "Nepodarilo sa na\u010d\u00edta\u0165 udalosti pre kalend\u00e1re:",
 	"camera": "Kamera",
 	"cancel": "Zru\u0161i\u0165",
 	"card_configuration": "Konfigur\u00e1cia karty",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Entita nen\u00e1jden\u00e1",
 	"error": "Chyba",
 	"error_save_yaml": "Nepodarilo sa ulo\u017ei\u0165 YAML: {error}",
+	"event_delete": "Odstr\u00e1ni\u0165 udalos\u0165",
 	"event_fired": "Udalos\u0165 {type} \u00faspe\u0161ne odoslan\u00e1!",
 	"exit_edit_mode": "Hotovo",
 	"expand": "Rozbali\u0165",
@@ -286,6 +289,7 @@
 	"time_format_description": "Vyberte sp\u00f4sob form\u00e1tovania \u010dasu.",
 	"time_format_header": "Form\u00e1t \u010dasu",
 	"timer": "\u010casova\u010d",
+	"today": "Dnes",
 	"todo_list": "Zoznam \u00faloh",
 	"toggle": "Prepn\u00fa\u0165",
 	"token": "Pr\u00edstupov\u00e9 tokeny s dlhou \u017eivotnos\u0165ou",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "Veterno, zamra\u010den\u00e9",
 	"week": "T\u00fd\u017ede\u0148",
 	"welcome_home": "Vitajte doma",
+	"year": "rok",
 	"yes": "\u00c1no"
 }

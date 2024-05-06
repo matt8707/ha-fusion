@@ -38,6 +38,8 @@
 	"buffering": "Puhverdamine",
 	"button": "Nupp",
 	"buttons": "Nupud",
+	"calendar": "Kalender",
+	"calendar_error": "Kalendrite s\u00fcndmusi ei \u00f5nnestunud k\u00e4tte saada:",
 	"camera": "Kaamera",
 	"cancel": "Loobu",
 	"card_configuration": "Kaardi seadistamine",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Olemit ei leitud",
 	"error": "Viga",
 	"error_save_yaml": "YAML-i ei saa salvestada: {error}",
+	"event_delete": "Kustuta s\u00fcndmus",
 	"event_fired": "S\u00fcndmus {type} vallandus edukalt!",
 	"exit_edit_mode": "Valmis",
 	"expand": "Laienda",
@@ -286,6 +289,7 @@
 	"time_format_description": "Vali kuidas ajad vormindatakse.",
 	"time_format_header": "Ajavorming",
 	"timer": "Taimer",
+	"today": "T\u00e4na",
 	"todo_list": "\u00dclesannete loend",
 	"toggle": "Muuda olekut",
 	"token": "Pikaajalised juurdep\u00e4\u00e4sut\u00f5endid",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "Tuuline, pilvine",
 	"week": "N\u00e4dal",
 	"welcome_home": "Tere tulemast koju",
+	"year": "aasta",
 	"yes": "Jah"
 }

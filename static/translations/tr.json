@@ -38,6 +38,8 @@
 	"buffering": "\u00d6n belle\u011fe al\u0131n\u0131yor",
 	"button": "D\u00fc\u011fme",
 	"buttons": "D\u00fc\u011fmeler",
+	"calendar": "Takvim",
+	"calendar_error": "Takvimler i\u00e7in etkinlikler al\u0131namad\u0131:",
 	"camera": "Kamera",
 	"cancel": "\u0130ptal",
 	"card_configuration": "Kart yap\u0131land\u0131rmas\u0131",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Varl\u0131k Bulunamad\u0131",
 	"error": "Hata",
 	"error_save_yaml": "YAML kaydedilemiyor: {error}",
+	"event_delete": "Etkinli\u011fi sil",
 	"event_fired": "{type} etkinli\u011fi ba\u015far\u0131yla ba\u015flat\u0131ld\u0131!",
 	"exit_edit_mode": "Bitti",
 	"expand": "Geni\u015flet",
@@ -286,6 +289,7 @@
 	"time_format_description": "Saatlerin nas\u0131l bi\u00e7imlendirilece\u011fini se\u00e7in.",
 	"time_format_header": "Saat bi\u00e7imi",
 	"timer": "Zamanlay\u0131c\u0131",
+	"today": "Bug\u00fcn",
 	"todo_list": "Yap\u0131lacaklar listesi",
 	"toggle": "De\u011fi\u015ftir",
 	"token": "Uzun \u00f6m\u00fcrl\u00fc eri\u015fim anahtarlar\u0131",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "R\u00fczgarl\u0131 bulutlu",
 	"week": "Hafta",
 	"welcome_home": "Eve Ho\u015fgeldin",
+	"year": "y\u0131l",
 	"yes": "Evet"
 }

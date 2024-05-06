@@ -23,6 +23,8 @@
 	"brightness": "Brightness",
 	"button": "Button",
 	"buttons": "Buttons",
+	"calendar": "Calendar",
+	"calendar_error": "Could not retrieve events for calendars:",
 	"cancel": "Cancel",
 	"card_configuration": "Card Configuration",
 	"change_color": "Change Colour",
@@ -62,6 +64,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Error",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_delete": "Delete Event",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"expand": "Expand",
@@ -194,6 +197,7 @@
 	"time_format_description": "Choose how times are formatted.",
 	"time_format_header": "Time Format",
 	"timer": "Timer",
+	"today": "Today",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "Long-Lived Access Tokens",
@@ -218,5 +222,6 @@
 	"weather_forecast": "Forecast",
 	"week": "Week",
 	"welcome_home": "Welcome Home",
+	"year": "year",
 	"yes": "Yes"
 }

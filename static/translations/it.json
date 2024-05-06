@@ -38,6 +38,8 @@
 	"buffering": "Precaricamento",
 	"button": "Pulsante",
 	"buttons": "Pulsanti",
+	"calendar": "Calendario",
+	"calendar_error": "Impossibile recuperare gli eventi per i calendari:",
 	"camera": "Telecamera",
 	"cancel": "Annulla",
 	"card_configuration": "Configurazione della scheda",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Entit\u00e0 non trovata",
 	"error": "Errore",
 	"error_save_yaml": "Impossibile salvare YAML: {error}",
+	"event_delete": "Elimina evento",
 	"event_fired": "Evento {type} eseguito correttamente!",
 	"exit_edit_mode": "Fatto",
 	"expand": "Espandi",
@@ -286,6 +289,7 @@
 	"time_format_description": "Scegli come vengono formattate le ore.",
 	"time_format_header": "Formato orario",
 	"timer": "Timer",
+	"today": "Oggi",
 	"todo_list": "Lista di attivit\u00e0",
 	"toggle": "Commuta",
 	"token": "Token di accesso a lungo termine",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "Ventoso, nuvoloso",
 	"week": "Settimana",
 	"welcome_home": "Benvenuto a casa",
+	"year": "anno",
 	"yes": "S\u00ec"
 }

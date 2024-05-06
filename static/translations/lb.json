@@ -23,6 +23,8 @@
 	"brightness": "Hellegkeet",
 	"button": "Kn\u00e4ppchen",
 	"buttons": "Kn\u00e4ppercher",
+	"calendar": "Calendar",
+	"calendar_error": "Konnt d'Evenementer fir Kalenneren net ofruffen:",
 	"camera": "Kamera",
 	"cancel": "Ofbriechen",
 	"card_configuration": "Kaart Konfiguratioun",
@@ -63,6 +65,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Feeler",
 	"error_save_yaml": "Kann de YAML net sp\u00e4icheren: {error}",
+	"event_delete": "Delete event",
 	"event_fired": "Event {type} erfollegr\u00e4ich gestart",
 	"exit_edit_mode": "Benotzer Interface Edit\u00e9ierungsmodus verloossen",
 	"expand": "Expand",
@@ -195,6 +198,7 @@
 	"time_format_description": "Choose how times are formatted.",
 	"time_format_header": "Time format",
 	"timer": "Timer",
+	"today": "Today",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "Lang g\u00eblteg Acc\u00e8ss Jetone",
@@ -219,5 +223,6 @@
 	"weather_forecast": "Prognose",
 	"week": "Week",
 	"welcome_home": "W\u00ebllkomm Doheem",
+	"year": "Joer",
 	"yes": "Jo"
 }

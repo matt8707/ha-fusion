@@ -38,6 +38,8 @@
 	"buffering": "Buffrar",
 	"button": "Knapp",
 	"buttons": "Knappar",
+	"calendar": "Kalender",
+	"calendar_error": "Kan inte l\u00e4sa in h\u00e4ndelser f\u00f6r kalendrar:",
 	"camera": "Kamera",
 	"cancel": "Avbryt",
 	"card_configuration": "Kortkonfiguration",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Enhet ej funnen",
 	"error": "Fel",
 	"error_save_yaml": "Det gick inte att spara YAML: {error}",
+	"event_delete": "Ta bort h\u00e4ndelse",
 	"event_fired": "H\u00e4ndelse {type} utl\u00f6stes!",
 	"exit_edit_mode": "Avsluta UI-redigeringsl\u00e4ge",
 	"expand": "Expandera",
@@ -286,6 +289,7 @@
 	"time_format_description": "V\u00e4lj hur tid utformas.",
 	"time_format_header": "Tidsformat",
 	"timer": "Timer",
+	"today": "Idag",
 	"todo_list": "Att g\u00f6ra-lista",
 	"toggle": "V\u00e4xla",
 	"token": "L\u00e5nglivade \u00e5tkomsttoken",
@@ -345,5 +349,6 @@
 	"weather_windy": "Bl\u00e5sigt",
 	"week": "Vecka",
 	"welcome_home": "V\u00e4lkommen hem",
+	"year": "\u00e5r",
 	"yes": "Ja"
 }

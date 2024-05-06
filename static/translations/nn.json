@@ -23,6 +23,8 @@
 	"brightness": "Lysstyrke",
 	"button": "Knapp",
 	"buttons": "Knappar",
+	"calendar": "Kalendar",
+	"calendar_error": "Kunne ikkje hente hendingar for kalendar:",
 	"cancel": "Avbryt",
 	"card_configuration": "Kortkonfigurasjon",
 	"change_color": "Endre farge",
@@ -64,6 +66,7 @@
 	"entity_not_found": "Oppf\u00f8ring ikkje funnen",
 	"error": "Feil",
 	"error_save_yaml": "Kan ikkje lagre YAML: {error}",
+	"event_delete": "Slett hending",
 	"event_fired": "Arrangementet {type} velukka!",
 	"exit_edit_mode": "Ferdig",
 	"expand": "Utvid",
@@ -199,6 +202,7 @@
 	"time_format_description": "Vel korleis tider er formater.",
 	"time_format_header": "Tidsformat",
 	"timer": "Tidtakar",
+	"today": "I dag",
 	"todo_list": "To-do list",
 	"toggle": "Veksle",
 	"token": "Langtidslevande tilgangstokenar",
@@ -226,5 +230,6 @@
 	"weather_lightning_rainy": "Lyn, regn",
 	"week": "Veke",
 	"welcome_home": "Velkommen heim",
+	"year": "\u00e5r",
 	"yes": "Ja"
 }

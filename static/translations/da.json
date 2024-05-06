@@ -38,6 +38,8 @@
 	"buffering": "Buffer",
 	"button": "Knap",
 	"buttons": "Knapper",
+	"calendar": "Kalender",
+	"calendar_error": "Kunne ikke hente begivenheder for kalendere:",
 	"camera": "Kamera",
 	"cancel": "Annull\u00e9r",
 	"card_configuration": "Kortkonfiguration",
@@ -93,6 +95,7 @@
 	"entity_not_found": "Entitet ikke fundet",
 	"error": "Fejl",
 	"error_save_yaml": "Kunne ikke gemme YAML: {error}",
+	"event_delete": "Slet begivenhed",
 	"event_fired": "H\u00e6ndelse {type} blev afsendt!",
 	"exit_edit_mode": "F\u00e6rdig",
 	"expand": "Udvid",
@@ -278,6 +281,7 @@
 	"time_format_description": "V\u00e6lg, hvordan klokkesl\u00e6t skal formateres.",
 	"time_format_header": "Tidsformat",
 	"timer": "Timer",
+	"today": "I dag",
 	"todo_list": "Huskeliste",
 	"toggle": "Skift",
 	"token": "Langlivede adgangstokens",
@@ -338,5 +342,6 @@
 	"weather_windy_variant": "Bl\u00e6sende, overskyet",
 	"week": "Uge",
 	"welcome_home": "Velkommen hjem",
+	"year": "\u00e5r",
 	"yes": "Ja"
 }

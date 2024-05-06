@@ -37,6 +37,8 @@
 	"buffering": "Buferiz\u0101cija",
 	"button": "Poga",
 	"buttons": "Pogas",
+	"calendar": "Kalend\u0101rs",
+	"calendar_error": "Neizdev\u0101s ieg\u016bt notikumus kalend\u0101riem:",
 	"cancel": "Atcelt",
 	"card_configuration": "Kart\u012btes konfigur\u0101cija",
 	"change_color": "Kr\u0101su izv\u0113le",
@@ -91,6 +93,7 @@
 	"entity_not_found": "Vien\u012bba nav atrasta",
 	"error": "K\u013c\u016bda",
 	"error_save_yaml": "Nevar saglab\u0101t YAML: {error}",
+	"event_delete": "Dz\u0113st notikumu",
 	"event_fired": "Notikums {type} veiksm\u012bgi aktiviz\u0113ts!",
 	"exit_edit_mode": "Gatavs",
 	"expand": "Izv\u0113rst",
@@ -271,6 +274,7 @@
 	"time_format_description": "Izv\u0113lieties laika att\u0113lo\u0161anas form\u0101tu.",
 	"time_format_header": "Laika form\u0101ts",
 	"timer": "Taimeris",
+	"today": "\u0160odien",
 	"todo_list": "To-do list",
 	"toggle": "P\u0101rsl\u0113gt",
 	"token": "Ilgtermi\u0146a piek\u013cuves pilnvaras",
@@ -325,5 +329,6 @@
 	"weather_windy": "V\u0113jains",
 	"week": "Ned\u0113\u013ca",
 	"welcome_home": "Laipni l\u016bgti m\u0101j\u0101s",
+	"year": "gads",
 	"yes": "J\u0101"
 }

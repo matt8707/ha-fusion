@@ -38,6 +38,8 @@
 	"buffering": "Pufferel\u00e9s",
 	"button": "Gomb",
 	"buttons": "Gombok",
+	"calendar": "Napt\u00e1r",
+	"calendar_error": "Nem siker\u00fclt lek\u00e9rni a napt\u00e1resem\u00e9nyeket:",
 	"camera": "Kamera",
 	"cancel": "M\u00e9gse",
 	"card_configuration": "K\u00e1rtya konfigur\u00e1ci\u00f3",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Az entit\u00e1s nem tal\u00e1lhat\u00f3",
 	"error": "Hiba",
 	"error_save_yaml": "Nem siker\u00fclt menteni a YAML-t: {error}",
+	"event_delete": "Esem\u00e9ny t\u00f6rl\u00e9se",
 	"event_fired": "{type} esem\u00e9ny sikeresen megh\u00edvva!",
 	"exit_edit_mode": "K\u00e9sz",
 	"expand": "Kiterjeszt\u00e9s",
@@ -286,6 +289,7 @@
 	"time_format_description": "V\u00e1lassza ki, hogy az id\u0151pontok hogyan legyenek form\u00e1zva.",
 	"time_format_header": "Id\u0151form\u00e1tum",
 	"timer": "Id\u0151tartam",
+	"today": "Ma",
 	"todo_list": "Teend\u0151lista",
 	"toggle": "Kapcsol\u00e1s",
 	"token": "Hossz\u00fa \u00e9lettartam\u00fa hozz\u00e1f\u00e9r\u00e9si tokenek",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "Szeles, felh\u0151s",
 	"week": "H\u00e9t",
 	"welcome_home": "\u00dcdv Itthon",
+	"year": "\u00e9v",
 	"yes": "Igen"
 }

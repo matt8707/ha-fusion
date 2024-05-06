@@ -38,6 +38,8 @@
 	"buffering": "Puskuroi",
 	"button": "Painike",
 	"buttons": "Painikkeet",
+	"calendar": "Kalenteri",
+	"calendar_error": "Seuraavien kalenterien tapahtumien haku ep\u00e4onnistui:",
 	"camera": "Kamera",
 	"cancel": "Peruuta",
 	"card_configuration": "Kortti-asetukset",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Entiteetti\u00e4 ei l\u00f6ydy",
 	"error": "Virhe",
 	"error_save_yaml": "YAML-tiedostoa ei voi tallentaa: {error}",
+	"event_delete": "Poista tapahtuma",
 	"event_fired": "Tapahtuma {type} l\u00e4hetetty!",
 	"exit_edit_mode": "Valmis",
 	"expand": "Laajenna",
@@ -286,6 +289,7 @@
 	"time_format_description": "Valitse, miten kellonajat muotoillaan.",
 	"time_format_header": "Aikamuoto",
 	"timer": "Ajastin",
+	"today": "T\u00e4n\u00e4\u00e4n",
 	"todo_list": "Teht\u00e4v\u00e4lista",
 	"toggle": "Vaihda",
 	"token": "Pitk\u00e4aikaiset k\u00e4ytt\u00f6tunnukset",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "Tuulista, pilvist\u00e4",
 	"week": "Viikko",
 	"welcome_home": "Tervetuloa kotiin",
+	"year": "vuosi",
 	"yes": "Kyll\u00e4"
 }

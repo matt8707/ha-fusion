@@ -25,6 +25,8 @@
 	"brightness": "Svjetlina",
 	"button": "Gumb",
 	"buttons": "Gumbi",
+	"calendar": "Kalendar",
+	"calendar_error": "Nije mogu\u0107e dohvatiti doga\u0111aje za kalendare:",
 	"cancel": "Otkazati",
 	"card_configuration": "Konfiguracija Kartice",
 	"change_color": "Promjena boje",
@@ -64,6 +66,7 @@
 	"entity_not_found": "Entitet nije prona\u0111en",
 	"error": "Gre\u0161ka",
 	"error_save_yaml": "Nije mogu\u0107e spremiti YAML: {error}",
+	"event_delete": "Izbri\u0161i doga\u0111aj",
 	"event_fired": "Doga\u0111aj {type} uspje\u0161no je pokrenut!",
 	"exit_edit_mode": "Gotovo",
 	"expand": "Pro\u0161iriti",
@@ -196,6 +199,7 @@
 	"time_format_description": "Odaberite format vremena.",
 	"time_format_header": "Format vremena",
 	"timer": "Tajmer",
+	"today": "Danas",
 	"todo_list": "Popis obaveza",
 	"toggle": "Prebacivanje",
 	"token": "Dugotrajni tokeni",
@@ -221,5 +225,6 @@
 	"weather_partlycloudy": "Promjenjivo obla\u010dno",
 	"week": "Tjedan",
 	"welcome_home": "Dobrodo\u0161li ku\u0107i",
+	"year": "godina",
 	"yes": "Da"
 }

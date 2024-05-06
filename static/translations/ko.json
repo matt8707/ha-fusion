@@ -38,6 +38,8 @@
 	"buffering": "\ubc84\ud37c\ub9c1 \uc911",
 	"button": "\ubc84\ud2bc",
 	"buttons": "\ubc84\ud2bc",
+	"calendar": "\uce98\ub9b0\ub354",
+	"calendar_error": "\uce98\ub9b0\ub354\uc5d0 \ub300\ud55c \uc774\ubca4\ud2b8\ub97c \uac80\uc0c9\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4.",
 	"camera": "\uce74\uba54\ub77c",
 	"cancel": "\ucde8\uc18c",
 	"card_configuration": "\uce74\ub4dc \uad6c\uc131",
@@ -95,6 +97,7 @@
 	"entity_not_found": "\uad6c\uc131\uc694\uc18c\ub97c \ucc3e\uc744 \uc218 \uc5c6\uc74c",
 	"error": "\uc624\ub958",
 	"error_save_yaml": "YAML\uc744 \uc800\uc7a5\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4: {error}",
+	"event_delete": "\uc774\ubca4\ud2b8 \uc0ad\uc81c",
 	"event_fired": "{type} \uc774\ubca4\ud2b8\uac00 \uc131\uacf5\uc801\uc73c\ub85c \ubc1c\ud589\ub418\uc5c8\uc2b5\ub2c8\ub2e4!",
 	"exit_edit_mode": "\uc644\ub8cc",
 	"expand": "\ud655\uc7a5\ud558\uae30",
@@ -286,6 +289,7 @@
 	"time_format_description": "\uc2dc\uac04 \ud615\uc2dd\uc744 \uc120\ud0dd\ud569\ub2c8\ub2e4.",
 	"time_format_header": "\uc2dc\uac04 \ud615\uc2dd",
 	"timer": "\ud0c0\uc774\uba38",
+	"today": "\uc624\ub298",
 	"todo_list": "\ud560 \uc77c \ubaa9\ub85d",
 	"toggle": "\ud1a0\uae00",
 	"token": "\uc7a5\uae30 \uc561\uc138\uc2a4 \ud1a0\ud070",
@@ -345,5 +349,6 @@
 	"weather_windy": "\uc7a6\uc740\ubc14\ub78c",
 	"week": "\uc8fc",
 	"welcome_home": "\uc9d1\uc5d0 \uc624\uc2e0 \uac83\uc744 \ud658\uc601\ud569\ub2c8\ub2e4",
+	"year": "\ub144",
 	"yes": "\uc608"
 }

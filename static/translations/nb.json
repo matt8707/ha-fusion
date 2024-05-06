@@ -36,6 +36,8 @@
 	"buffering": "Bufring",
 	"button": "Knapp",
 	"buttons": "Knapper",
+	"calendar": "Kalender",
+	"calendar_error": "Kunne ikke hente hendelser for kalendere:",
 	"camera": "Kamera",
 	"cancel": "Avbryt",
 	"card_configuration": "Kortkonfigurasjon",
@@ -91,6 +93,7 @@
 	"entity_not_found": "Enheten ble ikke funnet",
 	"error": "Feil",
 	"error_save_yaml": "Kan ikke lagre YAML: {error}",
+	"event_delete": "Slett hendelse",
 	"event_fired": "Arrangementet {type} vellykket!",
 	"exit_edit_mode": "Ferdig",
 	"expand": "Utvide",
@@ -264,6 +267,7 @@
 	"time_format_description": "Velg hvordan tidene skal formateres.",
 	"time_format_header": "Tidsformat",
 	"timer": "Timer",
+	"today": "I dag",
 	"todo_list": "Gj\u00f8rem\u00e5lsliste",
 	"toggle": "Veksle",
 	"token": "Langvarige tilgangstokener",
@@ -322,5 +326,6 @@
 	"weather_windy_variant": "Vind, skyet",
 	"week": "Uke",
 	"welcome_home": "Velkommen hjem",
+	"year": "\u00e5r",
 	"yes": "Ja"
 }

@@ -23,6 +23,8 @@
 	"brightness": "\u054a\u0561\u0575\u056e\u0561\u057c\u0578\u0582\u0569\u0575\u0578\u0582\u0576",
 	"button": "Button",
 	"buttons": "Buttons",
+	"calendar": "Calendar",
+	"calendar_error": "Could not retrieve events for calendars:",
 	"cancel": "Cancel",
 	"card_configuration": "\u0554\u0561\u0580\u057f\u056b \u056f\u0561\u0580\u0563\u0561\u057e\u0578\u0580\u0578\u0582\u0574",
 	"change_color": "Change color",
@@ -61,6 +63,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "\u054d\u056d\u0561\u056c",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_delete": "Delete event",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"expand": "Expand",
@@ -193,6 +196,7 @@
 	"time_format_description": "Choose how times are formatted.",
 	"time_format_header": "Time format",
 	"timer": "Timer",
+	"today": "Today",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "\u0535\u0580\u056f\u0561\u0580\u0561\u057f\u0587  \u0574\u0578\u0582\u057f\u0584\u056b \u0576\u0577\u0561\u0576\u0576\u0565\u0580",
@@ -217,5 +221,6 @@
 	"weather_forecast": "\u053f\u0561\u0576\u056d\u0561\u057f\u0565\u057d\u0578\u0582\u0574",
 	"week": "Week",
 	"welcome_home": "\u0532\u0561\u0580\u056b \u0563\u0561\u056c\u0578\u0582\u057d\u057f \u057f\u0578\u0582\u0576",
+	"year": "year",
 	"yes": "Yes"
 }

@@ -38,6 +38,8 @@
 	"buffering": "Ukl\u00e1d\u00e1n\u00ed do vyrovn\u00e1vac\u00ed pam\u011bti",
 	"button": "Tla\u010d\u00edtko",
 	"buttons": "Tla\u010d\u00edtka",
+	"calendar": "Kalend\u00e1\u0159",
+	"calendar_error": "Nezda\u0159ilo se na\u010d\u00edst ud\u00e1losti pro kalend\u00e1\u0159e:",
 	"camera": "Kamera",
 	"cancel": "Zru\u0161it",
 	"card_configuration": "Nastaven\u00ed karty",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Entita nebyla nenalezena",
 	"error": "Chyba",
 	"error_save_yaml": "Nelze ulo\u017eit YAML: {error}",
+	"event_delete": "Smazat ud\u00e1lost",
 	"event_fired": "Ud\u00e1lost {type} \u00fasp\u011b\u0161n\u011b spu\u0161t\u011bna!",
 	"exit_edit_mode": "Hotovo",
 	"expand": "Rozbalit",
@@ -286,6 +289,7 @@
 	"time_format_description": "Zvolte zp\u016fsob form\u00e1tov\u00e1n\u00ed \u010dasu.",
 	"time_format_header": "Form\u00e1t \u010dasu",
 	"timer": "\u010casova\u010d",
+	"today": "Dnes",
 	"todo_list": "Seznam \u00fakol\u016f",
 	"toggle": "P\u0159epnout",
 	"token": "Tokeny s dlouhou \u017eivotnost\u00ed",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "V\u011btrno, zata\u017eeno",
 	"week": "T\u00fdden",
 	"welcome_home": "V\u00edtejte doma",
+	"year": "rok",
 	"yes": "Ano"
 }

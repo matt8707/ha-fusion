@@ -132,6 +132,11 @@ dir_keys = [
             ("notifications_dismiss", ["ui.notification_toast.dismiss"]),
             ("expand", ["ui.components.target-picker.expand"]),
             ("weather_forecast", ["ui.card.weather.forecast"]),
+            ("calendar", ["ui.components.calendar.label"]),
+            ("today", ["ui.components.calendar.today"]),
+            ("calendar_error", ["ui.components.calendar.event_retrieval_error"]),
+            ("event_delete", ["ui.components.calendar.event.delete"]),
+            ("year", ["ui.components.calendar.event.rrule.year"]),
         ],
     ),
     (  # MEDIA_PLAYER
