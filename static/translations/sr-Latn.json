@@ -23,6 +23,8 @@
 	"brightness": "Osvetljenost",
 	"button": "Taster",
 	"buttons": "Tasteri",
+	"calendar": "\u041a\u0430\u043b\u0435\u043d\u0434\u0430\u0440",
+	"calendar_error": "\u041d\u0438\u0441\u0430\u043c \u0443\u0441\u043f\u0435\u043e \u0434\u0430 \u043f\u0440\u0435\u0443\u0437\u043c\u0435\u043c \u0434\u043e\u0433\u0430\u0452\u0430\u0458\u0435 \u0437\u0430 \u043a\u0430\u043b\u0435\u043d\u0434\u0430\u0440\u0435:",
 	"cancel": "Otka\u017ei",
 	"card_configuration": "Konfiguracija kartice",
 	"change_color": "Change color",
@@ -61,6 +63,7 @@
 	"entity_not_found": "Entitet nije prona\u0111en",
 	"error": "Gre\u0161ka",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_delete": "\u041e\u0431\u0440\u0438\u0448\u0438 \u0434\u043e\u0433\u0430\u0452\u0430\u0458",
 	"event_fired": "Doga\u0111aj {type} je uspe\u0161no pokrenut!",
 	"exit_edit_mode": "Gotovo",
 	"expand": "Pro\u0161iri",
@@ -193,6 +196,7 @@
 	"time_format_description": "Odaberite na\u010din formatiranja vremena.",
 	"time_format_header": "Format vremena",
 	"timer": "Timer",
+	"today": "Danas",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "Dugotrajni pristupni tokeni",
@@ -217,5 +221,6 @@
 	"weather_forecast": "Vremenska prognoza",
 	"week": "Nedelja",
 	"welcome_home": "Dobrodo\u0161ao ku\u0107i",
+	"year": "\u0433\u043e\u0434\u0438\u043d\u0430",
 	"yes": "Yes"
 }

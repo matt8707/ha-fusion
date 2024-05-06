@@ -23,6 +23,8 @@
 	"brightness": "Brightness",
 	"button": "Button",
 	"buttons": "Buttons",
+	"calendar": "Kalender",
+	"calendar_error": "Kunne ikke hente hendelser for kalendere:",
 	"cancel": "Cancel",
 	"card_configuration": "Card configuration",
 	"change_color": "Change color",
@@ -61,6 +63,7 @@
 	"entity_not_found": "Fant ikke enheten",
 	"error": "Error",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_delete": "Slett hendelse",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"expand": "Expand",
@@ -192,6 +195,7 @@
 	"time_format_description": "Choose how times are formatted.",
 	"time_format_header": "Time format",
 	"timer": "Timer",
+	"today": "Today",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "Long-lived access tokens",
@@ -216,5 +220,6 @@
 	"weather_forecast": "Prognose",
 	"week": "Uke",
 	"welcome_home": "Welcome Home",
+	"year": "\u00e5r",
 	"yes": "Yes"
 }

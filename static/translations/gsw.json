@@ -27,6 +27,8 @@
 	"brightness": "H\u00e4uigkeit",
 	"button": "Chopf",
 	"buttons": "Chn\u00f6pf",
+	"calendar": "Kal\u00e4nder",
+	"calendar_error": "Ha d Termine f\u00fcr e Kal\u00e4nder nid ch\u00f6nne lade:",
 	"cancel": "Abbr\u00e4che",
 	"card_configuration": "Charte bearbeite",
 	"change_color": "Farb \u00e4ndere",
@@ -67,6 +69,7 @@
 	"entity_not_found": "Entit\u00e4t nid gfunde",
 	"error": "F\u00e4hler",
 	"error_save_yaml": "Unm\u00fcglech YAML z spychere: {error}",
+	"event_delete": "Termin l\u00f6sche",
 	"event_fired": "Ereignis {type} erfougrych usgf\u00fcehrt!",
 	"exit_edit_mode": "Fertig",
 	"expand": "Usdehne",
@@ -208,6 +211,7 @@
 	"time_format_description": "Usw\u00e4hle wie d Zyte formatiert sy.",
 	"time_format_header": "Zytformat",
 	"timer": "Stoppuhr",
+	"today": "H\u00fct",
 	"todo_list": "Ufgabelyschte",
 	"toggle": "Umschaute",
 	"token": "Langl\u00e4bigi Zuegangsschl\u00fcssu",
@@ -249,5 +253,6 @@
 	"weather_windy": "Windig",
 	"week": "Wuche",
 	"welcome_home": "Willkomme deheim",
+	"year": "Jahr",
 	"yes": "Ja"
 }

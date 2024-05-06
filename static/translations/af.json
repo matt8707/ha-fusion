@@ -23,6 +23,8 @@
 	"brightness": "Helderheid",
 	"button": "Button",
 	"buttons": "Buttons",
+	"calendar": "Calendar",
+	"calendar_error": "Could not retrieve events for calendars:",
 	"cancel": "Cancel",
 	"card_configuration": "Kaart opstelling",
 	"change_color": "Change color",
@@ -61,6 +63,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Fout",
 	"error_save_yaml": "Kan nie YAML stoor nie: {error}",
+	"event_delete": "Delete event",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Verlaat UI-wysigingsmodus",
 	"expand": "Expand",
@@ -193,6 +196,7 @@
 	"time_format_description": "Choose how times are formatted.",
 	"time_format_header": "Time format",
 	"timer": "Timer",
+	"today": "Today",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "Langlewende-toegangs-tekseenhede",
@@ -217,5 +221,6 @@
 	"weather_forecast": "Voorspelling",
 	"week": "Week",
 	"welcome_home": "Welkom tuis",
+	"year": "year",
 	"yes": "Yes"
 }

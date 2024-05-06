@@ -23,6 +23,8 @@
 	"brightness": "Helderheid",
 	"button": "Knop",
 	"buttons": "Knoppen",
+	"calendar": "Kalinder",
+	"calendar_error": "Koe de eveneminten net ophelje foar de kalinders:",
 	"cancel": "Annulearje",
 	"card_configuration": "Kaartkonfiguraasje",
 	"change_color": "Feroarje kleur",
@@ -62,6 +64,7 @@
 	"entity_not_found": "Entiteit net f\u00fbn",
 	"error": "Ferkeard",
 	"error_save_yaml": "Kin YAML net opslaan: {error}",
+	"event_delete": "Evenemint forwiderje",
 	"event_fired": "Foarfal {type} mei s\u00fakses \u00fatfierd!",
 	"exit_edit_mode": "Klear",
 	"expand": "\u00datwreidzje",
@@ -195,6 +198,7 @@
 	"time_format_description": "Kies hoe't tiiden werj\u00fbn wurde.",
 	"time_format_header": "Tiidnotaasje",
 	"timer": "Timer",
+	"today": "Hjoed",
 	"todo_list": "To-do list",
 	"toggle": "Omskeakelje",
 	"token": "Tagongstokens mei lange libbensdoer",
@@ -219,5 +223,6 @@
 	"weather_forecast": "Foarsizzing",
 	"week": "Wike",
 	"welcome_home": "Wolkom th\u00fas",
+	"year": "jier",
 	"yes": "Ja"
 }

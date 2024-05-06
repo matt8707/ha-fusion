@@ -23,6 +23,8 @@
 	"brightness": "Osvjetljenje",
 	"button": "Dugme",
 	"buttons": "Dugmad",
+	"calendar": "Kalend\u00e1\u0159",
+	"calendar_error": "Nelze na\u010d\u00edst ud\u00e1losti pro kalend\u00e1\u0159e:",
 	"cancel": "Odustani",
 	"card_configuration": "Konfiguracija kartice",
 	"change_color": "Change color",
@@ -62,6 +64,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Gre\u0161ka",
 	"error_save_yaml": "Nije mogu\u0107e sa\u010duvati YAML: {error}",
+	"event_delete": "Smazat ud\u00e1lost",
 	"event_fired": "Doga\u0111aj {type} uspje\u0161no pokrenut!",
 	"exit_edit_mode": "Gotovo",
 	"expand": "Pro\u0161iriti",
@@ -194,6 +197,7 @@
 	"time_format_description": "Odaberi kako \u0107e se vremena formatirati.",
 	"time_format_header": "Format vremena",
 	"timer": "Tajmer",
+	"today": "Danas",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "Dugotrajni pristupni tokeni",
@@ -218,5 +222,6 @@
 	"weather_forecast": "Prognoza",
 	"week": "Week",
 	"welcome_home": "Dobrodo\u0161li ku\u0107i",
+	"year": "rok",
 	"yes": "Da"
 }

@@ -202,8 +202,7 @@
 		>
 			{#each $dashboard.sidebar as item (item.id)}
 				{@const hide_mobile = matches && item?.hide_mobile && !$editMode}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- svelte-ignore a11y-no-static-element-interactions -->
+
 				<div
 					id={String(item.id)}
 					animate:flip={{ duration: loaded ? $motion : 0 }}

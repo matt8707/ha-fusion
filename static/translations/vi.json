@@ -37,6 +37,8 @@
 	"buffering": "\u0110ang \u0111\u1ec7m",
 	"button": "N\u00fat b\u1ea5m",
 	"buttons": "N\u00fat b\u1ea5m",
+	"calendar": "L\u1ecbch",
+	"calendar_error": "Kh\u00f4ng th\u1ec3 truy xu\u1ea5t s\u1ef1 ki\u1ec7n cho l\u1ecbch:",
 	"cancel": "Hu\u1ef7 B\u1ecf",
 	"card_configuration": "C\u1ea5u h\u00ecnh th\u1ebb",
 	"change_color": "\u0110\u1ed5i m\u00e0u",
@@ -89,6 +91,7 @@
 	"entity_not_found": "Kh\u00f4ng t\u00ecm th\u1ea5y th\u1ef1c th\u1ec3",
 	"error": "L\u1ed7i",
 	"error_save_yaml": "Kh\u00f4ng th\u1ec3 l\u01b0u YAML: {error}",
+	"event_delete": "X\u00f3a s\u1ef1 ki\u1ec7n",
 	"event_fired": "S\u1ef1 ki\u1ec7n {type} \u0111\u00e3 \u0111\u01b0\u1ee3c k\u00edch ho\u1ea1t th\u00e0nh c\u00f4ng!",
 	"exit_edit_mode": "Xong",
 	"expand": "M\u1edf r\u1ed9ng",
@@ -270,6 +273,7 @@
 	"time_format_description": "Ch\u1ecdn c\u00e1ch \u0111\u1ecbnh d\u1ea1ng th\u1eddi gian.",
 	"time_format_header": "\u0110\u1ecbnh d\u1ea1ng th\u1eddi gian",
 	"timer": "H\u1eb9n gi\u1edd",
+	"today": "H\u00f4m nay",
 	"todo_list": "Danh s\u00e1ch vi\u1ec7c c\u1ea7n l\u00e0m",
 	"toggle": "B\u1eadt t\u1eaft",
 	"token": "Token t\u01b0\u01a1i m\u1edbi th\u1eddi h\u1ea1n d\u00e0i",
@@ -325,5 +329,6 @@
 	"weather_windy": "Co\u0301 gio\u0301",
 	"week": "Tu\u1ea7n",
 	"welcome_home": "Ch\u00e0o m\u1eebng b\u1ea1n v\u1ec1 nh\u00e0",
+	"year": "n\u0103m",
 	"yes": "C\u00f3"
 }

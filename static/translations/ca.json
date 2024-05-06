@@ -38,6 +38,8 @@
 	"buffering": "Carregant",
 	"button": "Bot\u00f3",
 	"buttons": "Botons",
+	"calendar": "Calendari",
+	"calendar_error": "No s'han pogut obtenir els esdeveniments dels calendaris:",
 	"camera": "C\u00e0mera",
 	"cancel": "Cancel\u00b7la",
 	"card_configuration": "Configuraci\u00f3 de la targeta",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Entitat no trobada",
 	"error": "Error",
 	"error_save_yaml": "No es pot desar YAML: {error}",
+	"event_delete": "Elimina esdeveniment",
 	"event_fired": "Esdeveniment {type} disparat correctament!",
 	"exit_edit_mode": "Fet",
 	"expand": "Expandeix",
@@ -286,6 +289,7 @@
 	"time_format_description": "Tria el format de data i hora.",
 	"time_format_header": "Format de data i hora",
 	"timer": "Temporitzador",
+	"today": "Avui",
 	"todo_list": "Llista de tasques",
 	"toggle": "Commuta",
 	"token": "'Tokens' d'acc\u00e9s de llarga durada",
@@ -345,5 +349,6 @@
 	"weather_windy": "Vent\u00f3s",
 	"week": "Setmana",
 	"welcome_home": "Benvingut/da a casa",
+	"year": "any",
 	"yes": "S\u00ed"
 }

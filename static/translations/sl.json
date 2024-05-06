@@ -31,6 +31,8 @@
 	"brightness": "Svetlost",
 	"button": "Gumb",
 	"buttons": "Gumbi",
+	"calendar": "Koledar",
+	"calendar_error": "Dogodkov za koledarje ni bilo mogo\u010de pridobiti:",
 	"cancel": "Prekli\u010di",
 	"card_configuration": "Nastavitve kartice",
 	"change_color": "Sprememba barve",
@@ -76,6 +78,7 @@
 	"entity_not_found": "Entiteta ni najdena",
 	"error": "Napaka",
 	"error_save_yaml": "YAML-a ni mogo\u010de shraniti: {error}",
+	"event_delete": "Izbri\u0161i dogodek",
 	"event_fired": "Dogodek {type} uspe\u0161no zagnan!",
 	"exit_edit_mode": "Kon\u010dano",
 	"expand": "Raz\u0161iri",
@@ -225,6 +228,7 @@
 	"time_format_description": "Izberite, kako so oblikovani \u010dasi.",
 	"time_format_header": "\u010casovni format",
 	"timer": "\u010casovnik",
+	"today": "Danes",
 	"todo_list": "To-do list",
 	"toggle": "Preklopi",
 	"token": "Dolgotrajni dostopni \u017eetoni",
@@ -271,5 +275,6 @@
 	"weather_windy": "Vetrovno",
 	"week": "Teden",
 	"welcome_home": "Dobrodo\u0161li Doma",
+	"year": "leto",
 	"yes": "Da"
 }

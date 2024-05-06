@@ -23,6 +23,8 @@
 	"brightness": "\u4eae\u5ea6",
 	"button": "\u6309\u94ae",
 	"buttons": "\u6309\u94ae",
+	"calendar": "\u65e5\u5386",
+	"calendar_error": "\u65e0\u6cd5\u68c0\u7d22\u65e5\u5386\u4e8b\u4ef6\uff1a",
 	"cancel": "\u53d6\u6d88",
 	"card_configuration": "\u5361\u7247\u914d\u7f6e",
 	"change_color": "\u66f4\u6539\u989c\u8272",
@@ -62,6 +64,7 @@
 	"entity_not_found": "\u672a\u627e\u5230\u5b9e\u4f53",
 	"error": "\u9519\u8bef",
 	"error_save_yaml": "\u65e0\u6cd5\u4fdd\u5b58 YAML\uff1a{error}",
+	"event_delete": "\u5220\u9664\u4e8b\u4ef6",
 	"event_fired": "\u4e8b\u4ef6 {type} \u6210\u529f\u89e6\u53d1\uff01",
 	"exit_edit_mode": "\u5b8c\u6210",
 	"expand": "\u5c55\u5f00",
@@ -194,6 +197,7 @@
 	"time_format_description": "\u9009\u62e9\u65f6\u95f4\u7684\u683c\u5f0f\u3002",
 	"time_format_header": "\u65f6\u95f4\u683c\u5f0f",
 	"timer": "\u8ba1\u65f6\u5668",
+	"today": "\u4eca\u5929",
 	"todo_list": "\u5f85\u529e\u4e8b\u9879\u6e05\u5355",
 	"toggle": "\u5207\u6362",
 	"token": "\u957f\u671f\u8bbf\u95ee\u4ee4\u724c",
@@ -218,5 +222,6 @@
 	"weather_forecast": "\u9884\u62a5",
 	"week": "\u5468",
 	"welcome_home": "\u6b22\u8fce\u56de\u5bb6",
+	"year": "\u5e74",
 	"yes": "\u662f"
 }

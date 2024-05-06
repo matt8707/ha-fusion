@@ -23,6 +23,8 @@
 	"brightness": "Distira",
 	"button": "Button",
 	"buttons": "Buttons",
+	"calendar": "Calendar",
+	"calendar_error": "Could not retrieve events for calendars:",
 	"cancel": "Ezeztatu",
 	"card_configuration": "Txartelaren konfigurazioa",
 	"change_color": "Change color",
@@ -61,6 +63,7 @@
 	"entity_not_found": "Entity not found",
 	"error": "Errorea",
 	"error_save_yaml": "Unable to save YAML: {error}",
+	"event_delete": "Delete event",
 	"event_fired": "Event {type} successfully fired!",
 	"exit_edit_mode": "Done",
 	"expand": "Expand",
@@ -193,6 +196,7 @@
 	"time_format_description": "Choose how times are formatted.",
 	"time_format_header": "Time format",
 	"timer": "Timer",
+	"today": "Today",
 	"todo_list": "To-do list",
 	"toggle": "Toggle",
 	"token": "Iraupen luzeko sarbide tokenak",
@@ -217,5 +221,6 @@
 	"weather_forecast": "Iragarpena",
 	"week": "Week",
 	"welcome_home": "Ongi etorri Etxera",
+	"year": "year",
 	"yes": "Bai"
 }

@@ -38,6 +38,8 @@
 	"buffering": "Cite\u0219te date \u00een avans",
 	"button": "Buton",
 	"buttons": "Butoane",
+	"calendar": "Calendar",
+	"calendar_error": "Nu am putut preleva evenimentele pentru calendarele:",
 	"camera": "Camer\u0103",
 	"cancel": "Anulare",
 	"card_configuration": "Configura\u021bie card",
@@ -93,6 +95,7 @@
 	"entity_not_found": "Entitate neg\u0103sit\u0103",
 	"error": "Eroare",
 	"error_save_yaml": "Imposibil de salvat YAML: {error}",
+	"event_delete": "\u0218terge eveniment",
 	"event_fired": "Evenimentul {type} declan\u0219at cu succes!",
 	"exit_edit_mode": "Am terminat",
 	"expand": "Extindere",
@@ -276,6 +279,7 @@
 	"time_format_description": "Alege cum sunt formatate orele",
 	"time_format_header": "Format timp",
 	"timer": "Temporizator",
+	"today": "Ast\u0103zi",
 	"todo_list": "List\u0103 to-do",
 	"toggle": "Comutare",
 	"token": "Token-uri de acces persistente",
@@ -330,5 +334,6 @@
 	"weather_windy": "V\u00e2nt",
 	"week": "S\u0103pt\u0103m\u00e2n\u0103",
 	"welcome_home": "Bun venit acas\u0103",
+	"year": "an",
 	"yes": "Da"
 }

@@ -38,6 +38,8 @@
 	"buffering": "A armazenar em buffer",
 	"button": "Bot\u00e3o",
 	"buttons": "Bot\u00f5es",
+	"calendar": "Calend\u00e1rio",
+	"calendar_error": "N\u00e3o foi poss\u00edvel obter eventos para os calend\u00e1rios:",
 	"camera": "C\u00e2mara",
 	"cancel": "Cancelar",
 	"card_configuration": "Configura\u00e7\u00e3o do cart\u00e3o",
@@ -94,6 +96,7 @@
 	"entity_not_found": "Entidade n\u00e3o encontrada",
 	"error": "Erro",
 	"error_save_yaml": "N\u00e3o foi poss\u00edvel guardar o c\u00f3digo YAML: {error}",
+	"event_delete": "Eliminar evento",
 	"event_fired": "Evento {type} espoletado com sucesso!",
 	"exit_edit_mode": "Feito",
 	"expand": "Expandir",
@@ -282,6 +285,7 @@
 	"time_format_description": "Escolha como os hor\u00e1rios s\u00e3o formatados.",
 	"time_format_header": "Formato de hora",
 	"timer": "Temporizador",
+	"today": "Hoje",
 	"todo_list": "Lista de tarefas",
 	"toggle": "Alternar",
 	"token": "Tokens de acesso de longa dura\u00e7\u00e3o",
@@ -341,5 +345,6 @@
 	"weather_windy": "Ventoso",
 	"week": "Semana",
 	"welcome_home": "Bem-vindo a Casa",
+	"year": "ano",
 	"yes": "Sim"
 }

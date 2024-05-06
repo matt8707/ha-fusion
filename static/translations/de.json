@@ -38,6 +38,8 @@
 	"buffering": "Puffern",
 	"button": "Schalter",
 	"buttons": "Tasten",
+	"calendar": "Kalender",
+	"calendar_error": "Ereignisse f\u00fcr Kalender konnten nicht abgerufen werden:",
 	"camera": "Kamera",
 	"cancel": "Abbrechen",
 	"card_configuration": "Kartenkonfiguration",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Entit\u00e4t nicht gefunden",
 	"error": "Fehler",
 	"error_save_yaml": "YAML konnte nicht gespeichert werden: {error}",
+	"event_delete": "Ereignis l\u00f6schen",
 	"event_fired": "Ereignis {type} erfolgreich ausgel\u00f6st!",
 	"exit_edit_mode": "Fertig",
 	"expand": "Erweitern",
@@ -286,6 +289,7 @@
 	"time_format_description": "W\u00e4hle aus, wie Zeiten formatiert werden sollen.",
 	"time_format_header": "Zeitformat",
 	"timer": "Timer",
+	"today": "Heute",
 	"todo_list": "To-do-Liste",
 	"toggle": "Umschalten",
 	"token": "Langlebige Zugangstokens",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "Windig, bew\u00f6lkt",
 	"week": "Woche",
 	"welcome_home": "Willkommen Zuhause",
+	"year": "Jahr",
 	"yes": "Ja"
 }

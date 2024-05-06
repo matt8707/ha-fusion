@@ -38,6 +38,8 @@
 	"buffering": "Buferis",
 	"button": "Mygtukas",
 	"buttons": "Mygtukai",
+	"calendar": "Kalendorius",
+	"calendar_error": "Nepavyko gauti kalendori\u0173 \u012fvyki\u0173:",
 	"camera": "Kamera",
 	"cancel": "At\u0161aukti",
 	"card_configuration": "Kortel\u0117s konfig\u016bracija",
@@ -95,6 +97,7 @@
 	"entity_not_found": "Subjektas nerastas",
 	"error": "Klaida",
 	"error_save_yaml": "Ne\u012fmanoma \u012fra\u0161yti YAML: {error}",
+	"event_delete": "I\u0161trinti \u012fvyk\u012f",
 	"event_fired": "\u012evykis {type} s\u0117kmingai aktyvuotas!",
 	"exit_edit_mode": "Atlikta",
 	"expand": "I\u0161skleisti",
@@ -286,6 +289,7 @@
 	"time_format_description": "Pasirinkite, kaip formatuojami laikai.",
 	"time_format_header": "Laiko formatas",
 	"timer": "Laikmatis",
+	"today": "\u0160iandien",
 	"todo_list": "U\u017eduo\u010di\u0173 s\u0105ra\u0161as",
 	"toggle": "Perjungti",
 	"token": "Ilgalaikiai prieigos \u017eetonai",
@@ -346,5 +350,6 @@
 	"weather_windy_variant": "V\u0117jas, debesuota",
 	"week": "Savait\u0117",
 	"welcome_home": "Sveiki sugr\u012f\u017e\u0119 namo",
+	"year": "metai",
 	"yes": "Taip"
 }
