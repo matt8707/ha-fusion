@@ -136,6 +136,10 @@ export const ripple = readable({
 	clearingTimingFunction: 'ease-in-out'
 });
 
+// calendar
+export const calendarView = writable<string | null>();
+export const calendarFirstDay = writable<number>();
+
 // dnd
 export const dragging = writable<boolean>(false);
 

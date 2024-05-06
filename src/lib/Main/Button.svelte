@@ -12,7 +12,10 @@
 		ripple,
 		states,
 		templates,
-		config
+		config,
+		selectedLanguage,
+		calendarView,
+		calendarFirstDay
 	} from '$lib/Stores';
 	import { getDomain, getName, getTogglableService } from '$lib/Utils';
 	import Icon, { loadIcon } from '@iconify/svelte';
@@ -197,9 +200,23 @@
 					openModal(() => import('$lib/Modal/SwitchModal.svelte'), { sel });
 					break;
 
+				// calendar
+				case 'calendar': {
+					// set first day of week
+					$calendarFirstDay =
+						'weekInfo' in Intl.Locale.prototype
+							? (new Intl.Locale($selectedLanguage) as any)?.weekInfo.firstDay
+							: (await import('weekstart')).getWeekStartByLocale($selectedLanguage);
+
+					// set calendar view type
+					$calendarView = localStorage.getItem('calendar');
+
+					openModal(() => import('$lib/Modal/CalendarModal.svelte'), { sel });
+					break;
+				}
+
 				// sensor
 				case 'air_quality':
-				case 'calendar':
 				case 'date':
 				case 'time':
 				case 'event':
@@ -424,9 +441,6 @@
 
 	onDestroy(() => unsubscribe?.());
 </script>
-
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 
 <div
 	class="container"
