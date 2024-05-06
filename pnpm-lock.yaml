@@ -72,8 +72,8 @@ importers:
         specifier: ^9.3.6
         version: 9.3.6
       maplibre-gl:
-        specifier: ^4.1.3
-        version: 4.1.3
+        specifier: ^4.2.0
+        version: 4.2.0
       marked:
         specifier: ^12.0.2
         version: 12.0.2
@@ -81,8 +81,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0(svelte@4.2.15)
       svelte-dnd-action:
-        specifier: ^0.9.43
-        version: 0.9.43(svelte@4.2.15)
+        specifier: ^0.9.44
+        version: 0.9.44(svelte@4.2.15)
       svelte-modals:
         specifier: ^1.3.0
         version: 1.3.0(svelte@4.2.15)
@@ -92,10 +92,22 @@ importers:
       svelte-tiny-virtual-list:
         specifier: ^2.1.0
         version: 2.1.0
+      weekstart:
+        specifier: ^2.0.0
+        version: 2.0.0
     devDependencies:
+      '@event-calendar/core':
+        specifier: ^2.6.1
+        version: 2.6.1
+      '@event-calendar/day-grid':
+        specifier: ^2.6.1
+        version: 2.6.1
+      '@event-calendar/list':
+        specifier: ^2.6.1
+        version: 2.6.1
       '@iconify/svelte':
-        specifier: ^4.0.1
-        version: 4.0.1(svelte@4.2.15)
+        specifier: ^4.0.2
+        version: 4.0.2(svelte@4.2.15)
       '@sveltejs/adapter-node':
         specifier: ^5.0.1
         version: 5.0.1(@sveltejs/kit@2.5.7(@sveltejs/vite-plugin-svelte@3.1.0(svelte@4.2.15)(vite@5.2.11(@types/node@20.12.8)))(svelte@4.2.15)(vite@5.2.11(@types/node@20.12.8)))
@@ -357,6 +369,15 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
+  '@event-calendar/core@2.6.1':
+    resolution: {integrity: sha512-3dxMnmFfjEzeyNFhm0PS04/Js3LqqQC6HzqY6XtypxC2wLFhxrK4NqX4cq8ZKtIrTJu6EFFB3DZ8GamW28Pl7g==}
+
+  '@event-calendar/day-grid@2.6.1':
+    resolution: {integrity: sha512-wYzPRauhJRyCYNfh00vLdYdinE9DhWE5DYSh8drk8z1dVdjrunERRvcaMASi+Q6gwn9/i7U4yTORBnFeSktqrQ==}
+
+  '@event-calendar/list@2.6.1':
+    resolution: {integrity: sha512-pf9TJD/myj4wjj+nhjGRESthWsyVdCpXFIsRchosu7UTy5ZVxwCNOa/eFy/2AtXPXu5bgb6RXWYTdNl5q/FZmw==}
+
   '@fontsource-variable/inter@5.0.18':
     resolution: {integrity: sha512-rJzSrtJ3b7djiGFvRuTe6stDfbYJGhdQSfn2SI2WfXviee7Er0yKAHE5u7FU7OWVQQQ1x3+cxdmx9NdiAkcrcA==}
 
@@ -371,8 +392,8 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
 
-  '@iconify/svelte@4.0.1':
-    resolution: {integrity: sha512-rF6WUdYhoEaKT4D6qTsZFMD1g+NJZWOH2S+9zMTo5rWa8/NXPnB9uviuHOlGm3v+Cp/M1qTOOJsGdXXUTYHq+Q==}
+  '@iconify/svelte@4.0.2':
+    resolution: {integrity: sha512-6BSrU85FzGfhQD3bTXpnkCCvBAglEt8T9QednVnXAYm4C+d3464y+pYMzhQNJm5mPId2cuiw+2wXlDflXllHDw==}
     peerDependencies:
       svelte: '>4.0.0'
 
@@ -436,8 +457,8 @@ packages:
     resolution: {integrity: sha512-Es6WcD0nO5l+2BOQS4uLfNPYQaNDfbot3X1XUoloz+x0mPDS3eeORZJl06HXjwBG1fOGwCRnzK88LMdxKRrd6Q==}
     engines: {node: '>=6.0.0'}
 
-  '@maplibre/maplibre-gl-style-spec@20.1.1':
-    resolution: {integrity: sha512-z85ARNPCBI2Cs5cPOS3DSbraTN+ue8zrcYVoSWBuNrD/mA+2SKAJ+hIzI22uN7gac6jBMnCdpPKRxS/V0KSZVQ==}
+  '@maplibre/maplibre-gl-style-spec@20.2.0':
+    resolution: {integrity: sha512-BTw6/3ysowky22QMtNDjElp+YLwwvBDh3xxnq1izDFjTtUERm5nYSihlNZ6QaxXb+6lX2T2t0hBEjheAI+kBEQ==}
     hasBin: true
 
   '@nodelib/fs.scandir@2.1.5':
@@ -650,6 +671,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/junit-report-builder@3.0.2':
+    resolution: {integrity: sha512-R5M+SYhMbwBeQcNXYWNCZkl09vkVfAtcPIaCGdzIkkbeaTrVbGQ7HVgi4s+EmM/M1K4ZuWQH0jGcvMvNePfxYA==}
 
   '@types/mapbox__point-geometry@0.1.4':
     resolution: {integrity: sha512-mUWlSxAmYLfwnRBmgYV86tgYmMIICX4kza8YnE/eIlywGe2XoOxlpVnXWwir92xRLjwyarqwpu2EJKD2pk0IUA==}
@@ -1445,8 +1469,8 @@ packages:
   magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
 
-  maplibre-gl@4.1.3:
-    resolution: {integrity: sha512-nMy5h0kzq9Z66C6AIb3p2BvLIVHz75dGGQow22x+h9/VOihr0IPQI26ylAi6lHqvEy2VqjiRmKAMlFwt0xFKfQ==}
+  maplibre-gl@4.2.0:
+    resolution: {integrity: sha512-x5GgYyKKn5UDvbUZFK7ng3Pq829/uYWDSVN/itZoP2slWSzKbjIXKi/Qhz5FnYiMXwpRgM08UIcVjtn1PLK9Tg==}
     engines: {node: '>=16.14.0', npm: '>=8.1.0'}
 
   marked@12.0.2:
@@ -1861,10 +1885,10 @@ packages:
     peerDependencies:
       svelte: ^4.0.0
 
-  svelte-dnd-action@0.9.43:
-    resolution: {integrity: sha512-KBt8NL3zTBCTw1DJBUFU4zLw0Dr0rsJaimYA5yqsQeV9ZiTZ2ic4Llbe8MdkhhyWzBI0bw0mXElzkrc3+dg5ag==}
+  svelte-dnd-action@0.9.44:
+    resolution: {integrity: sha512-OTaZgW4odYONwywv0ITIdXCRih6Ur3YrbjWAHZUyQJUwSqJYnnuBgSbbAimCQ4BYzoOX4sTIEEaRf6ftL8aASA==}
     peerDependencies:
-      svelte: '>=3.23.0'
+      svelte: '>=3.23.0 || ^5.0.0-next.0'
 
   svelte-eslint-parser@0.35.0:
     resolution: {integrity: sha512-CtbPseajW0gjwEvHiuzYJkPDjAcHz2FaHt540j6RVYrZgnE6xWkzUBodQ4I3nV+G5AS0Svt8K6aIA/CIU9xT2Q==}
@@ -2063,6 +2087,9 @@ packages:
   w3c-keyname@2.2.8:
     resolution: {integrity: sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ==}
 
+  weekstart@2.0.0:
+    resolution: {integrity: sha512-HjYc14IQUwDcnGICuc8tVtqAd6EFpoAQMqgrqcNtWWZB+F1b7iTq44GzwM1qvnH4upFgbhJsaNHuK93NOFheSg==}
+
   which@1.3.1:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
     hasBin: true
@@ -2243,6 +2270,20 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
+  '@event-calendar/core@2.6.1':
+    dependencies:
+      svelte: 4.2.15
+
+  '@event-calendar/day-grid@2.6.1':
+    dependencies:
+      '@event-calendar/core': 2.6.1
+      svelte: 4.2.15
+
+  '@event-calendar/list@2.6.1':
+    dependencies:
+      '@event-calendar/core': 2.6.1
+      svelte: 4.2.15
+
   '@fontsource-variable/inter@5.0.18': {}
 
   '@humanwhocodes/config-array@0.11.14':
@@ -2257,7 +2298,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@iconify/svelte@4.0.1(svelte@4.2.15)':
+  '@iconify/svelte@4.0.2(svelte@4.2.15)':
     dependencies:
       '@iconify/types': 2.0.0
       svelte: 4.2.15
@@ -2317,14 +2358,16 @@ snapshots:
 
   '@mapbox/whoots-js@3.1.0': {}
 
-  '@maplibre/maplibre-gl-style-spec@20.1.1':
+  '@maplibre/maplibre-gl-style-spec@20.2.0':
     dependencies:
       '@mapbox/jsonlint-lines-primitives': 2.0.2
       '@mapbox/unitbezier': 0.0.1
       json-stringify-pretty-compact: 4.0.0
       minimist: 1.2.8
+      quickselect: 2.0.0
       rw: 1.3.3
       sort-object: 3.0.3
+      tinyqueue: 2.0.3
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -2529,6 +2572,8 @@ snapshots:
   '@types/js-yaml@4.0.9': {}
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/junit-report-builder@3.0.2': {}
 
   '@types/mapbox__point-geometry@0.1.4': {}
 
@@ -3422,7 +3467,7 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  maplibre-gl@4.1.3:
+  maplibre-gl@4.2.0:
     dependencies:
       '@mapbox/geojson-rewind': 0.5.2
       '@mapbox/jsonlint-lines-primitives': 2.0.2
@@ -3431,9 +3476,10 @@ snapshots:
       '@mapbox/unitbezier': 0.0.1
       '@mapbox/vector-tile': 1.3.1
       '@mapbox/whoots-js': 3.1.0
-      '@maplibre/maplibre-gl-style-spec': 20.1.1
+      '@maplibre/maplibre-gl-style-spec': 20.2.0
       '@types/geojson': 7946.0.14
       '@types/geojson-vt': 3.2.5
+      '@types/junit-report-builder': 3.0.2
       '@types/mapbox__point-geometry': 0.1.4
       '@types/mapbox__vector-tile': 1.3.4
       '@types/pbf': 3.0.5
@@ -3860,7 +3906,7 @@ snapshots:
     dependencies:
       svelte: 4.2.15
 
-  svelte-dnd-action@0.9.43(svelte@4.2.15):
+  svelte-dnd-action@0.9.44(svelte@4.2.15):
     dependencies:
       svelte: 4.2.15
 
@@ -4009,6 +4055,8 @@ snapshots:
       pbf: 3.2.1
 
   w3c-keyname@2.2.8: {}
+
+  weekstart@2.0.0: {}
 
   which@1.3.1:
     dependencies:
