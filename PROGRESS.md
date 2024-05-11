@@ -8,7 +8,7 @@ List grouped by domains and categorized based on their similar behaviors
 
 - [x] air_quality
 - [x] calendar
-  - [ ] idea: add actual calendar in modal
+  - [x] idea: add actual calendar in modal
 - [x] event
 - [x] image_processing
 - [x] mailbox
@@ -27,13 +27,12 @@ List grouped by domains and categorized based on their similar behaviors
 ### Switch
 
 - [x] automation
-  - [ ] idea: see automation flow in modal
 - [x] input_boolean
 - [x] remote
 - [x] siren
 - [x] switch
 - [x] script
-  - [ ] idea: show loader while executing
+  - [x] idea: show running state
 
 ### Climate
 
