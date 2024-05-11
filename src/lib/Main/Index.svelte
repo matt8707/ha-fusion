@@ -151,7 +151,7 @@
 	on:consider={dragSection}
 	on:finalize={dragSection}
 >
-	{#each view?.sections as section (section?.id)}
+	{#each view?.sections as section (`${section?.id}${section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 		<section
 			id={String(section?.id)}
 			data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
@@ -166,6 +166,7 @@
 					style:min-height="{stackHeight}px"
 					style:outline="2px dashed {$editMode ? '#ffc008' : 'transparent'}"
 					style:transition="min-height {$motion}ms ease, outline {$motion / 2}ms ease"
+					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 					use:dndzone={{
 						...dndOptions,
 						type: isDraggingHorizontalStack ? 'stack' : 'section',
@@ -174,7 +175,7 @@
 					on:consider={(event) => dragSection__stack(section.id, event)}
 					on:finalize={(event) => dragSection__stack(section.id, event)}
 				>
-					{#each section?.sections as stackSection (stackSection.id)}
+					{#each section?.sections as stackSection (`${stackSection?.id}${stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 						{@const empty = $editMode && !stackSection?.items?.length}
 						<section
 							id={String(stackSection.id)}
@@ -185,6 +186,7 @@
 							<SectionHeader {view} section={stackSection} />
 							<div
 								class="items"
+								data-is-dnd-shadow-item-hint={stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 								style={sectionStyles($itemHeight, $editMode, $motion, empty)}
 								use:dndzone={{ ...dndOptions, type: 'item', items: stackSection.items }}
 								on:consider={(event) => dragItem__stack(stackSection.id, event)}
@@ -194,7 +196,7 @@
 								{#each stackSection?.items as item (item.id)}
 									<div
 										id={item?.id}
-										data-is-dnd-shadow-item-hint={item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+										data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 										class="item"
 										animate:flip={{ duration: $motion }}
 										tabindex="-1"
@@ -214,6 +216,7 @@
 				<SectionHeader {view} {section} />
 				<div
 					class="items"
+					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 					style={sectionStyles($itemHeight, $editMode, $motion, empty)}
 					use:dndzone={{ ...dndOptions, type: 'item', items: section.items }}
 					on:consider={(event) => dragItem(section.id, event)}
@@ -222,7 +225,7 @@
 					{#each section?.items as item (item.id)}
 						<div
 							id={item?.id}
-							data-is-dnd-shadow-item-hint={item[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+							data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 							class="item"
 							animate:flip={{ duration: $motion }}
 							tabindex="-1"
