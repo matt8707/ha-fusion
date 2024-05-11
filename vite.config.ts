@@ -17,7 +17,7 @@ export default defineConfig({
 	optimizeDeps: {
 		include: [
 			// include all because of dynamic imports, prevents: ✨ optimized dependencies changed. reloading
-			// (pnpm ls -P | grep -Ev 'codemirror|@fontsource' | awk '/dependencies:/{flag=1; next} flag{print "\047" $1 "\047,"}'; echo "'@iconify/svelte',"; echo "'svelte-fast-dimension/action'")
+			// pnpm ls -P | grep -Ev 'codemirror|@fontsource' | awk '/dependencies:/{flag=1; next} flag{print "\047" $1 "\047,"}'
 			'@jaames/iro',
 			'd3-array',
 			'd3-scale',
@@ -36,8 +36,13 @@ export default defineConfig({
 			'svelte-modals',
 			'svelte-ripple',
 			'svelte-tiny-virtual-list',
+			'weekstart',
+			// dev deps
 			'@iconify/svelte',
-			'svelte-fast-dimension/action'
+			'svelte-fast-dimension/action',
+			'@event-calendar/core',
+			'@event-calendar/day-grid',
+			'@event-calendar/list'
 		],
 		exclude: [
 			// exclude codemirror to avoid state duplication

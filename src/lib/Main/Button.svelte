@@ -191,13 +191,17 @@
 					break;
 
 				// switch
-				case 'automation':
 				case 'input_boolean':
 				case 'remote':
 				case 'siren':
 				case 'switch':
 				case 'script':
 					openModal(() => import('$lib/Modal/SwitchModal.svelte'), { sel });
+					break;
+
+				// automation
+				case 'automation':
+					openModal(() => import('$lib/Modal/AutomationModal.svelte'), { sel });
 					break;
 
 				// calendar

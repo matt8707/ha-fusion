@@ -43,7 +43,7 @@ dir_keys = [
             ("cancel", ["ui.card.script.cancel"]),
             ("hide", ["ui.common.hide"]),
             ("icon", ["ui.dialogs.entity_registry.editor.icon"]),
-            ("name", ["ui.components.area-picker.add_dialog.name"]),
+            ("name", ["ui.common.name"]),
             ("remove", ["ui.common.remove"]),
             ("ok", ["ui.common.ok"]),
             ("options", ["ui.dialogs.helper_settings.input_select.options"]),
@@ -137,6 +137,9 @@ dir_keys = [
             ("calendar_error", ["ui.components.calendar.event_retrieval_error"]),
             ("event_delete", ["ui.components.calendar.event.delete"]),
             ("year", ["ui.components.calendar.event.rrule.year"]),
+            ("last_triggered", ["ui.card.automation.last_triggered"]),
+            ("trigger", ["ui.card.automation.trigger"]),
+            ("running", ["ui.card.script.running_single"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -376,6 +379,12 @@ dir_keys = [
             ("not_home", ["entity_component", "_", "state", "not_home"]),
         ],
     ),
+    (  # AUTOMATION
+        f"{COMPONENTS}/automation/translations/",
+        [
+            ("automation", ["entity_component", "_", "name"]),
+        ],
+    ),
     (  # PROFILE
         f"{TRANSLATIONS}/profile",
         [
@@ -428,6 +437,7 @@ dir_keys = [
             ("copy", ["ui.panel.config.repairs.copy"]),
             ("media", ["ui.panel.config.storage.network_mounts.mount_usage.media"]),
             ("service", ["ui.panel.config.devices.type.service_heading"]),
+            ("description", ["ui.panel.config.automation.editor.description.label"]),
         ],
     ),
     (  # ONBOARDING
@@ -505,6 +515,7 @@ dir_keys = [
             ("forecast_daily", ["ui.panel.lovelace.editor.card.weather-forecast.daily"]),
             ("forecast_hourly", ["ui.panel.lovelace.editor.card.weather-forecast.hourly"]),
             ("forecast_twice_daily", ["ui.panel.lovelace.editor.card.weather-forecast.twice_daily"]),
+            ("never_triggered", ["ui.panel.lovelace.cards.entities.never_triggered"]),
         ],
     ),
     (  # DEVELOPER-TOOLS
