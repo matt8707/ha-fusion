@@ -63,12 +63,19 @@
 			end: 'listDay,listWeek,listMonth,listYear, dayGridMonth'
 		},
 
+		// custom update button
+		customButtons: {
+			update: {
+				text: $lang('update'),
+				click: handleClick
+			}
+		},
+
 		// locale
 		locale: $selectedLanguage,
 		noEventsContent: '',
 		buttonText: {
 			today: $lang('today'),
-			update: $lang('update'),
 			listDay: $lang('day'),
 			listWeek: $lang('week'),
 			listMonth: $lang('month'),
@@ -135,36 +142,34 @@
 
 	// custom update button
 	async function handleClick(event: any) {
+		if (busy) return;
+		busy = true;
+
 		const target = event?.target;
 
-		if (target?.classList?.contains('ec-update')) {
-			event.stopPropagation();
-			const setStyle = (data: boolean) => {
-				target.style.opacity = data ? '0.3' : 'unset';
-				target.style.cursor = data ? 'default' : 'pointer';
-			};
+		const setStyle = (data: boolean) => {
+			target.style.opacity = data ? '0.3' : 'unset';
+			target.style.cursor = data ? 'default' : 'pointer';
+		};
 
-			if (busy) return;
-			busy = true;
-			setStyle(true);
+		setStyle(true);
 
-			try {
-				await $connection.sendMessagePromise({
-					type: 'call_service',
-					domain: 'homeassistant',
-					service: 'update_entity',
-					target: { entity_id }
-				});
-			} catch (err) {
-				console.error(err);
-			} finally {
-				ec?.refetchEvents();
+		try {
+			await $connection.sendMessagePromise({
+				type: 'call_service',
+				domain: 'homeassistant',
+				service: 'update_entity',
+				target: { entity_id }
+			});
+		} catch (err) {
+			console.error(err);
+		} finally {
+			ec?.refetchEvents();
 
-				timeout = setTimeout(() => {
-					setStyle(false);
-					busy = false;
-				}, 500);
-			}
+			timeout = setTimeout(() => {
+				setStyle(false);
+				busy = false;
+			}, 500);
 		}
 	}
 
@@ -174,8 +179,6 @@
 		ec?.destroy();
 	});
 </script>
-
-<svelte:document on:click|capture={handleClick} />
 
 {#if isOpen}
 	<Modal size="large">
