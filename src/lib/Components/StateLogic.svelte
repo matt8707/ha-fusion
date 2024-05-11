@@ -60,6 +60,10 @@
 		{$lang('update_up_to_date')}
 	{/if}
 
+	<!--  Automation -->
+{:else if getDomain(entity_id) === 'automation' && entity?.attributes?.current > 0}
+	{$lang('running')}
+
 	<!--  Humidifier -->
 {:else if getDomain(entity_id) === 'humidifier' && state === 'on' && attributes?.action}
 	{$lang('humidifier_' + attributes?.action)}
