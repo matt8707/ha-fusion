@@ -1,6 +1,6 @@
 /**
  * Remove large sveltekit `link` header to be able to run behind reverse proxy
- * `upstream sent too big header while reading esponse header from upstream`
+ * `upstream sent too big header while reading response header from upstream`
  */
 
 /** @type {import('@sveltejs/kit').Handle} */
