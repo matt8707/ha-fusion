@@ -89,7 +89,17 @@
 			</span>
 		</h2>
 
-		{#if entity && entity?.attributes?.mode === 'slider'}
+		{#if entity && entity?.attributes?.mode === 'box'}
+			<input
+				class="input"
+				type="number"
+				value={Number(entity?.state)}
+				min={entity?.attributes?.min}
+				max={entity?.attributes?.max}
+				step={entity?.attributes?.step}
+				on:change={handleInputBox}
+			/>
+		{:else}
 			<RangeSlider
 				{value}
 				min={entity?.attributes?.min}
@@ -101,16 +111,6 @@
 				on:change={(event) => {
 					handleChange(event?.detail);
 				}}
-			/>
-		{:else if entity && entity?.attributes?.mode === 'box'}
-			<input
-				class="input"
-				type="number"
-				value={Number(entity?.state)}
-				min={entity?.attributes?.min}
-				max={entity?.attributes?.max}
-				step={entity?.attributes?.step}
-				on:change={handleInputBox}
 			/>
 		{/if}
 
