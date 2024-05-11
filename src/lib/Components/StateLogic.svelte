@@ -44,11 +44,11 @@
 		{@html title}
 	{/if}
 
-	<!--  Climate -->
+	<!-- Climate -->
 {:else if getDomain(entity_id) === 'climate' && attributes?.hvac_action}
 	{$lang(attributes?.hvac_action)}
 
-	<!--  Climate -->
+	<!-- Climate -->
 {:else if getDomain(entity_id) === 'update'}
 	{#if attributes?.in_progress}
 		{typeof attributes?.in_progress === 'number'
@@ -60,28 +60,32 @@
 		{$lang('update_up_to_date')}
 	{/if}
 
-	<!--  Automation -->
+	<!-- Automation -->
 {:else if getDomain(entity_id) === 'automation' && entity?.attributes?.current > 0}
 	{$lang('running')}
 
-	<!--  Humidifier -->
+	<!-- Script -->
+{:else if getDomain(entity_id) === 'script' && entity?.attributes?.current > 0}
+	{$lang('running')}
+
+	<!-- Humidifier -->
 {:else if getDomain(entity_id) === 'humidifier' && state === 'on' && attributes?.action}
 	{$lang('humidifier_' + attributes?.action)}
 
-	<!--  Water Heater -->
+	<!-- Water Heater -->
 {:else if getDomain(entity_id) === 'water_heater'}
 	{$lang('water_heater_' + state)}
 
-	<!--  Input Number / Number -->
+	<!-- Input Number / Number -->
 {:else if entity_id && (getDomain(entity_id) === 'input_number' || getDomain(entity_id) === 'number')}
 	{Number(state) || $lang('unknown')}
 	{#if attributes?.unit_of_measurement}{attributes.unit_of_measurement}{/if}
 
-	<!--  Weather -->
+	<!-- Weather -->
 {:else if getDomain(entity_id) === 'weather'}
 	{$lang('weather_' + state?.replace('_', '-')) || state || $lang('unknown')}
 
-	<!--  Text -->
+	<!-- Text -->
 {:else if getDomain(entity_id) === 'input_text' || getDomain(entity_id) === 'text'}
 	{#if state === 'unknown'}
 		{$lang('unknown')}

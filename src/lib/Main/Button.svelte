@@ -195,8 +195,12 @@
 				case 'remote':
 				case 'siren':
 				case 'switch':
-				case 'script':
 					openModal(() => import('$lib/Modal/SwitchModal.svelte'), { sel });
+					break;
+
+				// script
+				case 'script':
+					openModal(() => import('$lib/Modal/ScriptModal.svelte'), { sel });
 					break;
 
 				// automation
