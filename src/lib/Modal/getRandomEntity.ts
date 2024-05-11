@@ -88,8 +88,8 @@ export function getWeatherForecastEntity(states: HassEntities) {
 	const list = Object.values(states).filter(
 		(entity) =>
 			entity.entity_id.startsWith('weather.') &&
-			entity.attributes &&
-			'forecast' in entity.attributes
+			entity?.attributes?.supported_features &&
+			entity?.attributes?.supported_features > 0
 	);
 	return list.length ? random(list).entity_id : undefined;
 }

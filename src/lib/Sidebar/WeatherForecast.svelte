@@ -1,11 +1,17 @@
 <script lang="ts">
-	import { states, selectedLanguage, lang, connection, forecasts } from '$lib/Stores';
+	import { states, selectedLanguage, lang, connection, forecasts, dragging } from '$lib/Stores';
 	import { iconMapMaterialSymbolsLight, iconMapMeteocons, iconMapWeatherIcons } from '$lib/Weather';
 	import type { WeatherIconSet, WeatherIconConditions, WeatherIconMapping } from '$lib/Weather';
 	import Icon from '@iconify/svelte';
 	import { getSupport } from '$lib/Utils';
+	import { onDestroy, tick } from 'svelte';
+	import { writable } from 'svelte/store';
 
 	export let sel: any;
+
+	let unsubscribe: any;
+	let busy = false;
+	const debug = false;
 
 	$: entity = $states?.[sel?.entity_id];
 	$: attributes = entity?.attributes;
@@ -17,35 +23,64 @@
 		FORECAST_TWICE_DAILY: 4
 	});
 
-	// get forecast data when sel changes
-	// TODO: also update periodically
-	$: if (sel) getForecast();
+	/**
+	 * tame reactivity
+	 */
+	const entity_id = writable<string | undefined>(sel?.entity_id);
+	const forecast_type = writable<string | undefined>(sel?.forecast_type);
 
-	function getForecast() {
-		// fallback if forecast_type is not defined select first true
-		const _default = Object.keys(supports)
+	$: if (sel?.entity_id) $entity_id = sel?.entity_id;
+	$: if (!sel?.forecast_type || sel?.forecast_type) $forecast_type = sel?.forecast_type;
+
+	// get forecast when not dragging
+	// and when entity_id or forecast_type changes
+	$: if (($forecast_type || !$forecast_type) && $entity_id && !$dragging) {
+		getForecast();
+
+		if (debug) {
+			console.log({
+				$forecast_type,
+				$entity_id,
+				$dragging
+			});
+		}
+	}
+
+	async function getForecast() {
+		if (busy) return;
+		busy = true;
+
+		await tick();
+
+		// cleanup old sub
+		if (unsubscribe) {
+			if (debug) console.debug('forecast unsubscribed');
+			unsubscribe?.();
+		}
+
+		// forecast_type fallback
+		const defaultForecastType = Object.keys(supports)
 			?.find((key) => supports[key])
 			?.replace('FORECAST_', '')
 			?.toLowerCase();
 
-		// dont get forecast if it's already stored
-		const entityMatches = sel?.entity_id === $forecasts[sel?.id]?.entity_id;
-		const typeMatches = (sel?.forecast_type || _default) === $forecasts[sel?.id]?.type;
-		const dragging = sel?.id === 'id:dnd-shadow-placeholder-0000';
-		if ((entityMatches && typeMatches) || dragging || !$states) return;
-
-		// console.debug('fire!', sel?.id);
-
-		$connection?.subscribeMessage(
-			(data: any) => {
-				$forecasts[sel?.id] = { ...data, entity_id: sel?.entity_id, subscribed: Date.now() };
-			},
-			{
-				type: 'weather/subscribe_forecast',
-				entity_id: sel?.entity_id,
-				forecast_type: sel?.forecast_type || _default
-			}
-		);
+		try {
+			unsubscribe = await $connection?.subscribeMessage(
+				(data: any) => {
+					$forecasts[sel?.id] = { ...data, entity_id: $entity_id, subscribed: Date.now() };
+					if (debug) console.debug('forecast subscribed');
+				},
+				{
+					type: 'weather/subscribe_forecast',
+					entity_id: $entity_id,
+					forecast_type: $forecast_type || defaultForecastType
+				}
+			);
+		} catch (err) {
+			console.error(err);
+		} finally {
+			busy = false;
+		}
 	}
 
 	let iconSet: WeatherIconSet;
@@ -70,6 +105,7 @@
 		date: string;
 		temperature: number;
 	}
+
 	let forecast: Forecast[];
 	$: forecast = $forecasts?.[sel?.id]?.forecast?.slice(0, calculated).map(function (item: any) {
 		let icon: WeatherIconMapping =
@@ -87,6 +123,14 @@
 	// Different forecast providers choose different intervals, we need to figure out display based on this
 	$: forecast_diff =
 		(new Date(forecast?.[1]?.date).valueOf() - new Date(forecast?.[0]?.date).valueOf()) / 3600000;
+
+	// cleanup
+	onDestroy(() => {
+		if (unsubscribe) {
+			if (debug) console.debug('forecast destroyed');
+			unsubscribe?.();
+		}
+	});
 </script>
 
 {#if forecast}
