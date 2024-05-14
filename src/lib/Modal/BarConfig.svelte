@@ -8,7 +8,8 @@
 		history,
 		historyIndex,
 		ripple,
-		record
+		record,
+		entityList
 	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import { slide } from 'svelte/transition';
@@ -38,10 +39,7 @@
 
 	$: math = sel?.math || '';
 
-	$: options = Object.keys($states)
-		.filter((key) => key.startsWith('sensor.'))
-		.sort()
-		.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('sensor');
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);

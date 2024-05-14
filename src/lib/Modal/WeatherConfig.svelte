@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { states, dashboard, lang, record, ripple, history, historyIndex } from '$lib/Stores';
+	import {
+		states,
+		dashboard,
+		lang,
+		record,
+		ripple,
+		history,
+		historyIndex,
+		entityList
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Weather from '$lib/Sidebar/Weather.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -28,10 +37,7 @@
 
 	const iconOptions = [{ id: 'meteocons', label: 'meteocons' }];
 
-	$: options = Object.keys($states)
-		.filter((key) => key.startsWith('weather.'))
-		.sort()
-		.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('weather');
 
 	$: sensorOptions = Object.keys($states)
 		.filter((key) => key.startsWith('sensor.'))

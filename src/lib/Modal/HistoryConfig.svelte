@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { states, dashboard, lang, record, history, historyIndex, ripple } from '$lib/Stores';
+	import {
+		states,
+		dashboard,
+		lang,
+		record,
+		history,
+		historyIndex,
+		ripple,
+		entityList
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import History from '$lib/Sidebar/History.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -20,9 +29,7 @@
 		set('entity_id', demo);
 	}
 
-	$: options = Object.keys($states)
-		.sort()
-		.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('');
 
 	const periodOptions = [
 		{ id: '5minute', label: $lang('period_5minute') },

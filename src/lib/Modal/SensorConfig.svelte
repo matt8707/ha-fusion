@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { dashboard, history, historyIndex, lang, record, ripple, states } from '$lib/Stores';
+	import {
+		dashboard,
+		entityList,
+		history,
+		historyIndex,
+		lang,
+		record,
+		ripple,
+		states
+	} from '$lib/Stores';
 	import { onDestroy, tick } from 'svelte';
 	import Sensor from '$lib/Sidebar/Sensor.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -29,10 +38,7 @@
 
 	$: date = sel?.date;
 
-	$: options = Object.keys($states)
-		.filter((key) => key.startsWith('sensor.'))
-		.sort()
-		.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('sensor');
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);

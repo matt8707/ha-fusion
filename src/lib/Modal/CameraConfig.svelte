@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { states, dashboard, lang, history, historyIndex, record, ripple } from '$lib/Stores';
+	import {
+		states,
+		dashboard,
+		lang,
+		history,
+		historyIndex,
+		record,
+		ripple,
+		entityList
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Select from '$lib/Components/Select.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
@@ -25,10 +34,7 @@
 
 	$: entity = $states?.[sel?.entity_id];
 
-	$: options = Object.keys($states)
-		.filter((key) => key.startsWith('camera.'))
-		.sort()
-		.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('camera');
 
 	onDestroy(() => $record());
 </script>

@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { states, dashboard, lang, history, historyIndex, record, ripple } from '$lib/Stores';
+	import {
+		states,
+		dashboard,
+		lang,
+		history,
+		historyIndex,
+		record,
+		ripple,
+		entityList
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Radial from '$lib/Sidebar/Radial.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -33,10 +42,7 @@
 		max: 15
 	};
 
-	$: options = Object.keys($states)
-		.sort()
-		.filter((key) => key.startsWith('sensor.'))
-		.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('sensor');
 
 	function minMax(key: string | number | undefined) {
 		return Math.min(Math.max(parseInt(key as string), range.min), range.max);

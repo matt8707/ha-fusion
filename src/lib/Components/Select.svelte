@@ -14,11 +14,11 @@
 	export let computeIcons: boolean | undefined = undefined;
 	export let getIconString: boolean | undefined = undefined;
 	export let defaultIcon: string | undefined = undefined;
-	export let renderName: boolean | undefined = undefined;
 	export let clearable: boolean | undefined = undefined;
 	export let options: {
 		id: string;
 		label: string;
+		hint?: string;
 		icon?: string;
 	}[];
 
@@ -255,9 +255,9 @@
 					{/if}
 
 					<div class="label">
-						{#if renderName}
+						{#if filter?.[index]?.hint}
 							<span class="name">
-								{getName(undefined, $states?.[filter?.[index]?.label])}
+								{filter?.[index]?.hint}
 							</span>
 						{/if}
 
@@ -304,6 +304,7 @@
 	/* list */
 
 	.wrapper {
+		margin-top: 0.2rem;
 		position: relative;
 		background-color: #1d1b18;
 		border-radius: 0.6rem;
