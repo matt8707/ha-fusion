@@ -6,6 +6,7 @@
 
 	export let entity_id: string;
 	export let getIconString: boolean | undefined = undefined;
+	export let skipEntitiyPicture: boolean | undefined = undefined;
 
 	let stateObj: any;
 	let currentIcon: string | undefined;
@@ -501,7 +502,7 @@
 		const entity = $states[entity_id];
 		const domain = getDomain(entity?.entity_id || entity_id);
 
-		if (entity?.attributes?.entity_picture && domain !== 'update') {
+		if (entity?.attributes?.entity_picture && !skipEntitiyPicture && domain !== 'update') {
 			return 'entity_picture';
 		} else if (entity?.attributes?.icon && String(entity.attributes.icon).startsWith('mdi')) {
 			return entity.attributes.icon.toString();

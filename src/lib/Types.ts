@@ -10,9 +10,7 @@ export interface Configuration {
 }
 
 export interface Addons {
-	youtube_watching?: {
-		entity_id: string;
-	};
+	youtube?: boolean;
 	maptiler?: {
 		apikey: string;
 	};

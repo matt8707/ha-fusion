@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { lang } from '$lib/Stores';
+	import { lang, youtubeAddon } from '$lib/Stores';
+	import { openModal } from 'svelte-modals';
+	import Toggle from '$lib/Components/Toggle.svelte';
 
 	export let data: any;
 
@@ -21,7 +23,6 @@
 <div class="grid">
 	<div class="item">
 		<h3>MapTiler</h3>
-
 		<input
 			class="input"
 			type="password"
@@ -34,22 +35,58 @@
 		/>
 	</div>
 
-	<!-- <div class="item">
+	<div class="item">
 		<h3>YouTube</h3>
+		<div class="button-toggle-container">
+			<button
+				on:click={() => {
+					openModal(() => import('$lib/Modal/YoutubeModal.svelte'), {});
+				}}
+				>{$lang('configure')}
+			</button>
 
-		<input
-			class="input"
-			type="text"
-			placeholder={$lang('entity')}
-			name="youtube_watching"
-			autocomplete="off"
-			spellcheck="false"
-			value={data?.configuration?.addons?.['youtube_watching']?.entity_id || ''}
-		/>
-	</div> -->
+			<div class="toggle">
+				<input type="hidden" bind:value={$youtubeAddon} name="youtube" />
+				<Toggle bind:checked={$youtubeAddon} />
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
+	.grid {
+		display: grid;
+		grid-template-columns: 50% 50%;
+		gap: 0.5rem;
+	}
+
+	.toggle {
+		flex-shrink: 0;
+	}
+
+	.button-toggle-container {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	button {
+		border-radius: 0.4em;
+		border: none;
+		color: inherit;
+		padding: 0.55em 0.9em;
+		cursor: pointer;
+		font-family: inherit;
+		font-size: inherit;
+		background-color: var(--theme-button-background-color-off);
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		flex-shrink: 1;
+	}
+
 	.input {
 		padding: 0.6rem !important;
 		font-size: 0.9rem;
@@ -61,12 +98,6 @@
 		padding: 0.8rem 1rem 1rem 1rem;
 		border-radius: 0.4rem;
 		border: 1px solid rgba(255, 255, 255, 0.05);
-	}
-
-	.grid {
-		display: grid;
-		grid-template-columns: repeat(1, 1fr);
-		gap: 0.5rem;
 	}
 
 	h3 {

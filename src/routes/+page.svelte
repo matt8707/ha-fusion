@@ -14,7 +14,8 @@
 		filterDashboard,
 		disableMenuButton,
 		clickOriginatedFromMenu,
-		connection
+		connection,
+		youtubeAddon
 	} from '$lib/Stores';
 	import { authentication } from '$lib/Socket';
 	import { onDestroy, onMount } from 'svelte';
@@ -33,6 +34,7 @@
 	$translation = data?.translations;
 	$selectedLanguage = data?.configuration?.locale || 'en';
 	$customJs = data?.configuration?.custom_js;
+	$youtubeAddon = data?.configuration?.addons?.youtube;
 	$currentViewId = $dashboard?.views?.[0]?.id;
 
 	const _motion = data?.configuration?.motion;
