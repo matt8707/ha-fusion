@@ -140,6 +140,9 @@ dir_keys = [
             ("last_triggered", ["ui.card.automation.last_triggered"]),
             ("trigger", ["ui.card.automation.trigger"]),
             ("running", ["ui.card.script.running_single"]),
+            ("nothing_playing", ["ui.card.media_player.nothing_playing"]),
+            ("log_in", ["ui.login-form.log_in"]),
+            ("show_area", ["ui.components.area-filter.show"]),
         ],
     ),
     (  # MEDIA_PLAYER
@@ -160,6 +163,12 @@ dir_keys = [
             ("camera", ["title"]),
             ("recording", ["entity_component", "_", "state", "recording"]),
             ("streaming", ["entity_component", "_", "state", "streaming"]),
+        ],
+    ),
+    (  # GOOGLE
+        f"{COMPONENTS}/google/translations/",
+        [
+            ("google_code", ["config", "progress", "exchange"]),
         ],
     ),
     (  # UPDATE
@@ -438,6 +447,8 @@ dir_keys = [
             ("media", ["ui.panel.config.storage.network_mounts.mount_usage.media"]),
             ("service", ["ui.panel.config.devices.type.service_heading"]),
             ("description", ["ui.panel.config.automation.editor.description.label"]),
+            ("manage_account", ["ui.panel.config.cloud.account.manage_account"]),
+            ("configure", ["ui.panel.config.integrations.configure"]),
         ],
     ),
     (  # ONBOARDING
@@ -516,6 +527,10 @@ dir_keys = [
             ("forecast_hourly", ["ui.panel.lovelace.editor.card.weather-forecast.hourly"]),
             ("forecast_twice_daily", ["ui.panel.lovelace.editor.card.weather-forecast.twice_daily"]),
             ("never_triggered", ["ui.panel.lovelace.cards.entities.never_triggered"]),
+            ("entities", ["ui.panel.lovelace.editor.card.entities.name"]),
+            ("conditional", ["ui.panel.lovelace.editor.card.conditional.name"]),
+            ("conditions", ["ui.panel.lovelace.editor.card.conditional.conditions"]),
+            ("media_player", ["ui.panel.lovelace.editor.card.media-control.name"]),
         ],
     ),
     (  # DEVELOPER-TOOLS
