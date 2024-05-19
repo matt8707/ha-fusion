@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import Button from '$lib/Main/Button.svelte';
-	import Media from '$lib/Main/Media.svelte';
+	import ConditionalMedia from '$lib/Main/ConditionalMedia.svelte';
 	import Camera from '$lib/Main/Camera.svelte';
 	import Configure from '$lib/Main/Configure.svelte';
 	import Empty from '$lib/Main/Empty.svelte';
@@ -10,7 +10,7 @@
 	export let sectionName: string | undefined = undefined;
 </script>
 
-{#if item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] && item?.type === 'media'}
+{#if item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] && item?.type === 'conditional_media'}
 	<div class="shadow"></div>
 {/if}
 
@@ -18,12 +18,15 @@
 	<Configure sel={item} />
 {:else if item?.type === 'button'}
 	<Button sel={item} {sectionName} />
-{:else if item?.type === 'media'}
-	<Media sel={item} />
+{:else if item?.type === 'conditional_media'}
+	<ConditionalMedia sel={item} />
 {:else if item?.type === 'camera'}
 	<Camera sel={item} responsive={false} muted={true} controls={false} />
 {:else if item?.type === 'empty'}
 	<Empty sel={item} />
+{:else}
+	<!-- if types are changed internally, don't break ui -->
+	<Configure sel={{ id: item?.id }} />
 {/if}
 
 <style>
