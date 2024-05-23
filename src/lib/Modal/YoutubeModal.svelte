@@ -2,55 +2,103 @@
 	import Modal from '$lib/Modal/Index.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import { base } from '$app/paths';
-	import { onDestroy, onMount, tick } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { closeModal } from 'svelte-modals';
 	import { lang, motion, ripple, youtubeAddon } from '$lib/Stores';
 	import { slide } from 'svelte/transition';
 	import Ripple from 'svelte-ripple';
+	import type { YouTubeEvent } from '$lib/Types';
 
 	export let isOpen: boolean;
 
-	let message: any;
-	let evtSource: EventSource;
+	let interval: ReturnType<typeof setInterval>;
+	let controller: AbortController;
+	let event: YouTubeEvent | undefined;
+	let data: any;
 	let copied = false;
+	let inputCode: HTMLInputElement;
 
-	$: if (message?.error) console.error(message?.error);
+	/**
+	 * If no credentials are saved, it starts the auth flow
+	 * otherwise returns the user account.
+	 */
+	async function initialize() {
+		controller = new AbortController();
 
-	$: data = message?.data?.contents?.contents?.[0];
-	$: user = data?.account_name?.text;
-	$: img = data?.account_photo?.[0]?.url;
+		try {
+			const response = await fetch(`${base}/_api/youtube`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				signal: controller?.signal
+			});
 
-	const regexUrl = /\[ *\{url\} *\]\( *\{url\} *\)/g;
-
-	$: url = message?.verification_url;
-	$: code = message?.user_code;
-
-	$: authMessage =
-		url &&
-		$lang('google_code') &&
-		regexUrl.test($lang('google_code')) &&
-		$lang('google_code').includes('{user_code}') &&
-		$lang('google_code')
-			.replace(regexUrl, `<a href="${url}" target="_blank">${url}</a>`)
-			.replace('{user_code}', '');
-
-	function signIn() {
-		evtSource = new EventSource(`${base}/_api/youtube`);
-
-		evtSource.onmessage = (event) => {
-			message = JSON.parse(event.data);
-
-			// close after data is recieved
-			if (message?.data) evtSource.close();
-		};
-
-		// error
-		evtSource.onerror = (err) => {
-			console.error('EventSource failed:', err);
-			evtSource.close();
-		};
+			const result = await response.json();
+			data = result;
+			clearInterval(interval);
+		} catch (err: any) {
+			if (err?.name === 'AbortError') {
+				// ignore
+			} else {
+				event = { message: 'error', error: 'Failed to initiate authentication' };
+				console.error('Failed to initiate authentication:', err);
+			}
+			clearInterval(interval);
+		}
 	}
 
+	/**
+	 * Polls for events, specifically 'auth-pending'.
+	 * Server-Sent Events (SSE) do not work with ingress...
+	 */
+	async function pollEvents() {
+		const start = new Date().getTime();
+		let attempts = 0;
+
+		interval = setInterval(async () => {
+			// console.debug('polling...');
+
+			try {
+				const response = await fetch(`${base}/_api/youtube`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						message: 'poll'
+					})
+				});
+				const result = await response.json();
+
+				attempts++;
+
+				// make sure data is not stale
+				if (!result?.timestamp || result.timestamp > start) {
+					event = result;
+				}
+
+				if (result?.message === 'auth' || result?.message === 'auth-error') {
+					clearInterval(interval);
+				}
+
+				// stop polling after 5 attempts if no data is received
+				if (attempts >= 5 && !event) {
+					event = { message: 'error', error: 'No valid response in 5 attempts' };
+					clearInterval(interval);
+				}
+			} catch (err) {
+				event = { message: 'error', error: 'Polling failed' };
+				console.error('Polling error:', err);
+				clearInterval(interval);
+			}
+		}, 1000);
+	}
+
+	/**
+	 * Signs out the user by sending a logout request to the server.
+	 * Deactivates the add-on and closes the modal.
+	 */
 	async function signOut() {
 		try {
 			const response = await fetch(`${base}/_api/youtube`, {
@@ -58,29 +106,34 @@
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ action: 'sign-out' })
+				body: JSON.stringify({
+					message: 'logout'
+				})
 			});
 
-			if (response.ok) {
-				const result = await response.text();
-				console.log(result);
-
-				await tick();
-
+			const result = await response.json();
+			if (result?.message === 'success') {
 				$youtubeAddon = false;
 				closeModal();
 			} else {
-				message.error = 'Failed to sign out';
+				console.error(result);
 			}
-		} catch (error) {
-			console.error('Error signing out:', error);
+		} catch (err) {
+			console.error('Failed to sign out:', err);
 		}
 	}
 
-	async function copyCode(user_code: string) {
-		try {
-			await navigator.clipboard.writeText(user_code);
+	/**
+	 * Copies a given user code to the clipboard.
+	 * Doesn't work with ingress, have to manually copy.
+	 */
+	async function copyCode(user_code: string | undefined) {
+		if (!user_code) return;
 
+		try {
+			inputCode?.select();
+
+			await navigator.clipboard.writeText(user_code);
 			copied = true;
 			setTimeout(() => (copied = false), $motion * 2);
 		} catch (err: any) {
@@ -89,36 +142,53 @@
 		}
 	}
 
-	onMount(() => signIn());
+	onMount(() => {
+		initialize();
+		pollEvents();
+	});
 
-	onDestroy(() => evtSource?.close?.());
+	onDestroy(() => {
+		clearInterval(interval);
+		controller?.abort?.();
+	});
 </script>
+
+<svelte:window
+	on:beforeunload={() => {
+		controller?.abort?.();
+	}}
+/>
 
 {#if isOpen}
 	<Modal>
 		<h1 slot="title">YouTube</h1>
 
-		{#if user && img}
-			<h2>{$lang('manage_account')}</h2>
-		{:else if url && code}
-			<h2>{$lang('log_in')}</h2>
-		{:else}
-			<h2>{$lang('loading')}</h2>
-		{/if}
-
 		<div data-exclude-drag-modal>
-			<!-- user -->
-			{#if user && img}
+			<!-- title -->
+			{#if data}
+				<h2>{$lang('manage_account')}</h2>
+			{:else if !event}
+				<h2>{$lang('loading')}</h2>
+			{:else if event?.message === 'auth-pending'}
+				<h2>{$lang('log_in')}</h2>
+			{/if}
+
+			<!-- account -->
+			{#if data}
+				{@const contents = data?.contents?.contents?.[0]}
+				{@const account_name = contents?.account_name?.text}
+				{@const account_photo = contents?.account_photo?.[0]?.url}
+
 				<div class="user" transition:slide={{ duration: $motion }}>
 					<div class="user-info">
-						<img src={img} alt="" />
+						<img src={account_photo} alt="" />
 
-						<span>{user}</span>
+						<span>{account_name}</span>
 
 						<button
 							class="action remove"
-							on:click={signOut}
 							style:margin-left="auto"
+							on:click={signOut}
 							use:Ripple={{
 								...$ripple,
 								color: 'rgba(0, 0, 0, 0.35)'
@@ -129,32 +199,53 @@
 					</div>
 				</div>
 
-				<!-- code -->
-			{:else if url && code}
+				<!-- auth -->
+			{:else if event?.message === 'auth-pending'}
+				{@const verification_url = event?.verification_url}
+				{@const user_code = event?.user_code}
+
+				{@const regex = /\[ *\{url\} *\]\( *\{url\} *\)/g}
+				{@const localeAuthMessage =
+					verification_url &&
+					$lang('google_code') &&
+					regex.test($lang('google_code')) &&
+					$lang('google_code').includes('{user_code}') &&
+					$lang('google_code')
+						.replace(regex, `<a href="${verification_url}" target="_blank">${verification_url}</a>`)
+						.replace('{user_code}', '')}
+
 				<div transition:slide={{ duration: $motion }}>
+					{#if localeAuthMessage}
+						{@html localeAuthMessage}
+					{:else}
+						To link your Google account, visit the
+						<a href={verification_url} target="_blank">{verification_url}</a> and enter code:
+					{/if}
+
+					<div class="code-container">
+						<input
+							bind:this={inputCode}
+							class="code"
+							class:copied
+							on:click={() => copyCode(user_code)}
+							style:transition="background-color {$motion}ms"
+							type="text"
+							value={user_code}
+							readonly
+						/>
+					</div>
+
 					<style>
 						a {
 							color: #00dbff;
 						}
 					</style>
+				</div>
+			{/if}
 
-					{#if authMessage}
-						{@html authMessage}
-					{:else}
-						To link your Google account, visit the <a href={url} target="_blank">{url}</a> and enter
-						code:
-					{/if}
-
-					<div class="code-container">
-						<button
-							class="code"
-							class:copied
-							on:click={() => copyCode(code)}
-							style:transition="background-color {$motion / 2}ms"
-						>
-							<code>{code}</code>
-						</button>
-					</div>
+			{#if event?.message === 'error'}
+				<div class="error">
+					Error: {event?.error}
 				</div>
 			{/if}
 		</div>
@@ -171,14 +262,18 @@
 	}
 
 	.code {
-		all: unset;
-		margin-top: 1.5rem;
+		border: none;
+		color: white;
 		user-select: text;
-		font-size: 1.5rem;
+		font-size: 1.35rem;
 		background-color: var(--theme-button-background-color-off);
-		padding: 0.8rem 1rem;
 		border-radius: 0.6rem;
 		cursor: pointer;
+		width: 17rem;
+		padding: 1.1rem 0;
+		text-align: center;
+		letter-spacing: 0.4rem;
+		margin-top: 2rem;
 	}
 
 	.copied {
@@ -190,6 +285,7 @@
 		padding: 1rem;
 		display: flex;
 		border-radius: 0.6rem;
+		height: 4.2rem;
 	}
 
 	.user-info {
@@ -211,5 +307,10 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+	}
+
+	.error {
+		color: red;
+		margin-top: 1rem;
 	}
 </style>

@@ -1,165 +1,62 @@
 import { readFileSync, writeFileSync, unlinkSync } from 'fs';
 import { Innertube, UniversalCache } from 'youtubei.js';
 import { error, json, type RequestHandler } from '@sveltejs/kit';
+import type { YouTubeEvent } from '$lib/Types';
 import yaml from 'js-yaml';
 
-interface Event {
-	message?: string;
-	error?: string;
-	data?: any;
-	verification_url?: string;
-	user_code?: string;
-}
-
 let youtube: Innertube | undefined;
+let event: YouTubeEvent | undefined;
+
+const credentialsFilePath = './data/youtube_credentials.json';
 
 /**
- * GET: Streams server-sent events to client in add-on settings.
+ * Handle post requests
+ * poll, logout, history
  */
-export const GET: RequestHandler = async () => {
-	const headers = {
-		'Content-Type': 'text/event-stream',
-		'Cache-Control': 'no-cache',
-		Connection: 'keep-alive'
-	};
-
-	const stream = new ReadableStream({ start: streamEvents });
-	return new Response(stream, { headers });
-};
-
-/**
- * Handles YouTube authentication and retrieves user info.
- */
-async function streamEvents(controller: ReadableStreamDefaultController) {
-	const send = (event: Event) => {
-		controller?.enqueue(`data: ${JSON.stringify(event)}\n\n`);
-	};
-
-	try {
-		send({ message: 'Loading...' });
-
-		youtube = await Innertube.create({
-			cache: new UniversalCache(false)
-		});
-
-		youtube.session.on('auth-pending', (data) => {
-			send({
-				verification_url: data.verification_url,
-				user_code: data.user_code
-			});
-		});
-
-		youtube.session.on('auth', async ({ credentials }) => {
-			await saveAuth(credentials);
-		});
-
-		youtube.session.on('update-credentials', async ({ credentials }) => {
-			await saveAuth(credentials);
-		});
-
-		youtube.session.on('auth-error', (error) => {
-			try {
-				send({ error: JSON.stringify(error) });
-			} catch (err) {
-				console.error(err);
-			}
-		});
-
-		const auth = await loadAuth();
-		await youtube.session.signIn(auth);
-
-		const info = await youtube.account.getInfo();
-		send({ data: info });
-		controller?.close?.();
-	} catch (err) {
-		send({ error: 'Failed to initialize YouTube session' });
-		controller?.close?.();
-	}
-}
-
-/**
- * Load credentials.
- */
-async function loadAuth() {
-	try {
-		const data = readFileSync('./data/youtube_credentials.json', 'utf8');
-		return JSON.parse(data);
-	} catch (err) {
-		// console.error('Failed to load credentials:', err);
-	}
-}
-
-/**
- * Save credentials.
- */
-async function saveAuth(credentials: any) {
-	try {
-		const data = JSON.stringify(credentials, null, '\t') + '\n';
-		writeFileSync('./data/youtube_credentials.json', data);
-	} catch (err) {
-		console.error('Failed to save credentials:', err);
-	}
-}
-
-/**
- * Check if a high-resolution YouTube thumbnail is available.
- */
-async function getThumbnail(id: string) {
-	const url = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
-
-	// only get headers
-	const response = await fetch(url, { method: 'HEAD' });
-
-	if (response.ok) return url;
-}
-
-/**
- * POST either `sign-out` or `get-history`
- */
-export const POST = async ({ request }) => {
+export const POST: RequestHandler = async ({ request }) => {
 	const response = await request.json();
+	const message = response?.message;
 
-	// sign-out
-	if (response.action === 'sign-out') {
-		try {
-			if (youtube) {
-				await youtube.session.signOut();
-				unlinkSync('./data/youtube_credentials.json');
+	if (message === 'poll') {
+		// poll
+		return json(event || {});
 
-				let config = await loadFile('./data/configuration.yaml');
-
-				if (config?.addons && config?.addons?.youtube) {
-					delete config.addons.youtube;
-
-					try {
-						config = yaml.dump(config);
-					} catch (err) {
-						console.log(err);
-					}
-
-					try {
-						writeFileSync('./data/configuration.yaml', config);
-					} catch (err) {
-						console.log(err);
-					}
-				}
-
-				return new Response('Signed out successfully', { status: 200 });
-			} else {
-				return new Response('No active session', { status: 400 });
-			}
-		} catch (err) {
-			return error(500, { message: 'Failed to sign out' });
+		// logout
+	} else if (message === 'logout') {
+		if (!youtube) {
+			return json({
+				message: 'error',
+				error: 'YouTube not initialized'
+			});
 		}
 
-		// get-history
-	} else if (response.action === 'get-history') {
+		try {
+			await youtube.session.signOut();
+			unlinkSync(credentialsFilePath);
+			const configFilePath = './data/configuration.yaml';
+			let config = await loadFile(configFilePath);
+
+			if (config?.addons?.youtube) {
+				delete config.addons.youtube;
+				config = yaml.dump(config);
+				writeFileSync(configFilePath, config);
+			}
+
+			return json({
+				message: 'success'
+			});
+		} catch (err: any) {
+			return error(500, err?.message);
+		}
+
+		// history
+	} else if (message === 'history') {
 		try {
 			youtube = await Innertube.create({
 				cache: new UniversalCache(false)
 			});
 
-			const eventSignal = new Promise<void>((resolve) => {
+			const events = new Promise<void>((resolve) => {
 				if (!youtube) return;
 
 				youtube.session.on('auth-pending', () => {
@@ -169,13 +66,13 @@ export const POST = async ({ request }) => {
 					resolve();
 				});
 
-				youtube.session.on('auth', ({ credentials }) => {
-					saveAuth(credentials);
+				youtube.session.on('auth', async ({ credentials }) => {
+					await saveFile(credentials);
 					resolve();
 				});
 
-				youtube.session.on('update-credentials', ({ credentials }) => {
-					saveAuth(credentials);
+				youtube.session.on('update-credentials', async ({ credentials }) => {
+					await saveFile(credentials);
 					resolve();
 				});
 
@@ -185,16 +82,12 @@ export const POST = async ({ request }) => {
 				});
 			});
 
-			const auth = await loadAuth();
-
+			const auth = await loadFile(credentialsFilePath);
 			await youtube.session.signIn(auth);
-
-			await eventSignal;
+			await events;
 
 			const library = await youtube.getLibrary();
-
 			const history = library?.sections?.find((section: any) => section?.title?.text === 'History');
-
 			const video = history?.contents.find((video) => {
 				return (
 					video.author?.name === response?.media_artist &&
@@ -203,6 +96,13 @@ export const POST = async ({ request }) => {
 			});
 
 			const { author, title, id, thumbnails } = video;
+
+			const getThumbnail = async (id: string) => {
+				const url = `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+				const response = await fetch(url, { method: 'HEAD' });
+				if (response.ok) return url;
+			};
+
 			const maxres = await getThumbnail(id);
 
 			return json({
@@ -211,28 +111,96 @@ export const POST = async ({ request }) => {
 				entity_picture: maxres || thumbnails?.[0]?.url
 			});
 		} catch (err: any) {
-			error(503, { message: err.message });
+			error(500, err?.message);
 		}
+	}
+
+	return json({
+		message: 'error',
+		error: 'Unhandled post request'
+	});
+};
+
+/**
+ * Init auth and return `AccountInfo`.
+ */
+export const GET: RequestHandler = async () => {
+	try {
+		youtube = await Innertube.create({
+			cache: new UniversalCache(false)
+		});
+
+		youtube.session.on('auth-pending', (data) => {
+			event = {
+				message: 'auth-pending',
+				verification_url: data?.verification_url,
+				user_code: data?.user_code,
+				timestamp: new Date().getTime()
+			};
+		});
+
+		youtube.session.on('auth', async ({ credentials }) => {
+			event = { message: 'auth' };
+			await saveFile(credentials);
+		});
+
+		youtube.session.on('update-credentials', async ({ credentials }) => {
+			event = { message: 'update-credentials' };
+			await saveFile(credentials);
+		});
+
+		youtube.session.on('auth-error', (error) => {
+			event = {
+				message: 'auth-error',
+				error: error
+			};
+		});
+
+		const auth = await loadFile(credentialsFilePath);
+		await youtube.session.signIn(auth);
+
+		const data = await youtube.account.getInfo();
+		event = undefined;
+		return json(data);
+
+		// error
+	} catch (err: any) {
+		console.error(err);
+		return error(500, err.message);
 	}
 };
 
 /**
- * Loads a yaml/json file and returns parsed data
+ * Load file.
  */
-async function loadFile(file: string) {
+async function loadFile(filePath: string) {
 	try {
-		const data = readFileSync(file, 'utf8');
+		const data = readFileSync(filePath, 'utf8');
+
 		if (!data.trim()) {
-			return {}; // file is empty, early return object
+			// file is empty, early return object
+			return {};
 		} else {
-			return file.endsWith('.yaml') ? yaml.load(data) : JSON.parse(data);
+			return filePath.endsWith('.yaml') ? yaml.load(data) : JSON.parse(data);
 		}
-	} catch (error) {
-		if ((error as NodeJS.ErrnoException)?.code === 'ENOENT') {
+	} catch (err) {
+		if ((err as NodeJS.ErrnoException)?.code === 'ENOENT') {
 			// console.error(`No existing file found for ${file}`);
 		} else {
-			console.error(`Error reading or parsing ${file}:`, error);
+			console.error(`Error reading or parsing ${filePath}:`, err);
 		}
 		return {};
+	}
+}
+
+/**
+ * Save file.
+ */
+async function saveFile(credentials: any) {
+	try {
+		const data = JSON.stringify(credentials, null, '\t') + '\n';
+		writeFileSync(credentialsFilePath, data);
+	} catch (err) {
+		console.error('Failed to save credentials:', err);
 	}
 }
