@@ -48,6 +48,11 @@
 				...(form.maptiler && { maptiler: { apikey: form.maptiler } })
 			};
 
+			if (typeof form.maptiler === 'string') {
+				$configuration.addons = $configuration.addons || {};
+				$configuration.addons.maptiler = { apikey: form.maptiler };
+			}
+
 			const token = form.token || undefined;
 			const custom_js = form.custom_js ? Boolean(form.custom_js === 'true') : undefined;
 			const formMotion = form.motion ? Boolean(form.motion === 'true') : undefined;
