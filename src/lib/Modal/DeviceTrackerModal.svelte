@@ -23,6 +23,7 @@
 	let markerContainer: HTMLDivElement;
 	let markerIcon: HTMLButtonElement;
 	let controlButtonsIconColor: string;
+	let loadError: boolean;
 
 	const zoom = 13.5;
 	const pitch = 0;
@@ -95,6 +96,11 @@
 				.addTo(map);
 
 			markerContainer.style.display = 'block';
+		});
+
+		map.on('error', () => {
+			loadError = true;
+			map.setStyle(styles.demo);
 		});
 
 		// controls
@@ -253,13 +259,17 @@
 			class="container"
 			style:--popup-background={colors?.backgroundColor?.dark}
 		>
-			{#if !apiKey}
+			{#if !apiKey || loadError}
 				<div class="notice">
 					<span class="icon">
 						<Icon icon="ep:info-filled" height="none" />
 					</span>
 					<span class="text">
-						{$lang('docs')}&nbsp;
+						{#if !apiKey}
+							{$lang('docs')}&nbsp;
+						{:else}
+							Error fetching the map. Please verify your API key and try again&nbsp;
+						{/if}
 						<a
 							href="https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md"
 							target="_blank"
@@ -325,7 +335,7 @@
 			<button
 				id="marker"
 				bind:this={markerIcon}
-				style:background-image={`url("${entity_picture}")`}
+				style:background-image={entity_picture ? `url("${entity_picture}")` : 'none'}
 				on:click={() => {
 					if (popup?.isOpen()) {
 						popup.remove();
