@@ -16,7 +16,7 @@
 	import { openModal, modals } from 'svelte-modals';
 	import StateLogic from '$lib/Components/StateLogic.svelte';
 	import { base } from '$app/paths';
-	import { callService } from 'home-assistant-js-websocket';
+	import { callService, type HassEntities, type HassEntity } from 'home-assistant-js-websocket';
 	import { onMount } from 'svelte';
 	import Progress from '$lib/Components/Progress.svelte';
 	import { fade, fly } from 'svelte/transition';
@@ -45,7 +45,8 @@
 	$: entity_entity_picture = entity?.attributes?.entity_picture;
 
 	// isolate each attribute to prevent mass reactivity
-	$: current_media_player = getCurrent(sel?.media_players, $states);
+	$: current_media_player = getCurrent(sel?.media_players, $states, pauseExpired, timeout);
+	$: currentEntityId = current_media_player?.entity_id;
 	$: currentState = current_media_player?.state;
 	$: currentAttr = current_media_player?.attributes;
 	$: media_artist = currentAttr?.media_artist;
@@ -54,8 +55,8 @@
 	$: entity_picture = currentAttr?.entity_picture;
 
 	// paused media_player state, expire in seconds
-	$: timeout = sel?.timeout || 900;
-	$: if (currentState || timeout || sel?.show_timeout) handlePaused();
+	$: timeout = sel?.timeout ?? 900;
+	$: if (currentEntityId || currentState || timeout || sel?.show_timeout) handlePaused(false);
 
 	$: active = currentState === 'playing' || (currentState === 'paused' && !pauseExpired);
 
@@ -70,58 +71,74 @@
 		nothingPlaying(fanart, poster, entity_entity_picture);
 	}
 
-	onMount(handlePaused);
+	onMount(() => handlePaused(true));
 
-	function getCurrent(media_players: any, states: any) {
-		if (!media_players) return;
+	function getCurrent(
+		media_players: HassEntity[],
+		states: HassEntities,
+		pauseExpired: boolean,
+		timeout: number
+	): HassEntity | undefined {
+		if (!media_players) return undefined;
 
-		let playing: any[] = [];
-		let paused: any[] = [];
+		const list = media_players
+			.map(({ entity_id }) => states[entity_id])
+			.filter((entity): entity is HassEntity => !!entity)
+			.sort((a, b) => new Date(b.last_changed).getTime() - new Date(a.last_changed).getTime());
 
-		media_players.forEach(({ entity_id }: any) => {
-			const entity = states?.[entity_id];
-			if (entity) {
-				if (entity.state === 'playing') {
-					playing.push(entity);
-				} else if (entity.state === 'paused') {
-					paused.push(entity);
+		if (list.length === 0) return undefined;
+		const last_changed = list[0];
+
+		if (timeout === 0) {
+			const find_playing = list.find((entity) => entity.state === 'playing');
+			if (debug) console.debug(`no timeout --> find playing (${find_playing?.entity_id})`);
+			return find_playing;
+		}
+
+		if (last_changed.state === 'playing') {
+			if (debug) console.debug(`last_changed is playing (${last_changed.entity_id})`);
+			return last_changed;
+		}
+
+		if (last_changed.state === 'paused') {
+			if (currentState === 'playing') {
+				return list.find((entity) => entity.entity_id === currentEntityId);
+			}
+
+			if (!pauseExpired) {
+				if (debug) console.debug(`last_changed is paused (${last_changed.entity_id}) NOT EXPIRED`);
+				return last_changed;
+			} else {
+				const first_playing = list.find((entity) => entity.state === 'playing');
+				if (first_playing) {
+					if (debug)
+						console.debug(
+							`last_changed is paused (${last_changed.entity_id}) EXPIRED -> find playing (${first_playing.entity_id})`
+						);
+					return first_playing;
+				} else {
+					if (debug)
+						console.debug(`last_changed is paused (${last_changed.entity_id}) EXPIRED -> entity`);
+					return;
 				}
 			}
-		});
-
-		const sortByDate = (entities: any) => {
-			return entities?.sort(
-				(a: { last_changed: string }, b: { last_changed: string }) =>
-					new Date(b?.last_changed)?.getTime() - new Date(a?.last_changed)?.getTime()
-			)?.[0];
-		};
-
-		if (playing?.length) {
-			return sortByDate(playing);
-		} else {
-			return sortByDate(paused);
 		}
 	}
 
-	async function handlePaused() {
+	async function handlePaused(mount?: boolean) {
 		clearTimeout(pausedTimeout);
 
+		// paused
 		if (currentState === 'paused') {
-			// skip if disabled
-			if (sel?.timeout === 0) {
-				pauseExpired = true;
-				return;
-			}
+			if (!current_media_player) return;
 
-			const last_changed = new Date(current_media_player?.last_changed);
-			const diff = Math.abs((new Date().getTime() - last_changed.getTime()) / 1000);
+			const current_last_changed = new Date(current_media_player?.last_changed);
+			const diff = Math.abs((new Date().getTime() - current_last_changed.getTime()) / 1000);
 			remaining = undefined;
 
 			if (diff > timeout) {
-				// already expired...
 				pauseExpired = true;
 			} else {
-				// expire in `remaining` time
 				remaining = (timeout - diff) * 1000;
 
 				if (debug) {
@@ -133,10 +150,15 @@
 					pauseExpired = true;
 				}, remaining);
 			}
+
+			// not paused
 		} else {
 			pauseExpired = false;
 			remaining = undefined;
 		}
+
+		// force update onmount
+		if (mount) current_media_player = current_media_player;
 	}
 
 	async function youtubeThumbnail(media_artist: string, media_title: string) {
@@ -165,28 +187,23 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					action: 'get-history',
+					message: 'history',
 					media_artist,
 					media_title
 				})
 			});
 
-			if (!response.ok) {
-				const errorData = await response.json();
-				throw new Error(errorData.message);
+			$youtubeData = await response.json();
+
+			// need to cancel async fetch if another
+			// function starts before this finishes
+			if (cancelAsyncFetch) return;
+
+			if ($youtubeData?.entity_picture) {
+				backgroundImage = `url("${$youtubeData?.entity_picture}")`;
 			} else {
-				$youtubeData = await response.json();
-
-				// need to cancel async fetch if another
-				// function starts before this finishes
-				if (cancelAsyncFetch) return;
-
-				if ($youtubeData?.entity_picture) {
-					backgroundImage = `url("${$youtubeData?.entity_picture}")`;
-				} else {
-					console.warn("Couldn't fetch YouTube thumbnail");
-					backgroundImage = undefined;
-				}
+				console.error("Couldn't fetch YouTube thumbnail");
+				backgroundImage = undefined;
 			}
 		} catch (err: any) {
 			console.error(err);
@@ -292,20 +309,20 @@
 				<Icon icon="ic:round-pause" width="5rem" height="100%" />
 			</div>
 		{/if}
-
-		<!-- paused progress -->
-		{#if sel?.show_timeout && !$editMode && !overlayIconState && remaining && currentState === 'paused' && !pauseExpired}
-			<div
-				class="progress"
-				in:fade={{ duration: $motion * 2, easing: expoOut }}
-				out:fade={{ duration: $motion / 2, easing: cubicOut }}
-			>
-				{#key remaining}
-					<Progress duration={remaining} size={60} stroke={7} />
-				{/key}
-			</div>
-		{/if}
 	</div>
+
+	<!-- paused progress -->
+	{#if sel?.show_timeout && !$editMode && remaining && currentState === 'paused' && !pauseExpired}
+		<div
+			class="progress"
+			in:fade={{ duration: $motion * 4, easing: expoOut }}
+			out:fade={{ duration: $motion / 2, easing: cubicOut }}
+		>
+			{#key currentEntityId}
+				<Progress duration={remaining} size={45} stroke={7} />
+			{/key}
+		</div>
+	{/if}
 
 	<div
 		class="background"
@@ -320,7 +337,7 @@
 				{#if active}
 					{#if currentAttr?.icon}
 						<Icon icon={currentAttr?.icon} height="auto" width="100%" />
-					{:else}
+					{:else if current_media_player}
 						<ComputeIcon entity_id={current_media_player?.entity_id} skipEntitiyPicture={true} />
 					{/if}
 
@@ -476,7 +493,8 @@
 	.progress {
 		position: absolute;
 		filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.15));
-		bottom: 0.58rem;
+		top: 0.8rem;
+		right: 0.8rem;
 	}
 
 	.container {
