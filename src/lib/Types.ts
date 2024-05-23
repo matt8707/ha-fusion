@@ -256,3 +256,11 @@ export interface WeatherForecastItem {
 	days_to_show?: number;
 	hide_mobile?: boolean;
 }
+
+export interface YouTubeEvent {
+	message: 'auth-pending' | 'auth' | 'update-credentials' | 'auth-error' | 'error';
+	verification_url?: string;
+	user_code?: string;
+	timestamp?: number;
+	error?: any;
+}
