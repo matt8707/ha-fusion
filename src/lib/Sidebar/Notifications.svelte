@@ -75,18 +75,18 @@
 	</div>
 {/if}
 
-{#if $persistentNotifications}
-	<div
-		class="container"
-		style:margin-bottom={(sel?.expand === false && !expanded) || empty ? '0' : '0.6rem'}
-		style:grid-template-rows={(sel?.expand === false && !expanded) || !sel?.expand === undefined
-			? '0fr'
-			: '1fr'}
-		style:transition="margin-bottom {$motion}ms ease, grid-template-rows {$motion}ms ease"
-	>
-		<div style:overflow="hidden">
-			{#each Object.entries($persistentNotifications) as [key, value] (key)}
-				<div class="item" transition:slide={{ duration: $motion }}>
+<div
+	class="container"
+	style:margin-bottom={(sel?.expand === false && !expanded) || empty ? '0' : '0.6rem'}
+	style:grid-template-rows={(sel?.expand === false && !expanded) || !sel?.expand === undefined
+		? '0fr'
+		: '1fr'}
+	style:transition="margin-bottom {$motion}ms ease, grid-template-rows {$motion}ms ease"
+>
+	<div style:overflow="hidden">
+		{#each Object.entries($persistentNotifications) as [key, value] (key)}
+			<div class="item" transition:slide={{ duration: $motion }}>
+				{#if Object.keys($persistentNotifications)?.length > 0}
 					<div class="inner">
 						{#if value?.title}
 							<div class="notification-title">
@@ -128,11 +128,11 @@
 							}
 						</style>
 					</div>
-				</div>
-			{/each}
-		</div>
+				{/if}
+			</div>
+		{/each}
 	</div>
-{/if}
+</div>
 
 <style>
 	.container {
