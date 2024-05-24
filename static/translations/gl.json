@@ -155,6 +155,8 @@
 	"object": "Obxecto",
 	"ok": "OK",
 	"open_cover": "Abrir persiana",
+	"open_door": "Porta aberta",
+	"open_door_success": "Porta aberta",
 	"open_menu": "Abrir men\u00fa do panel de control",
 	"open_tilt_cover": "Abrir inclinaci\u00f3n da persiana",
 	"open_valve": "Abrir v\u00e1lvula",

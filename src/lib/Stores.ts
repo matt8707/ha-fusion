@@ -40,6 +40,7 @@ export const onStates = readable([
 	'on',
 	'open',
 	'playing',
+	'unlocking',
 	'unlocked',
 	// vacuum
 	'cleaning',

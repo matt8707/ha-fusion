@@ -217,6 +217,8 @@
 	"on": "\ucf1c\uc9d0",
 	"open": "\uc5f4\ub9bc",
 	"open_cover": "\uc5f4\uae30",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "\ub300\uc2dc\ubcf4\ub4dc \uba54\ub274 \uc5f4\uae30",
 	"open_tilt_cover": "\uc5f4\uae30",
 	"open_valve": "\ubc38\ube0c \uc5f4\uae30",

@@ -216,6 +216,8 @@
 	"on": "Activ\u00e9",
 	"open": "Ouvert",
 	"open_cover": "Ouvrir le volet",
+	"open_door": "Ouvrir la porte",
+	"open_door_success": "Porte ouverte",
 	"open_menu": "Ouvrir le menu du tableau de bord",
 	"open_tilt_cover": "Incliner pour ouvrir le volet",
 	"open_valve": "Ouvrir la vanne",

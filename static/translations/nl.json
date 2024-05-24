@@ -215,6 +215,8 @@
 	"on": "Aan",
 	"open": "Open",
 	"open_cover": "Open bedekking",
+	"open_door": "Open deur",
+	"open_door_success": "Deur open",
 	"open_menu": "Dashboardmenu openen",
 	"open_tilt_cover": "Open bedekking kanteling",
 	"open_valve": "Open klep",

@@ -142,6 +142,8 @@
 	"object": "Object",
 	"ok": "OK",
 	"open_cover": "Open cover",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "Otvori meni kontrolne plo\u010de",
 	"open_tilt_cover": "Open cover tilt",
 	"open_valve": "Open valve",

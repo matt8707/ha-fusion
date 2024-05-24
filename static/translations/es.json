@@ -217,6 +217,8 @@
 	"on": "Encendido",
 	"open": "Abierto",
 	"open_cover": "Abrir persiana",
+	"open_door": "Abrir puerta",
+	"open_door_success": "Puerta abierta",
 	"open_menu": "Abrir el men\u00fa del panel de control",
 	"open_tilt_cover": "Abrir la inclinaci\u00f3n de la persiana",
 	"open_valve": "Abrir v\u00e1lvula",

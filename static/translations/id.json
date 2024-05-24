@@ -217,6 +217,8 @@
 	"on": "Nyala",
 	"open": "Terbuka",
 	"open_cover": "Buka penutup",
+	"open_door": "Buka pintu",
+	"open_door_success": "Pintu terbuka",
 	"open_menu": "Buka menu dasbor",
 	"open_tilt_cover": "Buka penutup",
 	"open_valve": "Buka katup",

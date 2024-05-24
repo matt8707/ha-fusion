@@ -142,6 +142,8 @@
 	"object": "\u7269\u4ef6",
 	"ok": "\u597d",
 	"open_cover": "\u958b\u555f\u9580\u7c3e",
+	"open_door": "\u6253\u958b\u9580",
+	"open_door_success": "\u9580\u958b\u555f",
 	"open_menu": "\u958b\u555f\u4e3b\u9762\u677f\u9078\u55ae",
 	"open_tilt_cover": "\u958b\u555f\u767e\u8449\u9580\u7c3e",
 	"open_valve": "\u958b\u555f\u95a5\u9580",

@@ -144,6 +144,8 @@
 	"object": "Objekt",
 	"ok": "OK",
 	"open_cover": "Otvori",
+	"open_door": "Otvori vrata",
+	"open_door_success": "Vrata otvorena",
 	"open_menu": "Otvorite izbornik nadzorne plo\u010de",
 	"open_tilt_cover": "Otvori \u017ealuzine",
 	"open_valve": "Otvori ventil",
