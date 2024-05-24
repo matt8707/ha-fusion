@@ -82,43 +82,43 @@
 		if (!media_players) return undefined;
 
 		const list = media_players
-			.map(({ entity_id }) => states[entity_id])
-			.filter((entity): entity is HassEntity => !!entity)
-			.sort((a, b) => new Date(b.last_changed).getTime() - new Date(a.last_changed).getTime());
+			?.map(({ entity_id }) => states?.[entity_id])
+			?.filter((entity) => entity)
+			?.sort((a, b) => new Date(b?.last_changed)?.getTime() - new Date(a?.last_changed)?.getTime());
 
-		if (list.length === 0) return undefined;
-		const last_changed = list[0];
+		if (list?.length === 0) return undefined;
+		const last_changed = list?.[0];
 
 		if (timeout === 0) {
-			const find_playing = list.find((entity) => entity.state === 'playing');
+			const find_playing = list?.find((entity) => entity?.state === 'playing');
 			if (debug) console.debug(`no timeout --> find playing (${find_playing?.entity_id})`);
 			return find_playing;
 		}
 
-		if (last_changed.state === 'playing') {
-			if (debug) console.debug(`last_changed is playing (${last_changed.entity_id})`);
+		if (last_changed?.state === 'playing') {
+			if (debug) console.debug(`last_changed is playing (${last_changed?.entity_id})`);
 			return last_changed;
 		}
 
-		if (last_changed.state === 'paused') {
+		if (last_changed?.state === 'paused') {
 			if (currentState === 'playing') {
-				return list.find((entity) => entity.entity_id === currentEntityId);
+				return list?.find((entity) => entity?.entity_id === currentEntityId);
 			}
 
 			if (!pauseExpired) {
-				if (debug) console.debug(`last_changed is paused (${last_changed.entity_id}) NOT EXPIRED`);
+				if (debug) console.debug(`last_changed is paused (${last_changed?.entity_id}) NOT EXPIRED`);
 				return last_changed;
 			} else {
-				const first_playing = list.find((entity) => entity.state === 'playing');
+				const first_playing = list?.find((entity) => entity?.state === 'playing');
 				if (first_playing) {
 					if (debug)
 						console.debug(
-							`last_changed is paused (${last_changed.entity_id}) EXPIRED -> find playing (${first_playing.entity_id})`
+							`last_changed is paused (${last_changed?.entity_id}) EXPIRED -> find playing (${first_playing?.entity_id})`
 						);
 					return first_playing;
 				} else {
 					if (debug)
-						console.debug(`last_changed is paused (${last_changed.entity_id}) EXPIRED -> entity`);
+						console.debug(`last_changed is paused (${last_changed?.entity_id}) EXPIRED -> entity`);
 					return;
 				}
 			}
@@ -133,7 +133,7 @@
 			if (!current_media_player) return;
 
 			const current_last_changed = new Date(current_media_player?.last_changed);
-			const diff = Math.abs((new Date().getTime() - current_last_changed.getTime()) / 1000);
+			const diff = Math.abs((new Date()?.getTime() - current_last_changed?.getTime()) / 1000);
 			remaining = undefined;
 
 			if (diff > timeout) {
