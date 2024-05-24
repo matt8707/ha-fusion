@@ -4,7 +4,7 @@
 	import type { WeatherIconSet, WeatherIconConditions, WeatherIconMapping } from '$lib/Weather';
 	import Icon from '@iconify/svelte';
 	import { getSupport } from '$lib/Utils';
-	import { onDestroy, tick } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	export let sel: any;
@@ -32,9 +32,15 @@
 	$: if (sel?.entity_id) $entity_id = sel?.entity_id;
 	$: if (!sel?.forecast_type || sel?.forecast_type) $forecast_type = sel?.forecast_type;
 
+	// forecast_type fallback
+	$: defaultForecastType = Object.keys(supports)
+		?.find((key) => supports?.[key])
+		?.replace('FORECAST_', '')
+		?.toLowerCase();
+
 	// get forecast when not dragging
 	// and when entity_id or forecast_type changes
-	$: if (($forecast_type || !$forecast_type) && $entity_id && !$dragging) {
+	$: if (($forecast_type || !$forecast_type) && $entity_id && !$dragging && defaultForecastType) {
 		getForecast();
 
 		if (debug) {
@@ -50,19 +56,11 @@
 		if (busy) return;
 		busy = true;
 
-		await tick();
-
 		// cleanup old sub
 		if (unsubscribe) {
 			if (debug) console.debug('forecast unsubscribed');
 			unsubscribe?.();
 		}
-
-		// forecast_type fallback
-		const defaultForecastType = Object.keys(supports)
-			?.find((key) => supports[key])
-			?.replace('FORECAST_', '')
-			?.toLowerCase();
 
 		try {
 			unsubscribe = await $connection?.subscribeMessage(
