@@ -142,6 +142,8 @@
 	"object": "Objeto",
 	"ok": "OK",
 	"open_cover": "Abrir cortina",
+	"open_door": "Abrir puerta",
+	"open_door_success": "Puerta abierta",
 	"open_menu": "Abre el men\u00fa de la interfaz de usuario de Lovelace",
 	"open_tilt_cover": "Inclinaci\u00f3n abierta de la cortina",
 	"open_valve": "Abrir v\u00e1lvula",

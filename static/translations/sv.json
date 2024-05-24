@@ -217,6 +217,8 @@
 	"on": "P\u00e5",
 	"open": "\u00d6ppen",
 	"open_cover": "\u00d6ppna skydd",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "\u00d6ppna kontrollpanelens meny",
 	"open_tilt_cover": "\u00d6ppna skyddets lutning",
 	"open_valve": "\u00d6ppna ventilen",

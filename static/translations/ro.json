@@ -211,6 +211,8 @@
 	"on": "Pornit",
 	"open": "Deschis\u0103",
 	"open_cover": "Deschide acoperitoarea",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "Deschide meniul tabloului de bord",
 	"open_tilt_cover": "Deschide \u00eenclinarea acoperitorii",
 	"open_valve": "Open valve",

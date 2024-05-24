@@ -216,6 +216,8 @@
 	"on": "On",
 	"open": "Open",
 	"open_cover": "Open cover",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "Open dashboard menu",
 	"open_tilt_cover": "Open cover tilt",
 	"open_valve": "Open valve",

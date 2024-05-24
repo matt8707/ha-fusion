@@ -143,6 +143,8 @@
 	"object": "Object",
 	"ok": "OK",
 	"open_cover": "Open cover",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "Lovelace Menu opmaachen",
 	"open_tilt_cover": "Open cover tilt",
 	"open_valve": "Open valve",

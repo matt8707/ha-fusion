@@ -214,6 +214,8 @@
 	"on": "Ligado",
 	"open": "Aberta",
 	"open_cover": "Abrir",
+	"open_door": "Abrir porta",
+	"open_door_success": "Porta aberta",
 	"open_menu": "Abrir painel de instrumentos",
 	"open_tilt_cover": "Abrir inclina\u00e7\u00e3o da cobertura",
 	"open_valve": "Abrir v\u00e1lvula",

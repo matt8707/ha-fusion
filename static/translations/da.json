@@ -211,6 +211,8 @@
 	"on": "Til",
 	"open": "\u00c5ben",
 	"open_cover": "\u00c5bn gardin/port",
+	"open_door": "\u00c5bn d\u00f8r",
+	"open_door_success": "D\u00f8r \u00e5ben",
 	"open_menu": "\u00c5bn betjeningspanel-menuen",
 	"open_tilt_cover": "\u00c5bn vippeposition",
 	"open_valve": "\u00c5bn ventil",

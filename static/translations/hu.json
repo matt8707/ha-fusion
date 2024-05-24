@@ -217,6 +217,8 @@
 	"on": "Be",
 	"open": "Nyitva",
 	"open_cover": "\u00c1rny\u00e9kol\u00f3 nyit\u00e1sa",
+	"open_door": "Ajt\u00f3nyit\u00e1s",
+	"open_door_success": "Ajt\u00f3 nyitva",
 	"open_menu": "Ir\u00e1ny\u00edt\u00f3pult men\u00fc megnyit\u00e1sa",
 	"open_tilt_cover": "\u00c1rny\u00e9kol\u00f3 d\u00f6nt\u00e9s\u00e9nek nyit\u00e1sa",
 	"open_valve": "Szelep megnyit\u00e1sa",

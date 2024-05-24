@@ -217,6 +217,8 @@
 	"on": "Acceso/a",
 	"open": "Aperto/a",
 	"open_cover": "Apri la serranda",
+	"open_door": "Apri porta",
+	"open_door_success": "Porta aperta",
 	"open_menu": "Apri il menu della plancia",
 	"open_tilt_cover": "Apri l'inclinazione della serranda",
 	"open_valve": "Apri la valvola",

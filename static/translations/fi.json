@@ -217,6 +217,8 @@
 	"on": "P\u00e4\u00e4ll\u00e4",
 	"open": "Auki",
 	"open_cover": "Avaa suojus",
+	"open_door": "Avaa ovi",
+	"open_door_success": "Ovi auki",
 	"open_menu": "Avaa kojelauta-valikko",
 	"open_tilt_cover": "Avaa suojuksen kallistus",
 	"open_valve": "Avaa venttiili",

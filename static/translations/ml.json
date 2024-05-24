@@ -142,6 +142,8 @@
 	"object": "Object",
 	"ok": "\u0d36\u0d30\u0d3f",
 	"open_cover": "Open cover",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "\u0d21\u0d3e\u0d37\u0d4d\u200c\u0d2c\u0d4b\u0d7c\u0d21\u0d4d \u0d2e\u0d46\u0d28\u0d41 \u0d24\u0d41\u0d31\u0d15\u0d4d\u0d15\u0d41\u0d15",
 	"open_tilt_cover": "Open cover tilt",
 	"open_valve": "Open valve",

@@ -143,6 +143,8 @@ dir_keys = [
             ("nothing_playing", ["ui.card.media_player.nothing_playing"]),
             ("log_in", ["ui.login-form.log_in"]),
             ("show_area", ["ui.components.area-filter.show"]),
+            ("open_door", ["ui.card.lock.open_door"]),
+            ("open_door_success", ["ui.card.lock.open_door_success"]),
         ],
     ),
     (  # MEDIA_PLAYER

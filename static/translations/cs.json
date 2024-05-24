@@ -217,6 +217,8 @@
 	"on": "Zapnuto",
 	"open": "Otev\u0159eno",
 	"open_cover": "Otev\u0159\u00edt",
+	"open_door": "Otev\u0159\u00edt dve\u0159e",
+	"open_door_success": "Dve\u0159e otev\u0159eny",
 	"open_menu": "Otev\u0159\u00edt menu ovl\u00e1dac\u00edho panelu",
 	"open_tilt_cover": "Zv\u00fd\u0161it n\u00e1klon",
 	"open_valve": "Otev\u0159\u00edt ventil",

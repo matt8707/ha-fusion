@@ -142,6 +142,8 @@
 	"object": "Objeto",
 	"ok": "OK",
 	"open_cover": "Abrir cobertura",
+	"open_door": "Porta aberta",
+	"open_door_success": "Porta aberta",
 	"open_menu": "Abra o menu da Interface Dashboard",
 	"open_tilt_cover": "Abrir inclina\u00e7\u00e3o da cortina",
 	"open_valve": "Abra a V\u00e1lvula",

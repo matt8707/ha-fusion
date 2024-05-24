@@ -217,6 +217,8 @@
 	"on": "Sees",
 	"open": "Avatud",
 	"open_cover": "Ava kate",
+	"open_door": "Ava uks",
+	"open_door_success": "Uks on avatud",
 	"open_menu": "Ava Lovelace'i kasutajaliidese men\u00fc\u00fc",
 	"open_tilt_cover": "Ava katte ribid",
 	"open_valve": "Ava ventiil",

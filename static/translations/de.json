@@ -217,6 +217,8 @@
 	"on": "An",
 	"open": "Offen",
 	"open_cover": "Abdeckung \u00f6ffnen",
+	"open_door": "T\u00fcr \u00f6ffnen",
+	"open_door_success": "T\u00fcr offen",
 	"open_menu": "Dashboard-Men\u00fc \u00f6ffnen",
 	"open_tilt_cover": "Abdeckung kippend \u00f6ffnen",
 	"open_valve": "Ventil \u00f6ffnen",

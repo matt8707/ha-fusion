@@ -146,6 +146,8 @@
 	"object": "Object",
 	"ok": "Ok",
 	"open_cover": "Open cover",
+	"open_door": "Open door",
+	"open_door_success": "Door open",
 	"open_menu": "\u00c5pne dashboardmeny",
 	"open_tilt_cover": "Open cover tilt",
 	"open_valve": "Opne ventil",

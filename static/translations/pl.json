@@ -211,6 +211,8 @@
 	"on": "w\u0142\u0105czono",
 	"open": "otwarto",
 	"open_cover": "Otw\u00f3rz",
+	"open_door": "Otw\u00f3rz drzwi",
+	"open_door_success": "Drzwi otwarte",
 	"open_menu": "Otw\u00f3rz menu dashboardu",
 	"open_tilt_cover": "Pochylenie przy otwarciu",
 	"open_valve": "Otw\u00f3rz zaw\u00f3r",
