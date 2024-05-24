@@ -69,8 +69,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       konva:
-        specifier: ^9.3.9
-        version: 9.3.9
+        specifier: ^9.3.11
+        version: 9.3.11
       maplibre-gl:
         specifier: ^4.3.2
         version: 4.3.2
@@ -97,14 +97,14 @@ importers:
         version: 9.4.0
     devDependencies:
       '@event-calendar/core':
-        specifier: ^2.7.2
-        version: 2.7.2
+        specifier: ^3.0.1
+        version: 3.0.1
       '@event-calendar/day-grid':
-        specifier: ^2.7.2
-        version: 2.7.2
+        specifier: ^3.0.1
+        version: 3.0.1
       '@event-calendar/list':
-        specifier: ^2.7.2
-        version: 2.7.2
+        specifier: ^3.0.1
+        version: 3.0.1
       '@iconify/svelte':
         specifier: ^4.0.2
         version: 4.0.2(svelte@4.2.17)
@@ -372,14 +372,14 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@event-calendar/core@2.7.2':
-    resolution: {integrity: sha512-gH0JE0emGQpLMFPWY1BU+NdNRGv0byhZnzJRJnzV9jCnThUk8rOCJ6T4VcfGZwzlxg5L24hF0UOdTSec2LuOqw==}
+  '@event-calendar/core@3.0.1':
+    resolution: {integrity: sha512-R8ciFho20GqEntz4RF92y/SAwjVPcJyHvbIciEivtYiLP6SN+/OfO05LEPXXx6QBT1kvu+YmpwGG2QnHEkSw2A==}
 
-  '@event-calendar/day-grid@2.7.2':
-    resolution: {integrity: sha512-8x8Ujh1erSzZHDR0D9cqeECZENg6lmrCsHYSHL2gHaDNU+kG4kLqoane2zgImulST2VJ3OR/Q3ec14xXiHgCcA==}
+  '@event-calendar/day-grid@3.0.1':
+    resolution: {integrity: sha512-ETwTtYFp0C7xF6bFwUk/3erisuv8FbrEK+sUsM7rNgWCn2PLA5GeOCkn+KO3qcj7zICNWdZRczX1ERwitLP20w==}
 
-  '@event-calendar/list@2.7.2':
-    resolution: {integrity: sha512-4g1ZuJcDsZ7W4BRP3hAxdO7TawI9rgAmthxxpr5BbdM7k3SPXeuIlAN8VAmHa4v9duHpDu0fBJ9/j/qgcZU5qg==}
+  '@event-calendar/list@3.0.1':
+    resolution: {integrity: sha512-09T03XJopEK1Hd6CTWPaQfwp1oBF2F9Ysxg6lISawnl3egFxvnpxldHwen3jYmJt+5sBC8ena5WGGz6rjGX36w==}
 
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
@@ -1446,8 +1446,8 @@ packages:
   known-css-properties@0.31.0:
     resolution: {integrity: sha512-sBPIUGTNF0czz0mwGGUoKKJC8Q7On1GPbCSFPfyEsfHb2DyBG0Y4QtV+EVWpINSaiGKZblDNuF5AezxSgOhesQ==}
 
-  konva@9.3.9:
-    resolution: {integrity: sha512-0ACsA2kCGilptQqosTVdu5g1jAeONZI/W/L5U7afeRhoWqSV+HjcuBB+vsFzs64oL/02y+4/jd3K5RL0sLCxbQ==}
+  konva@9.3.11:
+    resolution: {integrity: sha512-ZkFF4CXKZCDd2+6sBPA0y3hQ+X4uTqIS6JxTl3BEOFJzKr1tId+rxxJgtsk1FQIH3auuvnMj/rkbatUcf9C2Wg==}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -2275,18 +2275,18 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@event-calendar/core@2.7.2':
+  '@event-calendar/core@3.0.1':
     dependencies:
       svelte: 4.2.17
 
-  '@event-calendar/day-grid@2.7.2':
+  '@event-calendar/day-grid@3.0.1':
     dependencies:
-      '@event-calendar/core': 2.7.2
+      '@event-calendar/core': 3.0.1
       svelte: 4.2.17
 
-  '@event-calendar/list@2.7.2':
+  '@event-calendar/list@3.0.1':
     dependencies:
-      '@event-calendar/core': 2.7.2
+      '@event-calendar/core': 3.0.1
       svelte: 4.2.17
 
   '@fastify/busboy@2.1.1': {}
@@ -3444,7 +3444,7 @@ snapshots:
 
   known-css-properties@0.31.0: {}
 
-  konva@9.3.9: {}
+  konva@9.3.11: {}
 
   levn@0.4.1:
     dependencies:

@@ -12,9 +12,9 @@
 		"format": "prettier --plugin prettier-plugin-svelte . --write ."
 	},
 	"devDependencies": {
-		"@event-calendar/core": "^2.7.2",
-		"@event-calendar/day-grid": "^2.7.2",
-		"@event-calendar/list": "^2.7.2",
+		"@event-calendar/core": "^3.0.1",
+		"@event-calendar/day-grid": "^3.0.1",
+		"@event-calendar/list": "^3.0.1",
 		"@iconify/svelte": "^4.0.2",
 		"@sveltejs/adapter-node": "^5.0.1",
 		"@sveltejs/kit": "^2.5.10",
@@ -62,7 +62,7 @@
 		"home-assistant-js-websocket": "^9.3.0",
 		"http-proxy-middleware": "^3.0.0",
 		"js-yaml": "^4.1.0",
-		"konva": "^9.3.9",
+		"konva": "^9.3.11",
 		"maplibre-gl": "^4.3.2",
 		"marked": "^12.0.2",
 		"svelte-dnd-action": "^0.9.47",
