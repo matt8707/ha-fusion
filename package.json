@@ -58,7 +58,7 @@
 		"d3-shape": "^3.2.0",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
-		"hls.js": "^1.5.8",
+		"hls.js": "^1.5.9",
 		"home-assistant-js-websocket": "^9.3.0",
 		"http-proxy-middleware": "^3.0.0",
 		"js-yaml": "^4.1.0",
