@@ -10,9 +10,7 @@ export interface Configuration {
 }
 
 export interface Addons {
-	youtube_watching?: {
-		entity_id: string;
-	};
+	youtube?: boolean;
 	maptiler?: {
 		apikey: string;
 	};
@@ -257,4 +255,12 @@ export interface WeatherForecastItem {
 	icon_pack?: string;
 	days_to_show?: number;
 	hide_mobile?: boolean;
+}
+
+export interface YouTubeEvent {
+	message: 'auth-pending' | 'auth' | 'update-credentials' | 'auth-error' | 'error';
+	verification_url?: string;
+	user_code?: string;
+	timestamp?: number;
+	error?: any;
 }

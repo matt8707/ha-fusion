@@ -7,10 +7,15 @@
 	import { flip } from 'svelte/animate';
 	import InputClear from '$lib/Components/InputClear.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
-	import { getCameraEntity, getSensorEntity } from '$lib/Modal/getRandomEntity';
+	import {
+		getCameraEntity,
+		getSensorEntity,
+		getMediaPlayerEntity
+	} from '$lib/Modal/getRandomEntity';
 
 	import Button from '$lib/Main/Button.svelte';
 	import Camera from '$lib/Main/Camera.svelte';
+	import ConditionalMedia from '$lib/Main/ConditionalMedia.svelte';
 	import Empty from '$lib/Main/Empty.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Ripple from 'svelte-ripple';
@@ -24,6 +29,7 @@
 	// get random preview entities
 	if (!$demo.camera) $demo.camera = getCameraEntity($states);
 	if (!$demo.sensor) $demo.sensor = getSensorEntity($states);
+	if (!$demo.media_player) $demo.media_player = getMediaPlayerEntity($states);
 
 	onMount(() => {
 		if (searchElement) {
@@ -87,15 +93,16 @@
 			props: {
 				sel
 			}
+		},
+		{
+			id: 'conditional_media',
+			type: `${$lang('conditional')} ${$lang('media')?.toLocaleLowerCase()}`,
+			component: ConditionalMedia,
+			props: {
+				demo: $demo.media_player,
+				sel
+			}
 		}
-		// {
-		// 	id: 'media',
-		// 	type: $lang('media'),
-		// 	component: Media,
-		// 	props: {
-		// 		entity_id: $demo.bar
-		// 	}
-		// }
 	];
 
 	async function handleClick(id: string) {
@@ -118,6 +125,12 @@
 			case 'camera':
 				openModal(() => import('$lib/Modal/CameraConfig.svelte'), {
 					demo: $demo.camera,
+					sel
+				});
+				break;
+			case 'conditional_media':
+				openModal(() => import('$lib/Modal/ConditionalMediaConfig.svelte'), {
+					demo: $demo.media_player,
 					sel
 				});
 				break;

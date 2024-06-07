@@ -41,6 +41,7 @@ export const onStates = readable([
 	'on',
 	'open',
 	'playing',
+	'unlocking',
 	'unlocked',
 	// vacuum
 	'cleaning',
@@ -107,6 +108,14 @@ export const demo = writable<{ [key: string]: string | undefined }>({
 	camera: undefined,
 	history: undefined
 });
+
+// youtube_addon
+export const youtubeAddon = writable<boolean | undefined>();
+export const youtubeData = writable<{
+	media_artist: string;
+	media_title: string;
+	entity_picture: string;
+}>();
 
 // history
 export const history = writable<string[]>([]);

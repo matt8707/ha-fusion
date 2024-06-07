@@ -61,6 +61,15 @@ export function getTimerEntity(states: HassEntities) {
 }
 
 /**
+ * Get random media_player entity
+ */
+export function getMediaPlayerEntity(states: HassEntities) {
+	if (states === undefined) return;
+	const mediaPlayers = Object.values(states).filter((e) => e.entity_id.startsWith('media_player.'));
+	return mediaPlayers.length ? random(mediaPlayers).entity_id : undefined;
+}
+
+/**
  * Get random history entity
  */
 export function getHistoryEntity(states: HassEntities) {

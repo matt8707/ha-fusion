@@ -84,6 +84,8 @@ If you prefer to use Kubernetes, see [Chart README.md](https://github.com/matt87
 
 ## Query strings
 
+These will only function if you have exposed a port in the add-on configuration or by using Docker. Note that when using Ingress, query strings cannot be read.
+
 ### View
 
 To set a particular view when the page loads, add the "view" parameter. For example, if you have a "Bedroom" view, append the query string `?view=Bedroom` to the URL.

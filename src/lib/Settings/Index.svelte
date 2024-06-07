@@ -44,9 +44,14 @@
 			const form = formDataToObject(data);
 
 			const addons = {
-				...(form.youtube_watching && { youtube_watching: { entity_id: form.youtube_watching } }),
+				...(form.youtube && { youtube: form.youtube === 'true' }),
 				...(form.maptiler && { maptiler: { apikey: form.maptiler } })
 			};
+
+			if (typeof form.maptiler === 'string') {
+				$configuration.addons = $configuration.addons || {};
+				$configuration.addons.maptiler = { apikey: form.maptiler };
+			}
 
 			const token = form.token || undefined;
 			const custom_js = form.custom_js ? Boolean(form.custom_js === 'true') : undefined;
@@ -112,7 +117,7 @@
 	<Modal>
 		<h1 slot="title">{$lang('settings')}</h1>
 
-		<form id="settings" name="settings" bind:this={formElement}>
+		<form id="settings" name="settings" bind:this={formElement} on:submit|preventDefault>
 			<Language {languages} />
 
 			<Token />
