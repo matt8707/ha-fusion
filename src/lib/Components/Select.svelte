@@ -1,13 +1,12 @@
 <script lang="ts">
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
-	import { motion, states } from '$lib/Stores';
+	import { motion } from '$lib/Stores';
 	import { tick } from 'svelte';
 	import VirtualList, { type Alignment, type ScrollBehaviour } from 'svelte-tiny-virtual-list';
 	import { scale, slide } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import { expoOut } from 'svelte/easing';
-	import { getName } from '$lib/Utils';
 
 	export let value: string | undefined;
 	export let placeholder: string;
@@ -255,13 +254,12 @@
 					{/if}
 
 					<div class="label">
+						{filter?.[index]?.label}
 						{#if filter?.[index]?.hint}
 							<span class="name">
 								{filter?.[index]?.hint}
 							</span>
 						{/if}
-
-						{filter?.[index]?.label}
 					</div>
 				</div>
 			</button>

@@ -1,14 +1,5 @@
 <script lang="ts">
-	import {
-		states,
-		dashboard,
-		lang,
-		history,
-		historyIndex,
-		record,
-		ripple,
-		entityList
-	} from '$lib/Stores';
+	import { dashboard, lang, history, historyIndex, record, ripple, entityList } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Image from '$lib/Sidebar/Image.svelte';
 	import Select from '$lib/Components/Select.svelte';
