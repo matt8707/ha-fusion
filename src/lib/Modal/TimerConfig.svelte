@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states, dashboard, lang, history, historyIndex, record, ripple } from '$lib/Stores';
+	import { dashboard, lang, history, historyIndex, record, ripple, entityList } from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Timer from '$lib/Sidebar/Timer.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -20,10 +20,7 @@
 		set('entity_id', demo);
 	}
 
-	$: options = Object.entries($states)
-		.filter(([key]) => key.startsWith('timer.'))
-		.sort()
-		.map(([key]) => ({ id: key, label: key }));
+	$: options = $entityList('timer');
 
 	function set(key: string, event?: any) {
 		sel = updateObj(sel, key, event);

@@ -1,24 +1,23 @@
 <script lang="ts">
 	import ComputeIcon from '$lib/Components/ComputeIcon.svelte';
-	import { motion, states } from '$lib/Stores';
+	import { motion } from '$lib/Stores';
 	import { tick } from 'svelte';
 	import VirtualList, { type Alignment, type ScrollBehaviour } from 'svelte-tiny-virtual-list';
 	import { scale, slide } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import { expoOut } from 'svelte/easing';
-	import { getName } from '$lib/Utils';
 
 	export let value: string | undefined;
 	export let placeholder: string;
 	export let computeIcons: boolean | undefined = undefined;
 	export let getIconString: boolean | undefined = undefined;
 	export let defaultIcon: string | undefined = undefined;
-	export let renderName: boolean | undefined = undefined;
 	export let clearable: boolean | undefined = undefined;
 	export let options: {
 		id: string;
 		label: string;
+		hint?: string;
 		icon?: string;
 	}[];
 
@@ -255,13 +254,12 @@
 					{/if}
 
 					<div class="label">
-						{#if renderName}
+						{filter?.[index]?.label}
+						{#if filter?.[index]?.hint}
 							<span class="name">
-								{getName(undefined, $states?.[filter?.[index]?.label])}
+								{filter?.[index]?.hint}
 							</span>
 						{/if}
-
-						{filter?.[index]?.label}
 					</div>
 				</div>
 			</button>
@@ -304,6 +302,7 @@
 	/* list */
 
 	.wrapper {
+		margin-top: 0.2rem;
 		position: relative;
 		background-color: #1d1b18;
 		border-radius: 0.6rem;

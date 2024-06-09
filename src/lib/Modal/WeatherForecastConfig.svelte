@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { states, dashboard, lang, record, ripple, history, historyIndex } from '$lib/Stores';
+	import {
+		states,
+		dashboard,
+		lang,
+		record,
+		ripple,
+		history,
+		historyIndex,
+		entityList
+	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import WeatherForecast from '$lib/Sidebar/WeatherForecast.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -38,10 +47,7 @@
 		{ id: 'materialsymbolslight', label: 'materialsymbolslight' }
 	];
 
-	$: options = Object.keys($states)
-		.filter((key) => key.startsWith('weather.'))
-		.sort()
-		.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('weather');
 
 	$: range = {
 		min: 1,

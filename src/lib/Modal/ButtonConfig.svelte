@@ -7,7 +7,8 @@
 		ripple,
 		history,
 		historyIndex,
-		templates
+		templates,
+		entityList
 	} from '$lib/Stores';
 	import { onDestroy } from 'svelte';
 	import Button from '$lib/Main/Button.svelte';
@@ -40,11 +41,7 @@
 	let state = sel?.state;
 	let computedIcon: string;
 
-	$: options =
-		$states &&
-		Object.keys($states)
-			.sort()
-			.map((key) => ({ id: key, label: key }));
+	$: options = $entityList('');
 
 	$: template = $templates?.[sel?.id];
 
