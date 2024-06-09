@@ -15,8 +15,7 @@
 	 * Preloads module before click event
 	 */
 	async function handlePointer() {
-		const module = await import('$lib/Modal/CodeConfig.svelte');
-		module.default;
+		await import('$lib/Modal/CodeConfig.svelte');
 	}
 </script>
 

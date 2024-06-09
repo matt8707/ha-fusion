@@ -369,30 +369,27 @@
 	 * Preloads module before click event
 	 */
 	async function handlePointerEvent() {
-		let module;
-
 		if ($editMode) {
-			module = await import('$lib/Modal/ButtonConfig.svelte');
+			await import('$lib/Modal/ButtonConfig.svelte');
 		} else {
 			switch (getDomain(sel?.entity_id)) {
 				case 'light':
-					module = await import('$lib/Modal/LightModal.svelte');
+					await import('$lib/Modal/LightModal.svelte');
 					break;
 				case 'switch':
-					module = await import('$lib/Modal/SwitchModal.svelte');
+					await import('$lib/Modal/SwitchModal.svelte');
 					break;
 				case 'climate':
-					module = await import('$lib/Modal/ClimateModal.svelte');
+					await import('$lib/Modal/ClimateModal.svelte');
 					break;
 				case 'media_player':
-					module = await import('$lib/Modal/MediaPlayer.svelte');
+					await import('$lib/Modal/MediaPlayer.svelte');
 					break;
 				default:
-					module = await import('$lib/Modal/Unknown.svelte');
+					await import('$lib/Modal/Unknown.svelte');
 					break;
 			}
 		}
-		if (module) module.default;
 	}
 
 	////// templates //////

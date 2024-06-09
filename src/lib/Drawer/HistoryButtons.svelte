@@ -106,7 +106,12 @@
 
 		if (event.key.toLowerCase() === 'z' && (event.metaKey || event.ctrlKey)) {
 			event.preventDefault();
-			event.shiftKey ? handleClick('redo') : handleClick('undo');
+
+			if (event.shiftKey) {
+				handleClick('redo');
+			} else {
+				handleClick('undo');
+			}
 		}
 	}
 

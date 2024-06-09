@@ -59,7 +59,12 @@
 		await tick();
 		if (entity_id && $states) {
 			const state = $states?.[entity_id]?.state;
-			isTimestamp(state) ? set('date', true) : set('date');
+
+			if (isTimestamp(state)) {
+				set('date', true);
+			} else {
+				set('date');
+			}
 		}
 	}
 </script>

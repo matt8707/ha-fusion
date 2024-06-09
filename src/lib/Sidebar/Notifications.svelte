@@ -78,9 +78,7 @@
 <div
 	class="container"
 	style:margin-bottom={(sel?.expand === false && !expanded) || empty ? '0' : '0.6rem'}
-	style:grid-template-rows={(sel?.expand === false && !expanded) || !sel?.expand === undefined
-		? '0fr'
-		: '1fr'}
+	style:grid-template-rows={sel?.expand === false && !expanded ? '0fr' : '1fr'}
 	style:transition="margin-bottom {$motion}ms ease, grid-template-rows {$motion}ms ease"
 >
 	<div style:overflow="hidden">

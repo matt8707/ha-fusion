@@ -25,7 +25,11 @@
 	let video: HTMLVideoElement;
 	let busy: boolean = false;
 
-	$: attachVideo ? attach() : detach();
+	$: if (attachVideo) {
+		attach();
+	} else {
+		detach();
+	}
 
 	const playVideo = () => video.play();
 

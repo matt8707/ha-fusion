@@ -20,7 +20,7 @@ const options = {
 	async loadTokens() {
 		try {
 			return JSON.parse(localStorage.hassTokens);
-		} catch (error) {
+		} catch {
 			return undefined;
 		}
 	},

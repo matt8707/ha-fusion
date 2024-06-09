@@ -41,8 +41,7 @@
 	 * Preloads module before click event
 	 */
 	async function handlePointer() {
-		const module = await import('$lib/Settings/Index.svelte');
-		module.default;
+		await import('$lib/Settings/Index.svelte');
 	}
 </script>
 

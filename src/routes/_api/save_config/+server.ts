@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	let data;
 	try {
 		data = yaml.dump(body);
-	} catch (error) {
+	} catch {
 		return new Response(JSON.stringify({ error: 'Invalid JSON - cannot convert to YAML' }), {
 			status: 400
 		});

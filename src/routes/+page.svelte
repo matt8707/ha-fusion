@@ -74,7 +74,7 @@
 			await authentication($configuration);
 			console.debug('authenticated.');
 			clearInterval(retryInterval);
-		} catch (err) {
+		} catch {
 			// catch but don't log
 		} finally {
 			isConnecting = false;
