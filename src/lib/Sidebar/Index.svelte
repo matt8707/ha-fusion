@@ -245,9 +245,8 @@
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
 								this={Date.default}
-								short_day={item?.short_day}
-								short_month={item?.short_month}
-								hide={item?.hide}
+								short={item?.short}
+								show={item?.show}
 								layout={item?.layout}
 							/>
 						</button>

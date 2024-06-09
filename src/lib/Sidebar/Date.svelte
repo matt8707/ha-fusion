@@ -1,42 +1,53 @@
 <script lang="ts">
 	import { timer, selectedLanguage } from '$lib/Stores';
 
-	export let short_day: boolean | undefined = undefined;
-	export let short_month: boolean | undefined = undefined;
-	export let hide: string | undefined = undefined;
+	export let short: string[] = [];
+	export let show: string[] = ['day', 'month'];
 	export let layout: string | undefined = undefined;
 
-	$: weekDay = $timer.toLocaleDateString($selectedLanguage, {
-		weekday: short_day ? 'short' : 'long'
+	$: inlineDate = $timer.toLocaleDateString($selectedLanguage, {
+		day: show?.includes('day') ? 'numeric' : undefined,
+		weekday: show?.includes('day') ? (short?.includes('day') ? 'short' : 'long') : undefined,
+		month: show?.includes('month') ? (short?.includes('month') ? 'short' : 'long') : undefined,
+		year: show?.includes('year') ? (short?.includes('year') ? '2-digit' : 'numeric') : undefined
 	});
 
-	$: shortDate = $timer.toLocaleDateString($selectedLanguage, {
+	$: weekDay = $timer.toLocaleDateString($selectedLanguage, {
+		weekday: short?.includes('day') ? 'short' : 'long'
+	});
+
+	$: date = $timer.toLocaleDateString($selectedLanguage, {
 		day: 'numeric',
-		month: short_month ? 'short' : 'long'
+		month: short?.includes('month') ? 'short' : 'long'
+	});
+
+	$: year = $timer.toLocaleDateString($selectedLanguage, {
+		year: short?.includes('year') ? '2-digit' : 'numeric'
 	});
 
 	$: orientation = layout || 'vertical';
 </script>
 
 <div>
-	{#if orientation === 'vertical'}
-		{#if hide !== 'day'}
-			{weekDay}<br />
-		{/if}
-
-		{#if hide !== 'month'}
-			{shortDate}<br />
-		{/if}
-	{/if}
 	{#if orientation === 'horizontal'}
-		{weekDay},&nbsp;{shortDate}
+		{inlineDate}
+	{:else if orientation === 'vertical'}
+		{#each show.sort() as e, i}
+			{#if e === 'day'}{weekDay}
+			{:else if e === 'month'}{date}
+			{:else if e === 'year'}{year}
+			{/if}
+			{#if i !== show.length - 1}
+				<br />
+			{/if}
+		{/each}
 	{/if}
 </div>
 
 <style>
 	div {
 		padding: var(--theme-sidebar-item-padding);
-		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+		text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		overflow: hidden;

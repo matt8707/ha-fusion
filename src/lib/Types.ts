@@ -139,9 +139,8 @@ export interface CameraItem {
 export interface DateItem {
 	type?: string;
 	id?: number;
-	short_day?: boolean;
-	short_month?: boolean;
-	hide?: string;
+	short?: string[];
+	show?: string[];
 	layout?: string;
 	hide_mobile?: boolean;
 }
