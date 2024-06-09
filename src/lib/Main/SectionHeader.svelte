@@ -1,33 +1,36 @@
 <script lang="ts">
-	import { editMode } from '$lib/Stores';
+	import { editMode, motion } from '$lib/Stores';
 	import DragIndicator from '$lib/Main/DragIndicator.svelte';
 	import DeleteButton from '$lib/Main/DeleteButton.svelte';
 	import SectionTitle from '$lib/Main/SectionTitle.svelte';
+	import { slide } from 'svelte/transition';
 
 	export let view: any;
 	export let section: any;
 </script>
 
-<header>
-	<h1 style:cursor={$editMode ? 'text' : 'initial'}>
+{#if section?.name !== '' || $editMode}
+	<header transition:slide={{ duration: $motion }}>
+		<h1 style:cursor={$editMode ? 'text' : 'initial'}>
+			{#if $editMode}
+				<SectionTitle bind:value={section.name} />
+			{:else if section?.name === ''}
+				{@html '&nbsp;'}
+			{:else}
+				{section?.name}
+			{/if}
+		</h1>
+
 		{#if $editMode}
-			<SectionTitle bind:value={section.name} />
-		{:else if section?.name === ''}
-			{@html '&nbsp;'}
-		{:else}
-			{section?.name}
+			<div class="right">
+				<DragIndicator />
+
+				<!-- can't be asynchronously loaded, it'll flash on dnd -->
+				<DeleteButton {view} {section} />
+			</div>
 		{/if}
-	</h1>
-
-	{#if $editMode}
-		<div class="right">
-			<DragIndicator />
-
-			<!-- can't be asynchronously loaded, it'll flash on dnd -->
-			<DeleteButton {view} {section} />
-		</div>
-	{/if}
-</header>
+	</header>
+{/if}
 
 <style>
 	header {
