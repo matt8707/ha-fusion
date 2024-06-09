@@ -70,7 +70,7 @@
 				const service = getTogglableService($states[sel?.entity_id]);
 				servicePlaceholder = service || $lang('none');
 			}
-		} catch (error) {
+		} catch {
 			// error
 			servicePlaceholder = $lang('error');
 		}

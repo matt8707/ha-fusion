@@ -21,7 +21,9 @@
 
 	$: if (entity_id) entity = $states?.[entity_id];
 	$: state = entity?.state;
-	$: math && id && (cache[id] = {});
+	$: if (math && id) {
+		cache[id] = {};
+	}
 
 	$: if (entity) {
 		/**

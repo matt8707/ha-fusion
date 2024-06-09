@@ -168,7 +168,7 @@
 
 		// screensaver nonsense
 		if (media_artist === 'YouTube' && media_title === 'Ambient Display') {
-			backgroundImage === undefined;
+			backgroundImage = undefined;
 			return;
 		}
 

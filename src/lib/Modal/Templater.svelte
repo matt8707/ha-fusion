@@ -47,7 +47,7 @@
 			try {
 				const result = parser.load(template as string) as { service: string };
 				service = result?.service || undefined;
-			} catch (error) {
+			} catch {
 				service = undefined;
 			}
 		}

@@ -30,7 +30,11 @@
 	let video: HTMLVideoElement;
 	let busy: boolean = false;
 
-	$: attachVideo ? attach() : detach();
+	$: if (attachVideo) {
+		attach();
+	} else {
+		detach();
+	}
 
 	async function attach() {
 		if (stream_url || busy) return;

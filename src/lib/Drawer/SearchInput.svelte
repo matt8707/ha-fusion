@@ -19,7 +19,11 @@
 	 * Handle input focus/blur
 	 */
 	$: if (input) {
-		$focusSearch ? input.focus() : input.blur();
+		if ($focusSearch) {
+			input.focus();
+		} else {
+			input.blur();
+		}
 	}
 
 	/**

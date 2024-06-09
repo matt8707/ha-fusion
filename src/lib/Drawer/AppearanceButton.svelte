@@ -18,8 +18,7 @@
 	 * Preloads module before click event
 	 */
 	async function handlePointer() {
-		const module = await import('$lib/Modal/AppearanceConfig.svelte');
-		module.default;
+		await import('$lib/Modal/AppearanceConfig.svelte');
 
 		try {
 			const response = await fetch(`${base}/_api/get_all_themes`);
