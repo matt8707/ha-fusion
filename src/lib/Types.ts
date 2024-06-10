@@ -20,8 +20,8 @@ export interface Dashboard {
 	views: Views[];
 	sidebar: SidebarItem[];
 	theme?: string;
-	hide_views?: boolean;
-	hide_sidebar?: boolean;
+	hidden_navigate?: string[];
+	hidden_sidebar?: string[];
 	sidebarWidth?: number;
 }
 

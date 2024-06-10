@@ -12,8 +12,10 @@
 	export let highlight = false;
 	export let themes: any = undefined;
 
-	$: visibilityNavigate = $dashboard?.hide_views;
-	$: visibilitySidebar = $dashboard?.hide_sidebar;
+	const visibility = ['mobile', 'desktop'];
+
+	$: hiddenNavigate = $dashboard?.hidden_navigate ?? [];
+	$: hiddenSidebar = $dashboard?.hidden_sidebar ?? [];
 
 	onMount(async () => {
 		// something needs to be selected, set default
@@ -43,14 +45,18 @@
 		$record();
 	}
 
-	function handleViews(state: boolean) {
-		$dashboard.hide_views = state;
+	function handleNavigate(state: string) {
+		$dashboard.hidden_navigate = hiddenNavigate.includes(state)
+			? hiddenNavigate.filter((i) => i !== state)
+			: [...hiddenNavigate, state];
 		highlight = false;
 		$record();
 	}
 
-	function handleSidebar(state: boolean) {
-		$dashboard.hide_sidebar = state;
+	function handleSidebar(state: string) {
+		$dashboard.hidden_sidebar = hiddenSidebar.includes(state)
+			? hiddenSidebar.filter((i) => i !== state)
+			: [...hiddenSidebar, state];
 		$record();
 	}
 
@@ -85,43 +91,34 @@
 	<Modal>
 		<h1 slot="title">{$lang('appearance')}</h1>
 
-		<h2>{$lang('navigate')}</h2>
+		<h2>{$lang('hidden')}</h2>
 
+		<h4>{$lang('navigate')}</h4>
 		<div class:highlight>
 			<div class="button-container">
-				<button
-					class:selected={visibilityNavigate === false}
-					on:click={() => handleViews(false)}
-					use:Ripple={$ripple}
-				>
-					{$lang('visible')}
-				</button>
-				<button
-					class:selected={visibilityNavigate === true}
-					on:click={() => handleViews(true)}
-					use:Ripple={$ripple}
-				>
-					{$lang('hidden')}
-				</button>
+				{#each visibility as v}
+					<button
+						class:selected={hiddenNavigate.includes(v)}
+						on:click={() => handleNavigate(v)}
+						use:Ripple={$ripple}
+					>
+						{$lang(v)}
+					</button>
+				{/each}
 			</div>
 		</div>
 
-		<h2>{$lang('sidebar')}</h2>
+		<h4>{$lang('sidebar')}</h4>
 		<div class="button-container">
-			<button
-				class:selected={visibilitySidebar === false}
-				on:click={() => handleSidebar(false)}
-				use:Ripple={$ripple}
-			>
-				{$lang('visible')}
-			</button>
-			<button
-				class:selected={visibilitySidebar === true}
-				on:click={() => handleSidebar(true)}
-				use:Ripple={$ripple}
-			>
-				{$lang('hidden')}
-			</button>
+			{#each visibility as v}
+				<button
+					class:selected={hiddenSidebar.includes(v)}
+					on:click={() => handleSidebar(v)}
+					use:Ripple={$ripple}
+				>
+					{$lang(v)}
+				</button>
+			{/each}
 		</div>
 
 		<h1 style:margin-top="1.9rem">{$lang('theme')}</h1>

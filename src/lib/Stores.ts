@@ -78,6 +78,7 @@ export const editMode = writable(false);
 export const showDrawer = writable(false);
 export const motion = writable(190);
 export const itemHeight = readable(61.35);
+export const isMobileScreen = writable(false);
 
 // language
 export const translation = writable<Translations>({});
@@ -95,6 +96,7 @@ export const viewUnderline = writable<boolean>(true);
 export const highlightView = writable<boolean>(false);
 
 // sidebar
+export const isVisibleSidebar = writable(true);
 export const timers = writable<{ [key: string]: { pausedState: string } }>({});
 export const barErrors = writable<{ [key: string]: string }>({});
 export const forecasts = writable<{ [key: string]: any }>({});

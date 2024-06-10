@@ -15,7 +15,9 @@
 		disableMenuButton,
 		clickOriginatedFromMenu,
 		connection,
-		youtubeAddon
+		youtubeAddon,
+		isMobileScreen,
+		isVisibleSidebar
 	} from '$lib/Stores';
 	import { authentication } from '$lib/Socket';
 	import { onDestroy, onMount } from 'svelte';
@@ -39,6 +41,10 @@
 
 	const _motion = data?.configuration?.motion;
 	$motion = _motion === undefined || _motion === true ? $motion : 0;
+
+	$: $isVisibleSidebar =
+		(!$dashboard.hidden_sidebar?.includes('desktop') && !$isMobileScreen) ||
+		(!$dashboard.hidden_sidebar?.includes('mobile') && $isMobileScreen);
 
 	/**
 	 * Computes the current view.
@@ -95,6 +101,21 @@
 	}
 
 	onDestroy(() => clearInterval(retryInterval));
+
+	onMount(() => {
+		const handleMediaQueryChange = (event: { matches: boolean }) => {
+			$isMobileScreen = event.matches;
+		};
+
+		const mediaQuery = window.matchMedia('(max-width: 768px)');
+		$isMobileScreen = mediaQuery.matches;
+
+		mediaQuery.addEventListener('change', handleMediaQueryChange);
+		// cleanup
+		return () => {
+			mediaQuery.removeEventListener('change', handleMediaQueryChange);
+		};
+	});
 
 	onMount(async () => {
 		/**
@@ -177,9 +198,11 @@
 
 <div
 	id="layout"
-	style:grid-template-columns="{$dashboard?.hide_sidebar || !$dashboard?.sidebar?.length
+	style:grid-template-columns="{!$isVisibleSidebar || !$dashboard?.sidebar?.length
 		? '0'
-		: $dashboard?.sidebarWidth || 350}px auto"
+		: $isMobileScreen
+			? '100%'
+			: ($dashboard?.sidebarWidth || 350) + 'px'} auto"
 	style:grid-template-rows={$showDrawer ? 'auto auto 1fr' : '0fr auto 1fr'}
 	style:transition="grid-template-rows {$motion}ms ease, grid-template-columns {$motion}ms ease"
 >

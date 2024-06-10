@@ -7,7 +7,9 @@
 		motion,
 		connection,
 		event,
-		configuration
+		configuration,
+		isVisibleSidebar,
+		isMobileScreen
 	} from '$lib/Stores';
 	import { onDestroy, onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -113,7 +115,11 @@
 {#if message}
 	<div
 		transition:fade={{ duration: $motion }}
-		style:width="calc({$dashboard?.sidebarWidth}px - 2.8rem)"
+		style:width="calc({$isMobileScreen
+			? '100%'
+			: $isVisibleSidebar
+				? $dashboard?.sidebarWidth + 'px'
+				: '350px'} - 2.8rem)"
 		style:background={message === 'ERR_CANNOT_CONNECT' || message === 'ERR_HASS_HOST_REQUIRED'
 			? '#ba0000'
 			: 'var(--theme-navigate-background-color)'}

@@ -7,7 +7,8 @@
 		editMode,
 		viewUnderline,
 		highlightView,
-		draggingView
+		draggingView,
+		isMobileScreen
 	} from '$lib/Stores';
 	import { dndzone } from 'svelte-dnd-action';
 	import { flip } from 'svelte/animate';
@@ -22,6 +23,10 @@
 	let buttons: { [key: number]: HTMLButtonElement } = {};
 	let width: number;
 	let left: number;
+
+	$: visibleNavigate =
+		(!$dashboard.hidden_navigate?.includes('desktop') && !$isMobileScreen) ||
+		(!$dashboard.hidden_navigate?.includes('mobile') && $isMobileScreen);
 
 	/**
 	 * Compute width and left values on active view-button
@@ -83,8 +88,7 @@
 </script>
 
 <nav>
-	<!-- only show if there are views and (editMode || !hide_views) -->
-	{#if $dashboard.views.length === 0 ? false : $editMode ? true : !$dashboard?.hide_views}
+	{#if $dashboard.views.length === 0 ? false : $editMode ? true : visibleNavigate}
 		<section transition:slide={{ duration: $motion }}>
 			{#if $editMode}
 				<EditViewButton
@@ -93,10 +97,9 @@
 						editViewButtonWidth = event?.detail;
 					}}
 				/>
-			{/if}
-
-			{#if $dashboard?.hide_views}
-				<EyeIndicator bind:eyeWidth />
+				{#if $dashboard.hidden_navigate?.length !== 0}
+					<EyeIndicator bind:eyeWidth />
+				{/if}
 			{/if}
 
 			<div class="navigation-container" style:width={navWidth}>

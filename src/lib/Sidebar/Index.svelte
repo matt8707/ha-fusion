@@ -1,6 +1,14 @@
 <script lang="ts">
 	// store
-	import { dashboard, motion, showDrawer, editMode, record, dragging } from '$lib/Stores';
+	import {
+		dashboard,
+		motion,
+		showDrawer,
+		editMode,
+		record,
+		dragging,
+		isVisibleSidebar
+	} from '$lib/Stores';
 	import { onMount, tick } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { dndzone } from 'svelte-dnd-action';
@@ -175,18 +183,18 @@
 </script>
 
 <aside
-	style:padding={$dashboard.hide_sidebar || $dashboard.sidebar.length === 0
+	style:padding={!$isVisibleSidebar || $dashboard.sidebar.length === 0
 		? '0px'
 		: 'var(--theme-sidebar-padding)'}
 	style:transition="padding {$motion}ms ease"
 >
-	{#if $editMode}
+	{#if $isVisibleSidebar && $editMode}
 		{#await import('$lib/Components/ResizeHandle.svelte') then ResizeHandle}
 			<svelte:component this={ResizeHandle.default} />
 		{/await}
 	{/if}
 
-	{#if !$dashboard?.hide_sidebar}
+	{#if $isVisibleSidebar}
 		<section
 			use:dndzone={{
 				type: 'sidebar',
@@ -373,11 +381,10 @@
 				</div>
 			{/each}
 		</section>
-
-		{#await import('$lib/Sidebar/Toast.svelte') then Toast}
-			<svelte:component this={Toast.default} />
-		{/await}
 	{/if}
+	{#await import('$lib/Sidebar/Toast.svelte') then Toast}
+		<svelte:component this={Toast.default} />
+	{/await}
 </aside>
 
 <style>
@@ -385,7 +392,6 @@
 		position: relative;
 		grid-area: aside;
 		padding: var(--theme-sidebar-padding);
-		padding-bottom: 1.4rem !important;
 		background-color: var(--theme-colors-sidebar-background);
 		border-right: var(--theme-colors-sidebar-border);
 	}

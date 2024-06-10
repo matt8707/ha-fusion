@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dashboard, lang, motion, ripple } from '$lib/Stores';
+	import { dashboard, isVisibleSidebar, lang, motion, ripple } from '$lib/Stores';
 	import { cubicOut } from 'svelte/easing';
 	import { fade, slide } from 'svelte/transition';
 	import type { ViewItem } from '$lib/Types';
@@ -74,7 +74,7 @@
 			in:slide={{ duration: $motion, easing: cubicOut }}
 			out:fade={{ duration: $motion / 3, easing: cubicOut }}
 		>
-			{#if !$dashboard.hide_sidebar}
+			{#if $isVisibleSidebar}
 				<svelte:component this={SidebarButton.default} on:clicked={handleClick} />
 			{/if}
 

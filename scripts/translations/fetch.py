@@ -521,6 +521,7 @@ dir_keys = [
             ("add_item", ["ui.panel.lovelace.cards.todo-list.add_item"]),
             ("aspect_ratio", ["ui.panel.lovelace.editor.card.generic.aspect_ratio"]),
             ("mobile", ["ui.panel.lovelace.editor.condition-editor.condition.screen.breakpoints_list.mobile"]),
+            ("desktop", ["ui.panel.lovelace.editor.condition-editor.condition.screen.breakpoints_list.desktop"]),
             ("optional", ["ui.panel.lovelace.editor.card.config.optional"]),
             ("icons", ["ui.panel.lovelace.editor.features.types.climate-hvac-modes.style_list.icons"]),
             ("days_to_show", ["ui.panel.lovelace.editor.card.generic.days_to_show"]),
