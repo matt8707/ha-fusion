@@ -11,5 +11,5 @@ for language_code, translation_data in translations.items():
     output_file_path = os.path.join(OUTPUT_PATH, f"{language_code}.json")
 
     with open(output_file_path, "w", encoding="utf-8") as output_file:
-        json.dump(translation_data, output_file, indent="\t")
+        json.dump(translation_data, output_file, indent="\t", ensure_ascii=False)
         output_file.write("\n")

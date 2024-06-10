@@ -567,4 +567,4 @@ dir_keys = [
 for _dir, _keys in dir_keys:
     process_dir(_dir, output, _keys)
 
-print(json.dumps(output, indent=2, sort_keys=True))
+print(json.dumps(output, indent=2, sort_keys=True, ensure_ascii=False))
