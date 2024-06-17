@@ -123,6 +123,11 @@
 				}
 			}
 		}
+
+		// else
+		const find_playing = list?.find((entity) => entity?.state === 'playing');
+		if (debug) console.debug(`find playing (${find_playing?.entity_id})`);
+		return find_playing;
 	}
 
 	async function handlePaused(mount?: boolean) {
