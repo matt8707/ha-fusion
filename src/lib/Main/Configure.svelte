@@ -32,7 +32,7 @@
 </script>
 
 <div
-	style:height="{$itemHeight}px"
+	style:min-height="{$itemHeight}px"
 	on:click={handleClick}
 	style:cursor={$editMode ? 'unset' : 'pointer'}
 	on:keydown
@@ -46,5 +46,6 @@
 		background-color: rgba(255, 190, 10, 0.25);
 		outline: rgb(255, 192, 8) dashed 2px;
 		outline-offset: -2px;
+		height: 100%;
 	}
 </style>

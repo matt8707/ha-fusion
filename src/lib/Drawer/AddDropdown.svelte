@@ -17,6 +17,7 @@
 	let ObjectButton: typeof import('$lib/Drawer/ObjectButton.svelte');
 	let SectionButton: typeof import('$lib/Drawer/SectionButton.svelte');
 	let HorizontalStackButton: typeof import('$lib/Drawer/HorizontalStackButton.svelte');
+	let ScenesButton: typeof import('$lib/Drawer/ScenesButton.svelte');
 	let ViewButton: typeof import('$lib/Drawer/ViewButton.svelte');
 
 	onMount(async () => {
@@ -24,6 +25,7 @@
 		ObjectButton = await import('$lib/Drawer/ObjectButton.svelte');
 		SectionButton = await import('$lib/Drawer/SectionButton.svelte');
 		HorizontalStackButton = await import('$lib/Drawer/HorizontalStackButton.svelte');
+		ScenesButton = await import('$lib/Drawer/ScenesButton.svelte');
 		ViewButton = await import('$lib/Drawer/ViewButton.svelte');
 	});
 
@@ -83,6 +85,8 @@
 			<svelte:component this={SectionButton.default} {view} on:clicked={handleClick} />
 
 			<svelte:component this={HorizontalStackButton.default} {view} on:clicked={handleClick} />
+
+			<svelte:component this={ScenesButton.default} {view} on:clicked={handleClick} />
 
 			<svelte:component this={ViewButton.default} on:clicked={handleClick} />
 		</div>

@@ -199,7 +199,7 @@
 						{type}
 					</div>
 
-					<div class="preview" class:camera={id === 'camera'}>
+					<div class="preview" class:camera={id === 'camera'} class:button={id === 'button'}>
 						<svelte:component this={component} {...props} />
 					</div>
 				</button>
@@ -214,6 +214,12 @@
 	.camera {
 		padding: 1rem 1.2rem;
 		height: inherit;
+	}
+
+	.button {
+		display: flex;
+		align-self: start;
+		min-width: 14.5rem;
 	}
 
 	.container {

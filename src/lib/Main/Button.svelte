@@ -453,7 +453,7 @@
 	data-state={stateOn}
 	tabindex="-1"
 	style={!$editMode ? 'cursor: pointer;' : ''}
-	style:height="{$itemHeight}px"
+	style:min-height="{$itemHeight}px"
 	on:pointerenter={handlePointer}
 	on:pointerdown={handlePointer}
 	use:Ripple={{
@@ -558,7 +558,8 @@
 	.container {
 		background-color: var(--theme-button-background-color-off);
 		font-family: inherit;
-		width: 14.5rem;
+		width: 100%;
+		height: 100%;
 		display: grid;
 		border-radius: 0.65rem;
 		margin: 0;
