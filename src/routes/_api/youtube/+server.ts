@@ -23,15 +23,14 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		// logout
 	} else if (message === 'logout') {
-		if (!youtube) {
-			return json({
-				message: 'error',
-				error: 'YouTube not initialized'
-			});
-		}
-
 		try {
-			await youtube.session.signOut();
+			// catch error if not signed in
+			// so credentials can be removed anyway
+			try {
+				await youtube?.session.signOut();
+			} catch (err) {
+				console.error(err);
+			}
 			unlinkSync(credentialsFilePath);
 			const configFilePath = './data/configuration.yaml';
 			let config = await loadFile(configFilePath);
@@ -156,7 +155,12 @@ export const GET: RequestHandler = async () => {
 			};
 		});
 
-		const auth = await loadFile(credentialsFilePath);
+		let auth = await loadFile(credentialsFilePath);
+
+		// load function returned empty object
+		// signIn expects undefined if empty
+		if (!Object.keys(auth)?.length) auth = undefined;
+
 		await youtube.session.signIn(auth);
 
 		const data = await youtube.account.getInfo();

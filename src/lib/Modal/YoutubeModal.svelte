@@ -36,13 +36,18 @@
 
 			const result = await response.json();
 			data = result;
+
+			if (!response.ok) {
+				throw new Error(result?.message);
+			}
+
 			clearInterval(interval);
 		} catch (err: any) {
 			if (err?.name === 'AbortError') {
 				// ignore
 			} else {
-				event = { message: 'error', error: 'Failed to initiate authentication' };
-				console.error('Failed to initiate authentication:', err);
+				event = { message: 'error', error: err?.message };
+				console.error(err);
 			}
 			clearInterval(interval);
 		}
@@ -183,7 +188,7 @@
 					<div class="user-info">
 						<img src={account_photo} alt="" />
 
-						<span>{account_name}</span>
+						<span>{account_name || ''}</span>
 
 						<button
 							class="action remove"
