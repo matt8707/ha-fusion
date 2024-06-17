@@ -457,6 +457,7 @@ dir_keys = [
             ("description", ["ui.panel.config.automation.editor.description.label"]),
             ("manage_account", ["ui.panel.config.cloud.account.manage_account"]),
             ("configure", ["ui.panel.config.integrations.configure"]),
+            ("scenes", ["ui.panel.config.devices.scene.scenes"]),
             ("check_updates", ["ui.panel.config.updates.check_updates"]),
             ("checking_updates", ["ui.panel.config.updates.checking_updates"]),
         ],
