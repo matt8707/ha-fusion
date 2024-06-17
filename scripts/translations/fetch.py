@@ -173,6 +173,12 @@ dir_keys = [
             ("google_code", ["config", "progress", "exchange"]),
         ],
     ),
+    (  # HOMEASSISTANT
+        f"{COMPONENTS}/homeassistant/translations/",
+        [
+            ("version", ["system_health", "info", "version"]),
+        ],
+    ),
     (  # UPDATE
         f"{COMPONENTS}/update/translations/",
         [
@@ -451,6 +457,8 @@ dir_keys = [
             ("description", ["ui.panel.config.automation.editor.description.label"]),
             ("manage_account", ["ui.panel.config.cloud.account.manage_account"]),
             ("configure", ["ui.panel.config.integrations.configure"]),
+            ("check_updates", ["ui.panel.config.updates.check_updates"]),
+            ("checking_updates", ["ui.panel.config.updates.checking_updates"]),
         ],
     ),
     (  # ONBOARDING
