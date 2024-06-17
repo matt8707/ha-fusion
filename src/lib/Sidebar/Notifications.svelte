@@ -35,23 +35,18 @@
 		});
 	}
 
-	// modify markdown links
-	marked.setOptions({
-		renderer: (() => {
-			const renderer = new marked.Renderer();
-			const linkRenderer = renderer.link;
-			renderer.link = (href, title, text) => {
-				const localLink = href.startsWith('/');
-
-				if (localLink && $configuration?.hassUrl) {
-					href = `${$configuration?.hassUrl}${href}`;
+	// markdown modify local links
+	marked.use({
+		useNewRenderer: true,
+		renderer: {
+			link(token) {
+				let href = token?.href || '#';
+				if ($configuration?.hassUrl && href.startsWith('/')) {
+					href = `${$configuration.hassUrl}${href}`;
 				}
-
-				const html = linkRenderer.call(renderer, href, title, text);
-				return html.replace(/^<a /, `<a target="_blank" `);
-			};
-			return renderer;
-		})()
+				return `<a href="${href}" target="_blank">${token?.text}</a>`;
+			}
+		}
 	});
 </script>
 
