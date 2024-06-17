@@ -156,18 +156,24 @@ export const dragging = writable<boolean>(false);
 // codemirror
 export const autocompleteOpen = writable(false);
 export const autocompleteList = derived(states, ($states) => Object.keys($states));
+export const pasteContent = writable<string | undefined>();
+
+// entity select
 export const entityList = derived(
 	states,
 	($states) => (filter: string) =>
 		Object.keys($states)
-			.filter((key) => (filter.length > 0 ? key.startsWith(filter + '.') : true))
-			.sort()
-			.map((key) => {
-				const name = getName(undefined, $states[key]);
-				return { id: key, label: name ?? key, hint: name == key ? undefined : key };
+			?.filter((key) => (filter.length > 0 ? key.startsWith(`${filter}.`) : true))
+			?.sort()
+			?.map((key) => {
+				const name = getName(undefined, $states?.[key]);
+				return {
+					id: key,
+					label: name ?? key,
+					hint: name === key ? undefined : key
+				};
 			})
 );
-export const pasteContent = writable<string | undefined>();
 
 // event
 export const event = writable<string | undefined>();

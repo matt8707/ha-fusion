@@ -6,10 +6,15 @@
 	import Content from '$lib/Main/Content.svelte';
 	import SectionHeader from '$lib/Main/SectionHeader.svelte';
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
+	import Scenes from './Scenes.svelte';
 
 	export let view: any;
 
+	let currentDraggedElement: HTMLElement | undefined;
+	let dragEnteredAnother = false;
+
 	let isDraggingHorizontalStack = false;
+	let isDraggingScenes = false;
 
 	const stackHeight = $itemHeight * 1.65;
 
@@ -39,9 +44,18 @@
 		// handle dnd type
 		callback();
 
+		// set cross type flag
+		if (!dragEnteredAnother && event?.detail?.info?.trigger === 'dragEnteredAnother') {
+			dragEnteredAnother = true;
+		}
+
 		if (event.type === 'finalize') {
 			$record();
+
+			// reset variables
 			$dragging = false;
+			dragEnteredAnother = false;
+			currentDraggedElement = undefined;
 
 			// reset body height
 			await tick();
@@ -61,7 +75,12 @@
 		);
 
 		isDraggingHorizontalStack = matchedSection?.type === 'horizontal-stack';
-		if (event.type === 'finalize') isDraggingHorizontalStack = false;
+		isDraggingScenes = matchedSection?.type === 'scenes';
+
+		if (event.type === 'finalize') {
+			isDraggingScenes = false;
+			isDraggingHorizontalStack = false;
+		}
 
 		handleDrag(event, () => {
 			if (view) view.sections = event.detail.items;
@@ -124,10 +143,10 @@
 	 * recursive or use reusable components without breaking flip-animations.
 	 */
 
-	function sectionStyles(itemHeight: number, editMode: boolean, motion: number, empty: boolean) {
+	function sectionStyles(sectionType: string, editMode: boolean, motion: number, empty: boolean) {
 		return `
-			min-height: ${itemHeight}px;
-			background-color: ${empty ? 'rgba(255, 190, 10, 0.25)' : 'transparent'};
+			min-height: ${sectionType === 'scenes' ? '4.8rem' : `${$itemHeight}px`};
+			background-color: ${empty ? 'rgba(255, 190, 10, 0.25)' : sectionType === 'scenes' ? 'rgba(0, 0, 0, 0.125)' : 'transparent'};
 			outline: ${empty ? '2px dashed #ffc107' : 'none'};
 			transition: ${
 				editMode ? `background-color ${motion / 2}ms ease, min-height ${motion}ms ease` : 'none'
@@ -141,6 +160,38 @@
 			grid-row: ${type === 'conditional_media' || type === 'camera' ? 'span 4' : 'span 1'};
 			display: ${type ? '' : 'none'};
     `;
+	}
+
+	async function transformDraggedElement(element: HTMLElement | undefined) {
+		if (!element) return;
+
+		if (!currentDraggedElement) currentDraggedElement = element;
+
+		Object.assign(element.style, {
+			overflow: 'hidden',
+			borderRadius: '0.65rem',
+			border: 'none'
+		});
+	}
+
+	$: if (dragEnteredAnother && currentDraggedElement) {
+		acrossTypeTransform(currentDraggedElement);
+	}
+
+	function acrossTypeTransform(currentDraggedElement: HTMLElement) {
+		currentDraggedElement.innerHTML = '';
+		const div = document.createElement('div');
+
+		Object.assign(div.style, {
+			outline: 'rgb(255, 192, 8) dashed 2px',
+			outlineOffset: '-2px',
+			backgroundColor: 'rgba(255, 190, 10, 0.25)',
+			width: 'inherit',
+			height: 'inherit',
+			'border-radius': 'inherit'
+		});
+
+		currentDraggedElement.appendChild(div);
 	}
 </script>
 
@@ -169,7 +220,7 @@
 					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 					use:dndzone={{
 						...dndOptions,
-						type: isDraggingHorizontalStack ? 'stack' : 'section',
+						type: isDraggingHorizontalStack ? 'stack' : isDraggingScenes ? 'scenes' : 'section',
 						items: section.sections
 					}}
 					on:consider={(event) => dragSection__stack(section.id, event)}
@@ -187,8 +238,13 @@
 							<div
 								class="items"
 								data-is-dnd-shadow-item-hint={stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
-								style={sectionStyles($itemHeight, $editMode, $motion, empty)}
-								use:dndzone={{ ...dndOptions, type: 'item', items: stackSection.items }}
+								style={sectionStyles(section?.type, $editMode, $motion, empty)}
+								use:dndzone={{
+									...dndOptions,
+									type: 'item',
+									items: stackSection.items,
+									centreDraggedOnCursor: true
+								}}
 								on:consider={(event) => dragItem__stack(stackSection.id, event)}
 								on:finalize={(event) => dragItem__stack(stackSection.id, event)}
 							>
@@ -210,6 +266,37 @@
 					{/each}
 				</div>
 
+				<!-- scenes -->
+			{:else if section?.type === 'scenes'}
+				{@const empty = $editMode && !section?.items?.length}
+				<SectionHeader {view} {section} />
+				<div
+					class="scenes"
+					style={sectionStyles(section?.type, $editMode, $motion, empty)}
+					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+					use:dndzone={{
+						...dndOptions,
+						type: 'item',
+						items: section.items,
+						transformDraggedElement,
+						centreDraggedOnCursor: true
+					}}
+					on:consider={(event) => dragItem(section.id, event)}
+					on:finalize={(event) => dragItem(section.id, event)}
+				>
+					{#each section?.items as item, index (item.id)}
+						<div
+							id={item?.id}
+							data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+							animate:flip={{ duration: $motion }}
+							tabindex="-1"
+							class:divider={index !== section?.items?.length - 1}
+						>
+							<Scenes sel={item} />
+						</div>
+					{/each}
+				</div>
+
 				<!-- normal -->
 			{:else}
 				{@const empty = $editMode && !section?.items?.length}
@@ -217,8 +304,13 @@
 				<div
 					class="items"
 					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
-					style={sectionStyles($itemHeight, $editMode, $motion, empty)}
-					use:dndzone={{ ...dndOptions, type: 'item', items: section.items }}
+					style={sectionStyles(section?.type, $editMode, $motion, empty)}
+					use:dndzone={{
+						...dndOptions,
+						type: 'item',
+						items: section.items,
+						centreDraggedOnCursor: true
+					}}
 					on:consider={(event) => dragItem(section.id, event)}
 					on:finalize={(event) => dragItem(section.id, event)}
 				>
@@ -259,7 +351,7 @@
 		display: grid;
 		grid-auto-flow: column;
 		grid-auto-columns: 1fr;
-		gap: 0.4rem;
+		gap: 2rem;
 		border-radius: 0.65rem;
 		outline-offset: 3px;
 	}
@@ -295,5 +387,17 @@
 			display: flex;
 			flex-wrap: wrap;
 		}
+	}
+
+	.scenes {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+		border-radius: 0.65rem;
+		overflow: hidden;
+		min-height: 5rem;
+	}
+
+	.scenes > .divider {
+		border-right: 1px solid transparent;
 	}
 </style>
