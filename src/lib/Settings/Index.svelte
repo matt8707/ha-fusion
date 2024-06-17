@@ -7,6 +7,7 @@
 	import Language from '$lib/Settings/Language.svelte';
 	import Addons from '$lib/Settings/Addons.svelte';
 	import Motion from '$lib/Settings/Motion.svelte';
+	import Version from '$lib/Settings/Version.svelte';
 	import Token from '$lib/Settings/Token.svelte';
 	import CustomJs from '$lib/Settings/CustomJs.svelte';
 	import Logout from '$lib/Settings/Logout.svelte';
@@ -123,6 +124,8 @@
 			<Token />
 
 			<Addons {data} />
+
+			<Version />
 
 			<CustomJs />
 
