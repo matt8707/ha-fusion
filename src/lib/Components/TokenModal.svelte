@@ -26,7 +26,7 @@
 				// ok
 				closeModal();
 			} else {
-				console.log('Failed to save configuration.', response);
+				console.error('Failed to save configuration.', response);
 			}
 		} catch (error) {
 			console.error('Failed to save configuration.', error);

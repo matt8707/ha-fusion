@@ -15,7 +15,7 @@
 	let mounted: boolean;
 
 	const options = {
-		style: 'percent',
+		style: 'percent' as 'decimal' | 'currency' | 'percent' | 'unit',
 		maximumFractionDigits: 2
 	};
 

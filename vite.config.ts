@@ -8,7 +8,7 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	build: {
 		// increase chunk size because of maplibre-gl
-		chunkSizeWarningLimit: 800
+		chunkSizeWarningLimit: 1000
 	},
 	ssr: {
 		// "cannot use import statement outside a module" because of svelte-ripple

@@ -10,6 +10,7 @@
 	import { StreamLanguage } from '@codemirror/language';
 	import type { Diagnostic } from '@codemirror/lint';
 	import { createEventDispatcher } from 'svelte';
+	import { linter, lintGutter } from '@codemirror/lint';
 
 	export let type: string;
 	export let value: any;
@@ -192,10 +193,9 @@
 		//  import and push yaml extensions
 		if (type === 'yaml') {
 			const yamlModule = await import('@codemirror/legacy-modes/mode/yaml');
-			const lintModule = await import('@codemirror/lint');
 			const js_yamlModule = await import('js-yaml');
 
-			const lintYaml = lintModule.linter((view) => {
+			const lintYaml = linter((view) => {
 				const diagnostics: Diagnostic[] = [];
 				try {
 					js_yamlModule.load(view.state.doc.toString());
@@ -211,9 +211,7 @@
 				return diagnostics;
 			});
 
-			extensions.push(
-				...[StreamLanguage.define(yamlModule.yaml), lintYaml, lintModule.lintGutter()]
-			);
+			extensions.push(...[StreamLanguage.define(yamlModule.yaml), lintYaml, lintGutter()]);
 
 			// ... or jinja2 extensions
 		} else if (type === 'jinja2') {

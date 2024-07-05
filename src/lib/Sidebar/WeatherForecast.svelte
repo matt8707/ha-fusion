@@ -44,7 +44,7 @@
 		getForecast();
 
 		if (debug) {
-			console.log({
+			console.debug({
 				$forecast_type,
 				$entity_id,
 				$dragging
