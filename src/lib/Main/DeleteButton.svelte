@@ -2,6 +2,7 @@
 	import { dashboard, motion, record, lang, ripple } from '$lib/Stores';
 	import Ripple from 'svelte-ripple';
 	import { scale } from 'svelte/transition';
+	import Icon from '@iconify/svelte';
 
 	export let view: any;
 	export let section: any;
@@ -26,19 +27,22 @@
 </script>
 
 <button
+	title={$lang('remove')}
 	transition:scale={{ start: 0.9, duration: $motion }}
 	on:click={handleClick}
 	on:pointerdown|stopPropagation
 	use:Ripple={{ ...$ripple, color: 'rgba(0, 0, 0, 0.35)' }}
 >
-	{$lang('remove')}
+	<div class="icon">
+		<Icon icon="ic:round-delete" height="none" />
+	</div>
 </button>
 
 <style>
 	button {
 		background: #ba0000;
 		color: white;
-		padding: 0.4rem 0.7rem;
+		padding: 0.4rem 0.6rem;
 		font-weight: 500;
 		float: right;
 		font-size: 0.8rem;
@@ -51,5 +55,10 @@
 		font-family: inherit;
 		overflow: hidden;
 		white-space: nowrap;
+	}
+
+	.icon {
+		width: 1.1rem;
+		height: 110%;
 	}
 </style>

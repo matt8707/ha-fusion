@@ -37,10 +37,26 @@ export interface Section {
 	id?: number;
 	name?: string;
 	items?: Item[];
+	visibility?: {
+		conditions?: Condition[];
+	}[];
 
 	// HorizontalStack
 	type?: string;
 	sections?: Section[];
+}
+
+export interface Condition {
+	condition?: 'state' | 'numeric_state' | 'screen' | 'or' | 'and';
+	conditions?: Condition[];
+	id?: string;
+	entity?: string;
+	state?: string;
+	state_not?: string;
+	media_query?: string;
+	above?: number;
+	below?: number;
+	collapsed?: boolean;
 }
 
 export interface Translations {

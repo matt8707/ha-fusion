@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { motion, autocompleteOpen, ripple } from '$lib/Stores';
+	import { motion, autocompleteOpen, ripple, dragging } from '$lib/Stores';
 	import { onMount, onDestroy } from 'svelte';
 	import { modals, closeModal } from 'svelte-modals';
 	import { fly, scale } from 'svelte/transition';
@@ -149,7 +149,9 @@
 
 	function handleKeydown(event: any) {
 		if (event.key === 'Escape') {
-			if (!$autocompleteOpen) closeModal();
+			if (!$autocompleteOpen && !$dragging) {
+				closeModal();
+			}
 		}
 	}
 </script>

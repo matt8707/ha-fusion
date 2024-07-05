@@ -3,6 +3,7 @@
 	import { slide } from 'svelte/transition';
 	import DragIndicator from '$lib/Main/DragIndicator.svelte';
 	import DeleteButton from '$lib/Main/DeleteButton.svelte';
+	import VisibilitySectionButton from '$lib/Main/VisibilitySectionButton.svelte';
 
 	export let view: any;
 	export let section: any;
@@ -17,6 +18,8 @@
 		<!-- can't be asynchronously loaded, it'll flash on dnd -->
 		<span class="right">
 			<DragIndicator />
+
+			<VisibilitySectionButton {section} />
 
 			<DeleteButton {view} {section} />
 		</span>
