@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { editMode, motion, record, dragging, itemHeight } from '$lib/Stores';
-	import { tick } from 'svelte';
+	import { editMode, motion, record, dragging, itemHeight, states } from '$lib/Stores';
+	import { onMount, tick } from 'svelte';
 	import { flip } from 'svelte/animate';
 	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import Content from '$lib/Main/Content.svelte';
 	import SectionHeader from '$lib/Main/SectionHeader.svelte';
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
-	import Scenes from './Scenes.svelte';
+	import Scenes from '$lib/Main/Scenes.svelte';
+	import { handleVisibility, mediaQueries } from '$lib/Conditional';
 
 	export let view: any;
 
@@ -17,6 +18,9 @@
 	let isDraggingScenes = false;
 
 	const stackHeight = $itemHeight * 1.65;
+
+	let mounted = false;
+	onMount(() => (mounted = true));
 
 	$: dndOptions = {
 		flipDurationMs: $motion,
@@ -193,6 +197,19 @@
 
 		currentDraggedElement.appendChild(div);
 	}
+
+	/**
+	 * If $editMode is true, return the original view sections
+	 * Otherwise filter the sections based on current states and conditions.
+	 *
+	 * This statement reactively updates when any of the following change:
+	 * $editMode, mounted, $mediaQueries, view?.sections, $states
+	 */
+	$: viewSections = $editMode
+		? view?.sections
+		: typeof mounted === 'boolean' &&
+			typeof $mediaQueries === 'object' &&
+			handleVisibility($editMode, view?.sections, $states);
 </script>
 
 <main
@@ -202,7 +219,7 @@
 	on:consider={dragSection}
 	on:finalize={dragSection}
 >
-	{#each view?.sections as section (`${section?.id}${section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
+	{#each viewSections as section (`${section?.id}${section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 		<section
 			id={String(section?.id)}
 			data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
@@ -300,7 +317,9 @@
 				<!-- normal -->
 			{:else}
 				{@const empty = $editMode && !section?.items?.length}
+
 				<SectionHeader {view} {section} />
+
 				<div
 					class="items"
 					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}

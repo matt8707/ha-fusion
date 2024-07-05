@@ -20,6 +20,14 @@
 	pointer-events: none;
 }
 
+/* directly add `data-modal` to every element instead of just h2 */
+h2[data-modal] {
+	font-weight: 500;
+	margin: 1.3rem 0 0.6rem 0;
+	font-size: 1.125rem;
+	pointer-events: none;
+}
+
 #modal h2 .align-right {
 	float: right;
 }
@@ -70,6 +78,18 @@
 }
 
 #modal .input {
+	padding: 0.9em;
+	border-radius: 0.6em;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	background-color: rgba(0, 0, 0, 0.2);
+	color: inherit;
+	font-family: inherit;
+	width: 100%;
+	font-size: inherit;
+}
+
+/* directly add `data-modal` to every element instead of just input */
+input[data-modal] {
 	padding: 0.9em;
 	border-radius: 0.6em;
 	border: 1px solid rgba(255, 255, 255, 0.3);

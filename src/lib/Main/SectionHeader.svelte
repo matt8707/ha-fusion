@@ -2,6 +2,7 @@
 	import { editMode, motion } from '$lib/Stores';
 	import DragIndicator from '$lib/Main/DragIndicator.svelte';
 	import DeleteButton from '$lib/Main/DeleteButton.svelte';
+	import VisibilitySectionButton from '$lib/Main/VisibilitySectionButton.svelte';
 	import SectionTitle from '$lib/Main/SectionTitle.svelte';
 	import { slide } from 'svelte/transition';
 
@@ -24,6 +25,8 @@
 		{#if $editMode}
 			<div class="right">
 				<DragIndicator />
+
+				<VisibilitySectionButton {section} />
 
 				<!-- can't be asynchronously loaded, it'll flash on dnd -->
 				<DeleteButton {view} {section} />
@@ -54,6 +57,7 @@
 			font-size: 1.7rem;
 		}
 	}
+
 	.right {
 		display: flex;
 	}

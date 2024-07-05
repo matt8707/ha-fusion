@@ -184,6 +184,7 @@
 
 	{#if listOpen}
 		<input
+			data-modal
 			bind:value={search}
 			bind:this={input}
 			on:focus={handleFocus}
@@ -196,6 +197,7 @@
 	{:else}
 		<!-- only to display label -->
 		<input
+			data-modal
 			value={options?.[selectedIndex]?.label || ''}
 			on:focus={async () => {
 				listOpen = true;
