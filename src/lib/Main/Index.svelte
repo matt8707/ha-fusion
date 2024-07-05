@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { editMode, motion, record, dragging, itemHeight, states } from '$lib/Stores';
+	import { editMode, motion, record, dragging, itemHeight, states, dashboard } from '$lib/Stores';
 	import { onMount, tick } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
+	import { dndzone, TRIGGERS, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
 	import Content from '$lib/Main/Content.svelte';
 	import SectionHeader from '$lib/Main/SectionHeader.svelte';
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
 	import Scenes from '$lib/Main/Scenes.svelte';
 	import { handleVisibility, mediaQueries } from '$lib/Conditional';
+	import { generateId } from '$lib/Utils';
 
 	export let view: any;
 
@@ -16,6 +17,7 @@
 
 	let isDraggingHorizontalStack = false;
 	let isDraggingScenes = false;
+	let isAltKeyPressed = false;
 
 	const stackHeight = $itemHeight * 1.65;
 
@@ -68,6 +70,33 @@
 	}
 
 	/**
+	 * Handle Alt key press and release events for copy-on-drag
+	 */
+	function handleAltKey(event: KeyboardEvent) {
+		if (!event.altKey && event.key !== 'Alt') return;
+		isAltKeyPressed = event?.type === 'keydown' ? true : false;
+	}
+
+	/**
+	 * Duplicates dragged item when Alt key is pressed during drag start
+	 */
+	function handleCopyOnDrag(items: any[], event: CustomEvent<DndEvent>) {
+		const { trigger, id: itemId } = event.detail.info;
+
+		if (trigger === TRIGGERS.DRAG_STARTED && isAltKeyPressed) {
+			const idx = items.findIndex((item) => item.id === itemId);
+			const newId = generateId($dashboard);
+
+			event.detail.items = event.detail.items.filter(
+				(item) => !item[SHADOW_ITEM_MARKER_PROPERTY_NAME]
+			);
+			event.detail.items.splice(idx, 0, { ...items[idx], id: newId });
+		}
+
+		return event.detail.items;
+	}
+
+	/**
 	 * Handles the reordering of sections within a view when they are dragged
 	 *
 	 * Also checks if currently dragged section is a horizontal stack,
@@ -99,7 +128,7 @@
 			const section = view?.sections.find((sec: { id: number }) => sec.id === id);
 
 			if (section) {
-				section.items = event.detail.items as any;
+				section.items = handleCopyOnDrag(section.items, event);
 				view.sections = [...view.sections];
 			}
 		});
@@ -134,7 +163,7 @@
 				?.sections.find((sub: { id: number }) => sub.id === id);
 
 			if (section) {
-				section.items = event.detail.items;
+				section.items = handleCopyOnDrag(section.items, event);
 				view.sections = [...view.sections];
 			}
 		});
@@ -166,9 +195,37 @@
     `;
 	}
 
-	async function transformDraggedElement(element: HTMLElement | undefined) {
-		if (!element) return;
+	/**
+	 * dnd transformDraggedElement
+	 */
+	function transformDraggedElement(element: HTMLElement | undefined) {
+		if (element) transformElement(element);
+	}
 
+	/**
+	 * Helper function to transform the dragged element
+	 */
+	function transformElement(element: HTMLElement) {
+		const container = element.firstElementChild as HTMLDivElement;
+
+		if (isAltKeyPressed && container) {
+			Object.assign(container.style, {
+				outline: 'rgb(255, 192, 8) dashed 2px',
+				outlineOffset: '-2px',
+				borderRadius: '0.65rem'
+			});
+		}
+	}
+
+	/**
+	 * Transforms the dragged element for scene
+	 * items and triggers acrossTypeTransform
+	 */
+	function transformScenesElement(element: HTMLElement | undefined) {
+		if (!element) return;
+		transformElement(element);
+
+		// scene transformation
 		if (!currentDraggedElement) currentDraggedElement = element;
 
 		Object.assign(element.style, {
@@ -211,6 +268,8 @@
 			typeof $mediaQueries === 'object' &&
 			handleVisibility($editMode, view?.sections, $states);
 </script>
+
+<svelte:window on:keydown={handleAltKey} on:keyup={handleAltKey} />
 
 <main
 	style:transition="opacity {$motion}ms ease, outline-color {$motion}ms ease"
@@ -260,7 +319,8 @@
 									...dndOptions,
 									type: 'item',
 									items: stackSection.items,
-									centreDraggedOnCursor: true
+									centreDraggedOnCursor: true,
+									transformDraggedElement
 								}}
 								on:consider={(event) => dragItem__stack(stackSection.id, event)}
 								on:finalize={(event) => dragItem__stack(stackSection.id, event)}
@@ -295,7 +355,7 @@
 						...dndOptions,
 						type: 'item',
 						items: section.items,
-						transformDraggedElement,
+						transformDraggedElement: transformScenesElement,
 						centreDraggedOnCursor: true
 					}}
 					on:consider={(event) => dragItem(section.id, event)}
@@ -328,7 +388,8 @@
 						...dndOptions,
 						type: 'item',
 						items: section.items,
-						centreDraggedOnCursor: true
+						centreDraggedOnCursor: true,
+						transformDraggedElement
 					}}
 					on:consider={(event) => dragItem(section.id, event)}
 					on:finalize={(event) => dragItem(section.id, event)}
