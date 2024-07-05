@@ -6,6 +6,7 @@
 	import Icon from '@iconify/svelte';
 	import Ripple from 'svelte-ripple';
 	import { onMount } from 'svelte';
+	import type { ComponentType } from 'svelte';
 
 	export let view: ViewItem | undefined;
 
@@ -13,20 +14,20 @@
 	let showTriangle = false;
 	let container: HTMLDivElement;
 
-	let SidebarButton: typeof import('$lib/Drawer/SidebarButton.svelte');
-	let ObjectButton: typeof import('$lib/Drawer/ObjectButton.svelte');
-	let SectionButton: typeof import('$lib/Drawer/SectionButton.svelte');
-	let HorizontalStackButton: typeof import('$lib/Drawer/HorizontalStackButton.svelte');
-	let ScenesButton: typeof import('$lib/Drawer/ScenesButton.svelte');
-	let ViewButton: typeof import('$lib/Drawer/ViewButton.svelte');
+	let SidebarButton: ComponentType;
+	let ObjectButton: ComponentType;
+	let SectionButton: ComponentType;
+	let HorizontalStackButton: ComponentType;
+	let ScenesButton: ComponentType;
+	let ViewButton: ComponentType;
 
 	onMount(async () => {
-		SidebarButton = await import('$lib/Drawer/SidebarButton.svelte');
-		ObjectButton = await import('$lib/Drawer/ObjectButton.svelte');
-		SectionButton = await import('$lib/Drawer/SectionButton.svelte');
-		HorizontalStackButton = await import('$lib/Drawer/HorizontalStackButton.svelte');
-		ScenesButton = await import('$lib/Drawer/ScenesButton.svelte');
-		ViewButton = await import('$lib/Drawer/ViewButton.svelte');
+		SidebarButton = (await import('$lib/Drawer/SidebarButton.svelte')).default;
+		ObjectButton = (await import('$lib/Drawer/ObjectButton.svelte')).default;
+		SectionButton = (await import('$lib/Drawer/SectionButton.svelte')).default;
+		HorizontalStackButton = (await import('$lib/Drawer/HorizontalStackButton.svelte')).default;
+		ScenesButton = (await import('$lib/Drawer/ScenesButton.svelte')).default;
+		ViewButton = (await import('$lib/Drawer/ViewButton.svelte')).default;
 	});
 
 	function handleClick() {
@@ -77,18 +78,18 @@
 			out:fade={{ duration: $motion / 3, easing: cubicOut }}
 		>
 			{#if !$dashboard.hide_sidebar}
-				<svelte:component this={SidebarButton.default} on:clicked={handleClick} />
+				<svelte:component this={SidebarButton} on:clicked={handleClick} />
 			{/if}
 
-			<svelte:component this={ObjectButton.default} {view} on:clicked={handleClick} />
+			<svelte:component this={ObjectButton} {view} on:clicked={handleClick} />
 
-			<svelte:component this={SectionButton.default} {view} on:clicked={handleClick} />
+			<svelte:component this={SectionButton} {view} on:clicked={handleClick} />
 
-			<svelte:component this={HorizontalStackButton.default} {view} on:clicked={handleClick} />
+			<svelte:component this={HorizontalStackButton} {view} on:clicked={handleClick} />
 
-			<svelte:component this={ScenesButton.default} {view} on:clicked={handleClick} />
+			<svelte:component this={ScenesButton} {view} on:clicked={handleClick} />
 
-			<svelte:component this={ViewButton.default} on:clicked={handleClick} />
+			<svelte:component this={ViewButton} on:clicked={handleClick} />
 		</div>
 	{/if}
 
