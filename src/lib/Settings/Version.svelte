@@ -29,6 +29,7 @@
 			// fetch new data if missing or older than a day
 			if (diff > 86400000) {
 				if (debug) console.debug('stale version');
+				installed = data?.installed;
 				await fetchLatest();
 			} else {
 				installed = data?.installed;

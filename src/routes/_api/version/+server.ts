@@ -6,8 +6,8 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async () => {
 	try {
 		const [packageFile, versionFile] = await Promise.all([
-			readFile('./package.json', 'utf8'),
-			readFile('./data/version.json', 'utf8')
+			readFile('./package.json', 'utf8').catch(() => '{}'),
+			readFile('./data/version.json', 'utf8').catch(() => '{}')
 		]);
 
 		const packageData = JSON.parse(packageFile);
