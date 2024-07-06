@@ -29,6 +29,8 @@
 	 */
 	export let data;
 
+	let altKeyPressed = false;
+
 	$configuration = data?.configuration;
 	$dashboard = data?.dashboard;
 	$translation = data?.translations;
@@ -145,15 +147,20 @@
 
 	/**
 	 * Handles the keydown events for:
-	 * - 'f': Shows drawer and/or focuses on the search field.
 	 * - 'Escape': Hides the search focus/hides the drawer.
+	 * - 'Alt': Copy item on drag-and-drop
+	 * - 'f': Shows drawer and/or focuses on the search field.
 	 */
-	function handleKeydown(event: any) {
+	function handleKeydown(event: KeyboardEvent) {
 		if ($modals.length) return;
 
 		// don't focus on underlying element
 		if (event.key === 'Escape' && !$editMode && document.activeElement) {
 			(document.activeElement as HTMLElement).blur();
+		}
+
+		if (event.key === 'Alt') {
+			altKeyPressed = true;
 		}
 
 		if (event.key === 'f' && !$disableMenuButton) {
@@ -168,9 +175,18 @@
 			$drawerSearch = undefined;
 		}
 	}
+
+	/**
+	 * Handle Alt key press and release events for copy-on-drag
+	 */
+	function handleKeyup(event: KeyboardEvent) {
+		if (event.key === 'Alt') {
+			altKeyPressed = false;
+		}
+	}
 </script>
 
-<svelte:window on:keydown={handleKeydown} />
+<svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 
 <!-- theme -->
 <Theme initial={data?.theme} />
@@ -191,7 +207,7 @@
 	<!-- main -->
 	{#if view?.sections}
 		{#await import('$lib/Main/Index.svelte') then Main}
-			<svelte:component this={Main.default} {view} />
+			<svelte:component this={Main.default} {view} {altKeyPressed} />
 		{/await}
 	{:else if $connection}
 		{#await import('$lib/Main/Intro.svelte') then Intro}
@@ -201,7 +217,7 @@
 
 	<!-- aside -->
 	{#await import('$lib/Sidebar/Index.svelte') then Sidebar}
-		<svelte:component this={Sidebar.default} />
+		<svelte:component this={Sidebar.default} {altKeyPressed} />
 	{/await}
 
 	<!-- menu -->

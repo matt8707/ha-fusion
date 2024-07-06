@@ -11,13 +11,14 @@
 	import { generateId } from '$lib/Utils';
 
 	export let view: any;
+	export let altKeyPressed: boolean;
 
 	let currentDraggedElement: HTMLElement | undefined;
 	let dragEnteredAnother = false;
 
 	let isDraggingHorizontalStack = false;
 	let isDraggingScenes = false;
-	let isAltKeyPressed = false;
+	let skipTransformElement = false;
 
 	const stackHeight = $itemHeight * 1.65;
 
@@ -62,6 +63,7 @@
 			$dragging = false;
 			dragEnteredAnother = false;
 			currentDraggedElement = undefined;
+			skipTransformElement = false;
 
 			// reset body height
 			await tick();
@@ -70,20 +72,12 @@
 	}
 
 	/**
-	 * Handle Alt key press and release events for copy-on-drag
-	 */
-	function handleAltKey(event: KeyboardEvent) {
-		if (!event.altKey && event.key !== 'Alt') return;
-		isAltKeyPressed = event?.type === 'keydown' ? true : false;
-	}
-
-	/**
 	 * Duplicates dragged item when Alt key is pressed during drag start
 	 */
 	function handleCopyOnDrag(items: any[], event: CustomEvent<DndEvent>) {
 		const { trigger, id: itemId } = event.detail.info;
 
-		if (trigger === TRIGGERS.DRAG_STARTED && isAltKeyPressed) {
+		if (trigger === TRIGGERS.DRAG_STARTED && altKeyPressed) {
 			const idx = items.findIndex((item) => item.id === itemId);
 			const newId = generateId($dashboard);
 
@@ -208,7 +202,9 @@
 	function transformElement(element: HTMLElement) {
 		const container = element.firstElementChild as HTMLDivElement;
 
-		if (isAltKeyPressed && container) {
+		if (!altKeyPressed) skipTransformElement = true;
+
+		if (!skipTransformElement && container) {
 			Object.assign(container.style, {
 				outline: 'rgb(255, 192, 8) dashed 2px',
 				outlineOffset: '-2px',
@@ -268,8 +264,6 @@
 			typeof $mediaQueries === 'object' &&
 			handleVisibility($editMode, view?.sections, $states);
 </script>
-
-<svelte:window on:keydown={handleAltKey} on:keyup={handleAltKey} />
 
 <main
 	style:transition="opacity {$motion}ms ease, outline-color {$motion}ms ease"

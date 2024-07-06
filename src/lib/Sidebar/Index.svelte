@@ -3,55 +3,59 @@
 	import { dashboard, motion, showDrawer, editMode, record, dragging } from '$lib/Stores';
 	import { onMount, tick } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { dndzone } from 'svelte-dnd-action';
+	import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME, TRIGGERS } from 'svelte-dnd-action';
 	import { openModal } from 'svelte-modals';
-	import { getSelected } from '$lib/Utils';
+	import { generateId, getSelected } from '$lib/Utils';
 	import type { SidebarItem } from '$lib/Types';
 	import '$lib/Sidebar/Sidebar.css';
+	import type { ComponentType } from 'svelte';
 
-	let imported: (string | undefined)[] = [];
-	let loaded = false;
+	export let altKeyPressed: boolean;
 
-	let Bar: typeof import('$lib/Sidebar/Bar.svelte');
-	let Camera: typeof import('$lib/Sidebar/Camera.svelte');
-	let Configure: typeof import('$lib/Sidebar/Configure.svelte');
-	let Date: typeof import('$lib/Sidebar/Date.svelte');
-	let Divider: typeof import('$lib/Sidebar/Divider.svelte');
-	let Graph: typeof import('$lib/Sidebar/Graph.svelte');
-	let History: typeof import('$lib/Sidebar/History.svelte');
-	let Iframe: typeof import('$lib/Sidebar/Iframe.svelte');
-	let Image: typeof import('$lib/Sidebar/Image.svelte');
-	let Navigate: typeof import('$lib/Sidebar/Navigate.svelte');
-	let Notifications: typeof import('$lib/Sidebar/Notifications.svelte');
-	let Radial: typeof import('$lib/Sidebar/Radial.svelte');
-	let Sensor: typeof import('$lib/Sidebar/Sensor.svelte');
-	let Template: typeof import('$lib/Sidebar/Template.svelte');
-	let Time: typeof import('$lib/Sidebar/Time.svelte');
-	let Timer: typeof import('$lib/Sidebar/Timer.svelte');
-	let Weather: typeof import('$lib/Sidebar/Weather.svelte');
-	let WeatherForecast: typeof import('$lib/Sidebar/WeatherForecast.svelte');
+	let skipTransformElement = false;
+	let importedComponents: (string | undefined)[] = [];
+	let mountedComponents = false;
 
-	const importsMap = {
-		bar: () => import('$lib/Sidebar/Bar.svelte').then((module) => (Bar = module)),
-		camera: () => import('$lib/Sidebar/Camera.svelte').then((module) => (Camera = module)),
-		configure: () => import('$lib/Sidebar/Configure.svelte').then((module) => (Configure = module)),
-		date: () => import('$lib/Sidebar/Date.svelte').then((module) => (Date = module)),
-		divider: () => import('$lib/Sidebar/Divider.svelte').then((module) => (Divider = module)),
-		graph: () => import('$lib/Sidebar/Graph.svelte').then((module) => (Graph = module)),
-		history: () => import('$lib/Sidebar/History.svelte').then((module) => (History = module)),
-		iframe: () => import('$lib/Sidebar/Iframe.svelte').then((module) => (Iframe = module)),
-		image: () => import('$lib/Sidebar/Image.svelte').then((module) => (Image = module)),
-		navigate: () => import('$lib/Sidebar/Navigate.svelte').then((module) => (Navigate = module)),
+	let Bar: ComponentType;
+	let Camera: ComponentType;
+	let Configure: ComponentType;
+	let Date: ComponentType;
+	let Divider: ComponentType;
+	let Graph: ComponentType;
+	let History: ComponentType;
+	let Iframe: ComponentType;
+	let Image: ComponentType;
+	let Navigate: ComponentType;
+	let Notifications: ComponentType;
+	let Radial: ComponentType;
+	let Sensor: ComponentType;
+	let Template: ComponentType;
+	let Time: ComponentType;
+	let Timer: ComponentType;
+	let Weather: ComponentType;
+	let WeatherForecast: ComponentType;
+
+	const imports = {
+		bar: () => import('$lib/Sidebar/Bar.svelte').then((c) => (Bar = c.default)),
+		camera: () => import('$lib/Sidebar/Camera.svelte').then((c) => (Camera = c.default)),
+		configure: () => import('$lib/Sidebar/Configure.svelte').then((c) => (Configure = c.default)),
+		date: () => import('$lib/Sidebar/Date.svelte').then((c) => (Date = c.default)),
+		divider: () => import('$lib/Sidebar/Divider.svelte').then((c) => (Divider = c.default)),
+		graph: () => import('$lib/Sidebar/Graph.svelte').then((c) => (Graph = c.default)),
+		history: () => import('$lib/Sidebar/History.svelte').then((c) => (History = c.default)),
+		iframe: () => import('$lib/Sidebar/Iframe.svelte').then((c) => (Iframe = c.default)),
+		image: () => import('$lib/Sidebar/Image.svelte').then((c) => (Image = c.default)),
+		navigate: () => import('$lib/Sidebar/Navigate.svelte').then((c) => (Navigate = c.default)),
 		notifications: () =>
-			import('$lib/Sidebar/Notifications.svelte').then((module) => (Notifications = module)),
-		radial: () => import('$lib/Sidebar/Radial.svelte').then((module) => (Radial = module)),
-		sensor: () => import('$lib/Sidebar/Sensor.svelte').then((module) => (Sensor = module)),
-		template: () => import('$lib/Sidebar/Template.svelte').then((module) => (Template = module)),
-		time: () => import('$lib/Sidebar/Time.svelte').then((module) => (Time = module)),
-		timer: () => import('$lib/Sidebar/Timer.svelte').then((module) => (Timer = module)),
-		weather: () => import('$lib/Sidebar/Weather.svelte').then((module) => (Weather = module)),
+			import('$lib/Sidebar/Notifications.svelte').then((c) => (Notifications = c.default)),
+		radial: () => import('$lib/Sidebar/Radial.svelte').then((c) => (Radial = c.default)),
+		sensor: () => import('$lib/Sidebar/Sensor.svelte').then((c) => (Sensor = c.default)),
+		template: () => import('$lib/Sidebar/Template.svelte').then((c) => (Template = c.default)),
+		time: () => import('$lib/Sidebar/Time.svelte').then((c) => (Time = c.default)),
+		timer: () => import('$lib/Sidebar/Timer.svelte').then((c) => (Timer = c.default)),
+		weather: () => import('$lib/Sidebar/Weather.svelte').then((c) => (Weather = c.default)),
 		weather_forecast: () =>
-			import('$lib/Sidebar/WeatherForecast.svelte').then((module) => (WeatherForecast = module))
+			import('$lib/Sidebar/WeatherForecast.svelte').then((c) => (WeatherForecast = c.default))
 	};
 
 	$: if ($dashboard?.sidebar) importComponents();
@@ -65,14 +69,15 @@
 		const promises = [];
 
 		// counter for supported and not yet imported imports
-		let validImportsCount = 0;
+		let validImports = 0;
 
 		for (let type of types) {
-			const module = importsMap[type as keyof typeof importsMap];
-			if (!imported.includes(type) && module) {
+			const module = imports[type as keyof typeof imports];
+
+			if (!importedComponents.includes(type) && module) {
 				promises.push(module());
-				imported.push(type);
-				validImportsCount++;
+				importedComponents.push(type);
+				validImports++;
 			}
 		}
 
@@ -82,8 +87,8 @@
 		 * Wait for all imports to complete then set `loaded` flag
 		 * to prevent flip animation before components has loaded.
 		 */
-		if (imported.length >= validImportsCount) {
-			loaded = true;
+		if (importedComponents.length >= validImports) {
+			mountedComponents = true;
 		}
 	}
 
@@ -131,6 +136,7 @@
 			} else {
 				openModal(() => import('$lib/Modal/SidebarItemConfig.svelte'), { sel });
 
+				// force $editMode when clicking SidebarItemConfig
 				await tick();
 				setTimeout(() => {
 					$editMode = true;
@@ -138,6 +144,7 @@
 				}, $motion);
 			}
 		} else {
+			// !$editMode modals
 			if (sel?.type === 'camera') {
 				openModal(() => import('$lib/Modal/CameraModal.svelte'), { sel });
 			} else if (sel?.type === 'timer') {
@@ -148,10 +155,48 @@
 
 	function handleSort(event: CustomEvent<DndEvent>) {
 		$dragging = true;
-		$dashboard.sidebar = event.detail.items;
+
+		$dashboard.sidebar = handleCopyOnDrag($dashboard.sidebar, event);
+
 		if (event?.type === 'finalize') {
 			$record();
 			$dragging = false;
+			skipTransformElement = false;
+		}
+	}
+
+	function handleCopyOnDrag(items: any[], event: CustomEvent<DndEvent>) {
+		const { trigger, id: itemId } = event.detail.info;
+
+		if (trigger === TRIGGERS.DRAG_STARTED && altKeyPressed) {
+			const idx = items.findIndex((item) => item.id === itemId);
+			const newId = generateId($dashboard);
+
+			event.detail.items = event.detail.items.filter(
+				(item) => !item[SHADOW_ITEM_MARKER_PROPERTY_NAME]
+			);
+			event.detail.items.splice(idx, 0, { ...items[idx], id: newId });
+		}
+
+		return event.detail.items;
+	}
+
+	/**
+	 * dnd transformDraggedElement
+	 */
+	function transformDraggedElement(element: HTMLElement | undefined) {
+		if (element) {
+			const container = element.firstElementChild as HTMLDivElement;
+
+			if (!altKeyPressed) skipTransformElement = true;
+
+			if (!skipTransformElement && container) {
+				Object.assign(container.style, {
+					outline: 'rgb(255, 192, 8) dashed 2px',
+					outlineOffset: '-2px',
+					borderRadius: '0.65rem'
+				});
+			}
 		}
 	}
 
@@ -190,12 +235,13 @@
 		<section
 			use:dndzone={{
 				type: 'sidebar',
-				items: $dashboard.sidebar,
+				items: $dashboard?.sidebar,
 				flipDurationMs: $motion,
 				dragDisabled: !$editMode,
 				dropTargetStyle: {},
 				zoneTabIndex: -1,
-				morphDisabled: true
+				morphDisabled: true,
+				transformDraggedElement
 			}}
 			on:consider={handleSort}
 			on:finalize={handleSort}
@@ -205,7 +251,7 @@
 
 				<div
 					id={String(item.id)}
-					animate:flip={{ duration: loaded ? $motion : 0 }}
+					animate:flip={{ duration: mountedComponents ? $motion : 0 }}
 					class="sidebar_edit_mode"
 					style:display={item?.type === 'divider' ||
 					item?.type === 'date' ||
@@ -220,7 +266,7 @@
 					{#if Bar && item?.type === 'bar' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
-								this={Bar.default}
+								this={Bar}
 								entity_id={item?.entity_id}
 								name={item?.name}
 								math={item?.math}
@@ -231,20 +277,20 @@
 						<!-- CAMERA -->
 					{:else if Camera && item?.type === 'camera' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Camera.default} sel={item} />
+							<svelte:component this={Camera} sel={item} />
 						</button>
 
 						<!-- CONFIGURE -->
 					{:else if Configure && item?.type === 'configure'}
 						<div on:click={() => handleClick(item?.id)} on:keydown role="button" tabindex="0">
-							<svelte:component this={Configure.default} sel={item} />
+							<svelte:component this={Configure} sel={item} />
 						</div>
 
 						<!-- DATE -->
 					{:else if Date && item?.type === 'date' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
-								this={Date.default}
+								this={Date}
 								short_day={item?.short_day}
 								short_month={item?.short_month}
 								hide={item?.hide}
@@ -255,14 +301,14 @@
 						<!-- DIVIDER -->
 					{:else if Divider && item?.type === 'divider' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)} aria-label={item?.type} tabindex="-1">
-							<svelte:component this={Divider.default} mode={item?.mode} size={item?.size} />
+							<svelte:component this={Divider} mode={item?.mode} size={item?.size} />
 						</button>
 
 						<!-- GRAPH -->
 					{:else if Graph && item?.type === 'graph' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
-								this={Graph.default}
+								this={Graph}
 								entity_id={item?.entity_id}
 								name={item?.name}
 								period={item?.period}
@@ -274,7 +320,7 @@
 					{:else if History && item?.type === 'history' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
-								this={History.default}
+								this={History}
 								entity_id={item?.entity_id || ''}
 								period={item?.period}
 							/>
@@ -283,19 +329,19 @@
 						<!-- IFRAME -->
 					{:else if Iframe && item?.type === 'iframe' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Iframe.default} url={item?.url} size={item?.size} />
+							<svelte:component this={Iframe} url={item?.url} size={item?.size} />
 						</button>
 
 						<!-- NOTIFICATIONS -->
 					{:else if Notifications && item?.type === 'notifications' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Notifications.default} sel={item} />
+							<svelte:component this={Notifications} sel={item} />
 						</button>
 
 						<!-- IMAGE -->
 					{:else if Image && item?.type === 'image' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Image.default} entity_id={item?.entity_id} url={item?.url} />
+							<svelte:component this={Image} entity_id={item?.entity_id} url={item?.url} />
 						</button>
 
 						<!-- NAVIGATE -->
@@ -309,7 +355,7 @@
 								role="button"
 								tabindex="0"
 							>
-								<svelte:component this={Navigate.default} />
+								<svelte:component this={Navigate} />
 							</div>
 						{/key}
 
@@ -317,7 +363,7 @@
 					{:else if Radial && item?.type === 'radial' && !hide_mobile}
 						<div on:click={() => handleClick(item?.id)} on:keydown role="button" tabindex="0">
 							<svelte:component
-								this={Radial.default}
+								this={Radial}
 								entity_id={item?.entity_id}
 								name={item?.name}
 								strokeWidth={item?.stroke}
@@ -328,7 +374,7 @@
 					{:else if Sensor && item?.type === 'sensor' && !hide_mobile}
 						<div on:click={() => handleClick(item?.id)} on:keydown role="button" tabindex="0">
 							<svelte:component
-								this={Sensor.default}
+								this={Sensor}
 								entity_id={item?.entity_id}
 								prefix={item?.prefix}
 								suffix={item?.suffix}
@@ -339,14 +385,14 @@
 						<!-- TEMPLATE -->
 					{:else if Template && item?.type === 'template' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Template.default} sel={item} />
+							<svelte:component this={Template} sel={item} />
 						</button>
 
 						<!-- TIME -->
 					{:else if Time && item?.type === 'time' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
 							<svelte:component
-								this={Time.default}
+								this={Time}
 								seconds={item?.seconds}
 								hour12={item?.hour12 || false}
 							/>
@@ -355,19 +401,19 @@
 						<!-- TIMER -->
 					{:else if Timer && item?.type === 'timer' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Timer.default} sel={item} />
+							<svelte:component this={Timer} sel={item} />
 						</button>
 
 						<!-- WEATHER -->
 					{:else if Weather && item?.type === 'weather' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={Weather.default} sel={item} />
+							<svelte:component this={Weather} sel={item} />
 						</button>
 
 						<!-- WEATHER FORECAST -->
 					{:else if WeatherForecast && item?.type === 'weather_forecast' && !hide_mobile}
 						<button on:click={() => handleClick(item?.id)}>
-							<svelte:component this={WeatherForecast.default} sel={item} />
+							<svelte:component this={WeatherForecast} sel={item} />
 						</button>
 					{/if}
 				</div>
