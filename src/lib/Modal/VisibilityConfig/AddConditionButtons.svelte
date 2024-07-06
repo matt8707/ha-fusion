@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { lang, ripple } from '$lib/Stores';
+	import { dashboard, lang, ripple } from '$lib/Stores';
 	import Ripple from 'svelte-ripple';
 	import type { Condition } from '$lib/Types';
+	import { generateId } from '$lib/Utils';
 
 	export let items: Condition[];
 
@@ -21,7 +22,7 @@
 		items = [
 			{
 				condition: option,
-				id: crypto.randomUUID(),
+				id: generateId($dashboard),
 				...(option === 'and' || option === 'or' ? { conditions: [] } : {})
 			},
 			...items

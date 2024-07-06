@@ -11,7 +11,7 @@
 	/**
 	 * Updates `entity` value
 	 */
-	function handleEntity(id: string | undefined, entity_id: string) {
+	function handleEntity(id: number | undefined, entity_id: string) {
 		items = items.map((condition: Condition) => {
 			if (id === condition.id) {
 				return { ...condition, entity: entity_id };
@@ -23,7 +23,7 @@
 	/**
 	 * Updates `above` or `below` value
 	 */
-	function handleRange(id: string | undefined, target: EventTarget | null, key: 'above' | 'below') {
+	function handleRange(id: number | undefined, target: EventTarget | null, key: 'above' | 'below') {
 		const input = target as HTMLInputElement;
 		const value = input.value;
 

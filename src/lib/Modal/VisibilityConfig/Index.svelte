@@ -15,6 +15,7 @@
 	import ItemHeader from '$lib/Modal/VisibilityConfig/ItemHeader.svelte';
 	import { closeModal } from 'svelte-modals';
 	import Ripple from 'svelte-ripple';
+	import { generateId } from '$lib/Utils';
 
 	export let isOpen: boolean;
 	export let sel: any;
@@ -29,12 +30,12 @@
 	 */
 	let items =
 		sel?.visibility?.map((item: Condition) => ({
-			id: crypto.randomUUID(),
+			id: generateId($dashboard),
 			...item,
 			...(item.condition === 'and' || item.condition === 'or'
 				? {
 						conditions: item.conditions?.map((condition: Condition) => ({
-							id: crypto.randomUUID(),
+							id: generateId($dashboard),
 							...condition
 						}))
 					}

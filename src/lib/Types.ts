@@ -49,7 +49,7 @@ export interface Section {
 export interface Condition {
 	condition?: 'state' | 'numeric_state' | 'screen' | 'or' | 'and';
 	conditions?: Condition[];
-	id?: string;
+	id?: number;
 	entity?: string;
 	state?: string;
 	state_not?: string;
