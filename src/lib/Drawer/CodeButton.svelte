@@ -30,5 +30,13 @@
 		<Icon icon="ph:code-bold" height="none" />
 	</figure>
 
-	<span>{$lang('code')}</span>
+	<span>
+		{$lang('code')}
+	</span>
 </button>
+
+<style>
+	span {
+		text-transform: capitalize;
+	}
+</style>
