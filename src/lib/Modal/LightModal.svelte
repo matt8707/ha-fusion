@@ -238,7 +238,7 @@
 			</div>
 		{/if}
 
-		{#if supports?.BRIGHTNESS && selTab !== 'white'}
+		{#if supports?.COLOR && selTab !== 'white'}
 			<ColorPicker
 				{entity}
 				{colorMode}
