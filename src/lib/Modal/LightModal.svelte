@@ -200,7 +200,7 @@
 		{/if}
 
 		<!-- COLOR -->
-		{#if supports?.BRIGHTNESS}
+		{#if supports?.COLOR}
 			<h2>{$lang('change_color')}</h2>
 		{/if}
 
