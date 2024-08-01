@@ -33,8 +33,8 @@ importers:
         specifier: ^6.28.4
         version: 6.28.4
       '@fontsource-variable/inter':
-        specifier: ^5.0.19
-        version: 5.0.19
+        specifier: ^5.0.20
+        version: 5.0.20
       '@jaames/iro':
         specifier: ^5.5.2
         version: 5.5.2
@@ -483,8 +483,8 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
-  '@fontsource-variable/inter@5.0.19':
-    resolution: {integrity: sha512-V5KPpF5o0sI1uNWAdFArC87NDOb/ZJDPXLomEiKmDCYMlDUCTn2flkuAZkyME2rtGOKO7vzCuDJAND0m/5PhDA==}
+  '@fontsource-variable/inter@5.0.20':
+    resolution: {integrity: sha512-dhzG4Zls/tIrf8h0FhTNi8jT/uFwNhdTY2vKe6DYqoXDYOfEcTVZDyh1hKml1rlLT44Y7OoKoGz8w7czDW7twQ==}
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -2752,7 +2752,7 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@fontsource-variable/inter@5.0.19': {}
+  '@fontsource-variable/inter@5.0.20': {}
 
   '@humanwhocodes/module-importer@1.0.1': {}
 

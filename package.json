@@ -51,7 +51,7 @@
 		"@codemirror/state": "^6.4.1",
 		"@codemirror/theme-one-dark": "^6.1.2",
 		"@codemirror/view": "^6.28.4",
-		"@fontsource-variable/inter": "^5.0.19",
+		"@fontsource-variable/inter": "^5.0.20",
 		"@jaames/iro": "^5.5.2",
 		"codemirror": "^6.0.1",
 		"d3-array": "^3.2.4",
