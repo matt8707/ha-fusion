@@ -37,7 +37,7 @@
 		"svelte-confetti": "^2.0.1",
 		"svelte-fast-dimension": "^1.1.0",
 		"tslib": "^2.6.3",
-		"typescript": "^5.5.3",
+		"typescript": "^5.5.4",
 		"typescript-eslint": "8.0.0-alpha.39",
 		"vite": "^5.3.3"
 	},
