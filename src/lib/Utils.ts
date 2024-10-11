@@ -1,5 +1,5 @@
 import type { HassEntity } from 'home-assistant-js-websocket';
-import type { Dashboard } from '$lib/Types';
+import type { Dashboard, Section } from '$lib/Types';
 
 /**
  * Updates a selected object's property based on the event or direct value.
@@ -23,12 +23,36 @@ export function updateObj(sel: any, key: string, event?: any) {
  * It first searches within the sidebar, then the views sections
  */
 export function getSelected(id: number | undefined, data: Dashboard) {
-	return (
-		data.sidebar.find((item) => item.id === id) ||
-		data.views?.find((view) =>
-			view.sections?.flatMap((section) => section.items).find((item) => item?.id === id)
-		)
-	);
+	if (data.sidebar) {
+		const sidebarItem = data.sidebar.find((item) => item.id === id);
+		if (sidebarItem) return sidebarItem;
+	}
+
+	if (data.views) {
+		for (const view of data.views) {
+			if (view.sections) {
+				const result = findInSections(view.sections, id);
+				if (result) return result;
+			}
+		}
+	}
+
+	return undefined;
+}
+
+function findInSections(sections: Section[], id: number | undefined): any {
+	for (const section of sections) {
+		if (section.items) {
+			for (const item of section.items) {
+				if (item.id === id) return item;
+			}
+		}
+		if (section.type === 'horizontal-stack' && section.sections) {
+			const result = findInSections(section.sections, id);
+			if (result) return result;
+		}
+	}
+	return undefined;
 }
 
 /**
