@@ -176,7 +176,6 @@
 	// cleanup
 	onDestroy(() => {
 		clearTimeout(timeout);
-		ec?.destroy();
 	});
 </script>
 
