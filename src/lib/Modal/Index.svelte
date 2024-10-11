@@ -197,6 +197,7 @@
 					aria-label="close"
 					style:outline="none"
 					use:Ripple={$ripple}
+					tabindex="-1"
 				>
 					<Icon icon="mingcute:close-fill" height="none" />
 				</button>
