@@ -26,8 +26,7 @@
 	$: dndOptions = {
 		flipDurationMs: $motion,
 		dropTargetStyle: {},
-		zoneTabIndex: -1,
-		centreDraggedOnCursor: false
+		zoneTabIndex: -1
 	};
 
 	/**

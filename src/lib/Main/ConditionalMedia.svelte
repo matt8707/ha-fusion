@@ -343,14 +343,14 @@
 					{#if currentAttr?.icon}
 						<Icon icon={currentAttr?.icon} height="auto" width="100%" />
 					{:else if current_media_player}
-						<ComputeIcon entity_id={current_media_player?.entity_id} skipEntitiyPicture={true} />
+						<ComputeIcon entity_id={current_media_player?.entity_id} skipEntityPicture={true} />
 					{/if}
 
 					<!-- nothing_playing -->
 				{:else if sel?.icon || entity?.attributes?.icon}
 					<Icon icon={sel?.icon || entity?.attributes?.icon} height="auto" width="100%" />
 				{:else if sel?.entity_id}
-					<ComputeIcon entity_id={sel?.entity_id} skipEntitiyPicture={true} />
+					<ComputeIcon entity_id={sel?.entity_id} skipEntityPicture={true} />
 				{:else}
 					<Icon icon="ooui:help-ltr" height="auto" width="100%" />
 				{/if}

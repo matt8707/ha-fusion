@@ -29,8 +29,7 @@
 		flipDurationMs: $motion,
 		dragDisabled: !$editMode,
 		dropTargetStyle: {},
-		zoneTabIndex: -1,
-		centreDraggedOnCursor: false
+		zoneTabIndex: -1
 	};
 
 	/**
@@ -182,9 +181,10 @@
 	}
 
 	function itemStyles(type: string) {
+		const large = ['conditional_media', 'picture_elements', 'camera'];
 		return `
-			grid-column: ${type === 'conditional_media' || type === 'camera' ? 'span 2' : 'span 1'};
-			grid-row: ${type === 'conditional_media' || type === 'camera' ? 'span 4' : 'span 1'};
+			grid-column: ${large.includes(type) ? 'span 2' : 'span 1'};
+			grid-row: ${large.includes(type) ? 'span 4' : 'span 1'};
 			display: ${type ? '' : 'none'};
     `;
 	}
@@ -200,16 +200,27 @@
 	 * Helper function to transform the dragged element
 	 */
 	function transformElement(element: HTMLElement) {
-		const container = element.firstElementChild as HTMLDivElement;
+		const container = element.firstElementChild as HTMLElement;
+		if (!container) return;
+
+		const pictureElement = container?.firstElementChild?.className === 'konvajs-content';
 
 		if (!altKeyPressed) skipTransformElement = true;
 
-		if (!skipTransformElement && container) {
+		// alt-duplicate add yellow outline
+		if (!skipTransformElement) {
 			Object.assign(container.style, {
-				outline: 'rgb(255, 192, 8) dashed 2px',
+				outline: '2px dashed rgb(255, 192, 8)',
 				outlineOffset: '-2px',
 				borderRadius: '0.65rem'
 			});
+
+			// if picture element set z-index on konva
+			// container to be able to see the outline...
+			if (pictureElement) {
+				const konva = container.firstElementChild as HTMLElement;
+				if (konva) konva.style.zIndex = '-1';
+			}
 		}
 	}
 
@@ -313,7 +324,6 @@
 									...dndOptions,
 									type: 'item',
 									items: stackSection.items,
-									centreDraggedOnCursor: true,
 									transformDraggedElement
 								}}
 								on:consider={(event) => dragItem__stack(stackSection.id, event)}
@@ -349,8 +359,7 @@
 						...dndOptions,
 						type: 'item',
 						items: section.items,
-						transformDraggedElement: transformScenesElement,
-						centreDraggedOnCursor: true
+						transformDraggedElement: transformScenesElement
 					}}
 					on:consider={(event) => dragItem(section.id, event)}
 					on:finalize={(event) => dragItem(section.id, event)}
@@ -382,7 +391,6 @@
 						...dndOptions,
 						type: 'item',
 						items: section.items,
-						centreDraggedOnCursor: true,
 						transformDraggedElement
 					}}
 					on:consider={(event) => dragItem(section.id, event)}
