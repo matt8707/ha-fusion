@@ -1866,7 +1866,7 @@ export class KonvaEditor extends KonvaBase {
 	 * Add image
 	 */
 	public async addImage() {
-		const src = '/favicon.png';
+		const src = 'https://demo.home-assistant.io/stub_config/t-shirt-promo.png';
 
 		try {
 			const image = await this.loadImage(src);
@@ -1884,6 +1884,22 @@ export class KonvaEditor extends KonvaBase {
 			this.handleAddNode(node);
 		} catch (err) {
 			console.error('error adding image:', err);
+
+			// add empty fallback
+			const node = new Konva.Image({
+				type: 'image',
+				name: 'Image',
+				image: undefined,
+				src: src,
+				width: 100,
+				height: 100,
+				draggable: true
+			});
+
+			this.handleAddNode(node);
+
+			// gray box onerror
+			await this.updateImage(node, src, false);
 		}
 	}
 
