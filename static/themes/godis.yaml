@@ -9,6 +9,7 @@ theme:
   colors-sidebar-background: rgba(0, 0, 0, 0.2)
   sizes-sidebar-time: 3.4rem
   background-image: url('/themes/godis_background.webp')
+  background-image-fallback: url('/themes/godis_background.jpg')
   font-family: "'Inter Variable', system-ui"
   button-background-color-on: rgb(255, 255, 255)
   button-background-color-off: rgba(0, 0, 0, 0.3)

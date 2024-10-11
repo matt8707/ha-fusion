@@ -8,7 +8,7 @@
 		<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.js?version=4.8.0"></script>
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover" style="background-image: var(--theme-background-image)">
+	<body data-sveltekit-preload-data="hover" style="background-image: var(--theme-background-image), var(--theme-background-image-fallback)">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
