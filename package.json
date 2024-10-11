@@ -1,6 +1,6 @@
 {
 	"name": "ha-fusion",
-	"version": "2024.7.1",
+	"version": "2024.10.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -23,7 +23,7 @@
 		"@types/d3-scale": "^4.0.8",
 		"@types/d3-shape": "^3.1.6",
 		"@types/eslint": "^9.6.1",
-		"@types/express": "^4.17.21",
+		"@types/express": "^5.0.0",
 		"@types/js-yaml": "^4.0.9",
 		"@types/promise-fs": "^2.1.5",
 		"eslint": "^9.12.0",
@@ -33,10 +33,9 @@
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.7",
 		"svelte": "^4.2.19",
-		"svelte-check": "^3.8.6",
+		"svelte-check": "^4.0.4",
 		"svelte-confetti": "1.4.0",
 		"svelte-fast-dimension": "^1.1.0",
-		"tslib": "^2.7.0",
 		"typescript": "^5.6.3",
 		"typescript-eslint": "^8.8.1",
 		"vite": "^5.4.8"
