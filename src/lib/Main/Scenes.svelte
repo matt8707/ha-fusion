@@ -72,7 +72,7 @@
 					<Icon icon="ooui:help-ltr" style="font-size: {iconSize}" />
 				{/await}
 			{:else if sel?.entity_id}
-				<ComputeIcon entity_id={sel?.entity_id} skipEntitiyPicture={true} size={iconSize} />
+				<ComputeIcon entity_id={sel?.entity_id} skipEntityPicture={true} size={iconSize} />
 			{:else}
 				<Icon icon="ooui:help-ltr" style="font-size: {iconSize}" />
 			{/if}

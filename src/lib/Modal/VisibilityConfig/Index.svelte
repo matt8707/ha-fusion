@@ -114,9 +114,9 @@
 		item.condition === 'screen'
 			? [{ id: item.id, media_query: item.media_query }]
 			: item.condition === 'and' || item.condition === 'or'
-				? item.conditions
+				? (item.conditions
 						?.filter((cond) => cond.condition === 'screen')
-						.map(({ id, media_query }) => ({ id, media_query })) ?? []
+						.map(({ id, media_query }) => ({ id, media_query })) ?? [])
 				: []
 	);
 

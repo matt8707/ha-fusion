@@ -1,3 +1,6 @@
+import type Konva from 'konva';
+import type { ShapeConfig } from 'konva/lib/Shape';
+
 // configuration.yaml
 
 export interface Configuration {
@@ -279,4 +282,25 @@ export interface YouTubeEvent {
 	user_code?: string;
 	timestamp?: number;
 	error?: any;
+}
+
+export type KonvaMode = 'default' | 'pan' | 'zoom';
+
+export interface KonvaImageCache {
+	[selId: string]: {
+		[id: string]: HTMLImageElement;
+	};
+}
+
+export interface KonvaHistory {
+	elements: Konva.Node[];
+	selectedShapes: string[];
+}
+
+export interface KonvaStore {
+	children: Konva.Node[];
+	selectedShapes: ShapeConfig[];
+	mode: KonvaMode;
+	undoStack: KonvaHistory[];
+	redoStack: KonvaHistory[];
 }

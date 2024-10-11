@@ -37,7 +37,6 @@
 
 	// markdown modify local links
 	marked.use({
-		useNewRenderer: true,
 		renderer: {
 			link(token) {
 				let href = token?.href || '#';

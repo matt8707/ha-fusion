@@ -42,7 +42,8 @@ export default defineConfig({
 			'svelte-fast-dimension/action',
 			'@event-calendar/core',
 			'@event-calendar/day-grid',
-			'@event-calendar/list'
+			'@event-calendar/list',
+			'konva/lib/Shape'
 		],
 		exclude: [
 			// exclude codemirror to avoid state duplication

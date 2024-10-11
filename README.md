@@ -136,7 +136,7 @@ npm run dev -- --open
 
 # dependencies
 pnpm outdated
-pnpm upgrade
+pnpm update
 
 # lint
 npm run check

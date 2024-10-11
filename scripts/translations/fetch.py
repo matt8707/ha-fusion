@@ -559,6 +559,7 @@ dir_keys = [
             ("condition_pass", ["ui.panel.lovelace.editor.condition-editor.testing_pass"]),
             ("condition_error", ["ui.panel.lovelace.editor.condition-editor.testing_error"]),
             ("current_state", ["ui.panel.lovelace.editor.condition-editor.condition.state.current_state"]),
+            ("picture_elements", ["ui.panel.lovelace.editor.card.picture-elements.name"]),
         ],
     ),
     (  # DEVELOPER-TOOLS

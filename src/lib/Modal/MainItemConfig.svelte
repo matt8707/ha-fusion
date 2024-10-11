@@ -19,6 +19,7 @@
 	import Empty from '$lib/Main/Empty.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Ripple from 'svelte-ripple';
+	import PictureElements from '$lib/Main/PictureElements.svelte';
 
 	export let isOpen: boolean;
 	export let sel: any;
@@ -31,7 +32,10 @@
 	if (!$demo.sensor) $demo.sensor = getSensorEntity($states);
 	if (!$demo.media_player) $demo.media_player = getMediaPlayerEntity($states);
 
-	onMount(() => {
+	let loadIcons: (typeof import('@iconify/svelte'))['loadIcons'];
+	let icons: Record<string, string>;
+
+	onMount(async () => {
 		if (searchElement) {
 			searchElement.focus();
 		}
@@ -46,6 +50,15 @@
 			sel.type = 'configure';
 			$dashboard = $dashboard;
 		}
+
+		// picture elements config, need to be loaded before click but can be deferred to onmount
+		const [iconifyModule, iconsModule] = await Promise.all([
+			import('@iconify/svelte'),
+			import('$lib/Modal/PictureElements/icons')
+		]);
+
+		loadIcons = iconifyModule.loadIcons;
+		icons = iconsModule.icons;
 	});
 
 	$: filter = itemTypes
@@ -84,6 +97,14 @@
 				responsive: true,
 				controls: false,
 				muted: true
+			}
+		},
+		{
+			id: 'picture_elements',
+			type: $lang('picture_elements'),
+			component: PictureElements,
+			props: {
+				sel
 			}
 		},
 		{
@@ -134,6 +155,16 @@
 					sel
 				});
 				break;
+			case 'picture_elements': {
+				loadIcons(Object.values(icons));
+
+				openModal(() => import('$lib/Modal/PictureElements/PictureElementsConfig.svelte'), {
+					sel
+				});
+
+				break;
+			}
+
 			case 'empty':
 				openModal(() => import('$lib/Modal/EmptyConfig.svelte'), { sel });
 				break;

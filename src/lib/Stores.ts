@@ -5,7 +5,9 @@ import type {
 	PersistentNotification,
 	Template,
 	Translations,
-	Views
+	Views,
+	KonvaStore,
+	KonvaImageCache
 } from '$lib/Types';
 import type {
 	Connection,
@@ -180,3 +182,14 @@ export const event = writable<string | undefined>();
 export const persistentNotifications = writable<{
 	[notificationId: string]: PersistentNotification;
 }>({});
+
+// konva
+export const konvaImageCache = writable<KonvaImageCache>({});
+
+export const konvaStore = writable<KonvaStore>({
+	children: [],
+	selectedShapes: [],
+	mode: 'default',
+	undoStack: [],
+	redoStack: []
+});
