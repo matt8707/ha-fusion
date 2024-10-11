@@ -5,9 +5,7 @@
 export function trapFocus(node: HTMLElement) {
 	function focusable() {
 		return Array.from(
-			node.querySelectorAll(
-				'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-			)
+			node.querySelectorAll('button:not([tabindex="-1"]), [href], input, select, textarea')
 		).map((element) => element as HTMLElement);
 	}
 
