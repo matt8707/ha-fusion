@@ -207,6 +207,26 @@
 			/>
 		</InputClear>
 
+		<h2>{$lang('hide_name')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={sel?.hide_name}
+				on:click={() => set('hide_name', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('yes')}
+			</button>
+
+			<button
+				class:selected={!sel?.hide_name}
+				on:click={() => set('hide_name', false)}
+				use:Ripple={$ripple}
+			>
+				{$lang('no')}
+			</button>
+		</div>
+
 		<h2>{$lang('show_area')?.replace('{area}', $lang('time')?.toLocaleLowerCase())}</h2>
 
 		<div class="button-container">

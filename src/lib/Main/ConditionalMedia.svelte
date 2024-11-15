@@ -329,76 +329,45 @@
 		</div>
 	{/if}
 
-	<div
-		class="background"
-		style:background-color={!backgroundImage ? 'none' : 'rgba(0, 0, 0, 0.25)'}
-		style:backdrop-filter={!backgroundImage ? 'none' : 'blur(1rem)'}
-		style:-webkit-backdrop-filter={!backgroundImage ? 'none' : 'blur(1rem)'}
-	>
-		<div class="left">
-			<div class="icon">
-				<!-- activePlayer -->
+	{#if !sel?.hide_name}
+		<div
+			class="background"
+			style:background-color={!backgroundImage ? 'none' : 'rgba(0, 0, 0, 0.25)'}
+			style:backdrop-filter={!backgroundImage ? 'none' : 'blur(1rem)'}
+			style:-webkit-backdrop-filter={!backgroundImage ? 'none' : 'blur(1rem)'}
+		>
+			<div class="left">
+				<div class="icon">
+					<!-- activePlayer -->
 
-				{#if active}
-					{#if currentAttr?.icon}
-						<Icon icon={currentAttr?.icon} height="auto" width="100%" />
-					{:else if current_media_player}
-						<ComputeIcon entity_id={current_media_player?.entity_id} skipEntityPicture={true} />
-					{/if}
-
-					<!-- nothing_playing -->
-				{:else if sel?.icon || entity?.attributes?.icon}
-					<Icon icon={sel?.icon || entity?.attributes?.icon} height="auto" width="100%" />
-				{:else if sel?.entity_id}
-					<ComputeIcon entity_id={sel?.entity_id} skipEntityPicture={true} />
-				{:else}
-					<Icon icon="ooui:help-ltr" height="auto" width="100%" />
-				{/if}
-			</div>
-		</div>
-
-		<div class="right">
-			{#if active}
-				<!-- activePlayer -->
-
-				<div class="name">
-					{getName(undefined, current_media_player)}
-				</div>
-
-				<div class="state">
-					<div class="measure" bind:clientWidth={contentWidth}>
-						<!-- snippet -->
-						{#if media_artist && media_title}
-							{media_artist} - {media_title}
-						{:else if media_artist && !media_title}
-							{media_artist}
-						{:else if !media_artist && media_title}
-							{media_title}
-						{:else}
-							<StateLogic entity_id={current_media_player?.entity_id} selected={undefined} />
+					{#if active}
+						{#if currentAttr?.icon}
+							<Icon icon={currentAttr?.icon} height="auto" width="100%" />
+						{:else if current_media_player}
+							<ComputeIcon entity_id={current_media_player?.entity_id} skipEntityPicture={true} />
 						{/if}
+
+						<!-- nothing_playing -->
+					{:else if sel?.icon || entity?.attributes?.icon}
+						<Icon icon={sel?.icon || entity?.attributes?.icon} height="auto" width="100%" />
+					{:else if sel?.entity_id}
+						<ComputeIcon entity_id={sel?.entity_id} skipEntityPicture={true} />
+					{:else}
+						<Icon icon="ooui:help-ltr" height="auto" width="100%" />
+					{/if}
+				</div>
+			</div>
+
+			<div class="right">
+				{#if active}
+					<!-- activePlayer -->
+
+					<div class="name">
+						{getName(undefined, current_media_player)}
 					</div>
 
-					<div style="overflow: hidden; text-overflow: ellipsis;">
-						{#if sel?.marquee === true && contentWidth && contentWidth > 394 && !$editMode}
-							{#await import('$lib/Components/Marquee.svelte')}
-								loading
-							{:then Marquee}
-								<svelte:component this={Marquee.default}>
-									<!-- snippet -->
-									{#if media_artist && media_title}
-										{media_artist} - {media_title}
-									{:else if media_artist && !media_title}
-										{media_artist}
-									{:else if !media_artist && media_title}
-										{media_title}
-									{:else}
-										<StateLogic entity_id={current_media_player?.entity_id} selected={undefined} />
-									{/if}
-									{@html '&nbsp;'.repeat(4)}
-								</svelte:component>
-							{/await}
-						{:else}
+					<div class="state">
+						<div class="measure" bind:clientWidth={contentWidth}>
 							<!-- snippet -->
 							{#if media_artist && media_title}
 								{media_artist} - {media_title}
@@ -409,52 +378,51 @@
 							{:else}
 								<StateLogic entity_id={current_media_player?.entity_id} selected={undefined} />
 							{/if}
-						{/if}
-					</div>
-				</div>
-			{:else}
-				<!-- nothing_playing -->
+						</div>
 
-				<div class="name">
-					{sel?.name || getName(undefined, entity) || $lang('nothing_playing')}
-				</div>
-
-				<div class="state">
-					<div class="measure" bind:clientWidth={contentWidth}>
-						<!-- snippet -->
-						{#if entity_data?.title}
-							{entity_data?.title}
-
-							{#if entity_data?.aired}
-								({entity_data?.aired?.split('-')?.[0]})
-							{/if}
-						{:else}
-							<StateLogic entity_id={sel?.entity_id} selected={sel} />
-						{/if}
-					</div>
-
-					<div style="overflow: hidden; text-overflow: ellipsis;">
-						{#if sel?.marquee === true && contentWidth && contentWidth > 394 && !$editMode}
-							{#await import('$lib/Components/Marquee.svelte')}
-								loading
-							{:then Marquee}
-								<svelte:component this={Marquee.default}>
-									<!-- snippet -->
-									{#if entity_data?.title}
-										{entity_data?.title}
-
-										{#if entity_data?.aired}
-											({entity_data?.aired?.split('-')?.[0]})
+						<div style="overflow: hidden; text-overflow: ellipsis;">
+							{#if sel?.marquee === true && contentWidth && contentWidth > 394 && !$editMode}
+								{#await import('$lib/Components/Marquee.svelte')}
+									loading
+								{:then Marquee}
+									<svelte:component this={Marquee.default}>
+										<!-- snippet -->
+										{#if media_artist && media_title}
+											{media_artist} - {media_title}
+										{:else if media_artist && !media_title}
+											{media_artist}
+										{:else if !media_artist && media_title}
+											{media_title}
+										{:else}
+											<StateLogic entity_id={current_media_player?.entity_id} selected={undefined} />
 										{/if}
-									{:else}
-										<StateLogic entity_id={sel?.entity_id} selected={sel} />
-									{/if}
-									{@html '&nbsp;'.repeat(4)}
-								</svelte:component>
-							{/await}
-						{:else}
-							<!-- snippet -->
+										{@html '&nbsp;'.repeat(4)}
+									</svelte:component>
+								{/await}
+							{:else}
+								<!-- snippet -->
+								{#if media_artist && media_title}
+									{media_artist} - {media_title}
+								{:else if media_artist && !media_title}
+									{media_artist}
+								{:else if !media_artist && media_title}
+									{media_title}
+								{:else}
+									<StateLogic entity_id={current_media_player?.entity_id} selected={undefined} />
+								{/if}
+							{/if}
+						</div>
+					</div>
+				{:else}
+					<!-- nothing_playing -->
 
+					<div class="name">
+						{sel?.name || getName(undefined, entity) || $lang('nothing_playing')}
+					</div>
+
+					<div class="state">
+						<div class="measure" bind:clientWidth={contentWidth}>
+							<!-- snippet -->
 							{#if entity_data?.title}
 								{entity_data?.title}
 
@@ -464,12 +432,46 @@
 							{:else}
 								<StateLogic entity_id={sel?.entity_id} selected={sel} />
 							{/if}
-						{/if}
+						</div>
+
+						<div style="overflow: hidden; text-overflow: ellipsis;">
+							{#if sel?.marquee === true && contentWidth && contentWidth > 394 && !$editMode}
+								{#await import('$lib/Components/Marquee.svelte')}
+									loading
+								{:then Marquee}
+									<svelte:component this={Marquee.default}>
+										<!-- snippet -->
+										{#if entity_data?.title}
+											{entity_data?.title}
+
+											{#if entity_data?.aired}
+												({entity_data?.aired?.split('-')?.[0]})
+											{/if}
+										{:else}
+											<StateLogic entity_id={sel?.entity_id} selected={sel} />
+										{/if}
+										{@html '&nbsp;'.repeat(4)}
+									</svelte:component>
+								{/await}
+							{:else}
+								<!-- snippet -->
+
+								{#if entity_data?.title}
+									{entity_data?.title}
+
+									{#if entity_data?.aired}
+										({entity_data?.aired?.split('-')?.[0]})
+									{/if}
+								{:else}
+									<StateLogic entity_id={sel?.entity_id} selected={sel} />
+								{/if}
+							{/if}
+						</div>
 					</div>
-				</div>
-			{/if}
+				{/if}
+			</div>
 		</div>
-	</div>
+	{/if}
 </div>
 
 <style>
