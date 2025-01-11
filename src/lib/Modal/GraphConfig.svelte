@@ -54,11 +54,11 @@
 		{ id: '6hours', label: `6 ${$lang('hours')}` },
 		{ id: '12hours', label: `12 ${$lang('hours')}` },
 		{ id: '24hours', label: `24 ${$lang('hours')}` },
-		{ id: '2days',  label: `2 ${$lang('day')}` },
+		{ id: '2days', label: `2 ${$lang('day')}` },
 		{ id: '4days', label: `4 ${$lang('day')}` },
 		{ id: '1week', label: `1 ${$lang('week')}` },
 		{ id: '2weeks', label: `2 ${$lang('week')}` },
-		{ id: '1month',  label: `1 ${$lang('month')}` }
+		{ id: '1month', label: `1 ${$lang('month')}` }
 	];
 
 	function minMax(key: string | number | undefined) {
