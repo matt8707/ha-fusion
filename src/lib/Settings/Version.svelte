@@ -47,7 +47,7 @@
 
 		try {
 			if (debug) console.debug('fetching latest version from github');
-			const url = 'https://api.github.com/repos/matt8707/ha-fusion/releases/latest';
+			const url = 'https://api.github.com/repos/rajatb-git/ha-fusion/releases/latest';
 			const response = await fetch(url);
 
 			if (!response.ok) {
@@ -116,7 +116,7 @@
 					{$lang('update_up_to_date')} {installed}
 				{/if}
 
-				<a href="https://github.com/matt8707/ha-fusion/releases" target="_blank">
+				<a href="https://github.com/rajatb-git/ha-fusion/releases" target="_blank">
 					{$lang('update_release_notes')}
 				</a>
 			{:else if error_code}

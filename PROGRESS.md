@@ -38,7 +38,7 @@ List grouped by domains and categorized based on their similar behaviors
 
 - [x] climate
   - [x] horizontal temp select
-  - [x] issue <https://github.com/matt8707/ha-fusion/issues/22>
+  - [x] issue <https://github.com/rajatb-git/ha-fusion/issues/22>
 - [x] fan
 - [x] humidifier
 - [x] water_heater
@@ -46,22 +46,22 @@ List grouped by domains and categorized based on their similar behaviors
 ### Other
 
 - [x] alarm_control_panel
-  - [x] <https://github.com/matt8707/ha-fusion/issues/3>
+  - [x] <https://github.com/rajatb-git/ha-fusion/issues/3>
 - [x] lock
   - [ ] option to lock with code?
 - [x] camera
 - [x] cover
-  - [x] <https://github.com/matt8707/ha-fusion/issues/29>
-  - [x] <https://github.com/matt8707/ha-fusion/issues/13>
+  - [x] <https://github.com/rajatb-git/ha-fusion/issues/29>
+  - [x] <https://github.com/rajatb-git/ha-fusion/issues/13>
 - [x] number
 - [x] input_number
   - [x] idea: round state if .0
   - [x] support different modes other than mode: slider
 - [x] light
-  - [x] open rgb issue <https://github.com/matt8707/ha-fusion/issues/18>
+  - [x] open rgb issue <https://github.com/rajatb-git/ha-fusion/issues/18>
 - [ ] media_player
 - [x] input_select
-  - [x] <https://github.com/matt8707/ha-fusion/issues/4>
+  - [x] <https://github.com/rajatb-git/ha-fusion/issues/4>
 - [x] select
   - [x] use svelecte
 - [x] text
@@ -71,7 +71,7 @@ List grouped by domains and categorized based on their similar behaviors
   - [x] modal has a shopping_list functionality
 - [x] vacuum
   - [ ] idea: custom map if map camera
-  - [x] <https://github.com/matt8707/ha-fusion/issues/24>
+  - [x] <https://github.com/rajatb-git/ha-fusion/issues/24>
 - [x] counter
 - [x] group
 - [x] valve
@@ -88,7 +88,7 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] timer
   - [x] when set state in modal don't stop timer
   - [x] add entity name to timers
-        <https://github.com/matt8707/ha-fusion/issues/107>
+        <https://github.com/rajatb-git/ha-fusion/issues/107>
 
 ### Device Tracker
 
@@ -98,7 +98,7 @@ List grouped by domains and categorized based on their similar behaviors
   - [x] bug: if no gps modal won't open
   - [ ] idea: toggle icon pings phone?
   - [x] make api key more clear if missing
-        <https://github.com/matt8707/ha-fusion/issues/121>
+        <https://github.com/rajatb-git/ha-fusion/issues/121>
 - [x] zone
   - [ ] idea: map with all persons?
 
@@ -108,9 +108,9 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] camera
 - [ ] map
 - [ ] media
-  - [ ] <https://github.com/matt8707/ha-fusion/issues/20>
+  - [ ] <https://github.com/rajatb-git/ha-fusion/issues/20>
 - [ ] light slider
-  - [ ] <https://github.com/matt8707/ha-fusion/issues/40>
+  - [ ] <https://github.com/rajatb-git/ha-fusion/issues/40>
 
 ## List of domains (incomplete)
 

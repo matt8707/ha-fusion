@@ -10,7 +10,7 @@
 		target.type = event.type === 'focus' ? 'text' : 'password';
 	}
 
-	const href = 'https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md';
+	const href = 'https://github.com/rajatb-git/ha-fusion/blob/main/static/documentation/Map.md';
 </script>
 
 <h2>{$lang('addons')}</h2>

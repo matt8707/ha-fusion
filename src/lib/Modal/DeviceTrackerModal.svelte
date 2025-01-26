@@ -271,10 +271,10 @@
 							Error fetching the map. Please verify your API key and try again&nbsp;
 						{/if}
 						<a
-							href="https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md"
+							href="https://github.com/rajatb-git/ha-fusion/blob/main/static/documentation/Map.md"
 							target="_blank"
 						>
-							https://github.com/matt8707/ha-fusion/blob/main/static/documentation/Map.md
+							https://github.com/rajatb-git/ha-fusion/blob/main/static/documentation/Map.md
 						</a>
 					</span>
 				</div>
