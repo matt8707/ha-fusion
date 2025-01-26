@@ -8,6 +8,8 @@
 	export let entity_id: string | undefined;
 	export let name: string | undefined = undefined;
 	export let period = 'day';
+	// default to 24 hours
+	export let time_period = '24hours';
 	export let stroke = 2;
 
 	let width: number;
@@ -15,7 +17,6 @@
 	let chartData: any[] = [];
 	let resizeTimeout: ReturnType<typeof setTimeout>;
 	let isResizing: boolean;
-	let start_time = new Date(Date.now() - 2629800 * 1000).toISOString();
 	let end_time = new Date().toISOString();
 	let m = { x: 0, y: 0 };
 	let point: { [x: string]: any };
@@ -60,7 +61,7 @@
 		}, 200);
 	}
 
-	$: if (entity_id || period) {
+	$: if (entity_id || period || time_period) {
 		fetchData();
 	}
 
@@ -98,6 +99,21 @@
 		}).format(Number(entity?.state));
 	}
 
+	function calculateStartTime(tr: string): string {
+		const trMap: { [key: string]: number } = {
+			'6hours': 6 * 60 * 60,
+			'12hours': 12 * 60 * 60,
+			'24hours': 24 * 60 * 60,
+			'2days': 2 * 24 * 60 * 60,
+			'4days': 4 * 24 * 60 * 60,
+			'1week': 1 * 7 * 24 * 60 * 60,
+			'2weeks': 2 * 7 * 24 * 60 * 60,
+			'1month': 30 * 24 * 60 * 60
+		};
+
+		return new Date(Date.now() - trMap[tr || '24hours'] * 1000).toISOString();
+	}
+
 	function fetchData() {
 		if (!entity_id) return;
 
@@ -105,7 +121,7 @@
 			conn
 				?.sendMessagePromise({
 					type: 'recorder/statistics_during_period',
-					start_time: start_time,
+					start_time: calculateStartTime(time_period),
 					end_time: end_time,
 					statistic_ids: [entity_id],
 					period: period || 'day'

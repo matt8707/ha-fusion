@@ -50,6 +50,17 @@
 		{ id: 'month', label: $lang('period_month') }
 	];
 
+	const timePeriodOptions = [
+		{ id: '6hours', label: `6 ${$lang('hours')}` },
+		{ id: '12hours', label: `12 ${$lang('hours')}` },
+		{ id: '24hours', label: `24 ${$lang('hours')}` },
+		{ id: '2days', label: `2 ${$lang('day')}` },
+		{ id: '4days', label: `4 ${$lang('day')}` },
+		{ id: '1week', label: `1 ${$lang('week')}` },
+		{ id: '2weeks', label: `2 ${$lang('week')}` },
+		{ id: '1month', label: `1 ${$lang('month')}` }
+	];
+
 	function minMax(key: string | number | undefined) {
 		return Math.min(Math.max(parseInt(key as string), range.min), range.max);
 	}
@@ -108,6 +119,7 @@
 				entity_id={sel?.entity_id}
 				name={sel?.name}
 				period={sel?.period}
+				time_period={sel?.time_period}
 				stroke={minMax(stroke)}
 			/>
 		</div>
@@ -159,25 +171,16 @@
 			/>
 		{/if}
 
-		<h2>start_time</h2>
+		<h2>{`${$lang('time')} ${$lang('period')}`}</h2>
 
-		<input
-			class="input"
-			type="text"
-			placeholder={new Date(Date.now() - 2629800 * 1000).toISOString()}
-			autocomplete="off"
-			spellcheck="false"
-		/>
-
-		<h2>end_time</h2>
-
-		<input
-			class="input"
-			type="text"
-			placeholder={new Date().toISOString()}
-			autocomplete="off"
-			spellcheck="false"
-		/>
+		{#if timePeriodOptions}
+			<Select
+				options={timePeriodOptions}
+				placeholder={`${$lang('time')} ${$lang('period')}`}
+				value={sel?.time_period}
+				on:change={(event) => set('time_period', event)}
+			/>
+		{/if}
 
 		<h2>{$lang('size')}</h2>
 

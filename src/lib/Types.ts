@@ -170,6 +170,7 @@ export interface GraphItem {
 	type?: string;
 	id?: number;
 	entity_id?: string;
+	time_period?: string;
 	period?: string;
 	stroke?: number;
 	hide_mobile?: boolean;
