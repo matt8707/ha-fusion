@@ -389,6 +389,26 @@
 			</button>
 		</div>
 
+		<h2>{$lang('display_only')}</h2>
+
+		<div class="button-container">
+			<button
+				class:selected={!sel?.display_only}
+				on:click={() => set('display_only')}
+				use:Ripple={$ripple}
+			>
+				{$lang('no')}
+			</button>
+
+			<button
+				class:selected={sel?.display_only === true}
+				on:click={() => set('display_only', true)}
+				use:Ripple={$ripple}
+			>
+				{$lang('yes')}
+			</button>
+		</div>
+
 		{#if getDomain(entity_id) === 'media_player'}
 			<h2>Marquee</h2>
 
