@@ -1,0 +1,29 @@
+title: sage
+author: amedello
+attribution: ''
+theme:
+  colors-text: rgb(230, 245, 230)
+  colors-icon: rgb(180, 220, 180)
+  colors-title: rgb(230, 245, 230)
+  colors-sidebar-border: 1px solid rgba(129, 199, 132, 0.2)
+  colors-sidebar-background: rgba(13, 26, 15, 0.55)
+  sizes-sidebar-time: 3.4rem
+  background-image: radial-gradient(ellipse at center, #1a2f1c 0%, #0d1a0f 70%)
+  font-family: "'Inter Variable', system-ui"
+  button-background-color-on: rgb(129, 199, 132)
+  button-background-color-off: rgba(255, 255, 255, 0.07)
+  drawer-button-background-color: rgba(255, 255, 255, 0.07)
+  button-name-color-on: rgb(13, 30, 15)
+  button-name-color-off: rgb(220, 240, 220)
+  button-state-color-on: rgba(13, 30, 15, 0.7)
+  button-state-color-off: rgba(170, 210, 170, 0.75)
+  modal-background-color: rgba(0, 0, 0, 0.4)
+  border-radius: 0.4rem
+  sidebar-font-size: 1rem
+  sidebar-item-padding: 0.6rem 0.6rem
+  sidebar-padding: 0 1.4rem
+  drawer-font-size: 0.925rem
+  sidebar-divider: 1px solid rgba(129, 199, 132, 0.18)
+  navigate-background-color: rgba(129, 199, 132, 0.15)
+  app-color: '#0d1a0f'
+  modal-background-color-modal: rgb(13 26 15 / 78%)

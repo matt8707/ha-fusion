@@ -1,0 +1,29 @@
+title: ember
+author: amedello
+attribution: ''
+theme:
+  colors-text: rgb(255, 240, 210)
+  colors-icon: rgb(255, 200, 120)
+  colors-title: rgb(255, 240, 210)
+  colors-sidebar-border: 1px solid rgba(255, 152, 0, 0.25)
+  colors-sidebar-background: rgba(26, 8, 0, 0.5)
+  sizes-sidebar-time: 3.4rem
+  background-image: radial-gradient(ellipse at bottom, #3d1a00 0%, #1a0800 70%)
+  font-family: "'Inter Variable', system-ui"
+  button-background-color-on: rgb(255, 152, 0)
+  button-background-color-off: rgba(255, 255, 255, 0.07)
+  drawer-button-background-color: rgba(255, 255, 255, 0.07)
+  button-name-color-on: rgb(30, 10, 0)
+  button-name-color-off: rgb(255, 235, 200)
+  button-state-color-on: rgba(30, 10, 0, 0.7)
+  button-state-color-off: rgba(255, 200, 140, 0.7)
+  modal-background-color: rgba(0, 0, 0, 0.4)
+  border-radius: 0.4rem
+  sidebar-font-size: 1rem
+  sidebar-item-padding: 0.6rem 0.6rem
+  sidebar-padding: 0 1.4rem
+  drawer-font-size: 0.925rem
+  sidebar-divider: 1px solid rgba(255, 152, 0, 0.2)
+  navigate-background-color: rgba(255, 152, 0, 0.15)
+  app-color: '#3d1a00'
+  modal-background-color-modal: rgb(26 8 0 / 75%)

@@ -1,0 +1,29 @@
+title: nord
+author: amedello
+attribution: ''
+theme:
+  colors-text: rgb(236, 239, 244)
+  colors-icon: rgb(136, 192, 208)
+  colors-title: rgb(236, 239, 244)
+  colors-sidebar-border: 1px solid rgba(236, 239, 244, 0.15)
+  colors-sidebar-background: rgba(46, 52, 64, 0.6)
+  sizes-sidebar-time: 3.4rem
+  background-image: linear-gradient(160deg, #2e3440 0%, #3b4252 50%, #2e3440 100%)
+  font-family: "'Inter Variable', system-ui"
+  button-background-color-on: rgb(136, 192, 208)
+  button-background-color-off: rgba(236, 239, 244, 0.08)
+  drawer-button-background-color: rgba(236, 239, 244, 0.08)
+  button-name-color-on: rgb(46, 52, 64)
+  button-name-color-off: rgb(236, 239, 244)
+  button-state-color-on: rgba(46, 52, 64, 0.75)
+  button-state-color-off: rgba(216, 222, 233, 0.7)
+  modal-background-color: rgba(0, 0, 0, 0.4)
+  border-radius: 0.4rem
+  sidebar-font-size: 1rem
+  sidebar-item-padding: 0.6rem 0.6rem
+  sidebar-padding: 0 1.4rem
+  drawer-font-size: 0.925rem
+  sidebar-divider: 1px solid rgba(236, 239, 244, 0.12)
+  navigate-background-color: rgba(136, 192, 208, 0.2)
+  app-color: '#2e3440'
+  modal-background-color-modal: rgb(46 52 64 / 80%)
