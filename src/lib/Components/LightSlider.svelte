@@ -8,7 +8,7 @@
 	export let current: number;
 
 	export let debounce: boolean;
-	export let timeout: ReturnType<typeof setTimeout>;
+	export let timeout: ReturnType<typeof setTimeout> | undefined;
 	export let rangeValue: number;
 
 	let request: Promise<unknown> | undefined = undefined;

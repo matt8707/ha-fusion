@@ -19,6 +19,7 @@
 
 	export let isOpen: boolean;
 	export let sel: any;
+	export let isItemTemplate: boolean = false;
 
 	let innerWidth = 0;
 	let draggingGroup = false;
@@ -29,7 +30,7 @@
 	 * Add id's to to each item
 	 */
 	let items =
-		sel?.visibility?.map((item: Condition) => ({
+		(isItemTemplate ? sel?.item_visibility_template : sel?.visibility)?.map((item: Condition) => ({
 			id: generateId($dashboard),
 			...item,
 			...(item.condition === 'and' || item.condition === 'or'
@@ -140,7 +141,11 @@
 	 * Removes all conditions, which in turn also triggers onDestroy
 	 */
 	function handleRemove() {
-		delete sel?.visibility;
+		if (isItemTemplate) {
+			delete sel?.item_visibility_template;
+		} else {
+			delete sel?.visibility;
+		}
 		sel = { ...sel };
 		closeModal();
 	}
@@ -150,7 +155,8 @@
 	 * and add transformed items to dashboard section visibility
 	 */
 	onDestroy(() => {
-		sel.visibility = items?.map((item: Condition) => {
+		const field = isItemTemplate ? 'item_visibility_template' : 'visibility';
+		sel[field] = items?.map((item: Condition) => {
 			const condition = { ...item };
 			delete condition.id;
 			delete condition.collapsed;
@@ -167,8 +173,8 @@
 			return condition;
 		});
 
-		if (!sel.visibility?.length) {
-			delete sel.visibility;
+		if (!sel[field]?.length) {
+			delete sel[field];
 		}
 
 		$dashboard = $dashboard;
@@ -185,7 +191,7 @@
 			{$lang('visibility')}
 		</h1>
 
-		<Explanation {sel} {items} {matches} />
+		<Explanation {sel} {items} {matches} {isItemTemplate} />
 
 		<AddConditionButtons bind:items />
 
@@ -212,7 +218,7 @@
 						{#if !item?.collapsed}
 							<div class="content" transition:slide={{ duration: $motion, easing: expoOut }}>
 								{#if item?.condition === 'state' && !item?.collapsed}
-									<StateCondition {item} bind:items />
+									<StateCondition {item} bind:items {isItemTemplate} />
 								{:else if item?.condition === 'numeric_state' && !item?.collapsed}
 									<NumericCondition {item} bind:items />
 								{:else if item?.condition === 'screen' && !item?.collapsed}
@@ -252,7 +258,7 @@
 															transition:slide={{ duration: $motion, easing: expoOut }}
 														>
 															{#if subItem?.condition === 'state' && !subItem?.collapsed}
-																<StateCondition item={subItem} bind:items={item.conditions} />
+																<StateCondition item={subItem} bind:items={item.conditions} {isItemTemplate} />
 															{:else if subItem?.condition === 'numeric_state' && !subItem?.collapsed}
 																<NumericCondition item={subItem} bind:items={item.conditions} />
 															{:else if subItem?.condition === 'screen' && !subItem?.collapsed}

@@ -15,7 +15,7 @@
 	export let sel: any;
 
 	let debounce = false;
-	let timeout: ReturnType<typeof setTimeout>;
+	let timeout: ReturnType<typeof setTimeout> | undefined = undefined;
 	let rangeValue = 0;
 
 	let groupSel: string | undefined;
@@ -238,7 +238,7 @@
 			</div>
 		{/if}
 
-		{#if supports?.BRIGHTNESS && (selTab === 'color' || selTab === 'color_temp')}
+		{#if supports?.COLOR && (selTab === 'color' || selTab === 'color_temp')}
 			<ColorPicker
 				{entity}
 				{colorMode}

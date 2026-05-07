@@ -8,7 +8,7 @@
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
 	import VerticalStackHeader from '$lib/Main/VerticalStackHeader.svelte';
 	import Scenes from '$lib/Main/Scenes.svelte';
-	import { handleVisibility, mediaQueries } from '$lib/Conditional';
+	import { handleVisibility, handleItemVisibility, mediaQueries } from '$lib/Conditional';
 	import { generateId } from '$lib/Utils';
 
 	export let view: any;
@@ -314,6 +314,7 @@
 				>
 					{#each section?.sections as stackSection (`${stackSection?.id}${stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 						{@const empty = $editMode && !stackSection?.items?.length}
+						{@const visibleItems = $editMode ? stackSection?.items : handleItemVisibility($editMode, stackSection?.items, $states, stackSection)}
 						<section
 							id={String(stackSection.id)}
 							data-is-dnd-shadow-item-hint={stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
@@ -334,8 +335,7 @@
 								on:consider={(event) => dragItem__stack(stackSection.id, event)}
 								on:finalize={(event) => dragItem__stack(stackSection.id, event)}
 							>
-								<!-- item -->
-								{#each stackSection?.items as item (item.id)}
+								{#each visibleItems as item (item.id)}
 									<div
 										id={item?.id}
 										data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
@@ -372,6 +372,7 @@
 				>
 					{#each section?.sections as stackSection (`${stackSection?.id}${stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
 						{@const empty = $editMode && !stackSection?.items?.length}
+						{@const visibleItems = $editMode ? stackSection?.items : handleItemVisibility($editMode, stackSection?.items, $states, stackSection)}
 						<section
 							id={String(stackSection.id)}
 							data-is-dnd-shadow-item-hint={stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
@@ -392,7 +393,7 @@
 								on:consider={(event) => dragItem__stack(stackSection.id, event)}
 								on:finalize={(event) => dragItem__stack(stackSection.id, event)}
 							>
-								{#each stackSection?.items as item (item.id)}
+								{#each visibleItems as item (item.id)}
 									<div
 										id={item?.id}
 										data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
@@ -412,6 +413,7 @@
 				<!-- scenes -->
 			{:else if section?.type === 'scenes'}
 				{@const empty = $editMode && !section?.items?.length}
+				{@const visibleItems = $editMode ? section?.items : handleItemVisibility($editMode, section?.items, $states, section)}
 				<SectionHeader {view} {section} />
 				<div
 					class="scenes"
@@ -426,13 +428,13 @@
 					on:consider={(event) => dragItem(section.id, event)}
 					on:finalize={(event) => dragItem(section.id, event)}
 				>
-					{#each section?.items as item, index (item.id)}
+					{#each visibleItems as item, index (item.id)}
 						<div
 							id={item?.id}
 							data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 							animate:flip={{ duration: $motion }}
 							tabindex="-1"
-							class:divider={index !== section?.items?.length - 1}
+							class:divider={index !== visibleItems?.length - 1}
 						>
 							<Scenes sel={item} />
 						</div>
@@ -442,6 +444,7 @@
 				<!-- normal -->
 			{:else}
 				{@const empty = $editMode && !section?.items?.length}
+				{@const visibleItems = $editMode ? section?.items : handleItemVisibility($editMode, section?.items, $states, section)}
 
 				<SectionHeader {view} {section} />
 
@@ -458,7 +461,7 @@
 					on:consider={(event) => dragItem(section.id, event)}
 					on:finalize={(event) => dragItem(section.id, event)}
 				>
-					{#each section?.items as item (item.id)}
+					{#each visibleItems as item (item.id)}
 						<div
 							id={item?.id}
 							data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}

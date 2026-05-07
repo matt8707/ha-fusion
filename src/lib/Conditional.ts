@@ -34,6 +34,143 @@ export function handleVisibility($editMode: boolean, sections: Section[], states
 }
 
 /**
+ * Filters items based on their visibility conditions.
+ * Supports per-item visibility and section-level item_visibility_template.
+ */
+export function handleItemVisibility(
+	$editMode: boolean,
+	items: any[],
+	states: HassEntities,
+	section?: any
+) {
+	if (!items) return [];
+
+	return items.filter((item: any) => {
+		if (section?.item_visibility_template && item?.entity_id) {
+			const templateConditions = applyItemVisibilityTemplate(item, section.item_visibility_template);
+			if (templateConditions) {
+				const meetsTemplate = templateConditions.every((condition: any) =>
+					validateConditionForItem($editMode, states, item, condition)
+				);
+				if (item?.visibility) {
+					return meetsTemplate && handleAllConditionsForItem($editMode, states, item);
+				}
+				return meetsTemplate;
+			}
+		}
+		return handleAllConditionsForItem($editMode, states, item);
+	});
+}
+
+function applyItemVisibilityTemplate(
+	item: any,
+	template: { conditions?: Condition[] }[]
+): { conditions?: Condition[] }[] | null {
+	if (!item?.entity_id || !template) return null;
+	const processed = JSON.parse(JSON.stringify(template));
+	const replacePlaceholder = (obj: any): void => {
+		if (!obj || typeof obj !== 'object') return;
+		for (const key in obj) {
+			if (key === 'entity' && obj[key] === '{item.entity_id}') {
+				obj[key] = item.entity_id;
+			} else if (typeof obj[key] === 'object') {
+				replacePlaceholder(obj[key]);
+			}
+		}
+	};
+	replacePlaceholder(processed);
+	return processed;
+}
+
+export function handleAllConditionsForItem($editMode: boolean, $states: HassEntities, item: any) {
+	if (!$states || !item?.visibility) return true;
+	return item.visibility.every((condition: any) =>
+		validateConditionForItem($editMode, $states, item, condition)
+	);
+}
+
+export function validateConditionForItem(
+	$editMode: boolean,
+	$states: HassEntities,
+	item: any,
+	condition: Condition
+): boolean {
+	switch (condition?.condition) {
+		case 'and':
+			return handleAndForItem($editMode, $states, item, condition);
+		case 'or':
+			return handleOrForItem($editMode, $states, item, condition);
+		case 'state':
+			return handleState($states, condition);
+		case 'numeric_state':
+			return handleNumericState($states, condition);
+		case 'screen':
+			return handleScreenForItem($editMode, item, condition);
+		default:
+			return false;
+	}
+}
+
+export function handleAndForItem(
+	$editMode: boolean,
+	$states: HassEntities,
+	item: any,
+	condition: Condition
+) {
+	if (!condition.conditions?.length) return false;
+	return (
+		condition.conditions?.every((subCondition: Condition) =>
+			validateConditionForItem($editMode, $states, item, subCondition)
+		) ?? false
+	);
+}
+
+export function handleOrForItem(
+	$editMode: boolean,
+	$states: HassEntities,
+	item: any,
+	condition: Condition
+) {
+	if (!condition.conditions?.length) return false;
+	return (
+		condition.conditions?.some((subCondition: Condition) =>
+			validateConditionForItem($editMode, $states, item, subCondition)
+		) ?? false
+	);
+}
+
+export function handleScreenForItem($editMode: boolean, item: any, conditions: Condition) {
+	const id = item?.id;
+	if (!id || !conditions?.media_query) return false;
+
+	if ($editMode) {
+		return window?.matchMedia(conditions?.media_query)?.matches;
+	}
+
+	const store = get(mediaQueries);
+	const prev = store?.[id];
+	if (prev?.mql && prev?.listener) {
+		prev?.mql?.removeEventListener('change', prev?.listener);
+		delete prev?.listener;
+	}
+
+	const mql = window?.matchMedia(conditions?.media_query);
+	const listener = () => {
+		mediaQueries?.update((mqs: any) => ({
+			...mqs,
+			[id]: { ...mqs?.[id], matches: mql?.matches }
+		}));
+	};
+	mql?.addEventListener('change', listener);
+	mediaQueries?.update((mqs: any) => ({
+		...mqs,
+		[id]: { mql, listener, matches: mql?.matches }
+	}));
+
+	return mql?.matches;
+}
+
+/**
  * Handles every section in handleVisibility
  */
 export function handleAllConditions($editMode: boolean, $states: HassEntities, section: Section) {

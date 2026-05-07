@@ -5,8 +5,12 @@
 
 	export let item: Condition;
 	export let items: Condition[];
+	export let isItemTemplate: boolean = false;
 
-	$: entityOptions = $entityList('');
+	$: baseOptions = $entityList('');
+	$: entityOptions = isItemTemplate
+		? [{ id: '{item.entity_id}', label: '{item.entity_id}' }, ...baseOptions]
+		: baseOptions;
 
 	const stateOptions = [
 		{ id: 'state', label: $lang('state_equal') },

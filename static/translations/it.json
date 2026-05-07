@@ -380,6 +380,7 @@
 	"version": "Versione",
 	"vertical": "Verticale",
 	"vertical_stack": "Pila verticale",
+	"item_visibility_template": "Template visibilit\u00e0 elementi",
 	"visibility": "Visibilit\u00e0",
 	"visibility_explanation": "La scheda verr\u00e0 visualizzata quando TUTTE le condizioni riportate di seguito sono soddisfatte. Se non viene impostata alcuna condizione, la scheda verr\u00e0 sempre visualizzata.",
 	"visible": "Visibile",
