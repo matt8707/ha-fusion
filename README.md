@@ -4,6 +4,10 @@ A modern, easy-to-use and performant custom [Home Assistant](https://www.home-as
 
 This is a personal fork of [ha-fusion](https://github.com/matt8707/ha-fusion) by [matt8707](https://github.com/matt8707), extended with additional features and improvements.
 
+If this project saves you time, a coffee is always appreciated.
+
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/amedello)
+
 [![preview](/static/preview.png)](https://www.youtube.com/watch?v=D8mWruSuPOM)
 
 ---
