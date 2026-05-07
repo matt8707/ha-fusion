@@ -8,7 +8,7 @@ theme:
   colors-sidebar-border: 1px solid rgba(255, 255, 255, 0.15)
   colors-sidebar-background: rgba(13, 27, 42, 0.6)
   sizes-sidebar-time: 3.4rem
-  background-image: radial-gradient(ellipse at top, #1e3a5f 0%, #0d1b2a 70%)
+  background-image: "radial-gradient(ellipse at top, #1e3a5f 0%, #0d1b2a 70%)"
   font-family: "'Inter Variable', system-ui"
   button-background-color-on: rgb(0, 188, 212)
   button-background-color-off: rgba(255, 255, 255, 0.08)

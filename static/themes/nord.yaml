@@ -8,7 +8,7 @@ theme:
   colors-sidebar-border: 1px solid rgba(236, 239, 244, 0.15)
   colors-sidebar-background: rgba(46, 52, 64, 0.6)
   sizes-sidebar-time: 3.4rem
-  background-image: linear-gradient(160deg, #2e3440 0%, #3b4252 50%, #2e3440 100%)
+  background-image: "linear-gradient(160deg, #2e3440 0%, #3b4252 50%, #2e3440 100%)"
   font-family: "'Inter Variable', system-ui"
   button-background-color-on: rgb(136, 192, 208)
   button-background-color-off: rgba(236, 239, 244, 0.08)
