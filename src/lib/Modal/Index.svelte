@@ -183,6 +183,7 @@
 			style:width={size === 'large' ? '80vw' : '40rem'}
 			class="contents"
 			bind:this={contents}
+			class:large={size === 'large'}
 			class:warning={!backdropImage}
 		>
 			<div class="header">

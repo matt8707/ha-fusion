@@ -14,7 +14,13 @@
 
 	// icon pack
 	$: below_horizon = $states?.['sun.sun']?.state === 'below_horizon';
-	$: src = `weather/meteocons/${entity?.state}-${below_horizon ? 'night' : 'day'}.svg`;
+
+	let src: string;
+	let imgError = false;
+	$: {
+		src = `weather/meteocons/${entity?.state}-${below_horizon ? 'night' : 'day'}.svg`;
+		imgError = false;
+	}
 
 	// sensor
 	$: sensor = sel?.sensor && $states?.[sel?.sensor];
@@ -23,7 +29,9 @@
 {#if entity && entity?.state !== 'unavailable'}
 	<div class="container">
 		<div class="icon">
-			<img {src} width="100%" height="100%" alt="" />
+			{#if !imgError}
+				<img {src} width="100%" height="100%" alt="" on:error={() => (imgError = true)} />
+			{/if}
 		</div>
 
 		{#if attributes?.temperature}

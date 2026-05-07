@@ -110,11 +110,15 @@ List grouped by domains and categorized based on their similar behaviors
 
 - [x] button
 - [x] camera
+- [x] custom_panel
+  - rows: camera, buttons, sensor, slider
+  - configurable primary entity state on tile
+  - full i18n (en + it)
 - [ ] map
 - [ ] media
   - [ ] <https://github.com/matt8707/ha-fusion/issues/20>
 - [x] light slider
-  - [ ] <https://github.com/matt8707/ha-fusion/issues/40>
+  - [x] <https://github.com/matt8707/ha-fusion/issues/40>
 
 ## List of domains (incomplete)
 
@@ -148,6 +152,26 @@ List grouped by domains and categorized based on their similar behaviors
   - detects Ingress path (`/api/hassio_ingress/`) and passes explicit `redirectUrl` to `getAuth()`
   - prevents OAuth2 callback failure when accessing ha-fusion externally via Ingress
   - no impact on Docker / direct port installs
+
+### Custom Panel (feature/custom-panel)
+
+- [x] New `custom_panel` item type (tile + view modal + config modal)
+  - `Main/CustomPanel.svelte` — tile with icon, name, primary entity state
+  - `Modal/CustomPanelModal.svelte` — read-only view modal
+  - `Modal/CustomPanelConfig.svelte` — edit modal with row management
+  - Row sub-components: `RowCamera`, `RowButtons`, `RowSensor`, `RowSlider`
+  - `ButtonConfigRow.svelte` for per-button config
+- [x] Primary entity on tile: `primary_row_id` on `CustomPanelItem` lets user pick a sensor/slider row whose state is shown on the tile
+- [x] Binary sensor state translation: `$lang(state) || state` pattern
+- [x] All UI strings use `$lang()` — no hardcoded English in components
+- [x] Full Italian translation (14 new keys in `it.json`)
+- [x] GraphQL-consistent UI: `<h2>` section dividers, `ConfigButtons` footer, standard Svelte modal layout
+
+### Upstream bug fixes
+
+- [x] fix <https://github.com/matt8707/ha-fusion/issues/538> — LightModal: ColorPicker and "Change color" header now conditioned on `supports.COLOR` / `color_temp`; brightness-only lights no longer show the color picker
+- [x] fix <https://github.com/matt8707/ha-fusion/issues/599> — Weather sidebar: broken `<img>` on unknown HA weather states replaced with `on:error` hide + reset on state change
+- [x] fix <https://github.com/matt8707/ha-fusion/issues/550> — Button active state: removed hardcoded `color: black` from `.container[data-state='true']`; theme CSS variables now cascade correctly
 
 ### Pending
 

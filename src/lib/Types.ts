@@ -304,3 +304,59 @@ export interface KonvaStore {
 	undoStack: KonvaHistory[];
 	redoStack: KonvaHistory[];
 }
+
+export type ModalRowType = 'camera' | 'buttons' | 'sensor' | 'slider';
+
+/** A single button inside a RowButtons */
+export interface ModalButtonItem {
+	id: number;
+	entity_id?: string;
+	name?: string;
+	icon?: string;
+	service?: string; // optional override, defaults to togglable service
+}
+
+/** Base fields shared by every row */
+interface ModalRowBase {
+	id: number;
+	type: ModalRowType;
+}
+
+export interface ModalRowCamera extends ModalRowBase {
+	type: 'camera';
+	entity_id?: string;
+	stream?: boolean;
+}
+
+export interface ModalRowButtons extends ModalRowBase {
+	type: 'buttons';
+	columns?: number; // 1–4, defaults to 2
+	items?: ModalButtonItem[];
+}
+
+export interface ModalRowSensor extends ModalRowBase {
+	type: 'sensor';
+	entity_id?: string;
+	name?: string;
+	prefix?: string;
+	suffix?: string;
+}
+
+export interface ModalRowSlider extends ModalRowBase {
+	type: 'slider';
+	entity_id?: string;
+	name?: string;
+}
+
+export type ModalRow = ModalRowCamera | ModalRowButtons | ModalRowSensor | ModalRowSlider;
+
+/** The top-level dashboard item */
+export interface CustomPanelItem {
+	type: 'custom_panel';
+	id: number;
+	name?: string;
+	icon?: string;
+	color?: string;
+	rows?: ModalRow[];
+	primary_row_id?: number;
+}

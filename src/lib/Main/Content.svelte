@@ -6,6 +6,7 @@
 	import Camera from '$lib/Main/Camera.svelte';
 	import Configure from '$lib/Main/Configure.svelte';
 	import Empty from '$lib/Main/Empty.svelte';
+	import CustomPanel from '$lib/Main/CustomPanel.svelte';
 
 	export let item: any;
 	export let sectionName: string | undefined = undefined;
@@ -29,6 +30,8 @@
 	<Camera sel={item} responsive={false} muted={true} controls={false} />
 {:else if item?.type === 'empty'}
 	<Empty sel={item} />
+{:else if item?.type === 'custom_panel'}
+	<CustomPanel sel={item} />
 {:else}
 	<!-- if types are changed internally, don't break ui -->
 	<Configure sel={{ id: item?.id }} />

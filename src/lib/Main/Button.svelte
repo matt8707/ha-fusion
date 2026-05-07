@@ -732,7 +732,6 @@
 
 	.container[data-state='true'] {
 		background-color: var(--theme-button-background-color-on);
-		color: black;
 	}
 
 	.icon[data-state='true'] {
