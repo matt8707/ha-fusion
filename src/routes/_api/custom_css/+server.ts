@@ -2,18 +2,18 @@ import { readFile, writeFile } from 'fs/promises';
 import { json, error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
+const PATH = './data/custom_style.css';
+const DEFAULT = '/* Custom CSS */\n';
+
 export const GET: RequestHandler = async ({ setHeaders }) => {
 	let file;
-	const path = './data/custom_style.css';
 
 	try {
-		file = await readFile(path, 'utf-8');
+		file = await readFile(PATH, 'utf-8');
 	} catch (err: any) {
 		if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
-			console.warn(`File not found... creating ${path}`);
-			const content = `/* 🎨 Custom CSS file loaded! */\n`;
-			await writeFile(path, content, 'utf-8');
-			file = content;
+			await writeFile(PATH, DEFAULT, 'utf-8');
+			file = DEFAULT;
 		} else {
 			error(500, err.message);
 		}
@@ -22,4 +22,14 @@ export const GET: RequestHandler = async ({ setHeaders }) => {
 	setHeaders({ 'Cache-Control': 'max-age=0' });
 
 	return json(file);
+};
+
+export const POST: RequestHandler = async ({ request }) => {
+	try {
+		const { content } = await request.json();
+		await writeFile(PATH, content ?? '', 'utf-8');
+		return json({ action: 'saved' });
+	} catch (err: any) {
+		error(500, err.message);
+	}
 };

@@ -10,6 +10,7 @@
 	import Version from '$lib/Settings/Version.svelte';
 	import Token from '$lib/Settings/Token.svelte';
 	import CustomJs from '$lib/Settings/CustomJs.svelte';
+	import CustomCss from '$lib/Settings/CustomCss.svelte';
 	import Logout from '$lib/Settings/Logout.svelte';
 	import Ripple from 'svelte-ripple';
 
@@ -56,6 +57,7 @@
 
 			const token = form.token || undefined;
 			const custom_js = form.custom_js ? Boolean(form.custom_js === 'true') : undefined;
+			const custom_css = form.custom_css ? Boolean(form.custom_css === 'true') : undefined;
 			const formMotion = form.motion ? Boolean(form.motion === 'true') : undefined;
 
 			const json: any = {
@@ -69,6 +71,7 @@
 
 			if (Object.keys(addons).length > 0) json.addons = addons;
 			if (custom_js) json.custom_js = custom_js;
+			if (custom_css) json.custom_css = custom_css;
 
 			if (!formMotion) {
 				$motion = 0;
@@ -128,6 +131,8 @@
 			<Version />
 
 			<CustomJs />
+
+			<CustomCss />
 
 			<Motion />
 
