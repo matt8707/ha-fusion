@@ -167,6 +167,12 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] Full Italian translation (14 new keys in `it.json`)
 - [x] GraphQL-consistent UI: `<h2>` section dividers, `ConfigButtons` footer, standard Svelte modal layout
 
+### Upstream bug fixes
+
+- [x] fix <https://github.com/matt8707/ha-fusion/issues/538> — LightModal: ColorPicker and "Change color" header now conditioned on `supports.COLOR` / `color_temp`; brightness-only lights no longer show the color picker
+- [x] fix <https://github.com/matt8707/ha-fusion/issues/599> — Weather sidebar: broken `<img>` on unknown HA weather states replaced with `on:error` hide + reset on state change
+- [x] fix <https://github.com/matt8707/ha-fusion/issues/550> — Button active state: removed hardcoded `color: black` from `.container[data-state='true']`; theme CSS variables now cascade correctly
+
 ### Pending
 
 - [ ] Lock with code support

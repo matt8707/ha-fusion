@@ -4,9 +4,7 @@ A modern, easy-to-use and performant custom [Home Assistant](https://www.home-as
 
 This is a personal fork of [ha-fusion](https://github.com/matt8707/ha-fusion) by [matt8707](https://github.com/matt8707), extended with additional features and improvements.
 
-If this project saves you time, a coffee is always appreciated.
 
-[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/amedello)
 
 [![preview](/static/preview.png)](https://www.youtube.com/watch?v=D8mWruSuPOM)
 
@@ -14,7 +12,21 @@ If this project saves you time, a coffee is always appreciated.
 
 ## What's different in this fork
 
-- **FOR NOW BUGFIX AND LITTLE IMPLEMENTATION**
+### New: Custom Panel item type
+
+A new dashboard item type — `CUSTOM PANEL` — that lets you build a fully configurable multi-row panel inside a single tile. Rows can be freely combined and reordered:
+
+| Row type | What it does |
+|----------|--------------|
+| **Camera** | Embeds a camera stream (with optional live feed) |
+| **Buttons** | Up to 4 action buttons per row, each fully configurable |
+| **Sensor** | Displays a sensor or binary sensor value with optional prefix/suffix |
+| **Slider** | Controls a `light` or `number` entity via a brightness/value slider |
+
+A "primary entity" can be pinned to the tile so its state is always visible at a glance without opening the panel.
+All UI strings are fully translated (English and Italian included, contributor for other translation are welcome).
+
+For the full list of changes, fixes and improvements see [PROGRESS.md](PROGRESS.md).
 
 ---
 
@@ -132,4 +144,8 @@ npm run dev -- --open
 npm run check
 npm run lint
 npm run format
+
 ```
+## If this project saves you time, a coffee is always appreciated.
+
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://buymeacoffee.com/amedello)
