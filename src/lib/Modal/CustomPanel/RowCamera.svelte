@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states } from '$lib/Stores';
+	import { states, lang } from '$lib/Stores';
 	import Camera from '$lib/Main/Camera.svelte';
 	import Icon from '@iconify/svelte';
 	import type { ModalRowCamera } from '$lib/Types';
@@ -8,7 +8,7 @@
 	export let configMode = false;
 
 	$: entity = row?.entity_id ? $states[row.entity_id] : undefined;
-	$: isCamera = entity?.entity_id?.startsWith('camera.');
+	$: isCamera = row?.entity_id?.startsWith('camera.');
 	$: missing = !row?.entity_id;
 </script>
 
@@ -17,21 +17,21 @@
 		{#if configMode}
 			<div class="placeholder">
 				<Icon icon="mdi:camera-off" height="2rem" />
-				<span>No entity configured</span>
+				<span>{$lang('entity_not_configured')}</span>
 			</div>
 		{/if}
 	{:else if !isCamera && !entity}
 		{#if configMode}
 			<div class="placeholder warning">
 				<Icon icon="mdi:camera-off" height="2rem" />
-				<span>{row.entity_id} — entity not found</span>
+				<span>{row.entity_id} — {$lang('entity_not_found')}</span>
 			</div>
 		{/if}
 	{:else if !isCamera}
 		{#if configMode}
 			<div class="placeholder warning">
 				<Icon icon="mdi:alert" height="2rem" />
-				<span>{row.entity_id} is not a camera entity</span>
+				<span>{row.entity_id} — {$lang('not_camera_entity')}</span>
 			</div>
 		{/if}
 	{:else}

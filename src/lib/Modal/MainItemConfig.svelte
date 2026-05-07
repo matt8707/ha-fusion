@@ -89,11 +89,11 @@
 		},
 		{
 			id: 'custom_panel',
-			type: 'Custom Panel',
+			type: $lang('custom_panel') || 'Custom Panel',
 			component: Button,
 			props: {
-					demo: $demo.sensor,
-					sel
+				demo: undefined,
+				sel
 			}
 		},
 		{
@@ -174,8 +174,8 @@
 				break;
 			}
 			case 'custom_panel':
-    		openModal(() => import('$lib/Modal/CustomPanelConfig.svelte'), { sel });
-    	break;
+				openModal(() => import('$lib/Modal/CustomPanelConfig.svelte'), { sel });
+				break;
 			case 'empty':
 				openModal(() => import('$lib/Modal/EmptyConfig.svelte'), { sel });
 				break;

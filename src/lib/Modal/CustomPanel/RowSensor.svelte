@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { states } from '$lib/Stores';
+	import { states, lang } from '$lib/Stores';
 	import Icon from '@iconify/svelte';
 	import type { ModalRowSensor } from '$lib/Types';
 
@@ -20,7 +20,7 @@
 		<span class="sensor-name">{name}</span>
 		<span class="sensor-value">
 			{#if state !== undefined}
-				{prefix}{state}{suffix ? '\u00a0' + suffix : ''}
+				{prefix}{$lang(state) || state}{suffix ? '\u00a0' + suffix : ''}
 			{:else}
 				<Icon icon="mdi:help-circle-outline" height="1rem" />
 			{/if}

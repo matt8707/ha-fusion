@@ -358,4 +358,5 @@ export interface CustomPanelItem {
 	icon?: string;
 	color?: string;
 	rows?: ModalRow[];
+	primary_row_id?: number;
 }

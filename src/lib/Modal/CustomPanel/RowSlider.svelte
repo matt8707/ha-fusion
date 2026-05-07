@@ -9,9 +9,8 @@
 	export let row: ModalRowSlider;
 	export let configMode = false;
 
-	// ── Bitmasks per media_player e cover (valori enum attuali HA 2025.x) ──
-	// Fonte: github.com/home-assistant/core/blob/dev/homeassistant/components/media_player/const.py
-	// github.com/home-assistant/core/blob/dev/homeassistant/components/cover/__init__.py
+	// Bitmasks for media_player and cover (HA 2025.x enum values).
+	// Source: homeassistant/components/media_player/const.py, cover/__init__.py
 	const MEDIA_PLAYER_VOLUME_SET = 4;  // MediaPlayerEntityFeature.VOLUME_SET
 	const COVER_SET_POSITION = 4;       // CoverEntityFeature.SET_POSITION
 
@@ -21,9 +20,8 @@
 	$: name = row?.name || attributes?.friendly_name || row?.entity_id || '—';
 	$: supported_features = attributes?.supported_features ?? 0;
 
-	// ── Determine what to render ──
-	// Luce: usa supported_color_modes (API attuale HA 2025.x, magic numbers rimossi in 2025.1)
-	// Fonte: developers.home-assistant.io/docs/core/entity/light/ (sorgente GitHub 30/12/2025)
+	// Light: uses supported_color_modes (HA 2025.x API; magic-number brightness removed in 2025.1).
+	// Ref: developers.home-assistant.io/docs/core/entity/light/
 	type RenderMode = 'brightness' | 'volume' | 'cover' | 'input_number' | 'toggle' | 'readonly' | 'missing';
 
 	$: renderMode = ((): RenderMode => {
@@ -58,7 +56,7 @@
 		}
 	})();
 
-	// ── Slider values ──
+	// Slider values
 	$: sliderValue = (() => {
 		if (renderMode === 'brightness') return Math.round((attributes?.brightness ?? 0) / 2.55);
 		if (renderMode === 'volume') return Math.round((attributes?.volume_level ?? 0) * 100);
@@ -71,12 +69,10 @@
 	$: sliderMax = renderMode === 'input_number' ? (attributes?.max ?? 100) : 100;
 	$: sliderStep = renderMode === 'input_number' ? (attributes?.step ?? 1) : 1;
 
-	// ── Toggle state ──
 	$: toggleChecked = entity
 		? ['on', 'active', 'open', 'unlocked', 'cleaning', 'playing'].includes(entity.state)
 		: false;
 
-	// ── Handlers ──
 	function handleSlider(event: Event) {
 		if (configMode || !entity) return;
 		const value = Number((event.target as HTMLInputElement).value);

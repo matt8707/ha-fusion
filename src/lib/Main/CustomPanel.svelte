@@ -1,39 +1,37 @@
 <script lang="ts">
-	import { editMode, itemHeight, states, lang, dashboard } from '$lib/Stores';
+	import { editMode, itemHeight, lang, dashboard, states } from '$lib/Stores';
 	import { openModal } from 'svelte-modals';
 	import Icon, { loadIcon } from '@iconify/svelte';
-	import type { CustomPanelItem } from '$lib/Types';
+	import { getSelected } from '$lib/Utils';
+	import type { CustomPanelItem, ModalRowSensor, ModalRowSlider } from '$lib/Types';
 
 	export let sel: CustomPanelItem;
 
-	// legge live dal $dashboard così le modifiche nella modale si riflettono subito
-	function findItem(sections: any[]): CustomPanelItem | undefined {
-		for (const section of sections ?? []) {
-			const found = section?.items?.find((i: any) => i.id === sel.id);
-			if (found) return found as CustomPanelItem;
-			// horizontal-stack ha sezioni annidate
-			if (section?.sections) {
-				const nested = findItem(section.sections);
-				if (nested) return nested;
-			}
-		}
-		return undefined;
-	}
+	// Read live from $dashboard so config modal changes reflect immediately on the tile.
+	$: item = (getSelected(sel.id, $dashboard) as CustomPanelItem) ?? sel;
 
-	$: item = (() => {
-		// dipende esplicitamente da $dashboard per triggare reattività
-		const _ = $dashboard;
-		for (const view of $dashboard?.views ?? []) {
-			const found = findItem(view?.sections ?? []);
-			if (found) return found;
-		}
-		return sel;
-	})();
+	$: name = item?.name || $lang('section') || 'Panel';
+	$: tileIcon = item?.icon || 'mdi:view-dashboard-edit';
+	$: color = item?.color || 'rgba(0,0,0,0.3)';
 
-	$: name     = item?.name  || $lang('section') || 'Panel';
-	$: tileIcon = item?.icon  || 'mdi:view-dashboard-edit';
-	$: color    = item?.color || 'rgba(0,0,0,0.3)';
-	$: rowCount = item?.rows?.length ?? 0;
+	// Primary entity state shown on the tile
+	$: primaryRow = item?.primary_row_id
+		? item.rows?.find((r) => r.id === item.primary_row_id)
+		: undefined;
+	$: primaryEntityId =
+		primaryRow?.type === 'sensor' || primaryRow?.type === 'slider'
+			? (primaryRow as ModalRowSensor | ModalRowSlider).entity_id
+			: undefined;
+	$: primaryEntity = primaryEntityId ? $states[primaryEntityId] : undefined;
+	$: primaryState = primaryEntity?.state;
+	$: primaryUnit =
+		primaryRow?.type === 'sensor' && (primaryRow as ModalRowSensor).suffix !== undefined
+			? (primaryRow as ModalRowSensor).suffix
+			: (primaryEntity?.attributes?.unit_of_measurement ?? '');
+	$: primaryDisplay =
+		primaryState !== undefined
+			? ($lang(primaryState) || primaryState) + (primaryUnit ? ' ' + primaryUnit : '')
+			: undefined;
 
 	function handleClick() {
 		if ($editMode) {
@@ -44,11 +42,7 @@
 	}
 </script>
 
-<button
-	style:height="{$itemHeight}px"
-	style:background-color={color}
-	on:click={handleClick}
->
+<button style:height="{$itemHeight}px" style:background-color={color} on:click={handleClick}>
 	<div class="icon">
 		{#await loadIcon(tileIcon)}
 			<Icon icon="ph:dot" style="font-size: 1.6rem" />
@@ -61,8 +55,8 @@
 
 	<div class="label">
 		<span class="name">{name}</span>
-		{#if rowCount > 0}
-			<span class="count">{rowCount} {rowCount === 1 ? $lang('row') || 'row' : $lang('rows') || 'rows'}</span>
+		{#if primaryDisplay}
+			<span class="state">{primaryDisplay}</span>
 		{/if}
 	</div>
 </button>
@@ -121,7 +115,7 @@
 		max-width: 100%;
 	}
 
-	.count {
+	.state {
 		font-size: 0.75rem;
 		opacity: 0.55;
 	}

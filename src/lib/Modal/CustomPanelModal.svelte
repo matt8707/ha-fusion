@@ -5,17 +5,16 @@
 	import RowButtons from '$lib/Modal/CustomPanel/RowButtons.svelte';
 	import RowSensor from '$lib/Modal/CustomPanel/RowSensor.svelte';
 	import RowSlider from '$lib/Modal/CustomPanel/RowSlider.svelte';
-	import type { CustomPanelItem, ModalRow } from '$lib/Types';
-	import { lang } from '$lib/Stores';
-	import { onDestroy } from 'svelte';
+	import type { CustomPanelItem } from '$lib/Types';
+	import { lang, dashboard } from '$lib/Stores';
+	import { getSelected } from '$lib/Utils';
 
 	export let isOpen: boolean;
 	export let sel: CustomPanelItem;
 
-	$: name = sel?.name || $lang('custom_panel') || 'Custom Panel';
-	$: rows = sel?.rows ?? [];
-
-	onDestroy(() => {});
+	$: liveItem = (getSelected(sel.id, $dashboard) as CustomPanelItem | undefined) ?? sel;
+	$: name = liveItem?.name || $lang('custom_panel') || 'Custom Panel';
+	$: rows = liveItem?.rows ?? [];
 </script>
 
 {#if isOpen}
@@ -23,7 +22,7 @@
 		<h1 slot="title">{name}</h1>
 
 		{#if rows.length === 0}
-			<p class="empty">{$lang('no_rows_configured') || 'No rows configured.'}</p>
+			<p class="empty">{$lang('no_rows_configured')}</p>
 		{:else}
 			<div class="rows">
 				{#each rows as row (row.id)}

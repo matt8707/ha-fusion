@@ -6,6 +6,22 @@
 	import Ripple from 'svelte-ripple';
 	import type { ModalRowButtons, ModalButtonItem } from '$lib/Types';
 
+	const DOMAIN_ICONS: Record<string, string> = {
+		light: 'mdi:lightbulb',
+		switch: 'mdi:toggle-switch',
+		automation: 'mdi:robot',
+		script: 'mdi:script-text',
+		input_boolean: 'mdi:toggle-switch',
+		scene: 'mdi:palette',
+		fan: 'mdi:fan',
+		cover: 'mdi:window-shutter',
+		lock: 'mdi:lock',
+		media_player: 'mdi:play-circle',
+		vacuum: 'mdi:robot-vacuum',
+		button: 'mdi:gesture-tap-button',
+		input_button: 'mdi:gesture-tap-button'
+	};
+
 	export let row: ModalRowButtons;
 	export let configMode = false;
 
@@ -24,24 +40,8 @@
 
 	function getButtonIcon(btn: ModalButtonItem) {
 		if (btn.icon) return btn.icon;
-		// basic domain → icon fallback
 		const domain = getDomain(btn.entity_id);
-		const domainIcons: Record<string, string> = {
-			light: 'mdi:lightbulb',
-			switch: 'mdi:toggle-switch',
-			automation: 'mdi:robot',
-			script: 'mdi:script-text',
-			input_boolean: 'mdi:toggle-switch',
-			scene: 'mdi:palette',
-			fan: 'mdi:fan',
-			cover: 'mdi:window-shutter',
-			lock: 'mdi:lock',
-			media_player: 'mdi:play-circle',
-			vacuum: 'mdi:robot-vacuum',
-			button: 'mdi:gesture-tap-button',
-			input_button: 'mdi:gesture-tap-button'
-		};
-		return domainIcons[domain ?? ''] ?? 'mdi:gesture-tap';
+		return DOMAIN_ICONS[domain ?? ''] ?? 'mdi:gesture-tap';
 	}
 
 	function isActive(btn: ModalButtonItem): boolean {
@@ -70,9 +70,7 @@
 
 		if (!service || !domain) return;
 
-		const [svcDomain, svcName] = service.includes('.')
-			? service.split('.')
-			: [domain, service];
+		const [svcDomain, svcName] = service.includes('.') ? service.split('.') : [domain, service];
 
 		await callService($connection, svcDomain, svcName, { entity_id: btn.entity_id });
 	}
@@ -80,7 +78,7 @@
 
 <div class="row-buttons" style:--columns={columns}>
 	{#if items.length === 0 && configMode}
-		<div class="empty-hint">No buttons configured</div>
+		<div class="empty-hint">{$lang('no_buttons')}</div>
 	{:else}
 		{#each items as btn (btn.id)}
 			{@const active = isActive(btn)}
@@ -124,7 +122,9 @@
 		font-family: inherit;
 		font-size: 0.8rem;
 		cursor: pointer;
-		transition: background-color 150ms ease, opacity 150ms ease;
+		transition:
+			background-color 150ms ease,
+			opacity 150ms ease;
 		overflow: hidden;
 		position: relative;
 		min-height: 4rem;

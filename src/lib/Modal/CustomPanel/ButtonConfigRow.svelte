@@ -2,7 +2,7 @@
 	import Select from '$lib/Components/Select.svelte';
 	import Icon from '@iconify/svelte';
 	import Ripple from 'svelte-ripple';
-	import { ripple, entityList } from '$lib/Stores';
+	import { ripple, entityList, lang } from '$lib/Stores';
 	import { createEventDispatcher, tick } from 'svelte';
 	import type { ModalButtonItem } from '$lib/Types';
 
@@ -11,9 +11,11 @@
 	const dispatch = createEventDispatcher();
 
 	$: options = $entityList('');
+	$: entityPlaceholder = $lang('entity');
 
-	// ── Fixed positioning for dropdown ───────────────────────────────────────
+	// Fixed dropdown positioning — the Select dropdown must escape the modal overflow context.
 	let rowEl: HTMLElement;
+	let removeBtnEl: HTMLElement | undefined;
 	let dropdownTop = 0;
 	let dropdownLeft = 0;
 	let dropdownWidth = 0;
@@ -21,10 +23,11 @@
 	async function handleFocusIn() {
 		await tick();
 		if (rowEl) {
-			const rect = rowEl.getBoundingClientRect();
-			dropdownTop = rect.bottom + 4;
-			dropdownLeft = rect.left;
-			dropdownWidth = rect.width - 2.5 * 16; // subtract remove button width (~2.5rem)
+			const rowRect = rowEl.getBoundingClientRect();
+			const removeBtnWidth = removeBtnEl ? removeBtnEl.getBoundingClientRect().width + 8 : 0;
+			dropdownTop = rowRect.bottom + 4;
+			dropdownLeft = rowRect.left;
+			dropdownWidth = rowRect.width - removeBtnWidth;
 		}
 	}
 </script>
@@ -37,7 +40,7 @@
 >
 	<Select
 		{options}
-		placeholder="Entità"
+		placeholder={entityPlaceholder}
 		value={btn.entity_id}
 		computeIcons={true}
 		clearable={true}
@@ -45,6 +48,7 @@
 	/>
 	<button
 		class="remove-btn"
+		bind:this={removeBtnEl}
 		on:click={() => dispatch('remove', btn.id)}
 		use:Ripple={{ ...$ripple, color: 'rgba(255,80,80,0.3)' }}
 	>

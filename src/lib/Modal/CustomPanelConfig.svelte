@@ -1,5 +1,14 @@
 <script lang="ts">
-	import { dashboard, record, lang, ripple, motion, dragging, states, entityList } from '$lib/Stores';
+	import {
+		dashboard,
+		record,
+		lang,
+		ripple,
+		motion,
+		dragging,
+		states,
+		entityList
+	} from '$lib/Stores';
 	import Modal from '$lib/Modal/Index.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Select from '$lib/Components/Select.svelte';
@@ -16,7 +25,7 @@
 	import { slide } from 'svelte/transition';
 	import { expoOut } from 'svelte/easing';
 	import { onDestroy } from 'svelte';
-	import { generateId } from '$lib/Utils';
+	import { generateId, getSelected } from '$lib/Utils';
 	import type {
 		CustomPanelItem,
 		ModalRow,
@@ -38,36 +47,16 @@
 	function handleIcon(event: Event) {
 		const val = (event.target as HTMLInputElement).value || undefined;
 		icon = val;
-		for (const view of $dashboard?.views ?? []) {
-			for (const section of view?.sections ?? []) {
-				const found = section?.items?.find((i: any) => i.id === sel.id);
-				if (found) { found.icon = val; break; }
-				if (section?.sections) {
-					for (const nested of section.sections) {
-						const f = nested?.items?.find((i: any) => i.id === sel.id);
-						if (f) { f.icon = val; break; }
-					}
-				}
-			}
-		}
+		const found = getSelected(sel.id, $dashboard) as CustomPanelItem | undefined;
+		if (found) found.icon = val;
 		$dashboard = $dashboard;
 	}
 
 	function handleColor(event: Event) {
 		const val = (event.target as HTMLInputElement).value || undefined;
 		color = val;
-		for (const view of $dashboard?.views ?? []) {
-			for (const section of view?.sections ?? []) {
-				const found = section?.items?.find((i: any) => i.id === sel.id);
-				if (found) { found.color = val; break; }
-				if (section?.sections) {
-					for (const nested of section.sections) {
-						const f = nested?.items?.find((i: any) => i.id === sel.id);
-						if (f) { f.color = val; break; }
-					}
-				}
-			}
-		}
+		const found = getSelected(sel.id, $dashboard) as CustomPanelItem | undefined;
+		if (found) found.color = val;
 		$dashboard = $dashboard;
 	}
 
@@ -78,21 +67,35 @@
 	$: selectedRow = rows.find((r) => r.id === selectedRowId) ?? null;
 
 	// ── Typed accessors (avoid `as` in template) ────────────────────────────
-	$: selectedCamera  = selectedRow?.type === 'camera'  ? (selectedRow as ModalRowCamera)  : null;
+	$: selectedCamera = selectedRow?.type === 'camera' ? (selectedRow as ModalRowCamera) : null;
 	$: selectedButtons = selectedRow?.type === 'buttons' ? (selectedRow as ModalRowButtons) : null;
-	$: selectedSensor  = selectedRow?.type === 'sensor'  ? (selectedRow as ModalRowSensor)  : null;
-	$: selectedSlider  = selectedRow?.type === 'slider'  ? (selectedRow as ModalRowSlider)  : null;
+	$: selectedSensor = selectedRow?.type === 'sensor' ? (selectedRow as ModalRowSensor) : null;
+	$: selectedSlider = selectedRow?.type === 'slider' ? (selectedRow as ModalRowSlider) : null;
 
 	// ── Entity options ──────────────────────────────────────────────────────
-	$: allEntities    = $entityList('');
+	$: allEntities = $entityList('');
 	$: cameraEntities = $entityList('camera');
+
+	// ── Tile state: rows eligible as primary (sensor/slider with entity_id) ──
+	$: primaryRowOptions = rows
+		.filter((r) => !isShadow(r) && (r.type === 'sensor' || r.type === 'slider') && r.entity_id)
+		.map((r) => ({
+			id: r.id,
+			label: r.name || $states[r.entity_id]?.attributes?.friendly_name || r.entity_id
+		}));
+
+	function handlePrimaryRow(event: Event) {
+		const val = (event.target as HTMLSelectElement).value;
+		sel.primary_row_id = val ? Number(val) : undefined;
+		$dashboard = $dashboard;
+	}
 
 	// ── Row type labels & icons ─────────────────────────────────────────────
 	$: rowTypeInfo = {
-		camera:  { label: $lang('camera')  || 'Camera',  icon: 'mdi:cctv' },
+		camera: { label: $lang('camera') || 'Camera', icon: 'mdi:cctv' },
 		buttons: { label: $lang('buttons') || 'Buttons', icon: 'mdi:gesture-tap-button' },
-		sensor:  { label: $lang('sensor')  || 'Sensor',  icon: 'mdi:eye' },
-		slider:  { label: $lang('slider')  || 'Slider',  icon: 'mdi:tune-vertical' }
+		sensor: { label: $lang('sensor') || 'Sensor', icon: 'mdi:eye' },
+		slider: { label: $lang('slider') || 'Slider', icon: 'mdi:tune-vertical' }
 	} as Record<ModalRowType, { label: string; icon: string }>;
 
 	// ── Row helpers ──────────────────────────────────────────────────────────
@@ -115,7 +118,7 @@
 		return rowTypeInfo[row.type as ModalRowType] ?? { label: row.type, icon: 'mdi:help' };
 	}
 
-	// ── cast nello script, NON nel template ──────────────────────────────────
+	// Cast in script, not in template, to avoid TypeScript errors in Svelte templates.
 	function handleAddRow(type: string) {
 		addRow(type as ModalRowType);
 	}
@@ -147,6 +150,7 @@
 		rows = [...rows, row];
 		selectedRowId = id;
 		sync();
+		$record();
 	}
 
 	function removeRow(id: number) {
@@ -154,7 +158,11 @@
 		if (selectedRowId === id) {
 			selectedRowId = rows[0]?.id ?? null;
 		}
+		if (sel.primary_row_id === id) {
+			sel.primary_row_id = undefined;
+		}
 		sync();
+		$record();
 	}
 
 	function sync() {
@@ -231,13 +239,22 @@
 		sync();
 	}
 
-	// ── Degradation check for slider ────────────────────────────────────────
+	// Mirrors RowSlider's renderMode logic: domains that produce a real slider.
 	function sliderNeedsWarning(entity_id: string | undefined): boolean {
 		if (!entity_id) return false;
 		const entity = $states[entity_id];
 		if (!entity) return false;
 		const domain = entity_id.split('.')[0];
-		return !['light', 'media_player', 'cover', 'input_number'].includes(domain);
+		return ![
+			'light',
+			'media_player',
+			'cover',
+			'input_number',
+			'switch',
+			'input_boolean',
+			'fan',
+			'automation'
+		].includes(domain);
 	}
 
 	// ── Input handlers (no `as` in template) ────────────────────────────────
@@ -334,9 +351,17 @@
 			/>
 		</InputClear>
 
+		<!-- ── Tile state ────────────────────────────────────────────────── -->
+		<h2>{$lang('tile_state')}</h2>
+		<select class="input" on:change={handlePrimaryRow}>
+			<option value="" selected={sel.primary_row_id == null}>{$lang('none')}</option>
+			{#each primaryRowOptions as opt (opt.id)}
+				<option value={opt.id} selected={sel.primary_row_id === opt.id}>{opt.label}</option>
+			{/each}
+		</select>
+
 		<!-- ── Main layout ────────────────────────────────────────────────── -->
 		<div class="editor-layout">
-
 			<!-- LEFT: row list + add buttons -->
 			<div class="row-list-panel">
 				<p class="panel-label">{$lang('rows') || 'Rows'}</p>
@@ -406,10 +431,9 @@
 				{#if selectedRow}
 					{#key selectedRow.id}
 						<div transition:slide={{ duration: $motion, easing: expoOut }}>
-
 							<!-- CAMERA config -->
 							{#if selectedCamera}
-								<p class="panel-label">Camera</p>
+								<h2>{$lang('camera')}</h2>
 								<Select
 									options={cameraEntities}
 									placeholder={$lang('entity')}
@@ -425,24 +449,25 @@
 											on:click={() => updateRow(selectedCamera.id, { stream: true })}
 											use:Ripple={$ripple}
 										>
-											On
+											{$lang('yes')}
 										</button>
 										<button
 											class:selected={selectedCamera.stream === false}
 											on:click={() => updateRow(selectedCamera.id, { stream: false })}
 											use:Ripple={$ripple}
 										>
-											Off
+											{$lang('no')}
 										</button>
 									</div>
 								</div>
-								<div class="preview mt">
+								<h2>{$lang('preview')}</h2>
+								<div class="preview">
 									<RowCamera row={selectedCamera} configMode={true} />
 								</div>
 
-							<!-- BUTTONS config -->
+								<!-- BUTTONS config -->
 							{:else if selectedButtons}
-								<p class="panel-label">Buttons</p>
+								<h2>{$lang('buttons')}</h2>
 
 								<h2>{$lang('columns') || 'Columns'}</h2>
 								<div class="button-container">
@@ -459,12 +484,15 @@
 
 								<h2>{$lang('buttons') || 'Buttons'}</h2>
 								{#if (selectedButtons.items ?? []).length === 0}
-									<p class="no-rows">No buttons yet.</p>
+									<p class="no-rows">{$lang('no_buttons')}</p>
 								{:else}
-									{#each (selectedButtons.items ?? []) as btn (btn.id)}
+									{#each selectedButtons.items ?? [] as btn (btn.id)}
 										<ButtonConfigRow
 											{btn}
-											on:change={(e) => updateButton(selectedButtons.id, e.detail.id, { entity_id: e.detail.entity_id })}
+											on:change={(e) =>
+												updateButton(selectedButtons.id, e.detail.id, {
+													entity_id: e.detail.entity_id
+												})}
 											on:remove={(e) => removeButton(selectedButtons.id, e.detail)}
 										/>
 									{/each}
@@ -478,11 +506,12 @@
 									+ {$lang('add_button') || 'Add button'}
 								</button>
 
-								<div class="preview mt">
+								<h2>{$lang('preview')}</h2>
+								<div class="preview">
 									<RowButtons row={selectedButtons} configMode={true} />
 								</div>
 
-							<!-- SENSOR config -->
+								<!-- SENSOR config -->
 							{:else if selectedSensor}
 								<h2>{$lang('entity') || 'Entity'}</h2>
 								<Select
@@ -522,13 +551,14 @@
 										/>
 									</div>
 								</div>
-								<div class="preview mt">
+								<h2>{$lang('preview')}</h2>
+								<div class="preview">
 									<RowSensor row={selectedSensor} configMode={true} />
 								</div>
 
-							<!-- SLIDER config -->
+								<!-- SLIDER config -->
 							{:else if selectedSlider}
-								<p class="panel-label">Slider</p>
+								<h2>{$lang('slider')}</h2>
 								<Select
 									options={allEntities}
 									placeholder={$lang('entity')}
@@ -547,18 +577,18 @@
 								{#if sliderNeedsWarning(selectedSlider.entity_id)}
 									<p class="degradation-hint">
 										<Icon icon="mdi:information-outline" height="0.9rem" />
-										This entity will show as toggle or read-only state (no slider supported).
+										{$lang('slider_degradation')}
 									</p>
 								{/if}
-								<div class="preview mt">
+								<h2>{$lang('preview')}</h2>
+								<div class="preview">
 									<RowSlider row={selectedSlider} configMode={true} />
 								</div>
 							{/if}
-
 						</div>
 					{/key}
 				{:else}
-					<p class="no-rows">Select a row to configure it, or add one below.</p>
+					<p class="no-rows">{$lang('configure_row')}</p>
 				{/if}
 			</div>
 		</div>
@@ -755,6 +785,11 @@
 
 	.icon-gallery:hover {
 		background: rgba(255, 255, 255, 0.12);
+	}
+
+	select.input {
+		width: 100%;
+		color-scheme: dark;
 	}
 
 	@media (max-width: 600px) {

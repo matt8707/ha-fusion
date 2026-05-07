@@ -183,6 +183,7 @@
 			style:width={size === 'large' ? '80vw' : '40rem'}
 			class="contents"
 			bind:this={contents}
+			class:large={size === 'large'}
 			class:warning={!backdropImage}
 		>
 			<div class="header">
@@ -259,9 +260,6 @@
 		overflow-y: auto;
 	}
 
-	.contents.large {
-    overflow-y: visible;
-	}
 	button {
 		width: 1.85rem;
 		background: none;

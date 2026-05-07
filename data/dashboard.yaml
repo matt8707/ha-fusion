@@ -10,6 +10,53 @@ views:
         sections:
           - name: Telecamere
             items:
+              - id: 7107148132061
+                type: custom_panel
+                rows:
+                  - id: 8661373317631
+                    type: camera
+                    entity_id: camera.cucina
+                  - id: 1948523363938
+                    type: buttons
+                    columns: 2
+                    items:
+                      - id: 5673227289243
+                        entity_id: button.0xd0cf5efffeee77c4_identify
+                      - id: 2498155150587
+                        entity_id: button.pasquale_base_station_cleaning
+                  - id: 7484898774306
+                    type: sensor
+                    entity_id: sensor.zona_giorno_temperature
+              - id: 2068331996918
+                type: custom_panel
+                rows:
+                  - id: 5196224338006
+                    type: camera
+                    entity_id: camera.cucina
+                  - id: 2288317138922
+                    type: buttons
+                    columns: 1
+                    items:
+                      - id: 2352451718072
+                        entity_id: button.pasquale_self_clean
+                name: test
+              - id: 756623773731
+                type: button
+                entity_id: sensor.tecnoware_stato
+              - id: 3078939408356
+                type: custom_panel
+                rows:
+                  - id: 7343298891036
+                    type: camera
+                    entity_id: camera.cucina
+                  - id: 7570077715803
+                    type: slider
+                    entity_id: light.test_2
+                  - id: 2194108318986
+                    type: sensor
+                    entity_id: binary_sensor.c8c_bd2109800_movimento
+                name: TEST
+                icon: mdi:home
               - id: 2221333237047
                 type: camera
                 entity_id: camera.ingresso
@@ -394,6 +441,32 @@ views:
         sections:
           - name: Illuminazione
             items:
+              - id: 78355876385
+                type: custom_panel
+                rows:
+                  - id: 3991084994851
+                    type: camera
+                    entity_id: camera.garage
+                    stream: true
+                  - id: 7721099256516
+                    type: sensor
+                    entity_id: binary_sensor.finestra_stanzetta_contact
+                  - id: 8429179896938
+                    type: buttons
+                    columns: 4
+                    items:
+                      - id: 3792856722918
+                        entity_id: alarm_control_panel.allarme_casa
+                      - id: 571257101648
+                        entity_id: button.c8c_bd2109800_ptz_giu
+                  - id: 5743705952915
+                    type: slider
+                    entity_id: light.illuminazione_parete_2
+                  - id: 1161869027745
+                    type: slider
+                    entity_id: light.test_2
+                name: Cacca
+                icon: mdi:abacus
               - id: 9364818910398
                 type: button
                 entity_id: light.cucinino_2
