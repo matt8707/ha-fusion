@@ -31,14 +31,15 @@
 			sections: view.sections?.map((section) => ({
 				...section,
 				sections:
-					section.type === 'horizontal-stack' && section.sections
+					(section.type === 'horizontal-stack' || section.type === 'vertical-stack') &&
+					section.sections
 						? section.sections.map((nestedSection) => ({
 								...nestedSection,
 								items: nestedSection.items?.filter((item) => item.id !== sel.id)
 							}))
 						: section.sections,
 				items:
-					section.type !== 'horizontal-stack'
+					section.type !== 'horizontal-stack' && section.type !== 'vertical-stack'
 						? section.items?.filter((item) => item.id !== sel.id)
 						: section.items
 			}))

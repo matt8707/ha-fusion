@@ -8,11 +8,14 @@
 	import { updateObj } from '$lib/Utils';
 	import type { TemplateItem } from '$lib/Types';
 	import Ripple from 'svelte-ripple';
+	import InputClear from '$lib/Components/InputClear.svelte';
+	import Icon from '@iconify/svelte';
 
 	export let isOpen: boolean;
 	export let sel: TemplateItem;
 
 	let value = sel?.template;
+	let icon = sel?.icon;
 	let modalTransitionEnd = false;
 
 	function handleEvent() {
@@ -72,6 +75,40 @@
 				set('template', value);
 			}}
 		/>
+
+		<h2>{$lang('icon')}</h2>
+
+		<div class="icon-gallery-container">
+			<InputClear
+				condition={icon}
+				on:clear={() => {
+					icon = undefined;
+					set('icon');
+				}}
+				let:padding
+			>
+				<input
+					name={$lang('icon')}
+					class="input"
+					type="text"
+					placeholder={$lang('icon')}
+					autocomplete="off"
+					spellcheck="false"
+					bind:value={icon}
+					on:change={(event) => set('icon', event)}
+					style:padding
+				/>
+			</InputClear>
+
+			<button
+				class="icon-gallery"
+				title={$lang('icon')}
+				on:click={() => window.open('https://icon-sets.iconify.design/', '_blank')}
+				style:padding="0.84rem"
+			>
+				<Icon icon="majesticons:open-line" height="none" />
+			</button>
+		</div>
 
 		<h2>{$lang('mobile')}</h2>
 

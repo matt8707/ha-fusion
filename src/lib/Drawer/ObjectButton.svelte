@@ -17,11 +17,9 @@
 
 	function checkForHorizontalStackOnly(sections: any[]): boolean {
 		return sections.every((section) => {
-			// section is a horizontal-stack
-			if (section.type === 'horizontal-stack') {
+			if (section.type === 'horizontal-stack' || section.type === 'vertical-stack') {
 				return section.sections ? checkForHorizontalStackOnly(section.sections) : true;
 			}
-			// section is not a horizontal-stack
 			return false;
 		});
 	}
@@ -54,7 +52,7 @@
 	 */
 	function findSection(sections: any[]): any | undefined {
 		for (const section of sections) {
-			if (section.type !== 'horizontal-stack') return section;
+			if (section.type !== 'horizontal-stack' && section.type !== 'vertical-stack') return section;
 			const found = section.sections && findSection(section.sections);
 			if (found) return found;
 		}

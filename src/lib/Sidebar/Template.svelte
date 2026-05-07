@@ -3,6 +3,7 @@
 	import { marked } from 'marked';
 	import { onDestroy } from 'svelte';
 	import type { TemplateItem } from '$lib/Types';
+	import Icon, { loadIcon } from '@iconify/svelte';
 
 	export let sel: TemplateItem | undefined = undefined;
 	export let demo = false;
@@ -85,7 +86,22 @@
 	on:keydown
 	role="button"
 	tabindex="0"
+	style:display={sel?.icon ? 'flex' : undefined}
+	style:align-items={sel?.icon ? 'center' : undefined}
+	style:gap={sel?.icon ? '8px' : undefined}
 >
+	{#if sel?.icon}
+		<span
+			style:font-size={sel?.icon_size || '1.2rem'}
+			style:color={sel?.icon_color || 'inherit'}
+			style:flex-shrink="0"
+		>
+			{#await loadIcon(sel.icon) then resolvedIcon}
+				<Icon icon={resolvedIcon} height="1em" width="1em" />
+			{/await}
+		</span>
+	{/if}
+
 	{#if demo}
 		<div class="template">
 			<span>&#123;&#123;</span> template <span>&#125;&#125;</span>

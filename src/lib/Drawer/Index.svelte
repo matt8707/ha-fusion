@@ -32,6 +32,7 @@
 			'solar:file-bold-duotone',
 			'gg:row-first',
 			'solar:posts-carousel-horizontal-bold-duotone',
+			'gg:row-first',
 			'fluent:tab-add-24-filled'
 		]);
 	});

@@ -18,6 +18,7 @@
 	let ObjectButton: ComponentType;
 	let SectionButton: ComponentType;
 	let HorizontalStackButton: ComponentType;
+	let VerticalStackButton: ComponentType;
 	let ScenesButton: ComponentType;
 	let ViewButton: ComponentType;
 
@@ -26,6 +27,7 @@
 		ObjectButton = (await import('$lib/Drawer/ObjectButton.svelte')).default;
 		SectionButton = (await import('$lib/Drawer/SectionButton.svelte')).default;
 		HorizontalStackButton = (await import('$lib/Drawer/HorizontalStackButton.svelte')).default;
+		VerticalStackButton = (await import('$lib/Drawer/VerticalStackButton.svelte')).default;
 		ScenesButton = (await import('$lib/Drawer/ScenesButton.svelte')).default;
 		ViewButton = (await import('$lib/Drawer/ViewButton.svelte')).default;
 	});
@@ -86,6 +88,8 @@
 			<svelte:component this={SectionButton} {view} on:clicked={handleClick} />
 
 			<svelte:component this={HorizontalStackButton} {view} on:clicked={handleClick} />
+
+			<svelte:component this={VerticalStackButton} {view} on:clicked={handleClick} />
 
 			<svelte:component this={ScenesButton} {view} on:clicked={handleClick} />
 

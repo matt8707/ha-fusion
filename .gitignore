@@ -15,6 +15,7 @@ data/configuration.yaml
 /data/youtube_credentials.json
 /data/version.json
 /data/dashboard.yaml
+/data/custom_style.css
 
 # Claude Code (locale, non versionare)
 .claude/

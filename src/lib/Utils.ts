@@ -47,7 +47,10 @@ function findInSections(sections: Section[], id: number | undefined): any {
 				if (item.id === id) return item;
 			}
 		}
-		if (section.type === 'horizontal-stack' && section.sections) {
+		if (
+			(section.type === 'horizontal-stack' || section.type === 'vertical-stack') &&
+			section.sections
+		) {
 			const result = findInSections(section.sections, id);
 			if (result) return result;
 		}
@@ -112,6 +115,10 @@ export function getTogglableService(entity: HassEntity) {
 			service = state === 'locked' ? 'unlock' : 'lock';
 			break;
 
+		case 'group':
+			service = state === 'off' ? 'turn_on' : 'turn_off';
+			return `homeassistant.${service}`;
+
 		case 'remote':
 			return 'homeassistant.toggle';
 
@@ -133,6 +140,18 @@ export function getTogglableService(entity: HassEntity) {
 	}
 }
 
+function collectSectionIds(sections: any[], ids: Set<unknown>) {
+	for (const section of sections) {
+		ids.add(section.id);
+		if (section.items) {
+			for (const item of section.items) ids.add(item.id);
+		}
+		if (section.sections) {
+			collectSectionIds(section.sections, ids);
+		}
+	}
+}
+
 /**
  * Generates a unique 13-digit random ID
  * that doesn't collide with existing IDs
@@ -149,15 +168,7 @@ export function generateId(data: Dashboard) {
 		ids.add(view.id);
 
 		if (view.sections) {
-			for (const section of view.sections) {
-				ids.add(section.id);
-
-				if (section.items) {
-					for (const item of section.items) {
-						ids.add(item.id);
-					}
-				}
-			}
+			collectSectionIds(view.sections, ids);
 		}
 	}
 

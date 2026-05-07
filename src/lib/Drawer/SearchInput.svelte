@@ -58,7 +58,7 @@
 		};
 
 		const sectionFilter = (section: any) => {
-			if (section.type === 'horizontal-stack' && section.sections) {
+			if ((section.type === 'horizontal-stack' || section.type === 'vertical-stack') && section.sections) {
 				const filteredSubSections = section.sections.map(sectionFilter).filter(Boolean);
 				return filteredSubSections.length
 					? { ...section, sections: filteredSubSections }

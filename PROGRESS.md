@@ -173,6 +173,38 @@ List grouped by domains and categorized based on their similar behaviors
 - [x] fix <https://github.com/matt8707/ha-fusion/issues/599> — Weather sidebar: broken `<img>` on unknown HA weather states replaced with `on:error` hide + reset on state change
 - [x] fix <https://github.com/matt8707/ha-fusion/issues/550> — Button active state: removed hardcoded `color: black` from `.container[data-state='true']`; theme CSS variables now cascade correctly
 
+### Themes (themes-button branch)
+
+- [x] 5 new built-in CSS gradient themes: **slate**, **ember**, **nord**, **sage**, **rose**
+  - Each with dedicated thumbnail
+  - All gradient values properly quoted in YAML to prevent parser issues
+- [x] Light brightness drag slider on button tile
+  - Horizontal swipe on active light button adjusts brightness
+  - Drag overlay with color feedback, cancels on `pointercancel`
+
+### Button enhancements
+
+- [x] Display-only mode (`display_only: true` on ButtonItem)
+  - No click response, no ripple, no service call, no modal
+  - Edit mode still works normally
+  - Configurable via ButtonConfig "Solo visualizzazione" toggle
+- [x] Group entity toggle support in `getTogglableService`
+  - Groups route to `homeassistant.turn_on` / `homeassistant.turn_off`
+
+### Sidebar
+
+- [x] Template sidebar item now supports optional icon
+  - `icon`, `icon_size`, `icon_color` fields on `TemplateItem`
+  - Configurable in TemplateConfig modal
+
+### Custom CSS
+
+- [x] Custom CSS support (`custom_css: true` in `configuration.yaml`)
+  - CSS stored in `data/custom_style.css`
+  - In-app editor in Settings (textarea + save, independent from config save)
+  - GET + POST endpoint at `/_api/custom_css`
+  - Injected as `<style id="ha-fusion-custom-css">` in document head
+
 ### Pending
 
 - [ ] Lock with code support

@@ -11,20 +11,17 @@ export function handleVisibility($editMode: boolean, sections: Section[], states
 
 	sections.forEach((section: Section) => {
 		if (handleAllConditions($editMode, states, section)) {
-			// horizontal-stack
-			if (section.type === 'horizontal-stack' && section.sections) {
+			// horizontal-stack / vertical-stack
+			if (
+				(section.type === 'horizontal-stack' || section.type === 'vertical-stack') &&
+				section.sections
+			) {
 				const stack = section.sections.filter((nested: Section) => {
 					return handleAllConditions($editMode, states, nested);
 				});
 
-				// if every section in a horizontal-stack are hidden
-				// hide horizontal-stack itself
 				if (stack.length > 0) {
-					section = {
-						...section,
-						sections: stack
-					};
-
+					section = { ...section, sections: stack };
 					viewSections.push(section);
 				}
 			} else {

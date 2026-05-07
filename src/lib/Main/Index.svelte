@@ -6,6 +6,7 @@
 	import Content from '$lib/Main/Content.svelte';
 	import SectionHeader from '$lib/Main/SectionHeader.svelte';
 	import HorizontalStackHeader from '$lib/Main/HorizontalStackHeader.svelte';
+	import VerticalStackHeader from '$lib/Main/VerticalStackHeader.svelte';
 	import Scenes from '$lib/Main/Scenes.svelte';
 	import { handleVisibility, mediaQueries } from '$lib/Conditional';
 	import { generateId } from '$lib/Utils';
@@ -17,6 +18,7 @@
 	let dragEnteredAnother = false;
 
 	let isDraggingHorizontalStack = false;
+	let isDraggingVerticalStack = false;
 	let isDraggingScenes = false;
 	let skipTransformElement = false;
 
@@ -101,11 +103,13 @@
 		);
 
 		isDraggingHorizontalStack = matchedSection?.type === 'horizontal-stack';
+		isDraggingVerticalStack = matchedSection?.type === 'vertical-stack';
 		isDraggingScenes = matchedSection?.type === 'scenes';
 
 		if (event.type === 'finalize') {
 			isDraggingScenes = false;
 			isDraggingHorizontalStack = false;
+			isDraggingVerticalStack = false;
 		}
 
 		handleDrag(event, () => {
@@ -134,7 +138,8 @@
 		handleDrag(event, () => {
 			const stack = view?.sections.find(
 				(section: { id: number; type: string }) =>
-					section.id === id && section.type === 'horizontal-stack'
+					section.id === id &&
+					(section.type === 'horizontal-stack' || section.type === 'vertical-stack')
 			);
 
 			if (stack) {
@@ -301,7 +306,7 @@
 					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
 					use:dndzone={{
 						...dndOptions,
-						type: isDraggingHorizontalStack ? 'stack' : isDraggingScenes ? 'scenes' : 'section',
+						type: isDraggingHorizontalStack ? 'stack' : isDraggingVerticalStack ? 'vstack' : isDraggingScenes ? 'scenes' : 'section',
 						items: section.sections
 					}}
 					on:consider={(event) => dragSection__stack(section.id, event)}
@@ -330,6 +335,63 @@
 								on:finalize={(event) => dragItem__stack(stackSection.id, event)}
 							>
 								<!-- item -->
+								{#each stackSection?.items as item (item.id)}
+									<div
+										id={item?.id}
+										data-is-dnd-shadow-item-hint={item?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+										class="item"
+										animate:flip={{ duration: $motion }}
+										tabindex="-1"
+										style={itemStyles(item?.type)}
+									>
+										<Content {item} sectionName={stackSection?.name} />
+									</div>
+								{/each}
+							</div>
+						</section>
+					{/each}
+				</div>
+
+			<!-- vertical stack -->
+			{:else if section?.type === 'vertical-stack'}
+				<VerticalStackHeader {view} {section} />
+
+				<div
+					class="vertical-stack"
+					style:min-height="{stackHeight}px"
+					style:outline="2px dashed {$editMode ? '#ffc008' : 'transparent'}"
+					style:transition="min-height {$motion}ms ease, outline {$motion / 2}ms ease"
+					data-is-dnd-shadow-item-hint={section?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+					use:dndzone={{
+						...dndOptions,
+						type: isDraggingHorizontalStack ? 'stack' : isDraggingVerticalStack ? 'vstack' : isDraggingScenes ? 'scenes' : 'section',
+						items: section.sections
+					}}
+					on:consider={(event) => dragSection__stack(section.id, event)}
+					on:finalize={(event) => dragSection__stack(section.id, event)}
+				>
+					{#each section?.sections as stackSection (`${stackSection?.id}${stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] ? '_' + stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME] : ''}`)}
+						{@const empty = $editMode && !stackSection?.items?.length}
+						<section
+							id={String(stackSection.id)}
+							data-is-dnd-shadow-item-hint={stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+							animate:flip={{ duration: $motion }}
+							style:overflow="hidden"
+						>
+							<SectionHeader {view} section={stackSection} />
+							<div
+								class="items"
+								data-is-dnd-shadow-item-hint={stackSection?.[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
+								style={sectionStyles(section?.type, $editMode, $motion, empty)}
+								use:dndzone={{
+									...dndOptions,
+									type: 'item',
+									items: stackSection.items,
+									transformDraggedElement
+								}}
+								on:consider={(event) => dragItem__stack(stackSection.id, event)}
+								on:finalize={(event) => dragItem__stack(stackSection.id, event)}
+							>
 								{#each stackSection?.items as item (item.id)}
 									<div
 										id={item?.id}
@@ -434,6 +496,14 @@
 		grid-auto-flow: column;
 		grid-auto-columns: 1fr;
 		gap: 2rem;
+		border-radius: 0.65rem;
+		outline-offset: 3px;
+	}
+
+	.vertical-stack {
+		display: grid;
+		grid-auto-flow: row;
+		gap: 1.5rem;
 		border-radius: 0.65rem;
 		outline-offset: 3px;
 	}

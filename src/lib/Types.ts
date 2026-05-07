@@ -238,6 +238,9 @@ export interface TemplateItem {
 	type?: string;
 	id?: number;
 	template?: string;
+	icon?: string;
+	icon_size?: string;
+	icon_color?: string;
 	hide_mobile?: boolean;
 }
 
