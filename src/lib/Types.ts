@@ -7,6 +7,7 @@ export interface Configuration {
 	hassUrl?: string;
 	locale?: string;
 	custom_js?: boolean;
+	custom_css?: boolean;
 	motion?: boolean;
 	addons?: Addons;
 	token?: string;

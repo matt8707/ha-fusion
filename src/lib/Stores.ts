@@ -28,6 +28,7 @@ export const connected = writable<boolean>();
 export const configuration = writable<Configuration>();
 export const dashboard = writable<Dashboard>();
 export const customJs = writable<boolean | undefined>();
+export const customCss = writable<boolean | undefined>();
 
 // states
 export const onStates = readable([

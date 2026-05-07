@@ -11,6 +11,7 @@
 		currentViewId,
 		selectedLanguage,
 		customJs,
+		customCss,
 		filterDashboard,
 		disableMenuButton,
 		clickOriginatedFromMenu,
@@ -36,6 +37,7 @@
 	$translation = data?.translations;
 	$selectedLanguage = data?.configuration?.locale || 'en';
 	$customJs = data?.configuration?.custom_js;
+	$customCss = data?.configuration?.custom_css;
 	$youtubeAddon = data?.configuration?.addons?.youtube;
 	$currentViewId = $dashboard?.views?.[0]?.id;
 
@@ -238,6 +240,12 @@
 	{#if $customJs}
 		{#await import('$lib/Components/CustomJs.svelte') then CustomJs}
 			<svelte:component this={CustomJs.default} />
+		{/await}
+	{/if}
+
+	{#if $customCss}
+		{#await import('$lib/Components/CustomCss.svelte') then CustomCss}
+			<svelte:component this={CustomCss.default} />
 		{/await}
 	{/if}
 </div>
