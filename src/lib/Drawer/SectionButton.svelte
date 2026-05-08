@@ -55,9 +55,3 @@
 	{$lang('section')}
 </button>
 
-<style>
-	figure {
-		transform: scale(135%);
-		transform-origin: center 0.64rem;
-	}
-</style>

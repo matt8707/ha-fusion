@@ -20,6 +20,7 @@
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
 	import Ripple from 'svelte-ripple';
 	import PictureElements from '$lib/Main/PictureElements.svelte';
+	import Icon from '@iconify/svelte';
 
 	export let isOpen: boolean;
 	export let sel: any;
@@ -75,6 +76,7 @@
 		component?: any;
 		props?: any;
 		style?: any;
+		preview_icon?: string;
 	}[];
 
 	$: itemTypes = [
@@ -111,10 +113,7 @@
 		{
 			id: 'picture_elements',
 			type: $lang('picture_elements'),
-			component: PictureElements,
-			props: {
-				sel
-			}
+			preview_icon: 'solar:gallery-wide-bold-duotone'
 		},
 		{
 			id: 'empty',
@@ -127,7 +126,8 @@
 		{
 			id: 'conditional_media',
 			type: `${$lang('conditional')} ${$lang('media')?.toLocaleLowerCase()}`,
-			component: ConditionalMedia,
+			component: $demo.media_player ? ConditionalMedia : undefined,
+			preview_icon: 'solar:tv-bold-duotone',
 			props: {
 				demo: $demo.media_player,
 				sel
@@ -230,7 +230,7 @@
 		</div>
 
 		<div class="container">
-			{#each filter as { id, type, component, props, style } (id)}
+			{#each filter as { id, type, component, props, style, preview_icon } (id)}
 				<button
 					on:click={() => handleClick(id)}
 					animate:flip={{ duration: $motion }}
@@ -242,7 +242,13 @@
 					</div>
 
 					<div class="preview" class:camera={id === 'camera'} class:button={id === 'button'}>
-						<svelte:component this={component} {...props} />
+						{#if component}
+							<svelte:component this={component} {...props} />
+						{:else if preview_icon}
+							<div class="preview-icon">
+								<Icon icon={preview_icon} height="none" />
+							</div>
+						{/if}
 					</div>
 				</button>
 			{/each}
@@ -299,6 +305,14 @@
 		color: white;
 		padding: 0 1.5rem;
 		min-width: -webkit-fill-available;
+		display: flex;
+		align-items: center;
+	}
+
+	.preview-icon {
+		width: 3.5rem;
+		opacity: 0.4;
+		margin: auto;
 	}
 
 	.search {

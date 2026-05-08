@@ -2,6 +2,11 @@
  * Global CSS for #drawer
  */
 
+#drawer a.button {
+	text-decoration: none;
+	display: inline-block;
+}
+
 #drawer .button {
 	text-align: left;
 	position: relative;
@@ -26,6 +31,13 @@
 	width: 100%;
 	/* child radius = parent radius - padding */
 	border-radius: calc(0.4rem - 0.2rem);
+}
+
+/* buttons shown inline in toolbar (not inside a dropdown popup) */
+#drawer .add-buttons .button.dropdown {
+	background-color: var(--theme-drawer-button-background-color);
+	width: auto;
+	border-radius: 0.4rem;
 }
 
 /* add margin instead of padding because of animation drift */

@@ -17,6 +17,43 @@
 	$: brightness = attributes?.brightness;
 	$: percentage = attributes?.percentage;
 	$: media_title = attributes?.media_title;
+
+	function formatInputDatetime(
+		s: string | undefined,
+		hasDate: boolean | undefined,
+		hasTime: boolean | undefined,
+		locale: string
+	): string {
+		if (!s) return '';
+		try {
+			if (hasDate && hasTime) {
+				return new Intl.DateTimeFormat(locale, {
+					year: 'numeric',
+					month: 'short',
+					day: 'numeric',
+					hour: '2-digit',
+					minute: '2-digit'
+				}).format(new Date(s.replace(' ', 'T')));
+			} else if (hasDate) {
+				return new Intl.DateTimeFormat(locale, {
+					year: 'numeric',
+					month: 'short',
+					day: 'numeric'
+				}).format(new Date(s));
+			} else {
+				const [h, m] = s.split(':');
+				const d = new Date();
+				d.setHours(+h, +m, 0);
+				return new Intl.DateTimeFormat(locale, {
+					hour: 'numeric',
+					minute: '2-digit',
+					hour12: false
+				}).format(d);
+			}
+		} catch {
+			return s;
+		}
+	}
 </script>
 
 <!-- Light -->
@@ -94,6 +131,10 @@
 	{:else}
 		{attributes?.mode === 'password' ? state.replace(/./g, '•') : state}
 	{/if}
+
+	<!-- Input Datetime -->
+{:else if getDomain(entity_id) === 'input_datetime'}
+	{formatInputDatetime(state, attributes?.has_date, attributes?.has_time, $selectedLanguage)}
 
 	<!-- Timestamp  -->
 {:else if state && isTimestamp(state)}

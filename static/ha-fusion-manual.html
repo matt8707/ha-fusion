@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ha-fusion — Manuale / Manual</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2128;
+  --border: #30363d;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #58a6ff;
+  --accent2: #a5d6ff;
+  --green: #3fb950;
+  --yellow: #d29922;
+  --red: #f85149;
+  --purple: #bc8cff;
+  --orange: #ffa657;
+  --code-bg: #161b22;
+  --code-border: #30363d;
+  --nav-w: 250px;
+  --radius: 6px;
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 15px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.7;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── NAV ─────────────────────────────── */
+#nav {
+  width: var(--nav-w);
+  min-width: var(--nav-w);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  padding: 0 0 2rem 0;
+  z-index: 100;
+  font-size: 0.85rem;
+}
+#nav-header {
+  padding: 1.2rem 1rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+#nav-header .logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+#nav-header .version { color: var(--muted); font-size: 0.78rem; }
+#lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: var(--font);
+  width: fit-content;
+  transition: background 0.15s;
+}
+#lang-btn:hover { background: var(--border); }
+nav ul { list-style: none; padding: 0.5rem 0; }
+nav li a {
+  display: block;
+  padding: 0.32rem 1rem;
+  color: var(--muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color 0.12s, border-color 0.12s;
+  line-height: 1.45;
+}
+nav li a:hover { color: var(--text); }
+nav li a.active { color: var(--accent); border-left-color: var(--accent); }
+nav .nav-group { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; padding: 0.9rem 1rem 0.25rem; }
+nav .sub a { padding-left: 1.8rem; font-size: 0.82rem; }
+
+/* ── MAIN ────────────────────────────── */
+#main {
+  margin-left: var(--nav-w);
+  flex: 1;
+  padding: 2.5rem 2.5rem 6rem;
+  max-width: calc(var(--nav-w) + 880px);
+  min-width: 0;
+}
+
+/* ── HEADINGS ────────────────────────── */
+h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+h2 {
+  font-size: 1.5rem; font-weight: 700; margin: 3rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  scroll-margin-top: 1.5rem;
+}
+h3 { font-size: 1.15rem; font-weight: 600; margin: 2rem 0 0.6rem; color: var(--accent2); scroll-margin-top: 1.5rem; }
+h4 { font-size: 0.95rem; font-weight: 600; margin: 1.4rem 0 0.4rem; color: var(--text); }
+p { margin-bottom: 0.9rem; }
+ul, ol { margin: 0.5rem 0 0.9rem 1.4rem; }
+li { margin-bottom: 0.3rem; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { color: var(--text); font-weight: 600; }
+
+/* ── CODE ────────────────────────────── */
+code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+  color: var(--orange);
+}
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  margin: 0.8rem 0 1.2rem;
+  line-height: 1.6;
+}
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.kw { color: #ff7b72; }   /* keyword */
+.str { color: #a5d6ff; }  /* string */
+.cm { color: var(--muted); font-style: italic; } /* comment */
+.val { color: var(--orange); } /* value */
+.key { color: #7ee787; }  /* yaml key */
+
+/* ── TABLES ──────────────────────────── */
+.table-wrap { overflow-x: auto; margin: 0.8rem 0 1.4rem; }
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th {
+  background: var(--surface2);
+  text-align: left;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border);
+  font-weight: 600;
+  color: var(--text);
+}
+td {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--muted);
+}
+td:first-child { color: var(--orange); font-family: var(--mono); font-size: 0.83rem; }
+tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+/* ── CALLOUTS ────────────────────────── */
+.note, .tip, .warn {
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius);
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  border-left: 3px solid;
+}
+.note { background: rgba(88,166,255,0.08); border-color: var(--accent); color: var(--accent2); }
+.tip { background: rgba(63,185,80,0.08); border-color: var(--green); color: #7ee787; }
+.warn { background: rgba(210,153,34,0.08); border-color: var(--yellow); color: #e3b341; }
+.note strong, .tip strong, .warn strong { color: inherit; }
+
+/* ── BADGES ──────────────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: 0.3em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.badge-new { background: rgba(63,185,80,0.2); color: var(--green); }
+.badge-opt { background: rgba(88,166,255,0.15); color: var(--accent); }
+.badge-req { background: rgba(248,81,73,0.15); color: var(--red); }
+
+/* ── HERO ────────────────────────────── */
+#hero {
+  padding: 2rem 0 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+#hero h1 span { color: var(--accent); }
+#hero .subtitle { font-size: 1.1rem; color: var(--muted); margin-top: 0.4rem; }
+#hero .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+#hero .tag {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ── LANG ────────────────────────────── */
+html[lang="it"] .en { display: none; }
+html[lang="en"] .it { display: none; }
+
+/* ── SECTION SPACING ─────────────────── */
+section { margin-bottom: 1rem; }
+.divider { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+/* ── FEATURE GRID ────────────────────── */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.feat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1rem;
+}
+.feat-card .icon { font-size: 1.4rem; margin-bottom: 0.3rem; }
+.feat-card .name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.2rem; }
+.feat-card .desc { font-size: 0.8rem; color: var(--muted); }
+
+/* ── RESPONSIVE ──────────────────────── */
+@media (max-width: 900px) {
+  :root { --nav-w: 0px; }
+  #nav { transform: translateX(-250px); width: 250px; transition: transform 0.25s; }
+  #nav.open { transform: translateX(0); }
+  #main { margin-left: 0; padding: 1.2rem; }
+  #menu-btn { display: flex; }
+}
+#menu-btn {
+  display: none;
+  position: fixed;
+  top: 1rem; left: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px; height: 36px;
+  border-radius: var(--radius);
+  align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 200;
+  font-size: 1.1rem;
+}
+</style>
+</head>
+<body>
+
+<button id="menu-btn" onclick="document.getElementById('nav').classList.toggle('open')" title="Menu">☰</button>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════════════ -->
+<div id="nav">
+  <div id="nav-header">
+    <div class="logo">⚡ ha-fusion</div>
+    <div class="version">
+      <span class="it">Versione 2026.5 · Manuale Completo</span>
+      <span class="en">Version 2026.5 · Complete Manual</span>
+    </div>
+    <button id="lang-btn" onclick="toggleLang()">
+      <span id="lang-flag">🇬🇧</span>
+      <span id="lang-label">English</span>
+    </button>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#intro" class="it">Introduzione</a><a href="#intro" class="en">Introduction</a></li>
+      <li><a href="#requirements" class="it">Requisiti</a><a href="#requirements" class="en">Requirements</a></li>
+
+      <li class="nav-group it">Installazione</li>
+      <li class="nav-group en">Installation</li>
+      <li class="sub"><a href="#install-addon" class="it">Add-on HA</a><a href="#install-addon" class="en">HA Add-on</a></li>
+      <li class="sub"><a href="#install-docker" class="it">Docker</a><a href="#install-docker" class="en">Docker</a></li>
+      <li class="sub"><a href="#install-update" class="it">Aggiornamenti</a><a href="#install-update" class="en">Updates</a></li>
+
+      <li class="nav-group it">Configurazione</li>
+      <li class="nav-group en">Configuration</li>
+      <li class="sub"><a href="#config-yaml" class="it">configuration.yaml</a><a href="#config-yaml" class="en">configuration.yaml</a></li>
+      <li class="sub"><a href="#dashboard-yaml" class="it">dashboard.yaml</a><a href="#dashboard-yaml" class="en">dashboard.yaml</a></li>
+
+      <li class="nav-group it">Interfaccia</li>
+      <li class="nav-group en">Interface</li>
+      <li class="sub"><a href="#interface-overview" class="it">Panoramica</a><a href="#interface-overview" class="en">Overview</a></li>
+      <li class="sub"><a href="#views" class="it">Viste</a><a href="#views" class="en">Views</a></li>
+      <li class="sub"><a href="#sections" class="it">Sezioni</a><a href="#sections" class="en">Sections</a></li>
+
+      <li class="nav-group it">Elementi</li>
+      <li class="nav-group en">Items</li>
+      <li class="sub"><a href="#item-button" class="it">Button</a><a href="#item-button" class="en">Button</a></li>
+      <li class="sub"><a href="#item-camera" class="it">Camera</a><a href="#item-camera" class="en">Camera</a></li>
+      <li class="sub"><a href="#item-custompanel">Custom Panel</a></li>
+      <li class="sub"><a href="#item-other" class="it">Altri tipi</a><a href="#item-other" class="en">Other types</a></li>
+
+      <li class="nav-group it">Avanzato</li>
+      <li class="nav-group en">Advanced</li>
+      <li class="sub"><a href="#templates" class="it">Template Jinja2</a><a href="#templates" class="en">Jinja2 Templates</a></li>
+      <li class="sub"><a href="#visibility" class="it">Visibilità</a><a href="#visibility" class="en">Visibility</a></li>
+
+      <li class="nav-group it">Barra Laterale</li>
+      <li class="nav-group en">Sidebar</li>
+      <li class="sub"><a href="#sidebar-overview" class="it">Panoramica</a><a href="#sidebar-overview" class="en">Overview</a></li>
+      <li class="sub"><a href="#sidebar-items" class="it">Tutti i tipi</a><a href="#sidebar-items" class="en">All types</a></li>
+
+      <li class="nav-group it">Personalizzazione</li>
+      <li class="nav-group en">Customization</li>
+      <li class="sub"><a href="#themes" class="it">Temi</a><a href="#themes" class="en">Themes</a></li>
+      <li class="sub"><a href="#custom-css">Custom CSS / JS</a></li>
+
+      <li class="nav-group it">Utilizzo</li>
+      <li class="nav-group en">Usage</li>
+      <li class="sub"><a href="#modals" class="it">Finestre entità</a><a href="#modals" class="en">Entity modals</a></li>
+      <li class="sub"><a href="#edit-mode" class="it">Modalità modifica</a><a href="#edit-mode" class="en">Edit mode</a></li>
+      <li class="sub"><a href="#shortcuts" class="it">Scorciatoie & URL</a><a href="#shortcuts" class="en">Shortcuts & URL</a></li>
+      <li class="sub"><a href="#addons">Add-on YouTube</a></li>
+      <li class="sub"><a href="#debug" class="it">Debug</a><a href="#debug" class="en">Debug</a></li>
+
+      <li class="nav-group it">Riferimento YAML</li>
+      <li class="nav-group en">YAML Reference</li>
+      <li class="sub"><a href="#ref-dashboard">dashboard.yaml</a></li>
+      <li class="sub"><a href="#ref-section" class="it">Section</a><a href="#ref-section" class="en">Section</a></li>
+      <li class="sub"><a href="#ref-items" class="it">Items</a><a href="#ref-items" class="en">Items</a></li>
+      <li class="sub"><a href="#ref-sidebar" class="it">Sidebar</a><a href="#ref-sidebar" class="en">Sidebar</a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- ══ MAIN CONTENT ═══════════════════════════════════════════ -->
+<div id="main">
+
+<!-- HERO -->
+<div id="hero">
+  <h1><span>ha-fusion</span></h1>
+  <div class="subtitle it">Dashboard moderna e performante per Home Assistant</div>
+  <div class="subtitle en">Modern, performant custom dashboard for Home Assistant</div>
+  <div class="tags">
+    <span class="tag">SvelteKit</span>
+    <span class="tag">TypeScript</span>
+    <span class="tag">Docker</span>
+    <span class="tag">HA Add-on</span>
+    <span class="tag it">Italiano / Inglese</span>
+    <span class="tag en">Italian / English</span>
+    <span class="tag">v2026.5</span>
+  </div>
+</div>
+
+<!-- ══ INTRODUZIONE ══════════════════════════════════════════ -->
+<section id="intro">
+  <h2><span class="it">Introduzione</span><span class="en">Introduction</span></h2>
+
+  <p class="it"><strong>ha-fusion</strong> è una dashboard personalizzata per Home Assistant, costruita con SvelteKit. Sostituisce l'interfaccia predefinita di HA con un'esperienza moderna, fluida e completamente configurabile tramite interfaccia grafica — niente YAML da scrivere a mano per la maggior parte delle funzioni.</p>
+  <p class="en"><strong>ha-fusion</strong> is a custom dashboard for Home Assistant, built with SvelteKit. It replaces the default HA interface with a modern, fluid, fully configurable experience — no manual YAML required for most features.</p>
+
+  <p class="it">Questo è un fork personale del progetto originale <a href="https://github.com/matt8707/ha-fusion">ha-fusion di matt8707</a>, esteso con funzionalità aggiuntive tra cui il nuovo tipo di elemento <strong>Custom Panel</strong>, nuovi temi, CSS personalizzato in-app e miglioramenti vari.</p>
+  <p class="en">This is a personal fork of the original <a href="https://github.com/matt8707/ha-fusion">ha-fusion by matt8707</a>, extended with additional features including the new <strong>Custom Panel</strong> item type, new themes, in-app custom CSS, and various improvements.</p>
+
+  <h3><span class="it">Funzionalità principali</span><span class="en">Key features</span></h3>
+  <div class="feat-grid">
+    <div class="feat-card"><div class="icon">🗂️</div><div class="name it">Viste multiple</div><div class="name en">Multiple views</div><div class="desc it">Organizza il dashboard in viste separate con icone personalizzate</div><div class="desc en">Organise your dashboard into separate views with custom icons</div></div>
+    <div class="feat-card"><div class="icon">🔲</div><div class="name it">Sezioni flessibili</div><div class="name en">Flexible sections</div><div class="desc it">Stack orizzontali, verticali e scene per ogni layout</div><div class="desc en">Horizontal, vertical stacks and scenes for any layout</div></div>
+    <div class="feat-card"><div class="icon">🎛️</div><div class="name">Custom Panel</div><div class="desc it">Pannello multi-riga con camera, pulsanti, sensori e slider</div><div class="desc en">Multi-row panel with camera, buttons, sensors and sliders</div></div>
+    <div class="feat-card"><div class="icon">🧩</div><div class="name it">Template Jinja2</div><div class="name en">Jinja2 Templates</div><div class="desc it">Personalizza stato, icona, colore e servizio con template HA</div><div class="desc en">Customise state, icon, colour and service with HA templates</div></div>
+    <div class="feat-card"><div class="icon">👁️</div><div class="name it">Visibilità condizionale</div><div class="name en">Conditional visibility</div><div class="desc it">Mostra/nascondi sezioni e elementi in base a stati e condizioni</div><div class="desc en">Show/hide sections and items based on states and conditions</div></div>
+    <div class="feat-card"><div class="icon">🎨</div><div class="name it">Temi & CSS</div><div class="name en">Themes & CSS</div><div class="desc it">8 temi integrati + editor CSS personalizzato in-app</div><div class="desc en">8 built-in themes + in-app custom CSS editor</div></div>
+    <div class="feat-card"><div class="icon">🖱️</div><div class="name">Drag & Drop</div><div class="desc it">Riordina viste, sezioni ed elementi trascinandoli</div><div class="desc en">Reorder views, sections and items by dragging</div></div>
+    <div class="feat-card"><div class="icon">↩️</div><div class="name">Undo / Redo</div><div class="desc it">Cronologia completa delle modifiche con Cmd+Z</div><div class="desc en">Full change history with Cmd+Z</div></div>
+  </div>
+</section>
+
+<!-- ══ REQUISITI ══════════════════════════════════════════════ -->
+<section id="requirements">
+  <h2><span class="it">Requisiti</span><span class="en">Requirements</span></h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th class="it">Requisito</th><th class="en">Requirement</th><th class="it">Dettaglio</th><th class="en">Detail</th></tr></thead>
+      <tbody>
+        <tr><td>Home Assistant</td><td class="it">Istanza HA funzionante e raggiungibile in rete</td><td class="en">Working HA instance reachable on the network</td></tr>
+        <tr><td class="it">Metodo installazione</td><td class="en">Install method</td><td class="it">Docker <strong>oppure</strong> HA OS/Supervised (per Add-on)</td><td class="en">Docker <strong>or</strong> HA OS/Supervised (for Add-on)</td></tr>
+        <tr><td class="it">Token / Credenziali</td><td class="en">Token / Credentials</td><td class="it">Autenticazione OAuth integrata o token a lunga durata</td><td class="en">Built-in OAuth authentication or long-lived token</td></tr>
+        <tr><td class="it">Browser</td><td class="en">Browser</td><td class="it">Moderno (Chrome, Firefox, Safari, Edge)</td><td class="en">Modern browser (Chrome, Firefox, Safari, Edge)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ INSTALLAZIONE ══════════════════════════════════════════ -->
+<section id="install-addon">
+  <h2><span class="it">Installazione — Add-on Home Assistant</span><span class="en">Installation — Home Assistant Add-on</span></h2>
+
+  <p class="it">Il metodo più semplice per chi usa <strong>Home Assistant OS</strong> o <strong>Home Assistant Supervised</strong>. L'add-on viene gestito direttamente dal Supervisore HA.</p>
+  <p class="en">The easiest method for users running <strong>Home Assistant OS</strong> or <strong>Home Assistant Supervised</strong>. The add-on is managed directly by the HA Supervisor.</p>
+
+  <h3><span class="it">Passi</span><span class="en">Steps</span></h3>
+  <ol>
+    <li class="it"><strong>Aggiungi il repository</strong> — Vai in <em>Impostazioni → Add-on → Store degli add-on → ⋮ → Repository</em> e aggiungi:<br><code>https://github.com/amedello/addon-ha-fusion</code></li>
+    <li class="en"><strong>Add the repository</strong> — Go to <em>Settings → Add-ons → Add-on Store → ⋮ → Repositories</em> and add:<br><code>https://github.com/amedello/addon-ha-fusion</code></li>
+    <li class="it"><strong>Installa</strong> — Aggiorna la pagina dello Store, cerca <em>ha-fusion</em> e clicca <em>Installa</em>.</li>
+    <li class="en"><strong>Install</strong> — Refresh the Store page, search for <em>ha-fusion</em> and click <em>Install</em>.</li>
+    <li class="it"><strong>Avvia</strong> — Clicca <em>Avvia</em> nella pagina dell'add-on. Attiva <em>Mostra nella barra laterale</em> per accesso rapido.</li>
+    <li class="en"><strong>Start</strong> — Click <em>Start</em> on the add-on page. Enable <em>Show in sidebar</em> for quick access.</li>
+    <li class="it"><strong>Accedi</strong> — Apri la WebUI. La prima volta dovrai autenticarti con il tuo account Home Assistant.</li>
+    <li class="en"><strong>Access</strong> — Open the WebUI. The first time you'll need to authenticate with your Home Assistant account.</li>
+  </ol>
+
+  <div class="note">
+    <strong class="it">Modalità Ingress</strong><strong class="en">Ingress mode</strong>
+    <span class="it"> — In modalità add-on l'interfaccia viene servita attraverso l'Ingress di HA. L'URL HA viene rilevato automaticamente dai header della richiesta, non è necessario configurare <code>HASS_URL</code>.</span>
+    <span class="en"> — In add-on mode the interface is served through HA Ingress. The HA URL is automatically detected from request headers; no need to configure <code>HASS_URL</code>.</span>
+  </div>
+</section>
+
+<section id="install-docker">
+  <h2><span class="it">Installazione — Docker</span><span class="en">Installation — Docker</span></h2>
+
+  <p class="it">Usa Docker (o Docker Compose) per installare ha-fusion su qualsiasi macchina Linux, macOS o Windows che abbia accesso di rete alla tua istanza Home Assistant.</p>
+  <p class="en">Use Docker (or Docker Compose) to install ha-fusion on any Linux, macOS or Windows machine with network access to your Home Assistant instance.</p>
+
+  <h3>Docker Compose</h3>
+  <p class="it">Crea un file <code>docker-compose.yml</code>:</p>
+  <p class="en">Create a <code>docker-compose.yml</code> file:</p>
+<pre><code><span class="key">services</span><span class="kw">:</span>
+  <span class="key">ha-fusion</span><span class="kw">:</span>
+    <span class="key">container_name</span><span class="kw">:</span> <span class="val">ha-fusion</span>
+    <span class="key">image</span><span class="kw">:</span> <span class="val">ghcr.io/amedello/ha-fusion</span>
+    <span class="key">volumes</span><span class="kw">:</span>
+      <span class="kw">-</span> <span class="val">/percorso/locale/ha-fusion:/app/data</span>  <span class="cm"># dati persistenti</span>
+    <span class="key">network_mode</span><span class="kw">:</span> <span class="val">bridge</span>
+    <span class="key">ports</span><span class="kw">:</span>
+      <span class="kw">-</span> <span class="str">"5050:5050"</span>
+    <span class="key">environment</span><span class="kw">:</span>
+      <span class="key">TZ</span><span class="kw">:</span> <span class="val">Europe/Rome</span>          <span class="cm"># fuso orario</span>
+      <span class="key">HASS_URL</span><span class="kw">:</span> <span class="val">http://192.168.1.x:8123</span>  <span class="cm"># URL di Home Assistant</span>
+    <span class="key">restart</span><span class="kw">:</span> <span class="val">always</span></code></pre>
+
+  <p class="it">Avvia il container:</p>
+  <p class="en">Start the container:</p>
+<pre><code>docker-compose up -d ha-fusion</code></pre>
+  <p class="it">L'interfaccia è disponibile su <code>http://&lt;ip-macchina&gt;:5050</code></p>
+  <p class="en">The interface is available at <code>http://&lt;machine-ip&gt;:5050</code></p>
+
+  <h3><span class="it">Docker senza Compose</span><span class="en">Docker without Compose</span></h3>
+<pre><code>docker run -d \
+  --name ha-fusion \
+  --network bridge \
+  -p 5050:5050 \
+  -v /percorso/locale/ha-fusion:/app/data \
+  -e TZ=Europe/Rome \
+  -e HASS_URL=http://192.168.1.x:8123 \
+  --restart always \
+  ghcr.io/amedello/ha-fusion</code></pre>
+
+  <h3><span class="it">Variabili d'ambiente</span><span class="en">Environment variables</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Variabile</span><span class="en">Variable</span></th><th><span class="it">Obbligatoria</span><span class="en">Required</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>HASS_URL</td><td class="it">Sì (Docker)</td><td class="en">Yes (Docker)</td><td class="it">URL completo dell'istanza HA (es. <code>http://192.168.1.10:8123</code>)</td><td class="en">Full URL of your HA instance (e.g. <code>http://192.168.1.10:8123</code>)</td></tr>
+        <tr><td>TZ</td><td class="it">No</td><td class="en">No</td><td class="it">Fuso orario del container (es. <code>Europe/Rome</code>)</td><td class="en">Container timezone (e.g. <code>Europe/Rome</code>)</td></tr>
+        <tr><td>ADDON</td><td class="it">No</td><td class="en">No</td><td class="it"><code>true</code> solo in modalità add-on HA (gestito automaticamente)</td><td class="en"><code>true</code> only in HA add-on mode (set automatically)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tip">
+    <strong class="it">Volume dati</strong><strong class="en">Data volume</strong>
+    <span class="it"> — Mappa sempre un volume su <code>/app/data</code>. Questa cartella contiene <code>dashboard.yaml</code>, <code>configuration.yaml</code> e i file CSS/JS personalizzati. Senza mapping i dati vengono persi al riavvio del container.</span>
+    <span class="en"> — Always mount a volume at <code>/app/data</code>. This folder contains <code>dashboard.yaml</code>, <code>configuration.yaml</code> and custom CSS/JS files. Without a mapping, data is lost when the container restarts.</span>
+  </div>
+</section>
+
+<section id="install-update">
+  <h2><span class="it">Aggiornamenti</span><span class="en">Updates</span></h2>
+  <p class="it"><strong>Add-on:</strong> aggiorna direttamente dalla pagina dell'add-on in HA (icona di aggiornamento visibile se disponibile).</p>
+  <p class="en"><strong>Add-on:</strong> update directly from the add-on page in HA (update icon visible when available).</p>
+  <p class="it"><strong>Docker Compose:</strong></p>
+  <p class="en"><strong>Docker Compose:</strong></p>
+<pre><code>docker-compose pull ha-fusion
+docker-compose up -d ha-fusion</code></pre>
+  <div class="warn"><strong class="it">Backup</strong><strong class="en">Backup</strong><span class="it"> — Prima di aggiornare, fai una copia della cartella <code>data/</code> (specialmente <code>dashboard.yaml</code>).</span><span class="en"> — Before updating, back up the <code>data/</code> folder (especially <code>dashboard.yaml</code>).</span></div>
+</section>
+
+<!-- ══ CONFIGURAZIONE ═════════════════════════════════════════ -->
+<section id="config-yaml">
+  <h2>configuration.yaml</h2>
+  <p class="it">Questo file si trova in <code>data/configuration.yaml</code> e contiene le impostazioni globali dell'applicazione. Viene modificato tramite l'interfaccia grafica (Impostazioni), ma può essere editato manualmente.</p>
+  <p class="en">This file lives at <code>data/configuration.yaml</code> and contains global application settings. It can be modified through the UI (Settings) or edited manually.</p>
+
+<pre><code><span class="cm"># data/configuration.yaml</span>
+<span class="key">locale</span><span class="kw">:</span> <span class="val">it</span>          <span class="cm"># codice lingua (it, en, de, fr, …)</span>
+<span class="key">custom_css</span><span class="kw">:</span> <span class="kw">false</span>   <span class="cm"># abilita CSS personalizzato</span>
+<span class="key">custom_js</span><span class="kw">:</span> <span class="kw">false</span>    <span class="cm"># abilita JavaScript personalizzato</span>
+<span class="key">motion</span><span class="kw">:</span> <span class="kw">true</span>        <span class="cm"># animazioni di transizione (190ms)</span>
+<span class="key">addons</span><span class="kw">:</span>
+  <span class="key">youtube</span><span class="kw">:</span> <span class="kw">false</span>    <span class="cm"># integrazione YouTube</span>
+  <span class="key">maptiler</span><span class="kw">:</span>
+    <span class="key">apikey</span><span class="kw">:</span> <span class="str">""</span>      <span class="cm"># API key MapTiler per mappe</span></code></pre>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Chiave</span><span class="en">Key</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Default</span><span class="en">Default</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>locale</td><td>string</td><td><code>en</code></td><td class="it">Lingua dell'interfaccia. Usa codici ISO 639-1 (it, en, de, fr, es, …). Oltre 60 lingue disponibili.</td><td class="en">Interface language. Use ISO 639-1 codes (it, en, de, fr, es, …). 60+ languages available.</td></tr>
+        <tr><td>custom_css</td><td>boolean</td><td><code>false</code></td><td class="it">Se <code>true</code>, carica <code>data/custom_style.css</code> in ogni pagina.</td><td class="en">If <code>true</code>, loads <code>data/custom_style.css</code> on every page.</td></tr>
+        <tr><td>custom_js</td><td>boolean</td><td><code>false</code></td><td class="it">Se <code>true</code>, carica <code>data/custom_javascript.js</code> come modulo.</td><td class="en">If <code>true</code>, loads <code>data/custom_javascript.js</code> as a module.</td></tr>
+        <tr><td>motion</td><td>boolean</td><td><code>true</code></td><td class="it">Attiva/disattiva le animazioni CSS (utile su dispositivi lenti).</td><td class="en">Enable/disable CSS animations (useful on slow devices).</td></tr>
+        <tr><td>addons.youtube</td><td>boolean</td><td><code>false</code></td><td class="it">Abilita la scheda YouTube nella sidebar.</td><td class="en">Enable the YouTube tab in the sidebar.</td></tr>
+        <tr><td>addons.maptiler.apikey</td><td>string</td><td><code>""</code></td><td class="it">API key per MapTiler (necessaria per elementi mappa).</td><td class="en">MapTiler API key (needed for map elements).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="dashboard-yaml">
+  <h2>dashboard.yaml</h2>
+  <p class="it">Il file principale della configurazione si trova in <code>data/dashboard.yaml</code>. Contiene tutte le viste, sezioni, elementi e la configurazione della sidebar. Viene scritto automaticamente quando salvi dalla UI, ma può essere modificato a mano o tramite l'editor YAML integrato.</p>
+  <p class="en">The main configuration file lives at <code>data/dashboard.yaml</code>. It contains all views, sections, items and sidebar configuration. It is written automatically when you save from the UI, but can also be edited manually or via the built-in YAML editor.</p>
+
+<pre><code><span class="cm"># struttura di base / basic structure</span>
+<span class="key">theme</span><span class="kw">:</span> <span class="val">godis</span>          <span class="cm"># nome del tema</span>
+<span class="key">hide_views</span><span class="kw">:</span> <span class="kw">false</span>    <span class="cm"># nasconde la barra delle viste</span>
+<span class="key">hide_sidebar</span><span class="kw">:</span> <span class="kw">false</span>  <span class="cm"># nasconde la sidebar</span>
+<span class="key">sidebarWidth</span><span class="kw">:</span> <span class="val">380</span>    <span class="cm"># larghezza sidebar in pixel</span>
+<span class="key">views</span><span class="kw">:</span>               <span class="cm"># array di viste</span>
+  <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890</span>
+    <span class="key">name</span><span class="kw">:</span> <span class="val">Casa</span>
+    <span class="key">icon</span><span class="kw">:</span> <span class="val">mdi:home</span>
+    <span class="key">sections</span><span class="kw">:</span> <span class="cm"># …</span>
+<span class="key">sidebar</span><span class="kw">:</span>             <span class="cm"># array di elementi sidebar</span>
+  <span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">time</span>
+    <span class="key">id</span><span class="kw">:</span> <span class="val">9876543210</span></code></pre>
+
+  <div class="note"><strong>IDs</strong> — <span class="it">Ogni vista, sezione ed elemento deve avere un <code>id</code> numerico <em>univoco</em> nel dashboard. Usa sempre la UI per creare elementi: genera automaticamente gli ID con <code>generateId()</code>. Se modifichi il YAML a mano, genera un numero intero random di 13 cifre.</span><span class="en">Every view, section and item must have a numerically <em>unique</em> <code>id</code> across the whole dashboard. Always use the UI to create items — it auto-generates IDs via <code>generateId()</code>. If you edit YAML manually, generate a random 13-digit integer.</span></div>
+</section>
+
+<!-- ══ INTERFACCIA ════════════════════════════════════════════ -->
+<section id="interface-overview">
+  <h2><span class="it">Panoramica dell'Interfaccia</span><span class="en">Interface Overview</span></h2>
+  <p class="it">L'interfaccia di ha-fusion si compone di tre aree principali:</p>
+  <p class="en">The ha-fusion interface consists of three main areas:</p>
+  <ol>
+    <li class="it"><strong>Barra delle viste</strong> — in alto, mostra le tab delle viste configurate. Cliccando su una vista si naviga al suo contenuto.</li>
+    <li class="en"><strong>Views bar</strong> — at the top, shows tabs for configured views. Clicking a view navigates to its content.</li>
+    <li class="it"><strong>Area principale</strong> — la griglia centrale con sezioni ed elementi. Occupa la maggior parte dello schermo.</li>
+    <li class="en"><strong>Main area</strong> — the central grid with sections and items. Occupies most of the screen.</li>
+    <li class="it"><strong>Sidebar</strong> — a destra, mostra widget informativi (ora, meteo, sensori, ecc.).</li>
+    <li class="en"><strong>Sidebar</strong> — on the right, shows informational widgets (time, weather, sensors, etc.).</li>
+  </ol>
+
+  <h3><span class="it">Icona menu (☰)</span><span class="en">Menu icon (☰)</span></h3>
+  <p class="it">In alto a sinistra si trova l'icona del menu. Apre il <strong>Drawer</strong> che contiene le opzioni di configurazione globale: temi, CSS, lingua, impostazioni e aggiornamento.</p>
+  <p class="en">In the top left is the menu icon. It opens the <strong>Drawer</strong> containing global configuration options: themes, CSS, language, settings, and updates.</p>
+
+  <h3><span class="it">Pulsante Modifica (✏️)</span><span class="en">Edit button (✏️)</span></h3>
+  <p class="it">In alto a destra si trova il pulsante per entrare in <strong>modalità modifica</strong>. In questa modalità compaiono tutti i controlli per aggiungere, spostare e configurare elementi.</p>
+  <p class="en">In the top right is the button to enter <strong>edit mode</strong>. In this mode all controls appear for adding, moving and configuring items.</p>
+</section>
+
+<!-- ══ VISTE ══════════════════════════════════════════════════ -->
+<section id="views">
+  <h2><span class="it">Viste</span><span class="en">Views</span></h2>
+  <p class="it">Le viste sono le tab principali di navigazione. Ogni vista può contenere un numero arbitrario di sezioni. Nel YAML corrispondono all'array <code>views</code> in cima a <code>dashboard.yaml</code>.</p>
+  <p class="en">Views are the main navigation tabs. Each view can contain any number of sections. In YAML they correspond to the <code>views</code> array at the top of <code>dashboard.yaml</code>.</p>
+
+  <h3><span class="it">Aggiungere una vista</span><span class="en">Adding a view</span></h3>
+  <p class="it">In modalità modifica, clicca l'icona <strong>+</strong> nella barra delle viste. Inserisci nome e icona, poi salva.</p>
+  <p class="en">In edit mode, click the <strong>+</strong> icon in the views bar. Enter a name and icon, then save.</p>
+
+  <h3><span class="it">Modificare una vista</span><span class="en">Editing a view</span></h3>
+  <p class="it">In modalità modifica, fai clic sul nome della vista per modificarlo; oppure usa il pulsante <em>Configura</em> (ingranaggio) che appare accanto alla tab.</p>
+  <p class="en">In edit mode, click the view name to edit it; or use the <em>Configure</em> (gear) button that appears next to the tab.</p>
+
+  <h3><span class="it">Riordinare le viste</span><span class="en">Reordering views</span></h3>
+  <p class="it">In modalità modifica, trascina le tab delle viste per cambiarne l'ordine.</p>
+  <p class="en">In edit mode, drag the view tabs to reorder them.</p>
+
+  <h3><span class="it">Nascondere la barra delle viste</span><span class="en">Hiding the views bar</span></h3>
+  <p class="it">Imposta <code>hide_views: true</code> in <code>dashboard.yaml</code> per nascondere tutta la barra. Utile su schermi piccoli.</p>
+  <p class="en">Set <code>hide_views: true</code> in <code>dashboard.yaml</code> to hide the entire bar. Useful on small screens.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>id</td><td>number</td><td class="it">Identificatore univoco (generato automaticamente)</td><td class="en">Unique identifier (auto-generated)</td></tr>
+        <tr><td>name</td><td>string</td><td class="it">Nome visualizzato nella tab</td><td class="en">Name shown in the tab</td></tr>
+        <tr><td>icon</td><td>string</td><td class="it">Icona MDI/Iconify (es. <code>mdi:home</code>)</td><td class="en">MDI/Iconify icon (e.g. <code>mdi:home</code>)</td></tr>
+        <tr><td>sections</td><td>Section[]</td><td class="it">Array di sezioni nella vista</td><td class="en">Array of sections in the view</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ SEZIONI ════════════════════════════════════════════════ -->
+<section id="sections">
+  <h2><span class="it">Sezioni</span><span class="en">Sections</span></h2>
+  <p class="it">Le sezioni organizzano gli elementi all'interno di una vista. Esistono quattro tipi di sezione.</p>
+  <p class="en">Sections organise items within a view. There are four section types.</p>
+
+  <h3><span class="it">Sezione Normale (default)</span><span class="en">Normal Section (default)</span></h3>
+  <p class="it">Il tipo base. Mostra un titolo opzionale e una griglia di elementi. Nel YAML <strong>non ha</strong> il campo <code>type</code>.</p>
+  <p class="en">The basic type. Shows an optional title and a grid of items. In YAML it has <strong>no</strong> <code>type</code> field.</p>
+<pre><code><span class="key">sections</span><span class="kw">:</span>
+  <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890000</span>
+    <span class="key">name</span><span class="kw">:</span> <span class="str">"Illuminazione"</span>
+    <span class="key">items</span><span class="kw">:</span>
+      <span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">button</span>
+        <span class="key">id</span><span class="kw">:</span> <span class="val">9876543210001</span>
+        <span class="key">entity_id</span><span class="kw">:</span> <span class="val">light.soggiorno</span></code></pre>
+
+  <h3>Horizontal Stack</h3>
+  <p class="it">Affianca più sezioni in colonne orizzontali. Ogni colonna è una sezione figlia con i propri elementi. Ideale per dividere lo schermo in più zone affiancate.</p>
+  <p class="en">Places multiple sections in horizontal columns. Each column is a child section with its own items. Ideal for splitting the screen into side-by-side zones.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">horizontal-stack</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1111111111111</span>
+  <span class="key">sections</span><span class="kw">:</span>
+    <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">2222222222222</span>
+      <span class="key">name</span><span class="kw">:</span> <span class="str">"Sinistra"</span>
+      <span class="key">items</span><span class="kw">:</span> <span class="cm"># …</span>
+    <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">3333333333333</span>
+      <span class="key">name</span><span class="kw">:</span> <span class="str">"Destra"</span>
+      <span class="key">items</span><span class="kw">:</span> <span class="cm"># …</span></code></pre>
+
+  <h3>Vertical Stack <span class="badge badge-new">Nuovo</span></h3>
+  <p class="it">Come l'horizontal stack, ma dispone le sezioni figlie <strong>in verticale</strong> una sopra l'altra. Ogni sezione figlia ha il proprio titolo. Utile per raggruppare zone logicamente correlate in una colonna.</p>
+  <p class="en">Like the horizontal stack, but arranges child sections <strong>vertically</strong> one above the other. Each child section has its own title. Useful for grouping logically related zones in a column.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">vertical-stack</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">4444444444444</span>
+  <span class="key">sections</span><span class="kw">:</span>
+    <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">5555555555555</span>
+      <span class="key">name</span><span class="kw">:</span> <span class="str">"Piano terra"</span>
+      <span class="key">items</span><span class="kw">:</span> <span class="cm"># …</span>
+    <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">6666666666666</span>
+      <span class="key">name</span><span class="kw">:</span> <span class="str">"Primo piano"</span>
+      <span class="key">items</span><span class="kw">:</span> <span class="cm"># …</span></code></pre>
+
+  <div class="note"><strong class="it">Nota</strong><strong class="en">Note</strong> — <span class="it"><code>horizontal-stack</code> e <code>vertical-stack</code> non possono essere annidati l'uno nell'altro: uno stack può contenere solo sezioni normali come figli.</span><span class="en"><code>horizontal-stack</code> and <code>vertical-stack</code> cannot be nested inside each other: a stack may only contain normal sections as children.</span></div>
+
+  <h3>Scenes</h3>
+  <p class="it">Una sezione speciale ottimizzata per visualizzare scene HA. Gli elementi scene vengono mostrati in una griglia compatta senza titolo sezione.</p>
+  <p class="en">A special section optimised for displaying HA scenes. Scene items are shown in a compact grid without a section title.</p>
+<pre><code><span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">7777777777777</span>
+  <span class="key">name</span><span class="kw">:</span> <span class="str">"Scene"</span>
+  <span class="cm"># Nessun tipo speciale; usa entità scene.* come items</span></code></pre>
+
+  <h3><span class="it">Campi comuni delle sezioni</span><span class="en">Common section fields</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>id</td><td>number</td><td class="it">Identificatore univoco obbligatorio</td><td class="en">Mandatory unique identifier</td></tr>
+        <tr><td>name</td><td>string</td><td class="it">Titolo visualizzato sopra la sezione. Usa <code>"-"</code> per separatore visivo senza testo.</td><td class="en">Title shown above the section. Use <code>"-"</code> for visual separator without text.</td></tr>
+        <tr><td>type</td><td>string</td><td class="it">Ometti per sezione normale; oppure <code>horizontal-stack</code> o <code>vertical-stack</code></td><td class="en">Omit for normal; or <code>horizontal-stack</code> or <code>vertical-stack</code></td></tr>
+        <tr><td>items</td><td>Item[]</td><td class="it">Array di elementi della sezione</td><td class="en">Array of section items</td></tr>
+        <tr><td>sections</td><td>Section[]</td><td class="it">Sezioni figlie (solo per stack)</td><td class="en">Child sections (stacks only)</td></tr>
+        <tr><td>visibility</td><td>Condition[][]</td><td class="it">Condizioni visibilità della sezione (vedi § Visibilità)</td><td class="en">Section visibility conditions (see § Visibility)</td></tr>
+        <tr><td>item_visibility_template</td><td>Condition[][]</td><td class="it">Template visibilità applicato a tutti gli item (vedi § Visibilità)</td><td class="en">Visibility template applied to all items (see § Visibility)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ══ BUTTON ═════════════════════════════════════════════════ -->
+<section id="item-button">
+  <h2><span class="it">Elemento: Button</span><span class="en">Item: Button</span></h2>
+  <p class="it">Il tipo di elemento più versatile. Un <strong>button</strong> rappresenta qualsiasi entità di Home Assistant: luci, interruttori, script, scene, climate, media player, sensori e molti altri. Al click esegue l'azione predefinita per il dominio (toggle, press, activate…) oppure apre la finestra dettagli dell'entità.</p>
+  <p class="en">The most versatile item type. A <strong>button</strong> can represent any Home Assistant entity: lights, switches, scripts, scenes, climate, media players, sensors and many more. On click it performs the default action for the domain (toggle, press, activate…) or opens the entity detail modal.</p>
+
+  <h3><span class="it">Esempio base</span><span class="en">Basic example</span></h3>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">button</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890001</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">light.soggiorno</span>
+  <span class="key">name</span><span class="kw">:</span> <span class="str">"Soggiorno"</span>
+  <span class="key">icon</span><span class="kw">:</span> <span class="val">mdi:ceiling-light</span>
+  <span class="key">color</span><span class="kw">:</span> <span class="str">"#ffcc44"</span></code></pre>
+
+  <h3><span class="it">Tutti i campi</span><span class="en">All fields</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Default</span><span class="en">Default</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>type</td><td>string</td><td><code>—</code></td><td class="it">Deve essere <code>"button"</code></td><td class="en">Must be <code>"button"</code></td></tr>
+        <tr><td>id</td><td>number</td><td><code>—</code></td><td class="it">Identificatore univoco <span class="badge badge-req">richiesto</span></td><td class="en">Unique identifier <span class="badge badge-req">required</span></td></tr>
+        <tr><td>entity_id</td><td>string</td><td><code>—</code></td><td class="it">ID entità HA (es. <code>light.soggiorno</code>) <span class="badge badge-req">richiesto</span></td><td class="en">HA entity ID (e.g. <code>light.soggiorno</code>) <span class="badge badge-req">required</span></td></tr>
+        <tr><td>name</td><td>string</td><td class="it">nome amichevole HA</td><td class="en">HA friendly name</td><td class="it">Nome visualizzato sul pulsante (sovrascrive il nome HA)</td><td class="en">Name shown on the button (overrides HA name)</td></tr>
+        <tr><td>icon</td><td>string</td><td class="it">icona del dominio</td><td class="en">domain icon</td><td class="it">Icona MDI/Iconify (es. <code>mdi:lightbulb</code>, <code>fluent:home-20-filled</code>)</td><td class="en">MDI/Iconify icon (e.g. <code>mdi:lightbulb</code>, <code>fluent:home-20-filled</code>)</td></tr>
+        <tr><td>color</td><td>string</td><td class="it">calcolato</td><td class="en">computed</td><td class="it">Colore dell'icona quando l'entità è accesa. CSS color string (<code>#rrggbb</code>, <code>red</code>, <code>hsl(…)</code>)</td><td class="en">Icon colour when entity is on. Any CSS color string (<code>#rrggbb</code>, <code>red</code>, <code>hsl(…)</code>)</td></tr>
+        <tr><td>marquee</td><td>boolean</td><td><code>false</code></td><td class="it">Attiva lo scorrimento del testo per nomi lunghi</td><td class="en">Enable text scrolling for long names</td></tr>
+        <tr><td>more_info</td><td>boolean</td><td><code>true</code></td><td class="it">Se <code>false</code>, il click non apre la finestra dettagli (esegue solo toggle/servizio)</td><td class="en">If <code>false</code>, click does not open details modal (only toggle/service)</td></tr>
+        <tr><td>display_only</td><td>boolean</td><td><code>false</code></td><td class="it">Se <code>true</code>, l'elemento è puramente visivo: nessuna interazione al click</td><td class="en">If <code>true</code>, the item is purely visual — no click interaction</td></tr>
+        <tr><td>service</td><td>string</td><td><code>—</code></td><td class="it">YAML di servizio personalizzato da chiamare al click (vedi sotto)</td><td class="en">Custom service call YAML to execute on click (see below)</td></tr>
+        <tr><td>template</td><td>object</td><td><code>—</code></td><td class="it">Template Jinja2 per stato, nome, icona, colore, servizio (vedi § Template)</td><td class="en">Jinja2 templates for state, name, icon, colour, service (see § Templates)</td></tr>
+        <tr><td>visibility</td><td>array</td><td><code>—</code></td><td class="it">Condizioni di visibilità dell'elemento (vedi § Visibilità)</td><td class="en">Item visibility conditions (see § Visibility)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="it">Slider luminosità (trascinamento)</span><span class="en">Brightness slider (drag)</span></h3>
+  <p class="it">Per le entità <strong>light</strong>, puoi regolare la luminosità direttamente sulla tile trascinando orizzontalmente. Tieni premuto sulla tile e trascina a destra per aumentare, a sinistra per diminuire la luminosità. Un overlay colorato mostra il livello corrente durante il trascinamento.</p>
+  <p class="en">For <strong>light</strong> entities, you can adjust brightness directly on the tile by dragging horizontally. Press and hold on the tile, then drag right to increase or left to decrease brightness. A colour overlay shows the current level during the drag.</p>
+
+  <h3><span class="it">Servizio personalizzato (campo <code>service</code>)</span><span class="en">Custom service (<code>service</code> field)</span></h3>
+  <p class="it">Quando vuoi che il click esegua un servizio specifico invece del toggle predefinito, usa il campo <code>service</code>. Il valore è una stringa YAML multi-riga con la struttura del servizio.</p>
+  <p class="en">When you want click to execute a specific service instead of the default toggle, use the <code>service</code> field. The value is a multi-line YAML string with the service structure.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">button</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890002</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">sensor.soundbar</span>
+  <span class="key">name</span><span class="kw">:</span> <span class="str">"Soundbar"</span>
+  <span class="key">more_info</span><span class="kw">:</span> <span class="kw">false</span>
+  <span class="key">service</span><span class="kw">:</span> <span class="kw">|-</span>
+    <span class="key">service</span><span class="kw">:</span> <span class="val">remote.send_command</span>
+    <span class="key">data</span><span class="kw">:</span>
+      <span class="key">device_id</span><span class="kw">:</span> <span class="val">abc123def456</span>
+      <span class="key">command</span><span class="kw">:</span> <span class="val">PowerToggle</span>
+      <span class="key">device</span><span class="kw">:</span> <span class="val">Soundbar</span></code></pre>
+
+  <h3><span class="it">Modalità Display Only</span><span class="en">Display Only mode</span></h3>
+  <p class="it">Con <code>display_only: true</code> la tile mostra lo stato dell'entità ma non risponde al click. Utile per sensori informativi che non richiedono interazione.</p>
+  <p class="en">With <code>display_only: true</code> the tile shows the entity state but does not respond to clicks. Useful for informational sensors that require no interaction.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">button</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890003</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">sensor.temperatura_soggiorno</span>
+  <span class="key">display_only</span><span class="kw">:</span> <span class="kw">true</span></code></pre>
+
+  <h3><span class="it">Azioni predefinite per dominio</span><span class="en">Default actions by domain</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Dominio</span><span class="en">Domain</span></th><th><span class="it">Azione predefinita</span><span class="en">Default action</span></th><th><span class="it">Finestra dettagli</span><span class="en">Details modal</span></th></tr></thead>
+      <tbody>
+        <tr><td>light</td><td>toggle</td><td class="it">Sì (colore, luminosità, temperatura colore)</td><td class="en">Yes (colour, brightness, colour temperature)</td></tr>
+        <tr><td>switch, input_boolean, fan</td><td>toggle</td><td class="it">Sì</td><td class="en">Yes</td></tr>
+        <tr><td>script</td><td>turn_on</td><td class="it">Sì (parametri)</td><td class="en">Yes (parameters)</td></tr>
+        <tr><td>scene</td><td>turn_on</td><td class="it">No</td><td class="en">No</td></tr>
+        <tr><td>automation</td><td>toggle</td><td class="it">Sì</td><td class="en">Yes</td></tr>
+        <tr><td>button, input_button</td><td>press</td><td class="it">No</td><td class="en">No</td></tr>
+        <tr><td>climate</td><td class="it">apre la finestra</td><td class="en">opens modal</td><td class="it">Sì (mode, temperatura)</td><td class="en">Yes (mode, temperature)</td></tr>
+        <tr><td>media_player</td><td class="it">toggle</td><td class="en">toggle</td><td class="it">Sì (controlli media)</td><td class="en">Yes (media controls)</td></tr>
+        <tr><td>cover</td><td class="it">apre la finestra</td><td class="en">opens modal</td><td class="it">Sì (apri/chiudi/posizione)</td><td class="en">Yes (open/close/position)</td></tr>
+        <tr><td>lock</td><td class="it">apre la finestra</td><td class="en">opens modal</td><td class="it">Sì</td><td class="en">Yes</td></tr>
+        <tr><td>sensor, binary_sensor</td><td class="it">apre la finestra</td><td class="en">opens modal</td><td class="it">Sì (storia stato)</td><td class="en">Yes (state history)</td></tr>
+        <tr><td>vacuum</td><td class="it">apre la finestra</td><td class="en">opens modal</td><td class="it">Sì (comandi robot)</td><td class="en">Yes (robot commands)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ CAMERA ════════════════════════════════════════════════ -->
+<section id="item-camera">
+  <h2><span class="it">Elemento: Camera</span><span class="en">Item: Camera</span></h2>
+  <p class="it">Mostra l'anteprima di una telecamera HA direttamente nella griglia. Al click si apre la finestra a schermo intero con opzione stream.</p>
+  <p class="en">Shows a camera preview from HA directly in the grid. Click opens a full-screen modal with stream option.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">camera</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890010</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">camera.ingresso</span>
+  <span class="key">stream</span><span class="kw">:</span> <span class="kw">true</span>     <span class="cm"># usa HLS stream invece di still image</span>
+  <span class="key">size</span><span class="kw">:</span> <span class="val">contain</span>   <span class="cm"># object-fit CSS</span></code></pre>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>entity_id</td><td>string</td><td class="it">Entità <code>camera.*</code> di Home Assistant</td><td class="en">Home Assistant <code>camera.*</code> entity</td></tr>
+        <tr><td>stream</td><td>boolean</td><td class="it">Se <code>true</code> usa HLS stream live. Se <code>false</code> (default) usa immagine statica aggiornata periodicamente.</td><td class="en">If <code>true</code>, uses live HLS stream. If <code>false</code> (default), uses a periodically refreshed still image.</td></tr>
+        <tr><td>size</td><td>string</td><td class="it">CSS <code>object-fit</code>: <code>contain</code>, <code>cover</code>, <code>fill</code>, <code>scale-down</code>. Default: <code>cover</code>.</td><td class="en">CSS <code>object-fit</code>: <code>contain</code>, <code>cover</code>, <code>fill</code>, <code>scale-down</code>. Default: <code>cover</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ CUSTOM PANEL ══════════════════════════════════════════ -->
+<section id="item-custompanel">
+  <h2>Custom Panel <span class="badge badge-new">Nuovo</span></h2>
+  <p class="it"><strong>Custom Panel</strong> è un tipo di elemento completamente nuovo che permette di costruire un pannello multi-riga dentro una singola tile. Ogni riga può essere di tipo diverso: telecamera, pulsanti, sensore o slider. Le righe sono riordinabili con drag & drop dalla configurazione.</p>
+  <p class="en"><strong>Custom Panel</strong> is a brand-new item type that lets you build a multi-row panel inside a single tile. Each row can be a different type: camera, buttons, sensor or slider. Rows are reorderable via drag & drop in the configuration modal.</p>
+
+  <p class="it">Sul tile principale viene mostrato l'icona, il nome e opzionalmente lo stato di una singola entità "primaria" selezionabile dalla configurazione.</p>
+  <p class="en">The main tile shows the icon, name and optionally the state of a single "primary" entity selected from the configuration.</p>
+
+  <h3><span class="it">Struttura YAML</span><span class="en">YAML structure</span></h3>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">custom_panel</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890020</span>
+  <span class="key">name</span><span class="kw">:</span> <span class="str">"Garage"</span>
+  <span class="key">icon</span><span class="kw">:</span> <span class="val">mdi:garage</span>
+  <span class="key">color</span><span class="kw">:</span> <span class="str">"#4488ff"</span>
+  <span class="key">primary_row_id</span><span class="kw">:</span> <span class="val">10</span>   <span class="cm"># id della riga il cui stato appare sul tile</span>
+  <span class="key">rows</span><span class="kw">:</span>
+    <span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">camera</span>
+      <span class="key">id</span><span class="kw">:</span> <span class="val">1</span>
+      <span class="key">entity_id</span><span class="kw">:</span> <span class="val">camera.garage</span>
+      <span class="key">stream</span><span class="kw">:</span> <span class="kw">true</span>
+    <span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">buttons</span>
+      <span class="key">id</span><span class="kw">:</span> <span class="val">2</span>
+      <span class="key">columns</span><span class="kw">:</span> <span class="val">3</span>
+      <span class="key">items</span><span class="kw">:</span>
+        <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">100</span>
+          <span class="key">entity_id</span><span class="kw">:</span> <span class="val">light.garage_zona_a</span>
+          <span class="key">name</span><span class="kw">:</span> <span class="str">"Zona A"</span>
+          <span class="key">icon</span><span class="kw">:</span> <span class="val">mdi:lightbulb</span>
+        <span class="kw">-</span> <span class="key">id</span><span class="kw">:</span> <span class="val">101</span>
+          <span class="key">entity_id</span><span class="kw">:</span> <span class="val">switch.presa_garage</span>
+          <span class="key">name</span><span class="kw">:</span> <span class="str">"Presa"</span>
+    <span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">sensor</span>
+      <span class="key">id</span><span class="kw">:</span> <span class="val">10</span>
+      <span class="key">entity_id</span><span class="kw">:</span> <span class="val">sensor.temperatura_garage</span>
+      <span class="key">name</span><span class="kw">:</span> <span class="str">"Temperatura"</span>
+      <span class="key">suffix</span><span class="kw">:</span> <span class="str">"°C"</span>
+    <span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">slider</span>
+      <span class="key">id</span><span class="kw">:</span> <span class="val">20</span>
+      <span class="key">entity_id</span><span class="kw">:</span> <span class="val">light.garage_zona_a</span>
+      <span class="key">name</span><span class="kw">:</span> <span class="str">"Luminosità"</span></code></pre>
+
+  <h3><span class="it">Campi del pannello</span><span class="en">Panel fields</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>name</td><td>string</td><td class="it">Titolo del pannello mostrato sul tile e nella finestra</td><td class="en">Panel title shown on the tile and in the modal</td></tr>
+        <tr><td>icon</td><td>string</td><td class="it">Icona MDI sul tile (default: <code>mdi:view-dashboard-edit</code>)</td><td class="en">MDI icon on the tile (default: <code>mdi:view-dashboard-edit</code>)</td></tr>
+        <tr><td>color</td><td>string</td><td class="it">Colore di sfondo del tile</td><td class="en">Tile background colour</td></tr>
+        <tr><td>primary_row_id</td><td>number</td><td class="it">ID di una riga sensor/slider il cui stato viene mostrato sul tile senza aprire il pannello</td><td class="en">ID of a sensor/slider row whose state is shown on the tile without opening the panel</td></tr>
+        <tr><td>rows</td><td>ModalRow[]</td><td class="it">Array delle righe (camera, buttons, sensor, slider)</td><td class="en">Array of rows (camera, buttons, sensor, slider)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="it">Tipi di riga</span><span class="en">Row types</span></h3>
+
+  <h4><span class="it">Riga Camera</span><span class="en">Camera row</span></h4>
+  <p class="it">Incorpora il feed di una telecamera nel pannello con rapporto 16:9.</p>
+  <p class="en">Embeds a camera feed in the panel at 16:9 aspect ratio.</p>
+  <div class="table-wrap"><table><thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+  <tbody>
+    <tr><td>entity_id</td><td class="it">Entità camera HA</td><td class="en">HA camera entity</td></tr>
+    <tr><td>stream</td><td class="it">Stream live HLS (<code>true</code>) o immagine statica (<code>false</code>)</td><td class="en">Live HLS stream (<code>true</code>) or static image (<code>false</code>)</td></tr>
+  </tbody></table></div>
+
+  <h4><span class="it">Riga Buttons</span><span class="en">Buttons row</span></h4>
+  <p class="it">Una riga con fino a <strong>4 pulsanti</strong> configurabili. Ogni pulsante può controllare un'entità diversa.</p>
+  <p class="en">A row with up to <strong>4 configurable buttons</strong>. Each button can control a different entity.</p>
+  <div class="table-wrap"><table><thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+  <tbody>
+    <tr><td>columns</td><td class="it">Numero di colonne: <code>1</code>, <code>2</code>, <code>3</code> o <code>4</code> (default: <code>2</code>)</td><td class="en">Number of columns: <code>1</code>, <code>2</code>, <code>3</code> or <code>4</code> (default: <code>2</code>)</td></tr>
+    <tr><td>items</td><td class="it">Array di pulsanti. Ogni pulsante ha: <code>id</code>, <code>entity_id</code>, <code>name</code>, <code>icon</code>, <code>service</code> (opzionale)</td><td class="en">Array of buttons. Each button has: <code>id</code>, <code>entity_id</code>, <code>name</code>, <code>icon</code>, <code>service</code> (optional)</td></tr>
+  </tbody></table></div>
+
+  <h4><span class="it">Riga Sensor</span><span class="en">Sensor row</span></h4>
+  <p class="it">Visualizza il valore di un sensore o binary_sensor con etichetta e unità opzionali.</p>
+  <p class="en">Displays the value of a sensor or binary_sensor with optional label and unit.</p>
+  <div class="table-wrap"><table><thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+  <tbody>
+    <tr><td>entity_id</td><td class="it">Sensore o binary_sensor HA</td><td class="en">HA sensor or binary_sensor</td></tr>
+    <tr><td>name</td><td class="it">Etichetta (sovrascrive il nome HA)</td><td class="en">Label (overrides HA name)</td></tr>
+    <tr><td>prefix</td><td class="it">Testo prima del valore (es. <code>"Temp: "</code>)</td><td class="en">Text before the value (e.g. <code>"Temp: "</code>)</td></tr>
+    <tr><td>suffix</td><td class="it">Testo dopo il valore (es. <code>"°C"</code>, <code>"%"</code>)</td><td class="en">Text after the value (e.g. <code>"°C"</code>, <code>"%"</code>)</td></tr>
+  </tbody></table></div>
+
+  <h4><span class="it">Riga Slider</span><span class="en">Slider row</span></h4>
+  <p class="it">Uno slider per controllare la luminosità di una luce o il valore di un <code>input_number</code>/<code>number</code>. Per entità che non supportano nativamente uno slider (es. switch), viene mostrata automaticamente una versione toggle o read-only.</p>
+  <p class="en">A slider to control a light's brightness or an <code>input_number</code>/<code>number</code> value. For entities that don't natively support a slider (e.g. switches), a toggle or read-only version is shown automatically.</p>
+  <div class="table-wrap"><table><thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+  <tbody>
+    <tr><td>entity_id</td><td class="it">Entità <code>light.*</code>, <code>number.*</code>, <code>input_number.*</code></td><td class="en"><code>light.*</code>, <code>number.*</code>, <code>input_number.*</code> entity</td></tr>
+    <tr><td>name</td><td class="it">Etichetta sopra lo slider</td><td class="en">Label above the slider</td></tr>
+  </tbody></table></div>
+
+  <h3><span class="it">Configurare il Custom Panel via UI</span><span class="en">Configuring Custom Panel via UI</span></h3>
+  <ol>
+    <li class="it">In modalità modifica, clicca sulla tile del Custom Panel per aprire la configurazione.</li>
+    <li class="en">In edit mode, click on the Custom Panel tile to open the configuration modal.</li>
+    <li class="it">Dalla colonna <strong>sinistra</strong> trascina le righe per riordinarle; clicca il tipo di riga per aggiungerla.</li>
+    <li class="en">In the <strong>left</strong> column drag rows to reorder them; click a row type button to add a new row.</li>
+    <li class="it">Clicca su una riga per selezionarla e vedi le sue opzioni nella colonna <strong>destra</strong>.</li>
+    <li class="en">Click a row to select it and see its options in the <strong>right</strong> column.</li>
+    <li class="it">Imposta <strong>Stato sul tile</strong> nel dropdown in cima per scegliere quale riga visualizzare sul tile principale.</li>
+    <li class="en">Set <strong>Tile state</strong> in the dropdown at the top to choose which row's state appears on the main tile.</li>
+  </ol>
+</section>
+
+<!-- ══ ALTRI ELEMENTI ════════════════════════════════════════ -->
+<section id="item-other">
+  <h2><span class="it">Altri tipi di elemento</span><span class="en">Other item types</span></h2>
+
+  <h3>Empty</h3>
+  <p class="it">Un elemento vuoto e trasparente. Utile come spaziatore per mantenere l'allineamento visivo nella griglia.</p>
+  <p class="en">A blank, transparent item. Useful as a spacer to maintain visual alignment in the grid.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">empty</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">9999999999001</span></code></pre>
+
+  <h3>Conditional Media</h3>
+  <p class="it">Mostra il lettore media di un'entità <code>media_player</code> condizionatamente: appare solo quando il player è attivo (play/pausa). Quando il player è inattivo l'elemento si nasconde.</p>
+  <p class="en">Shows a <code>media_player</code> entity's media player conditionally: appears only when the player is active (playing/paused). When idle the item hides itself.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">conditional_media</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">9999999999002</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">media_player.samsung_tv</span></code></pre>
+
+  <h3>Picture Elements</h3>
+  <p class="it">Un editor avanzato basato su canvas (Konva.js) che permette di sovrapporre icone, testo e forme su un'immagine di sfondo. Ideale per planimetrie interattive o immagini annotate.</p>
+  <p class="en">An advanced canvas-based editor (Konva.js) that lets you overlay icons, text and shapes on a background image. Ideal for interactive floor plans or annotated images.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">picture_elements</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">9999999999003</span>
+  <span class="cm"># configurato interamente tramite UI</span></code></pre>
+  <p class="it">La configurazione degli elementi grafici viene gestita completamente dall'editor visuale in modalità modifica. Include strumenti per spostare, ridimensionare, aggiungere testo e collegare entità agli elementi.</p>
+  <p class="en">Graphic elements configuration is managed entirely by the visual editor in edit mode. Includes tools to move, resize, add text and link entities to elements.</p>
+</section>
+
+<!-- ══ TEMPLATE ══════════════════════════════════════════════ -->
+<section id="templates">
+  <h2><span class="it">Template Jinja2</span><span class="en">Jinja2 Templates</span></h2>
+  <p class="it">I template permettono di personalizzare dinamicamente come viene mostrato un elemento. Usano la stessa sintassi Jinja2 di Home Assistant, con accesso completo alle entità e agli helper di HA.</p>
+  <p class="en">Templates let you dynamically customise how an item is displayed. They use the same Jinja2 syntax as Home Assistant, with full access to HA entities and helpers.</p>
+
+  <h3><span class="it">Chiavi disponibili</span><span class="en">Available keys</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Chiave</span><span class="en">Key</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th><th><span class="it">Esempio output</span><span class="en">Example output</span></th></tr></thead>
+      <tbody>
+        <tr><td>template.state</td><td class="it">Testo dello stato mostrato sotto il nome sull'elemento</td><td class="en">State text shown below the name on the item</td><td><code>Acceso</code>, <code>23°C</code></td></tr>
+        <tr><td>template.name</td><td class="it">Nome dell'elemento (sovrascrive <code>name</code> e il nome HA)</td><td class="en">Item name (overrides <code>name</code> and HA name)</td><td><code>Luce Cucina</code></td></tr>
+        <tr><td>template.icon</td><td class="it">Icona MDI/Iconify da mostrare</td><td class="en">MDI/Iconify icon to show</td><td><code>mdi:lightbulb-on</code></td></tr>
+        <tr><td>template.color</td><td class="it">Colore dell'icona (CSS color string)</td><td class="en">Icon colour (CSS color string)</td><td><code>green</code>, <code>#ff4400</code></td></tr>
+        <tr><td>template.service</td><td class="it">YAML di servizio da eseguire al click (formato identico al campo <code>service</code>)</td><td class="en">Service YAML to execute on click (same format as the <code>service</code> field)</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="it">Variabile speciale <code>entity_id</code></span><span class="en">Special variable <code>entity_id</code></span></h3>
+  <p class="it">All'interno di ogni template è disponibile la variabile <code>entity_id</code> che contiene l'ID dell'entità configurata sull'elemento. Questo permette di scrivere template riutilizzabili.</p>
+  <p class="en">Inside every template the variable <code>entity_id</code> is available and contains the entity ID configured on the item. This allows writing reusable templates.</p>
+
+  <h3><span class="it">Esempi pratici</span><span class="en">Practical examples</span></h3>
+
+  <h4><span class="it">Stato tradotto in italiano</span><span class="en">State translated to Italian</span></h4>
+<pre><code><span class="key">template</span><span class="kw">:</span>
+  <span class="key">state</span><span class="kw">:</span> <span class="kw">|-</span>
+    <span class="str">{% if is_state(entity_id, "on") %}</span>
+      <span class="str">Acceso</span>
+    <span class="str">{% else %}</span>
+      <span class="str">Spento</span>
+    <span class="str">{% endif %}</span></code></pre>
+
+  <h4><span class="it">Colore dinamico in base allo stato</span><span class="en">Dynamic colour based on state</span></h4>
+<pre><code><span class="key">template</span><span class="kw">:</span>
+  <span class="key">color</span><span class="kw">:</span> <span class="kw">|-</span>
+    <span class="str">{% if is_state(entity_id, "on") %}</span>
+      <span class="str">green</span>
+    <span class="str">{% elif is_state(entity_id, "unavailable") %}</span>
+      <span class="str">gray</span>
+    <span class="str">{% else %}</span>
+      <span class="str">darkred</span>
+    <span class="str">{% endif %}</span></code></pre>
+
+  <h4><span class="it">Icona che cambia</span><span class="en">Changing icon</span></h4>
+<pre><code><span class="key">template</span><span class="kw">:</span>
+  <span class="key">icon</span><span class="kw">:</span> <span class="kw">|-</span>
+    <span class="str">{% if is_state(entity_id, "on") %}</span>
+      <span class="str">mdi:lightbulb-on</span>
+    <span class="str">{% else %}</span>
+      <span class="str">mdi:lightbulb-off</span>
+    <span class="str">{% endif %}</span></code></pre>
+
+  <h4><span class="it">Stato complesso (clima)</span><span class="en">Complex state (climate)</span></h4>
+<pre><code><span class="key">template</span><span class="kw">:</span>
+  <span class="key">state</span><span class="kw">:</span> <span class="kw">|-</span>
+    <span class="str">{% if is_state(entity_id, "cool") %}</span>
+      <span class="str">Raffreddamento</span>
+    <span class="str">{% elif is_state(entity_id, "heat") %}</span>
+      <span class="str">Riscaldamento</span>
+    <span class="str">{% elif is_state(entity_id, "fan_only") %}</span>
+      <span class="str">Ventilatore</span>
+    <span class="str">{% else %}</span>
+      <span class="str">Spento</span>
+    <span class="str">{% endif %}</span></code></pre>
+
+  <h4><span class="it">Servizio personalizzato con template</span><span class="en">Custom service with template</span></h4>
+<pre><code><span class="key">template</span><span class="kw">:</span>
+  <span class="key">service</span><span class="kw">:</span> <span class="kw">|-</span>
+    <span class="key">service</span><span class="kw">:</span> <span class="val">script.my_scene</span>
+    <span class="key">data</span><span class="kw">:</span>
+      <span class="key">brightness</span><span class="kw">:</span> <span class="str">{{ state_attr(entity_id, 'brightness') }}</span></code></pre>
+
+  <div class="tip"><strong class="it">Suggerimento</strong><strong class="en">Tip</strong> — <span class="it">Usa la funzione <code>$lang(state) || state</code> internamente: ha-fusion traduce automaticamente stati standard come <code>on</code> → "Acceso", <code>off</code> → "Spento", ecc. senza bisogno di template.</span><span class="en">ha-fusion automatically translates standard states like <code>on</code> → "On", <code>off</code> → "Off", etc. without needing a template. Use templates only for custom text or complex logic.</span></div>
+</section>
+
+<!-- ══ VISIBILITÀ ════════════════════════════════════════════ -->
+<section id="visibility">
+  <h2><span class="it">Condizioni di Visibilità</span><span class="en">Visibility Conditions</span></h2>
+  <p class="it">ha-fusion supporta tre livelli di visibilità condizionale che permettono di mostrare o nascondere parti della dashboard in base agli stati di Home Assistant, valori numerici o dimensioni dello schermo.</p>
+  <p class="en">ha-fusion supports three levels of conditional visibility that let you show or hide parts of the dashboard based on HA states, numeric values or screen sizes.</p>
+
+  <h3><span class="it">1. Visibilità di sezione</span><span class="en">1. Section visibility</span></h3>
+  <p class="it">Imposta condizioni sulla sezione stessa. La sezione (e tutti i suoi elementi) viene nascosta quando le condizioni non sono soddisfatte.</p>
+  <p class="en">Set conditions on the section itself. The section (and all its items) is hidden when conditions are not met.</p>
+  <p class="it">Configurabile tramite il pulsante <strong>occhio (👁)</strong> nell'intestazione della sezione in modalità modifica.</p>
+  <p class="en">Configurable via the <strong>eye (👁)</strong> button in the section header in edit mode.</p>
+
+  <h3><span class="it">2. Visibilità di singolo elemento</span><span class="en">2. Single item visibility</span></h3>
+  <p class="it">Condizioni su un singolo elemento. Il solo elemento viene nascosto quando le condizioni non sono soddisfatte, gli altri elementi della sezione restano visibili.</p>
+  <p class="en">Conditions on a single item. Only that item is hidden when conditions fail; other items in the section remain visible.</p>
+  <p class="it">Configurabile tramite il pulsante <strong>occhio</strong> nella finestra di configurazione dell'elemento (modalità modifica).</p>
+  <p class="en">Configurable via the <strong>eye</strong> button in the item configuration modal (edit mode).</p>
+
+  <h3 id="vis-template"><span class="it">3. Template visibilità elementi</span><span class="en">3. Item visibility template</span> <span class="badge badge-new">Nuovo</span></h3>
+  <p class="it">Una condizione di visibilità definita sulla sezione che viene applicata automaticamente a <em>tutti</em> gli elementi della sezione. Il placeholder speciale <code>{item.entity_id}</code> viene sostituito con l'entity_id di ciascun elemento prima di valutare la condizione.</p>
+  <p class="en">A visibility condition defined on the section that is automatically applied to <em>all</em> items in the section. The special placeholder <code>{item.entity_id}</code> is replaced with each item's entity_id before evaluating the condition.</p>
+
+  <p class="it">Configurabile tramite il pulsante <strong>scansione-occhio</strong> nell'intestazione della sezione.</p>
+  <p class="en">Configurable via the <strong>scan-eye</strong> button in the section header.</p>
+
+<pre><code><span class="cm"># Esempio: nascondi tutti gli elementi la cui entità è "unavailable"</span>
+<span class="key">item_visibility_template</span><span class="kw">:</span>
+  <span class="kw">-</span> <span class="key">conditions</span><span class="kw">:</span>
+    <span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">state</span>
+      <span class="key">entity</span><span class="kw">:</span> <span class="str">"{item.entity_id}"</span>   <span class="cm"># placeholder sostituito per ogni item</span>
+      <span class="key">state_not</span><span class="kw">:</span> <span class="val">unavailable</span></code></pre>
+
+  <h3><span class="it">Tipi di condizione</span><span class="en">Condition types</span></h3>
+
+  <h4><span class="it">Condizione: stato</span><span class="en">Condition: state</span></h4>
+<pre><code><span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">state</span>
+  <span class="key">entity</span><span class="kw">:</span> <span class="val">input_boolean.modalita_notte</span>
+  <span class="key">state</span><span class="kw">:</span> <span class="val">on</span>          <span class="cm"># mostra se stato = "on"</span>
+  <span class="cm"># oppure:
+  # state_not: "off"  # mostra se stato ≠ "off"</span></code></pre>
+
+  <h4><span class="it">Condizione: stato numerico</span><span class="en">Condition: numeric state</span></h4>
+<pre><code><span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">numeric_state</span>
+  <span class="key">entity</span><span class="kw">:</span> <span class="val">sensor.temperatura</span>
+  <span class="key">above</span><span class="kw">:</span> <span class="val">20</span>   <span class="cm"># mostra se valore > 20</span>
+  <span class="key">below</span><span class="kw">:</span> <span class="val">30</span>   <span class="cm"># e valore < 30 (entrambi opzionali)</span></code></pre>
+
+  <h4><span class="it">Condizione: schermo</span><span class="en">Condition: screen</span></h4>
+<pre><code><span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">screen</span>
+  <span class="key">media_query</span><span class="kw">:</span> <span class="str">"(min-width: 768px)"</span>  <span class="cm"># qualsiasi media query CSS</span></code></pre>
+
+  <h4><span class="it">Condizioni nidificate: AND e OR</span><span class="en">Nested conditions: AND and OR</span></h4>
+<pre><code><span class="cm"># Mostra se (luce accesa) E (temperatura > 22)</span>
+<span class="kw">-</span> <span class="key">conditions</span><span class="kw">:</span>
+  <span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">and</span>
+    <span class="key">conditions</span><span class="kw">:</span>
+      <span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">state</span>
+        <span class="key">entity</span><span class="kw">:</span> <span class="val">light.soggiorno</span>
+        <span class="key">state</span><span class="kw">:</span> <span class="val">on</span>
+      <span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">numeric_state</span>
+        <span class="key">entity</span><span class="kw">:</span> <span class="val">sensor.temperatura</span>
+        <span class="key">above</span><span class="kw">:</span> <span class="val">22</span>
+
+<span class="cm"># Mostra se (persona a casa) O (allarme armato)</span>
+<span class="kw">-</span> <span class="key">conditions</span><span class="kw">:</span>
+  <span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">or</span>
+    <span class="key">conditions</span><span class="kw">:</span>
+      <span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">state</span>
+        <span class="key">entity</span><span class="kw">:</span> <span class="val">person.mario</span>
+        <span class="key">state</span><span class="kw">:</span> <span class="val">home</span>
+      <span class="kw">-</span> <span class="key">condition</span><span class="kw">:</span> <span class="val">state</span>
+        <span class="key">entity</span><span class="kw">:</span> <span class="val">alarm_control_panel.casa</span>
+        <span class="key">state</span><span class="kw">:</span> <span class="val">armed_away</span></code></pre>
+
+  <div class="note"><strong class="it">Logica delle condizioni</strong><strong class="en">Condition logic</strong> — <span class="it">La sezione/elemento è visibile quando <em>tutti</em> i gruppi di condizioni al livello superiore sono soddisfatti (AND implicito tra gruppi). Se non ci sono condizioni, è sempre visibile.</span><span class="en">The section/item is visible when <em>all</em> top-level condition groups are satisfied (implicit AND between groups). If no conditions are set, it is always visible.</span></div>
+</section>
+
+
+<!-- ══ SIDEBAR PANORAMICA ════════════════════════════════════ -->
+<section id="sidebar-overview">
+  <h2><span class="it">Barra Laterale — Panoramica</span><span class="en">Sidebar — Overview</span></h2>
+  <p class="it">La sidebar è la colonna a destra dell'area principale. Contiene widget informativi configurabili. La sua larghezza si imposta con <code>sidebarWidth</code> in <code>dashboard.yaml</code>. Si nasconde con <code>hide_sidebar: true</code>.</p>
+  <p class="en">The sidebar is the column on the right of the main area. It contains configurable informational widgets. Its width is set with <code>sidebarWidth</code> in <code>dashboard.yaml</code>. Hide it with <code>hide_sidebar: true</code>.</p>
+
+  <p class="it">Per configurare la sidebar in modalità modifica, clicca il pulsante <strong>Configura sidebar</strong> (icona ingranaggio) che appare in alto alla sidebar.</p>
+  <p class="en">To configure the sidebar in edit mode, click the <strong>Configure sidebar</strong> button (gear icon) that appears at the top of the sidebar.</p>
+
+  <div class="note"><strong class="it">Visibilità mobile</strong><strong class="en">Mobile visibility</strong> — <span class="it">Ogni elemento della sidebar ha un campo <code>hide_mobile: true</code> per nasconderlo su schermi piccoli.</span><span class="en">Every sidebar item has a <code>hide_mobile: true</code> field to hide it on small screens.</span></div>
+</section>
+
+<!-- ══ SIDEBAR ITEMS ═════════════════════════════════════════ -->
+<section id="sidebar-items">
+  <h2><span class="it">Sidebar — Tutti i tipi</span><span class="en">Sidebar — All types</span></h2>
+
+  <h3>Time</h3>
+  <p class="it">Mostra l'ora corrente, aggiornata ogni secondo.</p>
+  <p class="en">Shows the current time, updated every second.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">time</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890100</span>
+  <span class="key">hour12</span><span class="kw">:</span> <span class="kw">false</span>    <span class="cm"># false = formato 24h (default), true = AM/PM</span>
+  <span class="key">seconds</span><span class="kw">:</span> <span class="kw">false</span>   <span class="cm"># true = mostra i secondi</span></code></pre>
+
+  <h3>Date</h3>
+  <p class="it">Mostra la data corrente con opzioni di formato.</p>
+  <p class="en">Shows the current date with format options.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">date</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890101</span>
+  <span class="key">layout</span><span class="kw">:</span> <span class="val">horizontal</span>  <span class="cm"># "horizontal" o "vertical"</span>
+  <span class="key">short_day</span><span class="kw">:</span> <span class="kw">false</span>   <span class="cm"># true = "Lun" invece di "Lunedì"</span>
+  <span class="key">short_month</span><span class="kw">:</span> <span class="kw">false</span> <span class="cm"># true = "Gen" invece di "Gennaio"</span>
+  <span class="key">hide</span><span class="kw">:</span> <span class="val">none</span>          <span class="cm"># "day", "month", "year" o "none"</span></code></pre>
+
+  <h3>Weather</h3>
+  <p class="it">Mostra le condizioni meteo attuali: icona, temperatura, stato e sensore extra opzionale.</p>
+  <p class="en">Shows current weather conditions: icon, temperature, state and optional extra sensor.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">weather</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890102</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">weather.forecast_casa</span>
+  <span class="key">icon_pack</span><span class="kw">:</span> <span class="val">meteocons</span>   <span class="cm"># "meteocons" o ometti per icone HA default</span>
+  <span class="key">show_apparent</span><span class="kw">:</span> <span class="kw">false</span>  <span class="cm"># mostra temperatura percepita</span>
+  <span class="key">sensor</span><span class="kw">:</span> <span class="val">sensor.extra</span>   <span class="cm"># sensore aggiuntivo (es. umidità)</span>
+  <span class="key">extra_sensor_icon</span><span class="kw">:</span> <span class="val">mdi:water</span>  <span class="cm"># icona sensore extra</span></code></pre>
+
+  <h3>Weather Forecast</h3>
+  <p class="it">Mostra le previsioni meteo per i prossimi giorni.</p>
+  <p class="en">Shows weather forecast for the coming days.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">weather_forecast</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890103</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">weather.forecast_casa</span>
+  <span class="key">days_to_show</span><span class="kw">:</span> <span class="val">5</span>        <span class="cm"># numero di giorni (default: 5)</span>
+  <span class="key">icon_pack</span><span class="kw">:</span> <span class="val">meteocons</span></code></pre>
+
+  <h3>Sensor</h3>
+  <p class="it">Mostra il valore di un'entità sensore con prefisso e suffisso opzionali.</p>
+  <p class="en">Shows a sensor entity's value with optional prefix and suffix.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">sensor</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890104</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">sensor.temperatura_soggiorno</span>
+  <span class="key">prefix</span><span class="kw">:</span> <span class="str">"Temp: "</span>      <span class="cm"># testo prima del valore</span>
+  <span class="key">suffix</span><span class="kw">:</span> <span class="str">" °C"</span>         <span class="cm"># testo dopo il valore</span>
+  <span class="key">date</span><span class="kw">:</span> <span class="kw">false</span>           <span class="cm"># true = interpreta il valore come timestamp</span></code></pre>
+
+  <h3>Template</h3>
+  <p class="it">Mostra il risultato di un template Jinja2 HTML. Supporta tag HTML basilari. Può anche mostrare un'icona opzionale.</p>
+  <p class="en">Shows the result of an HTML Jinja2 template. Supports basic HTML tags. Can also show an optional icon.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">template</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890105</span>
+  <span class="key">template</span><span class="kw">:</span> <span class="kw">&gt;-</span>
+    <span class="str">{% if is_state('calendar.lavoro', 'on') %}</span>
+    <span class="str">&lt;b&gt;Impegno:&lt;/b&gt; {{ state_attr('calendar.lavoro', 'message') }}</span>
+    <span class="str">{% else %}</span>
+    <span class="str">Nessun impegno oggi</span>
+    <span class="str">{% endif %}</span>
+  <span class="key">icon</span><span class="kw">:</span> <span class="val">mdi:calendar</span>      <span class="cm"># icona opzionale</span>
+  <span class="key">icon_size</span><span class="kw">:</span> <span class="str">"24px"</span>     <span class="cm"># dimensione icona CSS</span>
+  <span class="key">icon_color</span><span class="kw">:</span> <span class="str">"#58a6ff"</span> <span class="cm"># colore icona CSS</span></code></pre>
+
+  <h3>Radial</h3>
+  <p class="it">Un indicatore circolare che mostra una percentuale (0-100). Adatto per CPU, RAM, umidità, ecc.</p>
+  <p class="en">A circular gauge showing a percentage (0-100). Suitable for CPU, RAM, humidity, etc.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">radial</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890106</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">sensor.cpu_usage</span>
+  <span class="key">name</span><span class="kw">:</span> <span class="str">"CPU"</span>
+  <span class="key">stroke</span><span class="kw">:</span> <span class="val">7</span>       <span class="cm"># spessore del cerchio in pixel</span></code></pre>
+
+  <h3>Bar</h3>
+  <p class="it">Una barra orizzontale che mostra una percentuale. <code>math</code> è il valore massimo dell'entità (per normalizzare a 100%).</p>
+  <p class="en">A horizontal bar showing a percentage. <code>math</code> is the entity's maximum value (to normalise to 100%).</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">bar</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890107</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">sensor.ram_used_gb</span>
+  <span class="key">name</span><span class="kw">:</span> <span class="str">"RAM"</span>
+  <span class="key">math</span><span class="kw">:</span> <span class="str">"32"</span>  <span class="cm"># valore massimo (es. 32 GB totali)</span></code></pre>
+
+  <h3>Graph</h3>
+  <p class="it">Un grafico sparkline della storia di un sensore.</p>
+  <p class="en">A sparkline graph of a sensor's history.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">graph</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890108</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">sensor.temperatura</span>
+  <span class="key">name</span><span class="kw">:</span> <span class="str">"Temperatura"</span>
+  <span class="key">period</span><span class="kw">:</span> <span class="val">hour</span>    <span class="cm"># "hour", "day", "week", "month"</span>
+  <span class="key">stroke</span><span class="kw">:</span> <span class="val">2</span>       <span class="cm"># spessore linea</span></code></pre>
+
+  <h3>History</h3>
+  <p class="it">Mostra la storia degli stati di un'entità come barre colorate nel tempo.</p>
+  <p class="en">Shows an entity's state history as coloured bars over time.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">history</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890109</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">binary_sensor.movimento_ingresso</span>
+  <span class="key">period</span><span class="kw">:</span> <span class="val">day</span>    <span class="cm"># "hour", "day", "week", "month"</span></code></pre>
+
+  <h3>Navigate</h3>
+  <p class="it">Un set di pulsanti di navigazione rapida tra le viste del dashboard.</p>
+  <p class="en">A set of quick-navigation buttons between dashboard views.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">navigate</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890110</span></code></pre>
+
+  <h3>Divider</h3>
+  <p class="it">Un separatore visivo tra elementi della sidebar.</p>
+  <p class="en">A visual separator between sidebar items.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">divider</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890111</span>
+  <span class="key">mode</span><span class="kw">:</span> <span class="val">line</span>   <span class="cm"># "line" (default) o "spacer"</span>
+  <span class="key">size</span><span class="kw">:</span> <span class="val">1</span>      <span class="cm"># altezza in rem (solo per mode: spacer)</span></code></pre>
+
+  <h3>Camera</h3>
+  <p class="it">Feed di una telecamera nella sidebar.</p>
+  <p class="en">Camera feed in the sidebar.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">camera</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890112</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">camera.ingresso</span>
+  <span class="key">stream</span><span class="kw">:</span> <span class="kw">false</span>
+  <span class="key">size</span><span class="kw">:</span> <span class="val">contain</span></code></pre>
+
+  <h3>Iframe</h3>
+  <p class="it">Incorpora una pagina web nella sidebar.</p>
+  <p class="en">Embeds a webpage in the sidebar.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">iframe</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890113</span>
+  <span class="key">url</span><span class="kw">:</span> <span class="str">"https://example.com/widget"</span>
+  <span class="key">size</span><span class="kw">:</span> <span class="str">"300px"</span>   <span class="cm"># altezza del frame</span></code></pre>
+
+  <h3>Image</h3>
+  <p class="it">Mostra un'immagine statica o il feed di un'entità <code>image.*</code>.</p>
+  <p class="en">Shows a static image or an <code>image.*</code> entity feed.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">image</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890114</span>
+  <span class="key">url</span><span class="kw">:</span> <span class="str">"/local/mia-immagine.jpg"</span>   <span class="cm"># URL statico</span>
+  <span class="cm"># oppure:</span>
+  <span class="cm"># entity_id: image.telecamera_snapshot</span></code></pre>
+
+  <h3>Timer</h3>
+  <p class="it">Mostra il conto alla rovescia di un'entità <code>timer.*</code>.</p>
+  <p class="en">Shows a countdown for a <code>timer.*</code> entity.</p>
+<pre><code><span class="kw">-</span> <span class="key">type</span><span class="kw">:</span> <span class="val">timer</span>
+  <span class="key">id</span><span class="kw">:</span> <span class="val">1234567890115</span>
+  <span class="key">entity_id</span><span class="kw">:</span> <span class="val">timer.cottura</span></code></pre>
+</section>
+
+<!-- ══ TEMI ══════════════════════════════════════════════════ -->
+<section id="themes">
+  <h2><span class="it">Temi</span><span class="en">Themes</span></h2>
+  <p class="it">ha-fusion include <strong>8 temi integrati</strong>. Il tema si seleziona tramite il Drawer (menu ☰ → Tema) oppure impostando il campo <code>theme</code> in <code>dashboard.yaml</code>.</p>
+  <p class="en">ha-fusion includes <strong>8 built-in themes</strong>. Select a theme from the Drawer (menu ☰ → Theme) or by setting the <code>theme</code> field in <code>dashboard.yaml</code>.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Nome</span><span class="en">Name</span></th><th><span class="it">Stile</span><span class="en">Style</span></th></tr></thead>
+      <tbody>
+        <tr><td>godis</td><td class="it">Dark con sfumatura viola/blu. Tema di default.</td><td class="en">Dark with purple/blue gradient. Default theme.</td></tr>
+        <tr><td>contrast</td><td class="it">Alta contrasto, sfondo molto scuro.</td><td class="en">High contrast, very dark background.</td></tr>
+        <tr><td>muted</td><td class="it">Colori smorzati e neutri.</td><td class="en">Muted and neutral colours.</td></tr>
+        <tr><td>slate</td><td class="it">Gradiente blu-grigio ardesia.</td><td class="en">Blue-grey slate CSS gradient.</td></tr>
+        <tr><td>ember</td><td class="it">Gradiente caldo arancio/rosso.</td><td class="en">Warm orange/red gradient.</td></tr>
+        <tr><td>nord</td><td class="it">Ispirato ai colori artici Nord.</td><td class="en">Arctic Nord colour palette.</td></tr>
+        <tr><td>sage</td><td class="it">Verde salvia calmante.</td><td class="en">Calming sage green.</td></tr>
+        <tr><td>rose</td><td class="it">Rosa e malva elegante.</td><td class="en">Elegant pink and mauve.</td></tr>
+      </tbody>
+    </table>
+  </div>
+<pre><code><span class="cm"># in dashboard.yaml</span>
+<span class="key">theme</span><span class="kw">:</span> <span class="val">sage</span></code></pre>
+
+  <h3><span class="it">Editor del tema</span><span class="en">Theme editor</span></h3>
+  <p class="it">Dall'editor (menu ☰ → Tema → Modifica) puoi personalizzare le variabili CSS del tema corrente: colori del testo, sfondo dei pulsanti, colori dell'icona, angoli arrotondati e altro. Le modifiche vengono salvate nel file del tema.</p>
+  <p class="en">From the editor (menu ☰ → Theme → Edit) you can customise the CSS variables of the current theme: text colours, button backgrounds, icon colours, border radius and more. Changes are saved back to the theme file.</p>
+</section>
+
+<!-- ══ CUSTOM CSS / JS ═══════════════════════════════════════ -->
+<section id="custom-css">
+  <h2>Custom CSS / JavaScript</h2>
+  <p class="it">Per personalizzazioni avanzate dell'aspetto o del comportamento puoi iniettare CSS e JavaScript personalizzati.</p>
+  <p class="en">For advanced appearance or behaviour customisation you can inject custom CSS and JavaScript.</p>
+
+  <h3>CSS <span class="badge badge-new">Nuovo</span></h3>
+  <p class="it">Abilita in <code>configuration.yaml</code>:</p>
+  <p class="en">Enable in <code>configuration.yaml</code>:</p>
+<pre><code><span class="key">custom_css</span><span class="kw">:</span> <span class="kw">true</span></code></pre>
+  <p class="it">Poi modifica il contenuto da: menu ☰ → <em>CSS Personalizzato</em>. Il file viene salvato in <code>data/custom_style.css</code> e iniettato come tag <code>&lt;style&gt;</code> in ogni pagina.</p>
+  <p class="en">Then edit the content from: menu ☰ → <em>Custom CSS</em>. The file is saved to <code>data/custom_style.css</code> and injected as a <code>&lt;style&gt;</code> tag on every page.</p>
+<pre><code><span class="cm">/* esempio: arrotonda le tile */</span>
+<span class="key">.button-card</span> <span class="kw">{</span>
+  <span class="key">border-radius</span><span class="kw">:</span> <span class="val">20px</span> <span class="kw">!</span><span class="val">important</span><span class="kw">;</span>
+<span class="kw">}</span></code></pre>
+
+  <h3>JavaScript</h3>
+  <p class="it">Abilita in <code>configuration.yaml</code>:</p>
+  <p class="en">Enable in <code>configuration.yaml</code>:</p>
+<pre><code><span class="key">custom_js</span><span class="kw">:</span> <span class="kw">true</span></code></pre>
+  <p class="it">Il file <code>data/custom_javascript.js</code> viene caricato come modulo ES. Ha accesso al DOM completo della pagina.</p>
+  <p class="en">The file <code>data/custom_javascript.js</code> is loaded as an ES module. It has access to the full page DOM.</p>
+
+  <div class="warn"><strong class="it">Attenzione</strong><strong class="en">Warning</strong> — <span class="it">Il JavaScript personalizzato viene eseguito nel contesto della pagina con accesso al DOM. Non inserire codice non fidato.</span><span class="en">Custom JavaScript runs in the page context with DOM access. Do not insert untrusted code.</span></div>
+</section>
+
+<!-- ══ ENTITY MODALS ═════════════════════════════════════════ -->
+<section id="modals">
+  <h2><span class="it">Finestre Entità</span><span class="en">Entity Modals</span></h2>
+  <p class="it">Quando clicchi su un elemento Button (con <code>more_info: true</code>, che è il default), si apre una finestra di dettaglio specifica per il dominio dell'entità. Ecco cosa offre ogni finestra:</p>
+  <p class="en">When you click a Button item (with <code>more_info: true</code>, the default), a domain-specific detail modal opens. Here's what each modal offers:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Dominio</span><span class="en">Domain</span></th><th><span class="it">Funzionalità nella finestra</span><span class="en">Modal features</span></th></tr></thead>
+      <tbody>
+        <tr><td>light</td><td class="it">Toggle on/off, slider luminosità, selettore temperatura colore, color picker (ruota colori HS), preimpostazioni bianco</td><td class="en">Toggle on/off, brightness slider, colour temperature selector, colour picker (HS wheel), white presets</td></tr>
+        <tr><td>climate</td><td class="it">Selettore mode (heat/cool/auto/off/…), regolazione temperatura target, umidità, action in corso</td><td class="en">Mode selector (heat/cool/auto/off/…), target temperature adjustment, humidity, current action</td></tr>
+        <tr><td>cover</td><td class="it">Apri/chiudi/stop, slider posizione, controllo inclinazione (tilt) se supportato</td><td class="en">Open/close/stop, position slider, tilt control if supported</td></tr>
+        <tr><td>media_player</td><td class="it">Play/pausa/stop, controllo volume, avanti/indietro, selettore sorgente, informazioni media corrente</td><td class="en">Play/pause/stop, volume control, next/prev, source selector, current media info</td></tr>
+        <tr><td>lock</td><td class="it">Sblocca/blocca con conferma</td><td class="en">Lock/unlock with confirmation</td></tr>
+        <tr><td>vacuum</td><td class="it">Avvia pulizia, pausa, torna alla base, pulisci spot, localizza</td><td class="en">Start cleaning, pause, return home, clean spot, locate</td></tr>
+        <tr><td>fan</td><td class="it">Toggle, velocità, direzione, oscillazione, modalità preset</td><td class="en">Toggle, speed, direction, oscillation, preset mode</td></tr>
+        <tr><td>alarm_control_panel</td><td class="it">Inserimento/disinserimento allarme con codice PIN</td><td class="en">Arm/disarm alarm with PIN code</td></tr>
+        <tr><td>sensor / binary_sensor</td><td class="it">Stato corrente, attributi, cronologia di stato</td><td class="en">Current state, attributes, state history</td></tr>
+        <tr><td>camera</td><td class="it">Immagine a schermo intero, pulsante stream</td><td class="en">Full-screen image, stream button</td></tr>
+        <tr><td>script</td><td class="it">Esecuzione con parametri opzionali, data/ora ultimo esecuzione</td><td class="en">Execute with optional parameters, last triggered time</td></tr>
+        <tr><td>automation</td><td class="it">Toggle abilitazione, esecuzione manuale, data/ora ultimo trigger</td><td class="en">Enable toggle, manual trigger, last triggered time</td></tr>
+        <tr><td>input_number</td><td class="it">Slider o +/− per impostare il valore</td><td class="en">Slider or +/− to set the value</td></tr>
+        <tr><td>input_select</td><td class="it">Selettore a discesa per scegliere l'opzione</td><td class="en">Dropdown to choose the option</td></tr>
+        <tr><td>input_text</td><td class="it">Campo di testo per impostare il valore</td><td class="en">Text field to set the value</td></tr>
+        <tr><td>humidifier</td><td class="it">Toggle, umidità target, modalità</td><td class="en">Toggle, target humidity, mode</td></tr>
+        <tr><td>water_heater</td><td class="it">Toggle, temperatura target, modalità operativa</td><td class="en">Toggle, target temperature, operation mode</td></tr>
+        <tr><td>valve</td><td class="it">Apri/chiudi/stop, posizione</td><td class="en">Open/close/stop, position</td></tr>
+        <tr><td>lawn_mower</td><td class="it">Avvia taglio, pausa, torna alla base</td><td class="en">Start mowing, pause, return</td></tr>
+        <tr><td>update</td><td class="it">Informazioni versione, pulsante installa, note di rilascio</td><td class="en">Version info, install button, release notes</td></tr>
+        <tr><td>weather</td><td class="it">Condizioni attuali e previsioni</td><td class="en">Current conditions and forecast</td></tr>
+        <tr><td>calendar</td><td class="it">Vista calendario mensile con eventi</td><td class="en">Monthly calendar view with events</td></tr>
+        <tr><td>todo</td><td class="it">Lista attività con checkbox</td><td class="en">Task list with checkboxes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ EDIT MODE ═════════════════════════════════════════════ -->
+<section id="edit-mode">
+  <h2><span class="it">Modalità Modifica</span><span class="en">Edit Mode</span></h2>
+  <p class="it">La modalità modifica permette di personalizzare l'intero dashboard. Clicca il pulsante <strong>✏️</strong> in alto a destra per attivarla; clicca <strong>Fine</strong> o premi <kbd>Esc</kbd> per uscire.</p>
+  <p class="en">Edit mode lets you customise the entire dashboard. Click the <strong>✏️</strong> button in the top right to activate it; click <strong>Done</strong> or press <kbd>Esc</kbd> to exit.</p>
+
+  <h3><span class="it">Drag & Drop</span><span class="en">Drag & Drop</span></h3>
+  <p class="it">In modalità modifica, <strong>tutti</strong> gli elementi sono trascinabili:</p>
+  <p class="en">In edit mode, <strong>all</strong> items are draggable:</p>
+  <ul>
+    <li class="it"><strong>Viste</strong> — trascina le tab per riordinarle</li>
+    <li class="en"><strong>Views</strong> — drag the tabs to reorder them</li>
+    <li class="it"><strong>Sezioni</strong> — trascina l'indicatore di trascina (⠿) per spostare le sezioni dentro la vista</li>
+    <li class="en"><strong>Sections</strong> — drag the drag handle (⠿) to move sections within the view</li>
+    <li class="it"><strong>Elementi</strong> — trascina qualsiasi elemento nella griglia per spostarlo o cambiare sezione</li>
+    <li class="en"><strong>Items</strong> — drag any item in the grid to move it or change its section</li>
+    <li class="it"><strong>Elementi sidebar</strong> — riordina i widget della sidebar trascinandoli</li>
+    <li class="en"><strong>Sidebar items</strong> — reorder sidebar widgets by dragging them</li>
+    <li class="it"><strong>Righe Custom Panel</strong> — riordina le righe nella finestra di configurazione</li>
+    <li class="en"><strong>Custom Panel rows</strong> — reorder rows in the configuration modal</li>
+  </ul>
+
+  <h3>Undo / Redo</h3>
+  <p class="it">Ogni modifica viene registrata nella cronologia. Puoi annullare e ripristinare le modifiche con:</p>
+  <p class="en">Every change is recorded in history. You can undo and redo changes with:</p>
+  <ul>
+    <li><kbd>Cmd/Ctrl</kbd> + <kbd>Z</kbd> — <span class="it">annulla</span><span class="en">undo</span></li>
+    <li><kbd>Cmd/Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Z</kbd> — <span class="it">ripristina</span><span class="en">redo</span></li>
+  </ul>
+
+  <h3><span class="it">Aggiungere elementi</span><span class="en">Adding items</span></h3>
+  <p class="it">In modalità modifica ogni sezione ha un pulsante <strong>+</strong>. Cliccandolo si apre la finestra di selezione del tipo di elemento da aggiungere.</p>
+  <p class="en">In edit mode every section has a <strong>+</strong> button. Clicking it opens the item type selection modal.</p>
+
+  <h3><span class="it">Configurare un elemento</span><span class="en">Configuring an item</span></h3>
+  <p class="it">In modalità modifica, clicca l'icona dell'<strong>ingranaggio (⚙)</strong> che appare sugli elementi per aprire la finestra di configurazione. Da lì puoi modificare tutti i campi (nome, icona, colore, template, visibilità, ecc.) e poi salvare.</p>
+  <p class="en">In edit mode, click the <strong>gear icon (⚙)</strong> that appears on items to open the configuration modal. From there you can edit all fields (name, icon, colour, template, visibility, etc.) and then save.</p>
+
+  <h3><span class="it">Eliminare elementi</span><span class="en">Deleting items</span></h3>
+  <p class="it">Ogni elemento in modalità modifica mostra un pulsante <strong>cestino 🗑</strong>. Clicca per eliminare. L'operazione è reversibile con Undo.</p>
+  <p class="en">Every item in edit mode shows a <strong>trash icon 🗑</strong>. Click to delete. The action is reversible with Undo.</p>
+
+  <h3><span class="it">Editor YAML</span><span class="en">YAML editor</span></h3>
+  <p class="it">Alcune finestre di configurazione includono un pulsante <em>"Modifica in YAML"</em>. Questo apre un editor di testo con il YAML grezzo dell'elemento corrente. Puoi modificarlo direttamente e salvare.</p>
+  <p class="en">Some configuration modals include an <em>"Edit in YAML"</em> button. This opens a text editor with the raw YAML of the current item. You can edit it directly and save.</p>
+
+  <h3><span class="it">Salvare</span><span class="en">Saving</span></h3>
+  <p class="it">Le modifiche vengono salvate automaticamente quando esci dalla modalità modifica (pulsante <em>Fine</em>) oppure premendo <kbd>Cmd/Ctrl+S</kbd>. Il file <code>data/dashboard.yaml</code> viene aggiornato via API.</p>
+  <p class="en">Changes are saved automatically when you exit edit mode (button <em>Done</em>) or by pressing <kbd>Cmd/Ctrl+S</kbd>. The <code>data/dashboard.yaml</code> file is updated via API.</p>
+</section>
+
+<!-- ══ SCORCIATOIE & URL ══════════════════════════════════════ -->
+<section id="shortcuts">
+  <h2><span class="it">Scorciatoie da Tastiera & URL</span><span class="en">Keyboard Shortcuts & URL Parameters</span></h2>
+
+  <h3><span class="it">Scorciatoie</span><span class="en">Shortcuts</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Tasto</span><span class="en">Key</span></th><th><span class="it">Azione</span><span class="en">Action</span></th></tr></thead>
+      <tbody>
+        <tr><td><kbd>f</kbd></td><td class="it">Apre il filtro / ricerca entità</td><td class="en">Opens entity filter/search</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td class="it">Esce dalla modalità modifica / chiude la finestra aperta</td><td class="en">Exits edit mode / closes open modal</td></tr>
+        <tr><td><kbd>Cmd/Ctrl</kbd>+<kbd>S</kbd></td><td class="it">Salva le modifiche</td><td class="en">Save changes</td></tr>
+        <tr><td><kbd>Cmd/Ctrl</kbd>+<kbd>Z</kbd></td><td class="it">Annulla ultima modifica</td><td class="en">Undo last change</td></tr>
+        <tr><td><kbd>Cmd/Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd></td><td class="it">Ripristina modifica annullata</td><td class="en">Redo undone change</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3><span class="it">Parametri URL</span><span class="en">URL parameters</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Parametro</span><span class="en">Parameter</span></th><th><span class="it">Esempio</span><span class="en">Example</span></th><th><span class="it">Effetto</span><span class="en">Effect</span></th></tr></thead>
+      <tbody>
+        <tr><td><code>?view=</code></td><td><code>?view=Soggiorno</code></td><td class="it">Naviga direttamente alla vista con quel nome al caricamento. Utile per schermi dedicati (wall panel).</td><td class="en">Navigate directly to the view with that name on load. Useful for dedicated screens (wall panels).</td></tr>
+        <tr><td><code>?menu=false</code></td><td><code>?menu=false</code></td><td class="it">Nasconde il pulsante menu (☰). Utile su tablet a parete dove non si vuole l'accesso alla configurazione.</td><td class="en">Hides the menu button (☰). Useful on wall tablets where config access is not wanted.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="it">Esempio di URL completo per tablet a parete:</p>
+  <p class="en">Example full URL for a wall tablet:</p>
+<pre><code>http://192.168.1.10:5050/?view=Soggiorno&menu=false</code></pre>
+</section>
+
+<!-- ══ ADD-ON YOUTUBE ════════════════════════════════════════ -->
+<section id="addons">
+  <h2>Add-on YouTube</h2>
+  <p class="it">ha-fusion include un'integrazione opzionale con YouTube che permette di cercare e riprodurre video attraverso dispositivi Chromecast/Google TV collegati a Home Assistant.</p>
+  <p class="en">ha-fusion includes an optional YouTube integration that lets you search and play videos through Chromecast/Google TV devices connected to Home Assistant.</p>
+
+  <h3><span class="it">Attivazione</span><span class="en">Activation</span></h3>
+<pre><code><span class="cm"># configuration.yaml</span>
+<span class="key">addons</span><span class="kw">:</span>
+  <span class="key">youtube</span><span class="kw">:</span> <span class="kw">true</span></code></pre>
+
+  <p class="it">Dopo aver abilitato, appare una nuova scheda <strong>YouTube</strong> nella sidebar. Al primo accesso ti viene chiesto di autenticarti con il tuo account Google tramite un codice OAuth.</p>
+  <p class="en">After enabling, a new <strong>YouTube</strong> tab appears in the sidebar. On first access you will be asked to authenticate with your Google account via an OAuth code.</p>
+
+  <h3><span class="it">Utilizzo</span><span class="en">Usage</span></h3>
+  <ol>
+    <li class="it">Apri la scheda YouTube nella sidebar</li>
+    <li class="en">Open the YouTube tab in the sidebar</li>
+    <li class="it">Autentica con il codice fornito su <em>youtube.com/activate</em></li>
+    <li class="en">Authenticate with the code provided at <em>youtube.com/activate</em></li>
+    <li class="it">Cerca video o sfoglia i suggerimenti</li>
+    <li class="en">Search for videos or browse suggestions</li>
+    <li class="it">Seleziona un dispositivo Chromecast/Google TV tra quelli disponibili</li>
+    <li class="en">Select a Chromecast/Google TV device from the available ones</li>
+    <li class="it">Clicca su un video per avviare la riproduzione sul dispositivo selezionato</li>
+    <li class="en">Click a video to start playback on the selected device</li>
+  </ol>
+</section>
+
+<!-- ══ DEBUG ═════════════════════════════════════════════════ -->
+<section id="debug">
+  <h2>Debug</h2>
+  <p class="it">In caso di problemi, ecco dove cercare informazioni diagnostiche:</p>
+  <p class="en">When troubleshooting, here is where to find diagnostic information:</p>
+
+  <h3><span class="it">Log del container Docker</span><span class="en">Docker container logs</span></h3>
+<pre><code>docker logs ha-fusion
+docker logs ha-fusion --tail 100 -f  <span class="cm"># segui in tempo reale</span></code></pre>
+
+  <h3><span class="it">Console del browser</span><span class="en">Browser console</span></h3>
+  <p class="it">Apri gli strumenti sviluppatore del browser (<kbd>F12</kbd>) e controlla la tab <em>Console</em> per errori frontend e la tab <em>Network</em> per richieste fallite.</p>
+  <p class="en">Open browser developer tools (<kbd>F12</kbd>) and check the <em>Console</em> tab for frontend errors and the <em>Network</em> tab for failed requests.</p>
+
+  <h3><span class="it">Problemi comuni</span><span class="en">Common issues</span></h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Problema</span><span class="en">Problem</span></th><th><span class="it">Causa probabile</span><span class="en">Likely cause</span></th><th><span class="it">Soluzione</span><span class="en">Solution</span></th></tr></thead>
+      <tbody>
+        <tr><td class="it">Pagina bianca al caricamento</td><td class="en">Blank page on load</td><td class="it">HASS_URL non raggiungibile o sbagliato</td><td class="en">HASS_URL unreachable or wrong</td><td class="it">Controlla <code>HASS_URL</code> e che HA sia raggiungibile dalla macchina Docker</td><td class="en">Check <code>HASS_URL</code> and that HA is reachable from the Docker machine</td></tr>
+        <tr><td class="it">Errore di autenticazione</td><td class="en">Authentication error</td><td class="it">Token scaduto o non valido</td><td class="en">Expired or invalid token</td><td class="it">Esci e rientra da <em>Impostazioni → Esci</em></td><td class="en">Log out and back in via <em>Settings → Log out</em></td></tr>
+        <tr><td class="it">Le entità non si aggiornano</td><td class="en">Entities not updating</td><td class="it">Connessione WebSocket interrotta</td><td class="en">WebSocket connection dropped</td><td class="it">Controlla i log; il client tenta riconnessione ogni 3 secondi</td><td class="en">Check logs; the client retries every 3 seconds</td></tr>
+        <tr><td class="it">Modifiche non salvate</td><td class="en">Changes not saving</td><td class="it">Cartella <code>data/</code> non montata o senza permessi di scrittura</td><td class="en"><code>data/</code> folder not mounted or not writable</td><td class="it">Verifica il volume Docker e i permessi della cartella</td><td class="en">Check the Docker volume and folder permissions</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ RIFERIMENTO YAML — DASHBOARD ═════════════════════════ -->
+<section id="ref-dashboard">
+  <h2><span class="it">Riferimento YAML — Dashboard</span><span class="en">YAML Reference — Dashboard</span></h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th>Default</th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>theme</td><td>string</td><td><code>godis</code></td><td class="it">Nome del tema (godis, contrast, muted, slate, ember, nord, sage, rose)</td><td class="en">Theme name (godis, contrast, muted, slate, ember, nord, sage, rose)</td></tr>
+        <tr><td>hide_views</td><td>boolean</td><td><code>false</code></td><td class="it">Nasconde la barra delle viste</td><td class="en">Hides the views bar</td></tr>
+        <tr><td>hide_sidebar</td><td>boolean</td><td><code>false</code></td><td class="it">Nasconde la sidebar</td><td class="en">Hides the sidebar</td></tr>
+        <tr><td>sidebarWidth</td><td>number</td><td><code>380</code></td><td class="it">Larghezza della sidebar in pixel</td><td class="en">Sidebar width in pixels</td></tr>
+        <tr><td>views</td><td>View[]</td><td><code>[]</code></td><td class="it">Array delle viste</td><td class="en">Array of views</td></tr>
+        <tr><td>sidebar</td><td>SidebarItem[]</td><td><code>[]</code></td><td class="it">Array degli elementi sidebar</td><td class="en">Array of sidebar items</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ RIFERIMENTO YAML — SECTION ══════════════════════════ -->
+<section id="ref-section">
+  <h2><span class="it">Riferimento YAML — Sezione</span><span class="en">YAML Reference — Section</span></h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>id</td><td>number</td><td class="it">Identificatore univoco obbligatorio (13 cifre)</td><td class="en">Mandatory unique identifier (13 digits)</td></tr>
+        <tr><td>name</td><td>string</td><td class="it">Titolo sezione. Ometti o usa <code>"-"</code> per separatore</td><td class="en">Section title. Omit or use <code>"-"</code> for separator</td></tr>
+        <tr><td>type</td><td>string</td><td class="it">Ometti = normale; <code>horizontal-stack</code>; <code>vertical-stack</code></td><td class="en">Omit = normal; <code>horizontal-stack</code>; <code>vertical-stack</code></td></tr>
+        <tr><td>items</td><td>Item[]</td><td class="it">Elementi della sezione (per sezioni normali)</td><td class="en">Section items (for normal sections)</td></tr>
+        <tr><td>sections</td><td>Section[]</td><td class="it">Sezioni figlie (solo per horizontal/vertical-stack)</td><td class="en">Child sections (stacks only)</td></tr>
+        <tr><td>visibility</td><td>CondGroup[]</td><td class="it">Condizioni visibilità della sezione</td><td class="en">Section visibility conditions</td></tr>
+        <tr><td>item_visibility_template</td><td>CondGroup[]</td><td class="it">Template visibilità applicato a tutti gli item (usa <code>{item.entity_id}</code>)</td><td class="en">Visibility template applied to all items (uses <code>{item.entity_id}</code>)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ RIFERIMENTO YAML — ITEMS ════════════════════════════ -->
+<section id="ref-items">
+  <h2><span class="it">Riferimento YAML — Elementi</span><span class="en">YAML Reference — Items</span></h2>
+
+  <h3>Button</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>type</td><td>string</td><td><code>"button"</code></td></tr>
+        <tr><td>id</td><td>number</td><td class="it">Univoco obbligatorio</td><td class="en">Mandatory unique</td></tr>
+        <tr><td>entity_id</td><td>string</td><td class="it">ID entità HA <span class="badge badge-req">req</span></td><td class="en">HA entity ID <span class="badge badge-req">req</span></td></tr>
+        <tr><td>name</td><td>string</td><td class="it">Nome personalizzato <span class="badge badge-opt">opt</span></td><td class="en">Custom name <span class="badge badge-opt">opt</span></td></tr>
+        <tr><td>icon</td><td>string</td><td class="it">Icona MDI/Iconify <span class="badge badge-opt">opt</span></td><td class="en">MDI/Iconify icon <span class="badge badge-opt">opt</span></td></tr>
+        <tr><td>color</td><td>string</td><td class="it">Colore icona CSS <span class="badge badge-opt">opt</span></td><td class="en">CSS icon colour <span class="badge badge-opt">opt</span></td></tr>
+        <tr><td>marquee</td><td>boolean</td><td class="it">Scorrimento testo lungo</td><td class="en">Scrolling for long text</td></tr>
+        <tr><td>more_info</td><td>boolean</td><td class="it">Apre finestra dettagli (default: <code>true</code>)</td><td class="en">Opens detail modal (default: <code>true</code>)</td></tr>
+        <tr><td>display_only</td><td>boolean</td><td class="it">Solo visualizzazione, nessun click</td><td class="en">Display only, no click action</td></tr>
+        <tr><td>service</td><td>string</td><td class="it">YAML servizio personalizzato</td><td class="en">Custom service YAML</td></tr>
+        <tr><td>template.state</td><td>string</td><td class="it">Jinja2 per testo stato</td><td class="en">Jinja2 for state text</td></tr>
+        <tr><td>template.name</td><td>string</td><td class="it">Jinja2 per nome</td><td class="en">Jinja2 for name</td></tr>
+        <tr><td>template.icon</td><td>string</td><td class="it">Jinja2 per icona</td><td class="en">Jinja2 for icon</td></tr>
+        <tr><td>template.color</td><td>string</td><td class="it">Jinja2 per colore</td><td class="en">Jinja2 for colour</td></tr>
+        <tr><td>template.service</td><td>string</td><td class="it">Jinja2 YAML per servizio</td><td class="en">Jinja2 YAML for service</td></tr>
+        <tr><td>visibility</td><td>CondGroup[]</td><td class="it">Condizioni visibilità item</td><td class="en">Item visibility conditions</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Camera</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>type</td><td>string</td><td><code>"camera"</code></td></tr>
+        <tr><td>entity_id</td><td>string</td><td class="it">Entità <code>camera.*</code></td><td class="en"><code>camera.*</code> entity</td></tr>
+        <tr><td>stream</td><td>boolean</td><td class="it">Stream HLS live (default: <code>false</code>)</td><td class="en">Live HLS stream (default: <code>false</code>)</td></tr>
+        <tr><td>size</td><td>string</td><td class="it">CSS object-fit (contain/cover/fill)</td><td class="en">CSS object-fit (contain/cover/fill)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Custom Panel</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th><span class="it">Campo</span><span class="en">Field</span></th><th><span class="it">Tipo</span><span class="en">Type</span></th><th><span class="it">Descrizione</span><span class="en">Description</span></th></tr></thead>
+      <tbody>
+        <tr><td>type</td><td>string</td><td><code>"custom_panel"</code></td></tr>
+        <tr><td>id</td><td>number</td><td class="it">Univoco obbligatorio</td><td class="en">Mandatory unique</td></tr>
+        <tr><td>name</td><td>string</td><td class="it">Titolo del pannello</td><td class="en">Panel title</td></tr>
+        <tr><td>icon</td><td>string</td><td class="it">Icona sul tile</td><td class="en">Tile icon</td></tr>
+        <tr><td>color</td><td>string</td><td class="it">Colore di sfondo tile</td><td class="en">Tile background colour</td></tr>
+        <tr><td>primary_row_id</td><td>number</td><td class="it">ID riga il cui stato appare sul tile</td><td class="en">Row ID whose state shows on tile</td></tr>
+        <tr><td>rows</td><td>ModalRow[]</td><td class="it">Array righe (camera/buttons/sensor/slider)</td><td class="en">Row array (camera/buttons/sensor/slider)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ RIFERIMENTO YAML — SIDEBAR ══════════════════════════ -->
+<section id="ref-sidebar">
+  <h2><span class="it">Riferimento YAML — Sidebar</span><span class="en">YAML Reference — Sidebar</span></h2>
+  <p class="it">Tutti gli elementi sidebar condividono i campi <code>type</code>, <code>id</code> e <code>hide_mobile</code>. Sotto i campi specifici per tipo.</p>
+  <p class="en">All sidebar items share the fields <code>type</code>, <code>id</code> and <code>hide_mobile</code>. Below are type-specific fields.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>type</th><th><span class="it">Campi specifici</span><span class="en">Type-specific fields</span></th></tr></thead>
+      <tbody>
+        <tr><td>time</td><td><code>hour12</code> (bool), <code>seconds</code> (bool)</td></tr>
+        <tr><td>date</td><td><code>layout</code> (horizontal/vertical), <code>short_day</code> (bool), <code>short_month</code> (bool), <code>hide</code> (day/month/year/none)</td></tr>
+        <tr><td>weather</td><td><code>entity_id</code>, <code>icon_pack</code> (meteocons), <code>show_apparent</code> (bool), <code>sensor</code>, <code>extra_sensor_icon</code></td></tr>
+        <tr><td>weather_forecast</td><td><code>entity_id</code>, <code>days_to_show</code> (number), <code>icon_pack</code></td></tr>
+        <tr><td>sensor</td><td><code>entity_id</code>, <code>prefix</code> (string), <code>suffix</code> (string), <code>date</code> (bool)</td></tr>
+        <tr><td>template</td><td><code>template</code> (Jinja2 HTML), <code>icon</code>, <code>icon_size</code>, <code>icon_color</code></td></tr>
+        <tr><td>radial</td><td><code>entity_id</code>, <code>name</code>, <code>stroke</code> (number)</td></tr>
+        <tr><td>bar</td><td><code>entity_id</code>, <code>name</code>, <code>math</code> (max value string)</td></tr>
+        <tr><td>graph</td><td><code>entity_id</code>, <code>name</code>, <code>period</code> (hour/day/week/month), <code>stroke</code></td></tr>
+        <tr><td>history</td><td><code>entity_id</code>, <code>period</code> (hour/day/week/month)</td></tr>
+        <tr><td>navigate</td><td class="it"><em>nessun campo specifico</em></td><td class="en"><em>no specific fields</em></td></tr>
+        <tr><td>divider</td><td><code>mode</code> (line/spacer), <code>size</code> (number, rem, per spacer)</td></tr>
+        <tr><td>camera</td><td><code>entity_id</code>, <code>stream</code> (bool), <code>size</code> (CSS object-fit)</td></tr>
+        <tr><td>iframe</td><td><code>url</code>, <code>size</code> (CSS height)</td></tr>
+        <tr><td>image</td><td><code>entity_id</code> oppure <code>url</code></td></tr>
+        <tr><td>timer</td><td><code>entity_id</code> (timer.*)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+  <p style="text-align:center; color: var(--muted); font-size:0.85rem; margin-top:2rem;">
+    <span class="it">ha-fusion — fork di <a href="https://github.com/matt8707/ha-fusion">matt8707/ha-fusion</a> · Manuale v2026.5</span>
+    <span class="en">ha-fusion — fork of <a href="https://github.com/matt8707/ha-fusion">matt8707/ha-fusion</a> · Manual v2026.5</span>
+  </p>
+</section>
+
+</div><!-- /#main -->
+
+<script>
+// ── LANGUAGE TOGGLE ───────────────────────────────────────
+function toggleLang() {
+  const html = document.documentElement;
+  const isIt = html.lang === 'it';
+  html.lang = isIt ? 'en' : 'it';
+  document.getElementById('lang-flag').textContent = isIt ? '🇮🇹' : '🇬🇧';
+  document.getElementById('lang-label').textContent = isIt ? 'Italiano' : 'English';
+  localStorage.setItem('ha-fusion-manual-lang', html.lang);
+}
+
+// restore saved lang
+(function() {
+  const saved = localStorage.getItem('ha-fusion-manual-lang');
+  if (saved && saved !== 'it') {
+    document.documentElement.lang = saved;
+    document.getElementById('lang-flag').textContent = '🇮🇹';
+    document.getElementById('lang-label').textContent = 'Italiano';
+  }
+})();
+
+// ── ACTIVE NAV HIGHLIGHT ──────────────────────────────────
+const sections = document.querySelectorAll('section[id], div[id="hero"]');
+const navLinks = document.querySelectorAll('#nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

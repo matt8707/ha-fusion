@@ -32,8 +32,9 @@
 			'solar:file-bold-duotone',
 			'gg:row-first',
 			'solar:posts-carousel-horizontal-bold-duotone',
-			'gg:row-first',
-			'fluent:tab-add-24-filled'
+			'heroicons:view-columns-16-solid',
+			'fluent:tab-add-24-filled',
+			'solar:book-2-bold-duotone'
 		]);
 	});
 
@@ -91,6 +92,12 @@
 				{/await}
 			</div>
 
+			<div class="docs">
+				{#await import('$lib/Drawer/ManualButton.svelte') then ManualButton}
+					<svelte:component this={ManualButton.default} />
+				{/await}
+			</div>
+
 			<div class="settings push">
 				{#await import('$lib/Drawer/SettingsButton.svelte') then SettingsButton}
 					<svelte:component this={SettingsButton.default} {data} />
@@ -108,7 +115,7 @@
 
 <style>
 	#drawer {
-		height: 4.75rem;
+		min-height: 4.75rem;
 		width: 100vw;
 		padding: 1rem 2rem;
 		background-color: var(--theme-colors-sidebar-background);
@@ -146,6 +153,10 @@
 		max-width: 20rem;
 	}
 
+	.docs {
+		grid-area: docs;
+	}
+
 	.settings {
 		grid-area: settings;
 	}
@@ -158,8 +169,8 @@
 	.grid {
 		display: grid;
 		gap: 0.5rem;
-		grid-template-areas: 'edit code div search settings';
-		grid-template-columns: auto auto auto 1fr auto;
+		grid-template-areas: 'edit code div search docs settings';
+		grid-template-columns: auto auto auto 1fr auto auto;
 		width: 100%;
 	}
 
@@ -175,22 +186,22 @@
 	@media all and (max-width: 768px) {
 		#drawer {
 			padding: 1rem 1.25rem;
-			height: 8rem;
+			min-height: 8rem;
 			flex-wrap: wrap;
 		}
 
 		.grid {
-			grid-template-columns: auto auto 1fr 1fr;
+			grid-template-columns: auto auto 1fr auto auto;
 			grid-template-areas:
-				'edit code . settings'
-				'search search search search';
+				'edit code . docs settings'
+				'search search search search search';
 		}
 
 		.grid-editmode {
-			grid-template-columns: auto auto 1fr auto;
+			grid-template-columns: auto 1fr auto;
 			grid-template-areas:
-				'edit add  appearance .'
-				'history history history save';
+				'edit add appearance'
+				'history history save';
 		}
 
 		.save {

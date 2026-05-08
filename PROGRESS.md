@@ -207,5 +207,5 @@ List grouped by domains and categorized based on their similar behaviors
 
 ### Pending
 
-- [ ] Lock with code support
-- [ ] `input_datetime` parse date in state
+- [x] Lock with code support
+- [x] `input_datetime` parse date in state
