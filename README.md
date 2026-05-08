@@ -6,11 +6,15 @@ This is a personal fork of [ha-fusion](https://github.com/matt8707/ha-fusion) by
 
 
 
-[![preview](/static/preview.png)](https://www.youtube.com/watch?v=D8mWruSuPOM)
+[![preview](/static/preview.png)](https://youtu.be/2jNCyvkyLD8)
 
 ---
 
 ## What's different in this fork
+
+### Built-in documentation
+
+A **Documentation** button in the toolbar opens a full bilingual (IT/EN) manual covering installation, all item types, sidebar widgets, visibility conditions, Jinja2 templates, themes, custom CSS/JS and more. No external link required — the manual is bundled with the app.
 
 ### New: Custom Panel item type
 
@@ -26,13 +30,19 @@ A new dashboard item type — `CUSTOM PANEL` — that lets you build a fully con
 A "primary entity" can be pinned to the tile so its state is always visible at a glance without opening the panel.
 All UI strings are fully translated (English and Italian included, contributor for other translation are welcome).
 
+### Other improvements
+
+- **Lock with code** — locks that expose `code_format: number` show a numeric keypad; `code_format: text` shows a text input. Same UX as the alarm control panel.
+- **`input_datetime` display** — the tile now shows a locale-formatted date/time (e.g. "15 May 2023, 14:30") instead of the raw HA state string.
+- **Edit toolbar** — add buttons are shown inline instead of inside a dropdown, making it faster to add objects, sections, stacks, scenes and views.
+
 For the full list of changes, fixes and improvements see [PROGRESS.md](PROGRESS.md).
 
 ---
 
 ## Credits
 
-This project is based on the excellent work of [matt8707](https://github.com/matt8707/ha-fusion). All credit for the original dashboard design and architecture goes to him. If you find his project useful, consider supporting him at <https://www.paypal.com/paypalme/matt8707>.
+This project is based on the excellent work of [matt8707](https://github.com/matt8707/ha-fusion). All credit for the original dashboard design and architecture goes to him.
 
 Original demo video: <https://www.youtube.com/watch?v=D8mWruSuPOM>
 
