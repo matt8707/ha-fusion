@@ -233,10 +233,13 @@ export interface SensorItem {
 }
 
 export interface TemplateItem {
-	type?: string;
-	id?: number;
-	template?: string;
-	hide_mobile?: boolean;
+    type?: string;
+    id?: number;
+    template?: string;
+    icon?: string;
+    icon_size?: number;    // Icon size
+    icon_color?: string;   // Icon color
+    hide_mobile?: boolean;
 }
 
 export interface TimeItem {

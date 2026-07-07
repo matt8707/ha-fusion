@@ -3,15 +3,18 @@
 	import { marked } from 'marked';
 	import { onDestroy } from 'svelte';
 	import type { TemplateItem } from '$lib/Types';
+	import Icon from '@iconify/svelte';
 
 	export let sel: TemplateItem | undefined = undefined;
 	export let demo = false;
+
 
 	let unsubscribe: () => void;
 	let id = sel?.id;
 	let error = false;
 
 	$: template = sel?.template;
+	$: icon = sel?.icon;
 
 	$: if ($config?.state === 'RUNNING' && template) {
 		renderTemplate(template);
@@ -79,46 +82,76 @@
 </script>
 
 <div
-	id="markdown"
-	on:click={handleEvent}
-	on:pointerenter={handleEvent}
-	on:keydown
-	role="button"
-	tabindex="0"
+        id="markdown"
+        on:click={handleEvent}
+        on:pointerenter={handleEvent}
+        on:keydown
+        role="button"
+        tabindex="0"
+        class="template-container"
 >
-	{#if demo}
-		<div class="template">
-			<span>&#123;&#123;</span> template <span>&#125;&#125;</span>
-		</div>
-	{:else if id && $templates?.[id]}
-		<span class:error>{@html $templates?.[id]}</span>
-	{:else if template}
-		{$lang('unknown')}
-	{:else}
-		{$lang('template')}
-	{/if}
+        {#if icon}
+			<div class="icon-wrapper">
+				<Icon 
+					{icon} 
+					width={sel?.icon_size || 20} 
+					color={sel?.icon_color}
+				/>
+			</div>
+        {/if}
+        
+        <div class="content-wrapper">
+                {#if demo}
+                        <div class="template">
+                                <span>&#123;&#123;</span> template <span>&#125;&#125;</span>
+                        </div>
+                {:else if id && $templates?.[id]}
+                        <span class:error>{@html $templates?.[id]}</span>
+                {:else if template}
+                        {$lang('unknown')}
+                {:else}
+                        {$lang('template')}
+                {/if}
+        </div>
 </div>
 
 <style>
-	#markdown {
-		position: relative;
-		word-wrap: break-word;
-		padding: var(--theme-sidebar-item-padding);
-		text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-	}
+        #markdown {
+                position: relative;
+                word-wrap: break-word;
+                padding: var(--theme-sidebar-item-padding);
+                text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
 
-	.error {
-		color: red;
-	}
+        .template-container {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+        }
 
-	.template {
-		color: #e06c75;
-		font-family: monospace;
-		font-size: 1.15rem;
-		text-align: center;
-	}
+        .icon-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 24px;
+        }
 
-	.template > span {
-		color: #e5c07b;
-	}
+        .content-wrapper {
+                flex: 1;
+        }
+
+        .error {
+                color: red;
+        }
+
+        .template {
+                color: #e06c75;
+                font-family: monospace;
+                font-size: 1.15rem;
+                text-align: center;
+        }
+
+        .template > span {
+                color: #e5c07b;
+        }
 </style>
