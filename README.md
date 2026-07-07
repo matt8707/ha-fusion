@@ -10,9 +10,10 @@ If you find this project useful, be sure to 🌟 this repository! If you love it
 
 ---
 
-## 📣 Pre-beta
+## 📣 Important
 
-The current state of this project is **pre-beta**. This means that there's basic functionality missing, incomplete features and unresolved issues. General feedback, bug reports and feature requests are welcome!
+This repository is no longer actively maintained. Development continues in a maintained fork: [knowald/ha-fusion](https://github.com/knowald/ha-fusion) (Svelte 5, ongoing fixes and new features).
+The matching add-on repository is [knowald/addon-ha-fusion](https://github.com/knowald/addon-ha-fusion), and the fork's README has a short migration guide.
 
 ---
 
