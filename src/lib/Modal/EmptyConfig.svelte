@@ -3,6 +3,7 @@
 	import type { EmptyItem } from '$lib/Types';
 	import Modal from '$lib/Modal/Index.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
+	import VisibilityItemButton from '$lib/Main/VisibilityItemButton.svelte';
 	import Empty from '$lib/Main/Empty.svelte';
 
 	export let isOpen: boolean;
@@ -16,6 +17,12 @@
 
 		<div>
 			<Empty {sel} />
+		</div>
+
+		<h2>{$lang('visibility')}</h2>
+
+		<div style="display: flex; gap: 0.8rem;">
+			<VisibilityItemButton item={sel} />
 		</div>
 
 		<ConfigButtons {sel} />

@@ -1,27 +1,42 @@
 <script lang="ts">
 	import { editMode, lang, states } from '$lib/Stores';
-	import { handleAllConditions } from '$lib/Conditional';
+	import { handleAllConditions, handleAllConditionsForItem } from '$lib/Conditional';
 	import type { Condition } from '$lib/Types';
 
 	export let sel: any;
 	export let items: Condition[];
 	export let matches: { [key: string]: boolean };
+	export let isItemTemplate = false;
 
 	/**
-	 * Current section visibility
+	 * Determine if sel is an item (has type property) or a section
+	 */
+	$: isItem = sel?.type !== undefined;
+
+	/**
+	 * Current visibility based on whether it's a section, item, or item template
+	 * For item templates, we can't evaluate because entity_id is a placeholder
 	 */
 	$: visible =
-		matches && handleAllConditions($editMode, $states, { ...sel, visibility: items })
+		matches &&
+		!isItemTemplate &&
+		(isItem
+			? handleAllConditionsForItem($editMode, $states, { ...sel, visibility: items })
+			: handleAllConditions($editMode, $states, { ...sel, visibility: items }))
 			? 'visible'
 			: 'hidden';
 </script>
 
 <div class="explanation">
-	{$lang('visibility_explanation')}
+	{#if isItemTemplate}
+		{$lang('item_visibility_template_explanation')}
+	{:else}
+		{$lang('visibility_explanation')}
 
-	<div class="evaluate-condition {visible}">
-		{$lang(visible)}
-	</div>
+		<div class="evaluate-condition {visible}">
+			{$lang(visible)}
+		</div>
+	{/if}
 </div>
 
 <style>

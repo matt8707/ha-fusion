@@ -358,6 +358,8 @@
 	"visibility": "Visibility",
 	"visibility_explanation": "The card will be shown when ALL conditions below are fulfilled. If no conditions are set, the card will always be shown.",
 	"visible": "Visible",
+	"item_visibility_template": "Item Visibility Template",
+	"item_visibility_template_explanation": "Set a visibility template that will apply to ALL items in this section. Use {item.entity_id} as a placeholder for each item's entity ID. This condition will be automatically applied to every item.",
 	"volume_level": "Volume",
 	"water_heater_away_mode": "Away mode",
 	"water_heater_eco": "Eco",

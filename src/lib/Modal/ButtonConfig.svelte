@@ -18,6 +18,7 @@
 	import Ripple from 'svelte-ripple';
 	import InputClear from '$lib/Components/InputClear.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
+	import VisibilityItemButton from '$lib/Main/VisibilityItemButton.svelte';
 	import { updateObj, getDomain, getName, getTogglableService } from '$lib/Utils';
 	import type { ButtonItem } from '$lib/Types';
 	import { openModal } from 'svelte-modals';
@@ -387,6 +388,12 @@
 			>
 				{$lang('no')}
 			</button>
+		</div>
+
+		<h2>{$lang('visibility')}</h2>
+
+		<div style="display: flex; gap: 0.8rem;">
+			<VisibilityItemButton item={sel} />
 		</div>
 
 		{#if getDomain(entity_id) === 'media_player'}

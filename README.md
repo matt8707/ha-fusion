@@ -6,7 +6,8 @@ A modern, easy-to-use and performant custom [Home Assistant](https://www.home-as
 
 [![preview](/static/preview.png)](https://www.youtube.com/watch?v=D8mWruSuPOM)
 
-If you find this project useful, be sure to 🌟 this repository! If you love it, please consider donating! ❤️ <https://www.paypal.com/paypalme/matt8707>
+If you find this project useful, be sure to 🌟 this repository!
+
 
 ---
 
@@ -75,7 +76,7 @@ docker run -d \
 
 #### Kubernetes
 
-If you prefer to use Kubernetes, see [Chart README.md](https://github.com/matt8707/ha-fusion/tree/167c320918544416e2f9272e1edad64b7329269a/charts/ha-fusion)
+If you prefer to use Kubernetes, see [Chart README.md](https://github.com/matt8707/ha-fusion/tree/main/charts/ha-fusion)
 
 </details>
 

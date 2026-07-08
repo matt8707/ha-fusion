@@ -20,7 +20,7 @@
 		{#if domain}
 			<h2>
 				Domain '{domain}' is not yet implemented...<br />
-				Please open issue on <a href="https://github.com/matt8707" target="_blank">GitHub</a>
+				Please open issue on <a href="https://github.com/matt8707/ha-fusion/issues" target="_blank">GitHub</a>
 			</h2>
 		{/if}
 

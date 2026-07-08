@@ -19,6 +19,7 @@
 
 	export let isOpen: boolean;
 	export let sel: any;
+	export let isItemTemplate = false;
 
 	let innerWidth = 0;
 	let draggingGroup = false;
@@ -26,21 +27,48 @@
 	let matches: { [key: string]: boolean } = {};
 
 	/**
-	 * Add id's to to each item
+	 * Determine which visibility property to use
 	 */
-	let items =
-		sel?.visibility?.map((item: Condition) => ({
-			id: generateId($dashboard),
-			...item,
-			...(item.condition === 'and' || item.condition === 'or'
-				? {
-						conditions: item.conditions?.map((condition: Condition) => ({
-							id: generateId($dashboard),
-							...condition
-						}))
-					}
-				: {})
-		})) || [];
+	$: visibilityKey = isItemTemplate ? 'item_visibility_template' : 'visibility';
+
+	/**
+	 * Capture dashboard reference for ID generation
+	 * to avoid reactive recalculation on every dashboard change
+	 */
+	let dashboardSnapshot = $dashboard;
+
+	/**
+	 * Track the source data to detect actual changes
+	 */
+	let previousVisibilityData: string | undefined;
+	let items: any[] = [];
+
+	/**
+	 * Add id's to each item
+	 * Only regenerate when modal opens or source data changes
+	 */
+	$: visibilityData = sel?.[visibilityKey];
+
+	$: if (isOpen) {
+		const currentData = JSON.stringify(visibilityData);
+		if (currentData !== previousVisibilityData) {
+			dashboardSnapshot = $dashboard;
+			previousVisibilityData = currentData;
+			items =
+				visibilityData?.map((item: Condition) => ({
+					id: generateId(dashboardSnapshot),
+					...item,
+					...(item.condition === 'and' || item.condition === 'or'
+						? {
+								conditions: item.conditions?.map((condition: Condition) => ({
+									id: generateId(dashboardSnapshot),
+									...condition
+								}))
+							}
+						: {})
+				})) || [];
+		}
+	}
 
 	/**
 	 * dnd
@@ -140,17 +168,17 @@
 	 * Removes all conditions, which in turn also triggers onDestroy
 	 */
 	function handleRemove() {
-		delete sel?.visibility;
+		delete sel?.[visibilityKey];
 		sel = { ...sel };
 		closeModal();
 	}
 
 	/**
 	 * When modal is closed remove any `id` and `collapsed` keys
-	 * and add transformed items to dashboard section visibility
+	 * and add transformed items to dashboard section visibility or item_visibility_template
 	 */
 	onDestroy(() => {
-		sel.visibility = items?.map((item: Condition) => {
+		sel[visibilityKey] = items?.map((item: Condition) => {
 			const condition = { ...item };
 			delete condition.id;
 			delete condition.collapsed;
@@ -167,8 +195,8 @@
 			return condition;
 		});
 
-		if (!sel.visibility?.length) {
-			delete sel.visibility;
+		if (!sel[visibilityKey]?.length) {
+			delete sel[visibilityKey];
 		}
 
 		$dashboard = $dashboard;
@@ -182,10 +210,10 @@
 {#if isOpen}
 	<Modal>
 		<h1 slot="title">
-			{$lang('visibility')}
+			{isItemTemplate ? $lang('item_visibility_template') : $lang('visibility')}
 		</h1>
 
-		<Explanation {sel} {items} {matches} />
+		<Explanation {sel} {items} {matches} {isItemTemplate} />
 
 		<AddConditionButtons bind:items />
 
@@ -212,7 +240,7 @@
 						{#if !item?.collapsed}
 							<div class="content" transition:slide={{ duration: $motion, easing: expoOut }}>
 								{#if item?.condition === 'state' && !item?.collapsed}
-									<StateCondition {item} bind:items />
+									<StateCondition {item} bind:items {isItemTemplate} />
 								{:else if item?.condition === 'numeric_state' && !item?.collapsed}
 									<NumericCondition {item} bind:items />
 								{:else if item?.condition === 'screen' && !item?.collapsed}
@@ -252,7 +280,7 @@
 															transition:slide={{ duration: $motion, easing: expoOut }}
 														>
 															{#if subItem?.condition === 'state' && !subItem?.collapsed}
-																<StateCondition item={subItem} bind:items={item.conditions} />
+																<StateCondition item={subItem} bind:items={item.conditions} {isItemTemplate} />
 															{:else if subItem?.condition === 'numeric_state' && !subItem?.collapsed}
 																<NumericCondition item={subItem} bind:items={item.conditions} />
 															{:else if subItem?.condition === 'screen' && !subItem?.collapsed}

@@ -1,0 +1,810 @@
+views:
+  - name: Overview
+    id: 4640519965864
+    sections:
+      - name: Pet Feeders
+        items:
+          - id: 1078943873806
+            type: button
+            entity_id: script.rizzo_manual_feed_11_12_cups_skip_next_feeding
+            name: Feed Rizzo
+        id: 6644876008125
+      - name: Alarm
+        items:
+          - id: 2797419241500
+            type: button
+            entity_id: alarm_control_panel.8124
+        id: 2090851036910
+      - name: Lights
+        items:
+          - id: 2776952395454
+            type: button
+            entity_id: switch.garage_west
+            name: Garage West
+          - id: 3038385877358
+            type: button
+            entity_id: light.deck_lights
+          - id: 4191002907534
+            type: button
+            entity_id: switch.front_door
+          - id: 4980222223393
+            type: button
+            entity_id: switch.garage_north
+          - id: 8116994414180
+            type: button
+            entity_id: switch.office_porch_led
+            name: Office Porch
+          - id: 1285868976010
+            type: button
+            entity_id: switch.back_yard_deck
+        id: 5796921286353
+      - name: Locks
+        items:
+          - id: 3170755198961
+            type: button
+            entity_id: lock.aqara_smart_lock_u100_2
+            name: Garage  North
+          - id: 5370976154394
+            type: button
+            entity_id: lock.aqara_smart_lock_u100
+            name: Garage South
+          - id: 3209251493391
+            type: button
+            entity_id: lock.office_door_office_door_lock
+            name: Office
+          - id: 7462114993254
+            type: button
+            entity_id: lock.back_patio_back_patio_lock
+            name: Back Patio
+          - id: 4659467861824
+            type: button
+            entity_id: lock.front_door_front_door_lock
+            name: Front
+        id: 5492635245288
+      - name: Garage Doors
+        items:
+          - id: 9416901258033
+            type: button
+            entity_id: cover.large_garage
+          - id: 5638232917834
+            type: button
+            entity_id: cover.small_garage
+        id: 9460952969975
+      - name: Doors & Windows
+        items:
+          - id: 6850686558979
+            type: button
+            entity_id: sensor.gym_door_status
+            name: Gym Door
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.gym_door_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.gym_door_status
+                    state: Unavailable
+          - id: 1566728819458
+            type: button
+            entity_id: sensor.back_door_status
+            name: Back Door
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.back_door_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.back_door_status
+                    state: Unavailable
+          - id: 2432923758332
+            type: button
+            entity_id: sensor.basement_guest_window_status
+            name: Basement Guest Window
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.basement_guest_window_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.basement_guest_window_status
+                    state: Unavailable
+          - id: 8318349264872
+            type: button
+            entity_id: sensor.basement_pool_table_window_status
+            name: Basement Pool Table
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.basement_pool_table_window_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.basement_pool_table_window_status
+                    state: Unavailable
+          - id: 5923507345834
+            type: button
+            entity_id: sensor.dining_room_window_north_status
+            name: Dining Room Window North
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.dining_room_window_north_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.dining_room_window_north_status
+                    state: Unavailable
+          - id: 4746808042873
+            type: button
+            entity_id: sensor.dog_door_status
+            name: Dog Door
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.dog_door_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.dog_door_status
+                    state: Unavailable
+          - id: 2952151221279
+            type: button
+            entity_id: sensor.entry_window_status
+            name: Entry Window
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.entry_window_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.entry_window_status
+                    state: Unavailable
+          - id: 5265749964086
+            type: button
+            entity_id: sensor.front_door_status
+            name: Front Door
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.front_door_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.front_door_status
+                    state: Unavailable
+          - id: 8386671246593
+            type: button
+            entity_id: sensor.garage_door_status
+            name: Garage Door
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.garage_door_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.garage_door_status
+                    state: Unavailable
+          - id: 1505605674599
+            type: button
+            entity_id: sensor.garage_door_south_status
+            name: Garage Door South
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.garage_door_south_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.garage_door_south_status
+                    state: Unavailable
+          - id: 5451351848372
+            type: button
+            entity_id: sensor.garage_north_door_status
+            name: Garage North Door
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.garage_north_door_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.garage_north_door_status
+                    state: Unavailable
+          - id: 7809761432833
+            type: button
+            entity_id: sensor.gwen_window_e1_status
+            name: Gwen Window E1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.gwen_window_e1_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.gwen_window_e1_status
+                    state: Unavailable
+          - id: 8025356084502
+            type: button
+            entity_id: sensor.gwen_window_e2_status
+            name: Gwen Window E2
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.gwen_window_e2_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.gwen_window_e2_status
+                    state: Unavailable
+          - id: 1541074552201
+            type: button
+            entity_id: sensor.gwen_window_north_status
+            name: Gwen Window North
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.gwen_window_north_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.gwen_window_north_status
+                    state: Unavailable
+          - id: 7798406403770
+            type: button
+            entity_id: sensor.kitchen_oven_window_status
+            name: Kitchen Oven Window
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.kitchen_oven_window_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.kitchen_oven_window_status
+                    state: Unavailable
+          - id: 5609908665649
+            type: button
+            entity_id: sensor.kitchen_sink_window_status
+            name: Kitchen Sink Window
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.kitchen_sink_window_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.kitchen_sink_window_status
+                    state: Unavailable
+          - id: 4761599830687
+            type: button
+            entity_id: sensor.kitchen_table_window_status
+            name: Kitchen Table Window
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.kitchen_table_window_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.kitchen_table_window_status
+                    state: Unavailable
+          - id: 2485172138984
+            type: button
+            entity_id: sensor.living_room_window_north_1_status
+            name: Living Room Window North 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.living_room_window_north_1_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.living_room_window_north_1_status
+                    state: Unavailable
+          - id: 2526835058431
+            type: button
+            entity_id: sensor.living_room_window_north_2_status
+            name: Living Room Window North 2
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.living_room_window_north_2_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.living_room_window_north_2_status
+                    state: Unavailable
+          - id: 9960045812642
+            type: button
+            entity_id: sensor.living_room_window_west_1_status
+            name: Living Room Window West 1
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.living_room_window_west_1_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.living_room_window_west_1_status
+                    state: Unavailable
+          - id: 7439898427378
+            type: button
+            entity_id: sensor.living_room_window_west_2_status
+            name: Living Room Window West 2
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.living_room_window_west_2_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.living_room_window_west_2_status
+                    state: Unavailable
+          - id: 3276979842620
+            type: button
+            entity_id: sensor.mud_room_window_north_status
+            name: Mud Room Window North
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.mud_room_window_north_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.mud_room_window_north_status
+                    state: Unavailable
+          - id: 1236007509918
+            type: button
+            entity_id: sensor.mud_room_window_south_status
+            name: Mud Room Window South
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.mud_room_window_south_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.mud_room_window_south_status
+                    state: Unavailable
+          - id: 4690843181137
+            type: button
+            entity_id: sensor.office_door_lower_status
+            name: Office Door Lower
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.office_door_lower_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.office_door_lower_status
+                    state: Unavailable
+          - id: 1547989659337
+            type: button
+            entity_id: sensor.office_door_upper_status
+            name: Office Door Upper
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.office_door_upper_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.office_door_upper_status
+                    state: Unavailable
+          - id: 5653392194182
+            type: button
+            entity_id: sensor.office_window_status
+            name: Office Window
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.office_window_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.office_window_status
+                    state: Unavailable
+          - id: 9717164798732
+            type: button
+            entity_id: sensor.will_window_north_status
+            name: Will Window North
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.will_window_north_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.will_window_north_status
+                    state: Unavailable
+          - id: 8103814188157
+            type: button
+            entity_id: sensor.will_window_south_status
+            name: Will Window South
+            visibility:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: sensor.will_window_south_status
+                    state: Open
+                  - condition: state
+                    entity: sensor.will_window_south_status
+                    state: Unavailable
+        id: 6773102841356
+  - name: Cameras
+    id: 5355954703011
+    sections:
+      - name: Cameras
+        items:
+          - id: 8117708499194
+            type: camera
+            entity_id: camera.ai_turret_high_resolution_channel
+            stream: true
+          - id: 2673799158030
+            type: camera
+            entity_id: camera.mews_high_resolution_channel
+          - id: 1350091690130
+            type: camera
+            entity_id: camera.front_yard_high_resolution_channel
+          - id: 1640838367850
+            type: camera
+            entity_id: camera.back_yard_high_resolution_channel
+            stream: true
+          - id: 9620341918479
+            type: camera
+            entity_id: camera.alley_high_resolution_channel
+            stream: true
+          - id: 1255384747092
+            type: camera
+            entity_id: camera.alley_2_high_resolution_channel
+            stream: true
+          - id: 7263576053873
+            type: camera
+            entity_id: camera.mews_high_resolution_channel
+            stream: true
+        id: 8197110181492
+  - name: Batteries
+    id: 5101227152425
+    sections:
+      - name: Pets
+        items:
+          - id: 3003358186654
+            type: button
+            entity_id: sensor.rizzo_feeder_battery_ac
+          - id: 7898434998538
+            type: button
+            entity_id: sensor.tucker_feeder_battery_ac
+        id: 3411641158298
+      - name: Locks
+        items:
+          - id: 2840345930745
+            type: button
+            entity_id: sensor.back_patio_back_patio_battery
+            name: Back Patio
+          - id: 9491656940393
+            type: button
+            entity_id: sensor.office_door_office_door_battery
+            name: Office Door
+          - id: 5128408766523
+            type: button
+            entity_id: sensor.front_door_front_door_battery
+            name: Front Door
+          - id: 4685366391838
+            type: button
+            entity_id: sensor.aqara_smart_lock_u100_battery
+          - id: 9903251368952
+            type: button
+            entity_id: sensor.aqara_smart_lock_u100_battery_2
+        id: 9560221376607
+      - name: Moen
+        items:
+          - id: 2424774845636
+            type: button
+            entity_id: sensor.1st_fl_bath_battery
+            name: 1st Fl Bath
+          - id: 3422900360546
+            type: button
+            entity_id: sensor.basement_drain_battery
+            name: Basement Drain
+          - id: 3593222909058
+            type: button
+            entity_id: sensor.basement_humidifier_battery
+            name: Basement Humidifier
+          - id: 2403404891890
+            type: button
+            entity_id: sensor.basement_sink_battery
+            name: Basement Sink
+          - id: 2113990544238
+            type: button
+            entity_id: sensor.basement_sump_pump_battery
+            name: Basement Hot Water Heater
+          - id: 4957463521551
+            type: button
+            entity_id: sensor.dishwasher_battery
+            name: Dishwasher
+          - id: 4469048058205
+            type: button
+            entity_id: sensor.kids_sink_battery
+            name: Gwen Sink
+          - id: 6309804520976
+            type: button
+            entity_id: sensor.kids_toilet_battery
+            name: Gwen Toilet
+          - id: 2137917342504
+            type: button
+            entity_id: sensor.kitchen_sink_battery
+            name: Kitchen Sink
+          - id: 8914125208098
+            type: button
+            entity_id: sensor.laundry_sink_battery
+            name: Laundry Sink
+          - id: 4940334228812
+            type: button
+            entity_id: sensor.loft_bathroom_battery
+            name: Loft Bathroom
+          - id: 7951242321051
+            type: button
+            entity_id: sensor.loft_bathroom_battery
+            name: Loft Bathroom
+          - id: 4448233908056
+            type: button
+            entity_id: sensor.master_bath_battery
+            name: Master Bath
+        id: 4044927925525
+sidebar:
+  - id: 2575838147451
+    type: time
+    hour12: true
+  - id: 1491447760858
+    type: date
+    short_day: false
+    short_month: false
+    layout: horizontal
+  - id: 4796178407917
+    type: divider
+  - id: 8872687512705
+    type: weather_forecast
+    entity_id: weather.pirateweather
+  - id: 8320757929705
+    type: divider
+  - id: 3123884614551
+    type: template
+    template: >-
+      # 📬 Mail
+
+      {% set sensor_state = states('binary_sensor.8124_mailbox_door_state') %}
+
+      {% set online_state = states('binary_sensor.8124_mailbox_online') %}
+
+      {% set last_delivery = states('sensor.8124_mailbox_last_closed') %}
+
+
+      {% if online_state == 'off' %}
+
+      {# Sensor is offline or not reporting #}
+
+      {% if last_delivery not in ['unknown', 'unavailable'] %}
+
+      📡 Mailbox sensor offline
+
+      Last delivery: {{ as_timestamp(last_delivery) | timestamp_custom('%b %d at
+      %I:%M %p')}}
+
+      {% else %}
+
+      📡 Mailbox sensor offline (no delivery data)
+
+      {% endif %}
+
+      {% elif last_delivery in ['unknown', 'unavailable'] %}
+
+      ⚠️ No delivery data available
+
+      {% else %}
+
+      {% set delivered_today = now().date() == as_datetime(last_delivery).date()
+      %}
+
+      {% if delivered_today %}
+
+      ✅ Mail delivered today at {{ as_timestamp(last_delivery) |
+      timestamp_custom('%I:%M %p') }}
+
+      {% else %}
+
+      ❌ Not delivered today
+
+      Last delivery: {{ as_timestamp(last_delivery) | timestamp_custom('%b %d at
+      %I:%M %p') }}
+
+      {% endif %}
+
+      {% endif %}
+  - id: 8210138260680
+    type: divider
+  - id: 5825786048796
+    type: template
+    template: >-
+      # 🚮 Trash 
+
+      {% set event = state_attr('sensor.denver_trash_schedule', 'next_event') %}
+
+      {% if event %}
+
+      **{% set date = as_datetime(event.day).strftime('%B %-d, %Y') %}{{ date
+      }}**
+
+      {% set flags = event.flags %}
+
+      {% for flag in flags -%}
+
+      {% set service = flag.subject.lower() %}
+
+      {% if 'trash' in service %}🗑️ Trash
+
+      {% elif 'recycle' in service %}♻️ Recycle
+
+      {% elif 'compost' in service %}🌿 Compost
+
+      {% elif 'large item' in service %}🛋️ Large Item
+
+      {% else %}{{ flag.subject }}
+
+      {% endif %}{% if not loop.last %}, {% endif %}
+
+      {%- endfor %}
+
+      {% else %}
+
+      **No pickup data available**
+
+      {% endif %}
+  - id: 1987901311094
+    type: divider
+  - id: 7638659504364
+    type: template
+    template: |-
+      # ⚽ Soccer
+      {% if state_attr('sensor.playmetrics_schedule', 'events') %}
+      {% for line in state_attr('sensor.playmetrics_schedule', 'events') %}
+        {% set parts = line.split(' | ') %}
+        {% if parts|length > 1 %}
+          {% set datetime = parts[0] %}
+          {% set remainder_parts = parts[1].split(' @ ') %}
+          {% set title_and_team = remainder_parts[0] %}
+          {% set location_and_cancel = remainder_parts[1] if remainder_parts|length > 1 else "TBD" %}
+          {% set is_cancelled = 'CANCELLED' in location_and_cancel %}
+          {% set status = '❌ Cancelled' if is_cancelled else '✅ Scheduled' %}
+          {% set location = location_and_cancel.replace(' ❌ CANCELLED', '') %}
+          {% set team_parts = title_and_team.split(' (') %}
+          {% set title = team_parts[0] %}
+          {% set team = team_parts[1].rstrip(')') if team_parts|length > 1 else '' %}
+      **{{ datetime }} - {{ title }}**  
+      {{ location }}  
+      {{ status }}  
+        {% endif %}
+      {% endfor %}
+      {% else %}
+      _No events in the next 3 days._
+      {% endif %}
+  - id: 2950716633419
+    type: divider
+  - id: 1009970843032
+    type: template
+    template: |2-
+        # 🚘 DGS Carpool
+        {% set today_events = state_attr('sensor.carpool_today', 'events') or [] %}
+        {% set upcoming_events = state_attr('sensor.carpool_upcoming', 'events') or [] %}
+        {% set all_events = today_events + upcoming_events %}
+        {% if all_events %}
+        {% for event in all_events[:2] %}
+        **{{ event.day_name }}, {{ event.date }} - {{ event.location }}**
+        {% for leg in event.legs %}
+        {% if loop.index == 1 %}➡️{% else %}⬅️{% endif %} {{ leg.time_formatted }}: {{ leg.driver_name }} ({{ leg.rider_count }} rider{{ 's' if leg.rider_count
+        != 1 else '' }})
+        {% endfor %}
+
+        {% endfor %}
+        {% else %}
+        _No upcoming carpool events scheduled._
+        {% endif %}
+  - id: 3814464876348
+    type: divider
+  - id: 6656730446189
+    type: template
+    template: |2-
+        # 🐱🐶 Pets
+
+        ## Tucker -👂 {{ states('sensor.tucker_ear') }} Ear
+        {%- set tucker_plans = state_attr('sensor.tucker_feeder_today_s_feeding_plan', 'plan_1'),
+        state_attr('sensor.tucker_feeder_today_s_feeding_plan', 'plan_2') %}
+        {%- set tucker_last_feed = states('sensor.tucker_feeder_last_feed_time') %}
+        {%- for plan in tucker_plans if plan %}
+        {%- set time_24h = plan.time %}
+        {%- set hour = time_24h.split(':')[0] | int %}
+        {%- set minute = time_24h.split(':')[1] %}
+        {%- set time_12h = '{:02d}:{} {}'.format(hour if hour <= 12 else hour - 12, minute, 'AM' if hour < 12 else 'PM') if
+        hour != 0 else '12:{} AM'.format(minute) %}
+        {%- set plan_time_today = today_at(time_24h) %}
+        {%- set last_feed_timestamp = as_timestamp(tucker_last_feed) %}
+        {%- set plan_timestamp = as_timestamp(plan_time_today) %}
+        {%- set fed_near_plan_time = (last_feed_timestamp - plan_timestamp) | abs < 3600 if tucker_last_feed != 'unknown' and
+        last_feed_timestamp and plan_timestamp else false %}
+        {{ time_12h }}: {% if plan.state == 'Completed' %}✅ Completed{% elif 'Skipped' in plan.state and fed_near_plan_time
+        %}✅ Manually fed at {{ as_timestamp(tucker_last_feed) | timestamp_custom('%-I:%M%p') }}{% elif 'Skipped' in
+        plan.state %}⏭️ {{ plan.state }}{% elif plan.state == 'Pending' %}⏰ Scheduled ({{ plan.amount }}){% else %}❓ {{
+        plan.state }}{% endif %}
+        {% endfor %}
+        {%- if is_state('binary_sensor.tucker_feeder_food_status', 'on') or
+        is_state('binary_sensor.tucker_feeder_food_dispenser', 'on') %}
+        ⚠️ Low food or jammed
+        {% endif %}
+
+        ## Rizzo
+        {%- set rizzo_plans = state_attr('sensor.rizzo_feeder_today_s_feeding_plan', 'plan_1'),
+        state_attr('sensor.rizzo_feeder_today_s_feeding_plan', 'plan_2') %}
+        {%- set rizzo_last_feed = states('sensor.rizzo_feeder_last_feed_time') %}
+        {%- for plan in rizzo_plans if plan %}
+        {%- set time_24h = plan.time %}
+        {%- set hour = time_24h.split(':')[0] | int %}
+        {%- set minute = time_24h.split(':')[1] %}
+        {%- set time_12h = '{:02d}:{} {}'.format(hour if hour <= 12 else hour - 12, minute, 'AM' if hour < 12 else 'PM') if
+        hour != 0 else '12:{} AM'.format(minute) %}
+        {%- set plan_time_today = today_at(time_24h) %}
+        {%- set last_feed_timestamp = as_timestamp(rizzo_last_feed) %}
+        {%- set plan_timestamp = as_timestamp(plan_time_today) %}
+        {%- set fed_near_plan_time = (last_feed_timestamp - plan_timestamp) | abs < 3600 if rizzo_last_feed != 'unknown' and
+        last_feed_timestamp and plan_timestamp else false %}
+        {{ time_12h }}: {% if plan.state == 'Completed' %}✅ Completed{% elif 'Skipped' in plan.state and fed_near_plan_time
+        %}✅ Manually fed at {{ as_timestamp(rizzo_last_feed) | timestamp_custom('%-I:%M%p') }}{% elif 'Skipped' in plan.state
+         %}⏭️ {{ plan.state }}{% elif plan.state == 'Pending' %}⏰ Scheduled ({{ plan.amount }}){% else %}❓ {{ plan.state
+        }}{% endif %}
+        {% endfor %}
+        {%- if is_state('binary_sensor.rizzo_feeder_food_status', 'on') or
+        is_state('binary_sensor.rizzo_feeder_food_dispenser', 'on') %}
+        ⚠️ Low food or jammed
+        {% endif %}
+  - id: 8905663993239
+    type: bar
+    entity_id: sensor.pet_water_bowl_pet_bowl_weight
+    math: Math.round(x/3000 * 100)
+    name: Water
+  - id: 5121662519278
+    type: divider
+  - id: 5661768050845
+    type: template
+    template: |2-
+        # Hot Tubs
+        {% set vail_temp_state = states('sensor.temperature_sensor_temperature') %}
+        {% set vail_temp = vail_temp_state | float(0) %}
+        {% set vail_online = states('binary_sensor.temperature_sensor_online') %}
+        {% set home_8124_temp_state = states('sensor.hot_tub_temperature') %}
+        {% set home_8124_temp = home_8124_temp_state | float(0) %}
+        {% set home_8124_online = states('binary_sensor.hot_tub_online') %}
+
+        {% if vail_online == 'off' or vail_temp_state in ['unavailable', 'unknown'] %}
+        🔴 **Vail:** Sensor offline (last: {{ vail_temp }}°)
+        {% elif vail_temp >= 98 %}
+        🟢 **Vail:** {{ vail_temp }}°
+        {% else %}
+        🟡 **Vail:** {{ vail_temp }}°
+        ⚠️ There is a problem with the hot tub.
+        {% endif %}
+
+        {% if home_8124_online == 'off' or home_8124_temp_state in ['unavailable', 'unknown']
+        %}
+        🔴 **8124:** Sensor offline (last: {{ home_8124_temp }}°)
+        {% elif home_8124_temp >= 98 %}
+        🟢 **8124:** {{ home_8124_temp }}°
+        {% else %}
+        🟡 **8124:** {{ home_8124_temp }}°
+        ⚠️ There is a problem with the hot tub.
+        {% endif %}
+sidebarWidth: 418
+theme: godis

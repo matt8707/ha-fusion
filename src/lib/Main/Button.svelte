@@ -223,6 +223,14 @@
 					break;
 				}
 
+
+				// button
+				case 'button':
+						callService($connection, 'button', 'press', {
+								entity_id: sel?.entity_id
+						});
+						break;
+
 				// sensor
 				case 'air_quality':
 				case 'date':
@@ -234,7 +242,7 @@
 				case 'binary_sensor':
 				case 'stt':
 				case 'weather':
-				case 'button':
+				//case 'button':
 				case 'scene':
 				case 'schedule':
 				case 'sun':

@@ -14,3 +14,9 @@ src/lib/Playground
 /data/configuration.yaml
 /data/youtube_credentials.json
 /data/version.json
+
+# Fork-specific development files
+prepare-pr.sh
+PR_SUBMISSION_GUIDE.md
+PULL_REQUEST_DESCRIPTION.md
+pr-backup-*/

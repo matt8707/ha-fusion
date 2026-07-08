@@ -12,6 +12,7 @@
 	import { onDestroy } from 'svelte';
 	import Select from '$lib/Components/Select.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
+	import VisibilityItemButton from '$lib/Main/VisibilityItemButton.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
 	import { updateObj } from '$lib/Utils';
 	import Ripple from 'svelte-ripple';
@@ -113,6 +114,13 @@
 				>
 					{$lang('hidden')}
 				</button>
+			</div>
+		{:else}
+			<!-- only show visibility for main items, not sidebar items -->
+			<h2>{$lang('visibility')}</h2>
+
+			<div style="display: flex; gap: 0.8rem;">
+				<VisibilityItemButton item={sel} />
 			</div>
 		{/if}
 

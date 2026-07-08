@@ -43,6 +43,9 @@ export interface Section {
 	visibility?: {
 		conditions?: Condition[];
 	}[];
+	item_visibility_template?: {
+		conditions?: Condition[];
+	}[];
 
 	// HorizontalStack
 	type?: string;
@@ -100,6 +103,9 @@ export interface ButtonItem {
 			service?: string;
 		};
 	};
+	visibility?: {
+		conditions?: Condition[];
+	}[];
 }
 
 export interface Template {

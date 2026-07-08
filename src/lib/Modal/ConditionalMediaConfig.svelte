@@ -13,6 +13,7 @@
 	import { onDestroy } from 'svelte';
 	import Select from '$lib/Components/Select.svelte';
 	import ConfigButtons from '$lib/Modal/ConfigButtons.svelte';
+	import VisibilityItemButton from '$lib/Main/VisibilityItemButton.svelte';
 	import Modal from '$lib/Modal/Index.svelte';
 	import { relativeTime, updateObj } from '$lib/Utils';
 	import Ripple from 'svelte-ripple';
@@ -241,6 +242,12 @@
 			>
 				{$lang('yes')}
 			</button>
+		</div>
+
+		<h2>{$lang('visibility')}</h2>
+
+		<div style="display: flex; gap: 0.8rem;">
+			<VisibilityItemButton item={sel} />
 		</div>
 
 		{#if debug}
