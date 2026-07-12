@@ -34,7 +34,7 @@
 		"prettier-plugin-svelte": "^3.2.7",
 		"svelte": "^4.2.19",
 		"svelte-check": "^4.0.4",
-		"svelte-confetti": "1.4.0",
+		"svelte-confetti": "2.0.1",
 		"svelte-fast-dimension": "^1.1.0",
 		"typescript": "^5.6.3",
 		"typescript-eslint": "^8.8.1",

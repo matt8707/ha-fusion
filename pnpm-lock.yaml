@@ -163,8 +163,8 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4(picomatch@2.3.1)(svelte@4.2.19)(typescript@5.6.3)
       svelte-confetti:
-        specifier: 1.4.0
-        version: 1.4.0(svelte@4.2.19)
+        specifier: 2.0.1
+        version: 2.0.1(svelte@4.2.19)
       svelte-fast-dimension:
         specifier: ^1.1.0
         version: 1.1.0(svelte@4.2.19)
@@ -1820,10 +1820,10 @@ packages:
       svelte: ^4.0.0 || ^5.0.0-next.0
       typescript: '>=5.0.0'
 
-  svelte-confetti@1.4.0:
-    resolution: {integrity: sha512-B0woNwpsFGwhkEoP48BIDQgvW0bMxPhavLVD+E+tsTWevlpr1aiz1S2wA8ArIXX957BiaZWHRHKmI5/pFRDbdg==}
+  svelte-confetti@2.0.1:
+    resolution: {integrity: sha512-o8jQ9GD6riVqQj7ndcdJFXoYIYw21AAnVKoQSxY1FgXoT1uTgJvsTdrDadlkjGmHNpg8Y5Ya0AzZfkESOGpcuQ==}
     peerDependencies:
-      svelte: ^4.0.0
+      svelte: ^4.0.0 || ^5.0.0
 
   svelte-dnd-action@0.9.51:
     resolution: {integrity: sha512-/0DEK+QqWf6QYtJgbQPJE/LSzo6JAE00oWVtBWZrBDAMXeN4cYVd0Z7sSpbu00Sm/h03t/RF4UGUMwosmrseQw==}
@@ -3690,7 +3690,7 @@ snapshots:
     transitivePeerDependencies:
       - picomatch
 
-  svelte-confetti@1.4.0(svelte@4.2.19):
+  svelte-confetti@2.0.1(svelte@4.2.19):
     dependencies:
       svelte: 4.2.19
 
