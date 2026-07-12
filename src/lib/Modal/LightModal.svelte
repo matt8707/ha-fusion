@@ -200,7 +200,7 @@
 		{/if}
 
 		<!-- COLOR -->
-		{#if supports?.BRIGHTNESS}
+		{#if supports?.COLOR}
 			<h2>{$lang('change_color')}</h2>
 		{/if}
 
@@ -238,7 +238,7 @@
 			</div>
 		{/if}
 
-		{#if supports?.BRIGHTNESS && selTab !== 'white'}
+		{#if supports?.COLOR && selTab !== 'white'}
 			<ColorPicker
 				{entity}
 				{colorMode}
