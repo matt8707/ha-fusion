@@ -62,7 +62,7 @@
 		"home-assistant-js-websocket": "^9.4.0",
 		"http-proxy-middleware": "^3.0.3",
 		"js-yaml": "^4.1.0",
-		"konva": "^9.3.15",
+		"konva": "^9.3.18",
 		"maplibre-gl": "^4.7.1",
 		"marked": "^14.1.2",
 		"svelte-dnd-action": "^0.9.51",
