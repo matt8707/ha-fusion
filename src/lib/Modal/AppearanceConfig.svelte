@@ -144,10 +144,12 @@
 						class:selected_theme={!mounted && _theme}
 					>
 						<div class="theme-container">
-							<div
-								class="image-area"
-								style:background-image="url('{base}/themes/{theme?.title}_thumbnail.webp')"
-							></div>
+							<div class="image-area">
+								<picture>
+									<source srcset="{base}/themes/{theme?.title}_thumbnail.webp" type="image/webp" />
+									<img src="{base}/themes/{theme?.title}_thumbnail.jpg" alt="{theme?.title}" />
+								</picture>
+							</div>
 
 							<div class="description-area">
 								<div class="description">

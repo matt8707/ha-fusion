@@ -76,7 +76,7 @@
 		if (backdropImage) {
 			if (backdrop) {
 				backdrop.style.backgroundColor = 'black';
-				backdrop.style.backgroundImage = 'var(--theme-background-image)';
+				backdrop.style.backgroundImage = 'var(--theme-background-image), var(--theme-background-image-fallback)';
 			}
 		} else {
 			if (backdrop) {

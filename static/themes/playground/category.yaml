@@ -5,6 +5,7 @@ theme:
   global:
     font-family: inherit
     background-image: url('/themes/muted_background.webp')
+    background-image-fallback: url('/themes/muted_background.webp')
 
   modal:
     color:
