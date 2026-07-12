@@ -115,6 +115,10 @@ export function getTogglableService(entity: HassEntity) {
 		case 'remote':
 			return 'homeassistant.toggle';
 
+		case 'group':
+			service = state === 'off' ? 'turn_on' : 'turn_off';
+			return `homeassistant.${service}`;
+
 		case 'scene':
 			service = 'turn_on';
 			break;
