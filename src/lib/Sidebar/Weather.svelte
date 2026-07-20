@@ -2,6 +2,8 @@
 	import { states, lang } from '$lib/Stores';
 	import type { HassEntity } from 'home-assistant-js-websocket';
 	import Icon from '@iconify/svelte';
+	import { iconMapMaterialSymbolsLight, iconMapMeteocons, iconMapWeatherIcons } from '$lib/Weather';
+	import type { WeatherIconSet, WeatherIconConditions, WeatherIconMapping } from '$lib/Weather';
 
 	export let sel: any;
 
@@ -14,7 +16,25 @@
 
 	// icon pack
 	$: below_horizon = $states?.['sun.sun']?.state === 'below_horizon';
-	$: src = `weather/meteocons/${entity?.state}-${below_horizon ? 'night' : 'day'}.svg`;
+
+	let iconSet: WeatherIconSet;
+	$: {
+		if (sel?.icon_pack === 'materialsymbolslight') {
+			iconSet = iconMapMaterialSymbolsLight;
+		} else if (sel?.icon_pack === 'meteocons') {
+			iconSet = iconMapMeteocons;
+		} else if (sel?.icon_pack === 'weathericons') {
+			iconSet = iconMapWeatherIcons;
+		} else {
+			iconSet = iconMapMeteocons;
+		}
+	}
+
+	$: icon = iconSet?.conditions?.[
+		entity?.state as keyof WeatherIconConditions
+	] as WeatherIconMapping;
+
+	$: iconName = icon && (below_horizon ? icon.icon_variant_night : icon.icon_variant_day);
 
 	// sensor
 	$: sensor = sel?.sensor && $states?.[sel?.sensor];
@@ -23,7 +43,11 @@
 {#if entity && entity?.state !== 'unavailable'}
 	<div class="container">
 		<div class="icon">
-			<img {src} width="100%" height="100%" alt="" />
+			{#if icon?.local}
+				<img src="{iconName}.svg" width="100%" height="100%" alt="" />
+			{:else if iconName}
+				<Icon icon={iconName} width="100%" height="100%"></Icon>
+			{/if}
 		</div>
 
 		{#if attributes?.temperature}
